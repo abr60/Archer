@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # =============================================================================
-# pseudo's Dotfiles - Entry Point
+# Archer - Setup Entry Point
+# Run after: git clone https://github.com/drunk-particles/Archer.git ~/Archer
+# Usage: bash ~/Archer/setup.sh
 # =============================================================================
 
 set -euo pipefail
 
-REPO_URL="https://github.com/drunk-particles/dots.git"
-DOTS_DIR="$HOME/dots"
+DOTS_DIR="$HOME/Archer"
 
 # Colors
 GREEN='\033[0;32m'
@@ -23,30 +24,13 @@ die()  { echo -e "${RED}ERR${NC} $1"; exit 1; }
 # ==========================================
 # 1. DEPENDENCY CHECK
 # ==========================================
-if ! command -v git &>/dev/null; then
-    msg "Installing git..."
-    sudo pacman -S --needed --noconfirm git
-fi
-
 if ! command -v gum &>/dev/null; then
     msg "Installing gum..."
     sudo pacman -S --needed --noconfirm gum
 fi
 
 # ==========================================
-# 2. CLONE / UPDATE REPO
-# ==========================================
-if [[ -d "$DOTS_DIR/.git" ]]; then
-    msg "Repo already exists, pulling latest..."
-    git -C "$DOTS_DIR" pull --ff-only && ok "Repo up to date" || warn "Git pull failed — using existing copy"
-else
-    msg "Cloning repo... (this may take a moment)"
-    git clone --depth=1 "$REPO_URL" "$DOTS_DIR"
-    ok "Repo cloned to $DOTS_DIR"
-fi
-
-# ==========================================
-# 3. SHOW LOGO
+# 2. SHOW LOGO
 # ==========================================
 clear
 LOGO_FILE="$DOTS_DIR/install/lib/logo.txt"
@@ -56,7 +40,7 @@ if [[ -f "$LOGO_FILE" ]]; then
 fi
 
 # ==========================================
-# 4. WARNING & CONFIRMATION
+# 3. WARNING & CONFIRMATION
 # ==========================================
 echo ""
 gum style \
@@ -81,7 +65,7 @@ echo ""
 gum confirm "Understood. Proceed?" || { msg "Aborted safely."; exit 0; }
 
 # ==========================================
-# 5. RUN SUB-SCRIPTS
+# 4. RUN SUB-SCRIPTS
 # ==========================================
 INSTALL_DIR="$DOTS_DIR/install"
 START_TIME=$SECONDS
@@ -114,13 +98,12 @@ run_step() {
 run_step "packages-pacman"  "Installing pacman packages"       true
 run_step "packages-aur"     "Installing AUR packages"          true
 
-# --- Step 2: Shell (zsh must be set up before configs that rely on it) ---
+# --- Step 2: Shell ---
 run_step "zsh"              "Setting up Zsh"                   false
 
 # --- Step 3: Configs & dotfiles ---
 run_step "configs"          "Copying config files"             true
 run_step "fonts"            "Installing fonts"                 false
-#run_step "themes"           "Applying themes"                  false
 
 # --- Step 4: Hardware & system ---
 run_step "thinkfan"         "Configuring Thinkfan"             false
@@ -138,7 +121,7 @@ run_step "services"         "Enabling systemd services"        false
 run_step "reload"           "Reloading environment"            false
 
 # ==========================================
-# 6. DONE & REBOOT
+# 5. DONE & REBOOT
 # ==========================================
 DURATION=$(( SECONDS - START_TIME ))
 echo ""
