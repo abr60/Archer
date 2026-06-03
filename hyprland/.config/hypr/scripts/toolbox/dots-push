@@ -55,16 +55,20 @@ sync_repo() {
 
 # Define options based on your aliases
 choice=$(gum choose --header "Select a repository to sync" \
-    "  Dotfiles" \
-    "󰸉  Wallpapers" \
-    "  Waybar Config" \
-    "󰔎  Assets" \
-    "  Open Lazygit" \
-    "󱎘  Cancel")
+    " Dotfiles" \
+    "󰣇 Archer" \
+    "󰸉 Wallpapers" \
+    " Waybar Config" \
+    "󰔎 Assets" \
+    " Open Lazygit" \
+    "󱎘 Cancel")
 
 case "$choice" in
-    "  Dotfiles")
+    " Dotfiles")
         sync_repo "Dotfiles" "$HOME/dots" "sync: $(date +%Y-%m-%d)"
+        ;;
+    "󰣇  Archer")
+        sync_repo "Archer" "$HOME/Archer" "sync: $(date +%Y-%m-%d)"
         ;;
     "󰸉  Wallpapers")
         sync_repo "Wallpapers" "$HOME/Wallpapers" "sync: $(date +%Y-%m-%d)"
