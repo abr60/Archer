@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# =============================================================================
+# packages-aur.sh — Install AUR packages via yay
+# =============================================================================
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PKGS_FILE="$SCRIPT_DIR/pkgs-aur.txt"
+
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+ok()   { echo -e "${GREEN} ✓${NC} $1"; }
+warn() { echo -e "${YELLOW} !${NC} $1"; }
+
+if ! command -v yay &>/dev/null; then
+    warn "yay not found — skipping AUR packages"
+    exit 0
+fi
+
+if [[ ! -f "$PKGS_FILE" ]]; then
+    echo "ERR: $PKGS_FILE not found."
+    exit 1
+fi
+
+# Parse packages — strip comments and blank lines
+mapfile -t PKGS < <(grep -v '^\s*#' "$PKGS_FILE" | grep -v '^\s*$' | awk '{print $1}')
+
+if [[ ${#PKGS[@]} -eq 0 ]]; then
+    warn "No packages found in $PKGS_FILE"
+    exit 0
+fi
+
+# Filter out already-installed packages
+TO_INSTALL=()
+for pkg in "${PKGS[@]}"; do
+    pacman -Q "$pkg" &>/dev/null || TO_INSTALL+=("$pkg")
+done
+
+if [[ ${#TO_INSTALL[@]} -eq 0 ]]; then
+    ok "All AUR packages already installed"
+    exit 0
+fi
+
+echo "  Installing ${#TO_INSTALL[@]} packages via yay..."
+yay -S --needed --noconfirm "${TO_INSTALL[@]}" || warn "Some AUR packages failed — check output above"
+ok "AUR packages done"

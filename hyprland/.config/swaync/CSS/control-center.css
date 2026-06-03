@@ -1,0 +1,286 @@
+/* ===== Global resets ===== find ~/.config/swaync/ -type f | entr -d swaync-client -R -rs */
+label, button, entry {
+  font-family: "Monaco Nerd Font Mono", monospace;
+  font-size: 13px;
+  text-shadow: none;
+}
+
+* {
+  -gtk-icon-shadow: none;
+  box-shadow: none;
+  outline: none;
+}
+
+
+/* ===== Container ===== */
+.control-center,
+.floating-notifications,
+.floating-notifications.background,
+.blank-window,
+notificationwindow,
+blankwindow {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.control-center-list {
+  background: transparent;
+}
+
+/* Hide the empty-state placeholder entirely */
+.control-center-list-placeholder,
+.control-center-list-placeholder image,
+.control-center-list-placeholder label {
+  opacity: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  -gtk-icon-size: 0;
+  font-size: 0;
+}
+
+
+/* ===== Base widget reset ===== */
+.widget {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 10px 14px;
+}
+
+
+/* ===== MPRIS ===== */
+.widget-mpris {
+  padding: 0;
+  background: transparent;
+  border: none;
+  margin: 6px 0;
+  margin-bottom: 0;
+}
+
+.widget-mpris-player {
+  background: transparent;
+  color: @on_surface;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid @outline_variant;
+  padding: 10px;
+  margin: 0;
+}
+
+.widget-mpris .mpris-background {
+  filter: none;
+  background: alpha(@surface, 0.7);
+  background-image: ;
+  opacity: 0;
+}
+
+.widget-mpris .mpris-overlay {
+  background: transparent;
+  padding: 0;
+}
+
+.widget-mpris-title {
+  font-weight: bold;
+  font-size: 14px;
+  color: @on_surface;
+}
+
+.widget-mpris-subtitle {
+  font-size: 12px;
+  color: @on_surface_variant;
+}
+
+.widget-mpris-album-art {
+  border-radius: 8px;
+  -gtk-icon-size: 160px;
+}
+
+.widget-mpris button {
+  background: transparent;
+  color: @on_surface;
+  border: none;
+  border-radius: 999px;
+  min-width: 28px;
+  min-height: 28px;
+  padding: 4px;
+  margin: 0 2px;
+}
+
+.widget-mpris button:hover {
+  background: @surface_container_highest;
+}
+
+.widget-mpris > box > button {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Player button box */
+.widget-mpris > box > carousel > widget > box > box:nth-child(2) {
+  margin: 5px 0px -5px 90px;
+}
+
+/* Player buttons */
+.widget-mpris > box > carousel > widget > box > box:nth-child(2) > button {
+  border-radius: 4px;
+}
+
+.widget-mpris > box > carousel > widget > box > box:nth-child(2) > button:hover {
+  background: alpha(currentColor, 0.1);
+}
+
+carouselindicatordots {
+  opacity: 0;
+}
+
+/* MPRIS outer wrapper — top card border */
+.widget-mpris {
+  background: alpha(@surface, 0.7);
+  border: 1px solid @outline_variant;
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
+  margin: 6px 0;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+
+/* ===== DND ===== */
+.widget-dnd {
+  background: @surface_container_low;
+  border: 1px solid @outline_variant;
+  border-radius: 0;
+  border-top: none;
+  border-bottom: 1px solid @outline_variant;
+  margin: 0;
+  padding: 10px 14px;
+}
+
+.widget-dnd > label {
+  color: @on_surface;
+  font-size: 14px;
+}
+
+.widget-dnd > switch {
+  background: @surface_container_highest;
+  border: 1px solid @outline_variant;
+  border-radius: 6px;
+  min-height: 22px;
+  min-width: 46px;
+  padding: 0;
+}
+
+.widget-dnd > switch:hover {
+  background: @surface;
+}
+
+.widget-dnd > switch:checked {
+  background: transparent;
+}
+
+.widget-dnd > switch slider {
+  background: @primary;
+  border: 1px solid @outline_variant;
+  border-radius: 6px;
+  min-height: 18px;
+  min-width: 18px;
+  margin: -2px;
+}
+
+
+/* ===== Title ===== */
+.widget-title {
+  background: @surface_container_low;
+  border: 1px solid @outline_variant;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 15px;
+}
+
+.widget-title > label {
+  font-weight: bold;
+  color: @on_surface;
+}
+
+.widget-title > button {
+  background: @surface_container_high;
+  color: @on_surface;
+  border: 1px solid @outline_variant;
+  border-radius: 10px;
+  padding: 2px 10px;
+  margin-left: 8px;
+}
+
+.widget-title > button:hover {
+  background: @surface_container_highest;
+}
+
+
+/* ===== Notifications ===== */
+.widget-notifications {
+  background: @surface_container_low;
+  border: 1px solid @outline_variant;
+  border-top: 1px solid @outline_variant;
+  border-radius: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+
+/* ===== Inhibitors ===== */
+.widget-inhibitors > label {
+  font-weight: bold;
+  color: @on_surface;
+}
+
+.widget-inhibitors > button {
+  background: @surface_container_high;
+  color: @on_surface;
+  border: 1px solid @outline_variant;
+  border-radius: 10px;
+  padding: 2px 10px;
+  margin-left: 8px;
+}
+
+
+/* ===== Progress bars ===== */
+progressbar {
+  min-height: 6px;
+  border-radius: 999px;
+  background: transparent;
+  border: none;
+}
+
+progressbar trough {
+  min-height: 6px;
+  border-radius: 999px;
+  background: @surface_container_highest;
+  border: 1px solid @outline_variant;
+}
+
+progressbar progress {
+  min-height: 6px;
+  border-radius: 999px;
+  background: @on_surface;
+  border: none;
+}

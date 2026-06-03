@@ -1,0 +1,13 @@
+/* ===== Matugen token mapping ===== */
+/* base     → @surface_container_low      (card background)      */
+/* surface  → @surface_container_high     (subtle background)    */
+/* overlay  → @surface_container_highest  (hover / trough)       */
+/* text     → @on_surface                 (text + borders)       */
+/* subtle   → @on_surface_variant         (dimmed text / icons)  */
+/* muted    → @outline_variant            (UI borders / chrome)  */
+/* foam     → @tertiary                   (DND on accent)        */
+/* love     → @error_container            (critical border)      */
+
+@import 'CSS/matugen.css';
+@import 'CSS/control-center.css';
+@import 'CSS/notification.css';

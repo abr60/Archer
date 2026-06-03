@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# =============================================================================
+# easyeffects.sh — Install EasyEffects DSP presets for ThinkPad T14 Gen 2
+#                — Downloads Dolby IRS files from GitHub
+#                — Copies presets to ~/.local/share/easyeffects/output/
+#                — Adds EasyEffects autostart to Hyprland autostart.conf
+# =============================================================================
+
+set -euo pipefail
+
+DOTS_DIR="$HOME/dots"
+PRESET_SOURCE="$DOTS_DIR/easyeffects/presets"
+IRS_DEST="$HOME/.local/share/easyeffects/irs"
+PRESET_DEST="$HOME/.local/share/easyeffects/output"
+AUTOSTART_CONF="$HOME/.config/hypr/autostart.conf"
+
+IRS_BASE_URL="https://github.com/shuhaowu/linux-thinkpad-speaker-improvements/raw/main/ThinkPadT14Gen1"
+
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+log()  { echo -e "${BLUE}==>${NC} $1"; }
+ok()   { echo -e "${GREEN} ✓${NC} $1"; }
+warn() { echo -e "${YELLOW} !${NC} $1"; }
+err()  { echo -e "${RED} ✗${NC} $1"; }
+
+# ==========================================
+# 1. INSTALL EASYEFFECTS IF MISSING
+# ==========================================
+if ! command -v easyeffects &>/dev/null; then
+    log "Installing easyeffects and plugins..."
+    sudo pacman -S --needed --noconfirm easyeffects lsp-plugins calf zam-plugins-lv2
+    ok "EasyEffects installed"
+else
+    ok "EasyEffects already installed"
+fi
+
+# ==========================================
+# 2. CREATE DIRECTORIES
+# ==========================================
+mkdir -p "$IRS_DEST" "$PRESET_DEST"
+ok "Directories ready"
+
+# ==========================================
+# 3. DOWNLOAD IRS FILES FROM GITHUB
+# ==========================================
+log "Downloading Dolby IRS files for ThinkPad T14 Gen 1/2..."
+
+declare -A IRS_FILES=(
+    ["T14-Dolby-Music.irs"]="DolbyMusicBalanced.irs"
+    ["T14-Dolby-Movie.irs"]="DolbyMovieBalanced.irs"
+    ["T14-Dolby-Game.irs"]="DolbyGameBalanced.irs"
+    ["T14-Dolby-Voice.irs"]="DolbyVoiceBalanced.irs"
+)
+
+for local_name in "${!IRS_FILES[@]}"; do
+    remote_name="${IRS_FILES[$local_name]}"
+    dest="$IRS_DEST/$local_name"
+    if [[ -f "$dest" ]]; then
+        ok "Already exists: $local_name — skipping"
+    else
+        log "Downloading $remote_name → $local_name"
+        curl -fsSL "$IRS_BASE_URL/$remote_name" -o "$dest" \
+            && ok "Downloaded $local_name" \
+            || warn "Failed to download $remote_name — skipping"
+    fi
+done
+
+# ==========================================
+# 4. COPY PRESETS
+# ==========================================
+log "Copying EasyEffects presets..."
+
+if [[ ! -d "$PRESET_SOURCE" ]]; then
+    err "Preset source not found at $PRESET_SOURCE — skipping"
+else
+    cp "$PRESET_SOURCE"/*.json "$PRESET_DEST/"
+    ok "Presets copied → $PRESET_DEST"
+fi
+
+# ==========================================
+# 5. ADD AUTOSTART TO HYPRLAND
+# ==========================================
+AUTOSTART_LINE="exec-once = easyeffects --gapplication-service  # EasyEffects DSP"
+
+if [[ ! -f "$AUTOSTART_CONF" ]]; then
+    warn "autostart.conf not found at $AUTOSTART_CONF — skipping autostart injection"
+elif grep -q "easyeffects" "$AUTOSTART_CONF"; then
+    ok "EasyEffects already in autostart.conf — skipping"
+else
+    log "Adding EasyEffects to autostart.conf..."
+    echo "" >> "$AUTOSTART_CONF"
+    echo "$AUTOSTART_LINE" >> "$AUTOSTART_CONF"
+    ok "Added to $AUTOSTART_CONF"
+fi
+
+ok "EasyEffects setup complete"

@@ -1,0 +1,122 @@
+#!/bin/bash
+# services-setup.sh
+# Run after Omarchy (or any dotfiles) install on fresh Arch.
+# Installs missing packages and enables required services.
+
+set -e
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+info()    { echo -e "${GREEN}[+]${NC} $1"; }
+warn()    { echo -e "${YELLOW}[!]${NC} $1"; }
+error()   { echo -e "${RED}[x]${NC} $1"; }
+
+# ─── package install helper ───────────────────────────────────────────────────
+
+install_if_missing() {
+    local pkg=$1
+    if ! pacman -Qi "$pkg" &>/dev/null; then
+        warn "$pkg not found, installing..."
+        sudo pacman -S --noconfirm "$pkg"
+    else
+        info "$pkg already installed, skipping."
+    fi
+}
+
+aur_install_if_missing() {
+    local pkg=$1
+    if ! pacman -Qi "$pkg" &>/dev/null; then
+        warn "$pkg not found, installing from AUR..."
+        if command -v yay &>/dev/null; then
+            yay -S --noconfirm "$pkg"
+        elif command -v paru &>/dev/null; then
+            paru -S --noconfirm "$pkg"
+        else
+            error "No AUR helper found (yay/paru). Please install $pkg manually."
+            return 1
+        fi
+    else
+        info "$pkg already installed, skipping."
+    fi
+}
+
+# ─── system service helper ────────────────────────────────────────────────────
+
+enable_system_service() {
+    local svc=$1
+    if systemctl list-unit-files "$svc" &>/dev/null; then
+        if systemctl is-enabled "$svc" &>/dev/null; then
+            info "$svc already enabled, skipping."
+        else
+            info "Enabling $svc..."
+            sudo systemctl enable --now "$svc"
+        fi
+    else
+        error "$svc not found, skipping."
+    fi
+}
+
+# ─── user service helper ──────────────────────────────────────────────────────
+
+enable_user_service() {
+    local svc=$1
+    if systemctl --user list-unit-files "$svc" &>/dev/null; then
+        if systemctl --user is-enabled "$svc" &>/dev/null; then
+            info "$svc (user) already enabled, skipping."
+        else
+            info "Enabling $svc (user)..."
+            systemctl --user enable --now "$svc"
+        fi
+    else
+        error "$svc (user) not found, skipping."
+    fi
+}
+
+# ─── packages ─────────────────────────────────────────────────────────────────
+
+info "Checking required packages..."
+
+install_if_missing tlp
+install_if_missing tlp-rdw
+install_if_missing ufw
+
+# linux-enable-ir-emitter — check both the source and bin variants
+if pacman -Qi linux-enable-ir-emitter &>/dev/null || pacman -Qi linux-enable-ir-emitter-bin &>/dev/null; then
+    info "linux-enable-ir-emitter already installed, skipping."
+else
+    aur_install_if_missing linux-enable-ir-emitter-bin
+fi
+
+# ─── mask conflicting services ────────────────────────────────────────────────
+
+info "Masking power-profiles-daemon (conflicts with TLP)..."
+if systemctl list-unit-files power-profiles-daemon.service &>/dev/null; then
+    sudo systemctl mask power-profiles-daemon.service
+else
+    warn "power-profiles-daemon not found, nothing to mask."
+fi
+
+# ─── system services ──────────────────────────────────────────────────────────
+
+info "Enabling system services..."
+
+enable_system_service tlp.service
+enable_system_service NetworkManager-dispatcher.service
+enable_system_service linux-enable-ir-emitter.service
+enable_system_service ufw.service
+
+# ─── user services ────────────────────────────────────────────────────────────
+
+info "Enabling user services..."
+
+enable_user_service mpd.service
+enable_user_service mpd-mpris.service
+
+# ─── done ─────────────────────────────────────────────────────────────────────
+
+echo ""
+info "All done. You may want to reboot to make sure everything is clean."

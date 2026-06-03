@@ -1,0 +1,159 @@
+{
+  "auto_update_lookup": true,
+  "geometry-of-main_window_geometry": {
+    "frame_geometry": {
+      "height": 720,
+      "width": 1280,
+      "x": 0,
+      "y": 0
+    },
+    "full_screened": true,
+    "geometry": {
+      "height": 720,
+      "width": 1280,
+      "x": 0,
+      "y": 0
+    },
+    "maximized": true,
+    "normal_geometry": {
+      "height": 671,
+      "width": 695,
+      "x": 0,
+      "y": 0
+    },
+    "qt": {
+      "__class__": "bytearray",
+      "__value__": "AdnQywADAAAAAAAAAAAAAAAABP8AAALPAAAAAAAAAAAAAAK2AAACngAAAAACBAAABQAAAAAAAAAAAAAABP8AAALP"
+    },
+    "screen": {
+      "depth": 32,
+      "device_pixel_ratio": 2.0,
+      "geometry_in_logical_pixels": {
+        "height": 720,
+        "width": 1280,
+        "x": 0,
+        "y": 0
+      },
+      "index_in_screens_list": 0,
+      "manufacturer": "AU Optronics",
+      "model": "0x323D",
+      "name": "eDP-1",
+      "serial": "",
+      "size_in_logical_pixels": {
+        "height": 720,
+        "width": 1280
+      },
+      "virtual_geometry": {
+        "height": 720,
+        "width": 1280,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "local_storage": {
+    "search-bar-history-search-for-sc": [
+      "toggle",
+      "full",
+      "table of",
+      "profile"
+    ]
+  },
+  "lookup_location": "Google search",
+  "main_window_state": {
+    "__class__": "bytearray",
+    "__value__": "AAAA/wAAAAH9AAAAAgAAAAAAAAEOAAAC0PwCAAAAAvsAAAAQAHQAbwBjAC0AZABvAGMAawAAAAAAAAAC0AAAAIUA////+wAAABYAcwBlAGEAcgBjAGgALQBkAG8AYwBrAAAAAAAAAALQAAAAkQD///8AAAABAAABDgAAAtD8AgAAAAT7AAAAFgBsAG8AbwBrAHUAcAAtAGQAbwBjAGsCAAAAAAAAAAAAAAUAAAAC0PsAAAAcAGIAbwBvAGsAbQBhAHIAawBzAC0AZABvAGMAawAAAAAAAAAC0AAAAOIA////+wAAABwAaQBuAHMAcABlAGMAdABvAHIALQBkAG8AYwBrAAAAAAAAAALQAAAAEQD////7AAAAHgBoAGkAZwBoAGwAaQBnAGgAdABzAC0AZABvAGMAawAAAAAAAAAC0AAAAMwA////AAAFAAAAAtAAAAAEAAAABAAAAAgAAAAI/AAAAAEAAAAAAAAAAQAAAB4AYQBjAHQAaQBvAG4AcwBfAHQAbwBvAGwAYgBhAHICAAAAAP////8AAAAAAAAAAA=="
+  },
+  "old_prefs_migrated": true,
+  "saved-search-settings": {
+    "glint": {
+      "case_sensitive": false,
+      "mode": "normal"
+    }
+  },
+  "session_data": {
+    "background_image": "clbr://internal.invalid/reader-background-63616c696272652e6a7067",
+    "base_font_size": 31,
+    "columns_per_screen": {
+      "landscape": 2,
+      "portrait": 0
+    },
+    "controls_help_shown_count": 2,
+    "current_color_scheme": "sepia-light",
+    "keyboard_shortcuts": {
+      "show_profiles": [
+        {
+          "altKey": false,
+          "ctrlKey": false,
+          "key": "p",
+          "metaKey": false,
+          "shiftKey": false
+        }
+      ],
+      "toggle_full_screen": [
+        {
+          "altKey": false,
+          "ctrlKey": false,
+          "key": "F11",
+          "metaKey": false,
+          "shiftKey": false
+        },
+        {
+          "altKey": false,
+          "ctrlKey": false,
+          "key": "f",
+          "metaKey": false,
+          "shiftKey": false
+        }
+      ],
+      "toggle_toc": [
+        {
+          "altKey": false,
+          "ctrlKey": false,
+          "key": "t",
+          "metaKey": false,
+          "shiftKey": false
+        }
+      ]
+    },
+    "margin_bottom": 60,
+    "margin_left": 60,
+    "margin_right": 60,
+    "margin_top": 60,
+    "standalone_font_settings": {
+      "standard_font": "mono"
+    },
+    "standalone_recently_opened": [
+      {
+        "authors": [
+          "Er Gen"
+        ],
+        "key": "/home/pseudo/Calibre Library/Er Gen/I Shall Seal the Heavens (6)/I Shall Seal the Heavens - Er Gen.epub",
+        "pathtoebook": "/home/pseudo/Calibre Library/Er Gen/I Shall Seal the Heavens (6)/I Shall Seal the Heavens - Er Gen.epub",
+        "timestamp": "2026-03-24T00:15:13.673Z",
+        "title": "I Shall Seal the Heavens"
+      },
+      {
+        "authors": [
+          "Translator: Johnchen & DoubleDD; Author: Wang Yu 忘语; Licensed From: Qidian"
+        ],
+        "key": "/home/pseudo/Calibre Library/Translator_ Johnchen/A Record of a Mortal's Journey to Immortality c1-2248 (3)/A Record of a Mortal's Journey to Immortal - Translator_ Johnchen.epub",
+        "pathtoebook": "/home/pseudo/Calibre Library/Translator_ Johnchen/A Record of a Mortal's Journey to Immortality c1-2248 (3)/A Record of a Mortal's Journey to Immortal - Translator_ Johnchen.epub",
+        "timestamp": "2026-01-15T15:51:12.971Z",
+        "title": "A Record of a Mortal’s Journey to Immortality c1-2248"
+      }
+    ],
+    "user_color_schemes": {
+      "*adnan": {
+        "background": "#000000",
+        "foreground": "#878787",
+        "is_dark_theme": true,
+        "link": "#8a4819",
+        "name": "adnan"
+      }
+    },
+    "user_stylesheet": "body{\nbackground-image:url('file:///path/to/background.jpg') !important;  /* adjust this line to point to where the background is stored */\nbackground-size:1600px 900px;  /* adjust this line to suit your screen resolution */\nbackground-repeat:no-repeat;\nbackground-attachment:fixed;\nbackground-position:center; \n}\n\np{\nmargin-bottom:0.5em !important; /* change this if you don't want a gap after each paragraph */"
+  },
+  "viewer-search-case-sensitive": false,
+  "viewer-search-mode": "normal"
+}

@@ -1,0 +1,6 @@
+* {
+    matugen-bg:      {{colors.surface.default.hex}}; 
+    matugen-fg:      {{colors.on_surface.default.hex}};
+    matugen-primary: {{colors.primary.default.hex}};
+    matugen-outline: {{colors.outline.default.hex}};
+}

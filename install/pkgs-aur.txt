@@ -1,0 +1,61 @@
+# =============================================================================
+# pkgs-aur.txt — AUR packages
+# Installed via: yay -S --needed --noconfirm
+# Comment out anything you don't want installed yet
+# =============================================================================
+
+# --- Graphics & PDF ---
+masterpdfeditor-free
+# zotero             # install later
+
+# --- Audio & Music ---
+# moosync
+#swingmusic-bin
+
+# --- Video ---
+mpv-autosub-git
+mpv-thumbfast-git
+mpv-uosc-git
+mpv-mpris
+mpvpaper
+subliminal
+
+# --- Desktop & UI ---
+bibata-cursor-git
+matugen-bin
+spicetify-marketplace-bin
+waybar-module-pacman-updates-git
+tabbed
+
+# --- Browsers & Social ---
+brave-bin
+google-chrome
+visual-studio-code-bin
+
+# --- System & Utils ---
+howdy-git
+payload-dumper-go-bin
+qimgv-git
+voxtype-bin
+wifitui
+wttr-bin
+wttrbar
+awww
+# opencode
+
+# --- Waydroid (heavy — install later) ---
+# waydroid
+# waydroid-helper
+# waydroid-script-git
+
+# --- Fonts ---
+# maple-mono-nf-cn-unhinted
+
+# --- Terminal Fun ---
+cbonsai
+cowfortune
+
+# -- extra ---
+sioyek
+python-ffmpeg-python
+linux-enable-ir-emitter

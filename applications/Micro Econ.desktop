@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Micro Econ
+Comment=Micro Econ
+Exec=omarchy-launch-webapp https://saylordotorg.github.io/text_microeconomics-theory-through-applications/index.html
+Terminal=false
+Type=Application
+Icon=/home/pseudo/.local/share/applications/icons/Micro Econ.png
+StartupNotify=true

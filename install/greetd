@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# =============================================================================
+# install/greetd.sh — Greetd setup with tuigreet
+# =============================================================================
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTS_DIR="$(dirname "$SCRIPT_DIR")"
+CONF_SRC="$DOTS_DIR/greetd/config.toml"
+
+echo "==> Setting up greetd..."
+
+# Copy config
+sudo mkdir -p /etc/greetd
+sudo cp "$CONF_SRC" /etc/greetd/config.toml
+
+# Enable service
+sudo systemctl enable greetd
+
+echo "==> Greetd setup complete."

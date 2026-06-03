@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# omarchy:summary=Restart Waybar
+# omarchy:examples=omarchy restart waybar
+
+pkill -9 -x waybar || true
+sleep 0.3
+setsid waybar >/dev/null 2>&1 &

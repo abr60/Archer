@@ -1,0 +1,250 @@
+/* ===== Notification rows ===== */
+.notification-row,
+.notification-row:focus,
+.notification-row:hover {
+  background: transparent;
+  outline: none;
+}
+
+/* Floating toasts: match the panel's 20px gap from screen edges */
+.floating-notifications.background .notification-row {
+  margin: 20px 20px 0 0;
+}
+
+.notification-background {
+  padding: 0;
+}
+
+
+/* ===== Notification cards ===== */
+/* Inside the control center: no left/right border, only top divider */
+.notification {
+  background: transparent;
+  color: @on_surface;
+  border: none;
+  border-top: 1px solid @outline_variant;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/* First notification in a list has no top divider */
+.notification-row:first-child .notification {
+  border-top: none;
+}
+
+/* Floating toasts remain full standalone cards */
+.floating-notifications.background .notification {
+  background: @surface_container_low;
+  border: 1px solid @outline;
+  border-radius: 10px;
+}
+
+.notification.critical {
+  border-color: @error_container;
+}
+
+.floating-notifications.background .notification.critical {
+  border-color: @error_container;
+}
+
+
+/* ===== Notification content ===== */
+.notification-default-action {
+  background: transparent;
+  color: @on_surface;
+  border: none;
+  border-radius: 0;
+  padding: 8px 10px;
+}
+
+.notification-content {
+  background: transparent;
+  color: @on_surface_variant;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+.notification-default-action:hover {
+  background: @surface_container_highest;
+}
+
+.notification-default-action:not(:only-child) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.notification-content .summary {
+  font-weight: bold;
+  font-size: 13px;
+  color: @on_surface;
+}
+
+.notification-content .time {
+  font-size: 11px;
+  color: @on_surface_variant;
+  margin-right: 6px;
+}
+
+.notification-content .body {
+  font-size: 12px;
+  color: @on_surface_variant;
+}
+
+.notification-content .image {
+  border-radius: 6px;
+  margin: 2px 8px 2px 2px;
+  color: @on_surface;
+}
+
+.notification-content .app-icon {
+  margin: 2px;
+  color: @on_surface_variant;
+}
+
+.notification-content .body-image {
+  margin-top: 4px;
+  background: @surface_container_highest;
+  border-radius: 6px;
+}
+
+
+/* ===== Inline reply ===== */
+.inline-reply {
+  margin-top: 4px;
+}
+
+.inline-reply-entry {
+  background: @surface_container_high;
+  color: @on_surface;
+  caret-color: @on_surface;
+  border: 1px solid @outline_variant;
+  border-radius: 10px;
+  padding: 4px 8px;
+}
+
+.inline-reply-button {
+  background: @surface_container_low;
+  color: @on_surface;
+  border: 1px solid @outline_variant;
+  border-radius: 10px;
+  margin-left: 4px;
+  padding: 4px 10px;
+}
+
+.inline-reply-button:hover {
+  background: @surface_container_highest;
+}
+
+.inline-reply-button:disabled {
+  color: @outline_variant;
+  border-color: @outline_variant;
+}
+
+
+/* ===== Alternative actions row ===== */
+.notification-alt-actions {
+  background: transparent;
+  border-top: 1px solid @outline_variant;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 2px;
+}
+
+.notification-action {
+  margin: 2px;
+}
+
+.notification-action > button {
+  background: @surface_container_high;
+  color: @on_surface;
+  border: 1px solid @outline_variant;
+  border-radius: 10px;
+  padding: 3px 8px;
+}
+
+.notification-action > button:hover {
+  background: @surface_container_highest;
+}
+
+
+/* ===== Close button ===== */
+.close-button {
+  background: transparent;
+  color: @on_surface_variant;
+  border: none;
+  border-radius: 999px;
+  min-width: 20px;
+  min-height: 20px;
+  padding: 0;
+  margin: 4px 6px 0 0;
+}
+
+.close-button:hover {
+  background: @surface_container_highest;
+  color: @on_surface;
+}
+
+
+/* ===== Grouped notifications ===== */
+.notification-group {
+  background: transparent;
+}
+
+.notification-group-headers {
+  margin: 0;
+  padding: 6px 10px;
+  background: @surface_container;
+  border-bottom: 1px solid @outline_variant;
+  color: @on_surface;
+}
+
+.notification-group-header {
+  color: @on_surface;
+  font-weight: bold;
+}
+
+.notification-group-icon {
+  color: @on_surface_variant;
+  -gtk-icon-size: 16px;
+}
+
+.notification-group-buttons {
+  margin: 0 6px;
+}
+
+.notification-group-buttons > button,
+.notification-group-collapse-button,
+.notification-group-close-all-button {
+  background: transparent;
+  color: @on_surface_variant;
+  border: 1px solid @outline_variant;
+  border-radius: 999px;
+  min-width: 22px;
+  min-height: 22px;
+  padding: 0;
+  margin: 2px;
+}
+
+.notification-group-buttons > button:hover,
+.notification-group-collapse-button:hover,
+.notification-group-close-all-button:hover {
+  background: @surface_container_highest;
+  color: @on_surface;
+}
+
+/* Remove overlapping stacked lines from grouped notification cards */
+.notification-group.collapsed .notification-row:not(:first-child) {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+
+.notification-group.collapsed .notification-row .notification {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}

@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# omarchy-inject.sh
+# Runs at login via systemd user service.
+# Copies your patched scripts from ~/.config/hypr/bin/ over omarchy's bin,
+# creates required output directories, and comments out the swaybg autostart line.
+
+set -euo pipefail
+
+MY_SCRIPTS="$HOME/.config/hypr/bin"
+OMARCHY_BIN="$HOME/.local/share/omarchy/bin"
+AUTOSTART_CONF="$HOME/.local/share/omarchy/default/hypr/autostart.conf"
+
+SCREENSHOT_DIR="$HOME/Pictures/Screenshots"
+SCREENRECORD_DIR="$HOME/Videos/Screen Recordings"
+
+log() { echo "[omarchy-inject] $*"; }
+
+# ── 1. Sanity check ───────────────────────────────────────────────────────────
+
+if [[ ! -d "$MY_SCRIPTS" ]]; then
+  log "ERROR: $MY_SCRIPTS does not exist. Did you place your patched scripts in ~/.config/hypr/bin/?"
+  exit 1
+fi
+
+if [[ ! -d "$OMARCHY_BIN" ]]; then
+  log "ERROR: $OMARCHY_BIN does not exist. Is omarchy installed?"
+  exit 1
+fi
+
+# ── 2. Create output directories ──────────────────────────────────────────────
+
+for dir in "$SCREENSHOT_DIR" "$SCREENRECORD_DIR"; do
+  if [[ ! -d "$dir" ]]; then
+    mkdir -p "$dir"
+    log "Created directory: $dir"
+  fi
+done
+
+# ── 3. Overwrite omarchy bin scripts with your patched versions ───────────────
+
+SCRIPTS=(
+  omarchy-theme-bg-next
+  omarchy-theme-bg-set
+  omarchy-capture-screenshot
+  omarchy-capture-screenrecording
+  omarchy-restart-waybar
+  omarchy-restart-waybar
+)
+
+for script in "${SCRIPTS[@]}"; do
+  src="$MY_SCRIPTS/$script"
+  dst="$OMARCHY_BIN/$script"
+
+  if [[ ! -f "$src" ]]; then
+    log "WARN: Patched script not found, skipping: $src"
+    continue
+  fi
+
+  cp "$src" "$dst"
+  chmod +x "$dst"
+  log "Overwrote: $dst"
+done
+
+# ── 4. Comment out swaybg exec-once in autostart.conf ────────────────────────
+
+if [[ -f "$AUTOSTART_CONF" ]]; then
+  if grep -qE '^exec-once\s*=\s*uwsm-app -- swaybg' "$AUTOSTART_CONF"; then
+    sed -i -E 's|^(exec-once\s*=\s*uwsm-app -- swaybg.*)$|# \1|' "$AUTOSTART_CONF"
+    log "Commented out swaybg exec-once in: $AUTOSTART_CONF"
+  else
+    log "Skip: swaybg exec-once already commented out or not found in $AUTOSTART_CONF"
+  fi
+else
+  log "WARN: $AUTOSTART_CONF not found"
+fi
+
+log "Done."

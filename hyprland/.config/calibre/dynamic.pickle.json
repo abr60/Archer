@@ -1,0 +1,23 @@
+{
+  "notified-version-updates": {
+    "__class__": "set",
+    "__value__": [
+      "9.5",
+      "9.4",
+      "9.3"
+    ]
+  },
+  "sort_history": [
+    [
+      "timestamp",
+      false
+    ],
+    [
+      "timestamp",
+      false
+    ]
+  ],
+  "viewer-background-image": "/home/pseudo/Pictures/Screenshots",
+  "welcome_wizard_device": "default",
+  "welcome_wizard_was_run": true
+}

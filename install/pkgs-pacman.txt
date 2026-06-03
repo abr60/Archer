@@ -1,0 +1,95 @@
+# =============================================================================
+# pkgs-pacman.txt — Official Arch repo packages
+# Installed via: sudo pacman -S --needed --noconfirm
+# Comment out anything you don't want installed yet
+# =============================================================================
+
+# --- Graphics & PDF ---
+pdfarranger
+gifsicle
+
+# --- Audio & Music ---
+cava
+
+# --- Video ---
+chafa
+libcamera
+yt-dlp
+
+# --- System & Development ---
+android-tools
+android-udev
+python-pip
+python-pyqt5
+v4l2loopback-dkms
+hardinfo2
+mission-center
+ncdu
+tree
+yazi
+yq
+libev
+gocryptfs
+wireguard-tools
+openbsd-netcat
+scrcpy
+stow
+bluez-utils
+
+# --- Gaming & Wine ---
+# gamemode
+# gamescope
+# lutris
+# protonup-qt        # install later
+# steam              # install later — takes a while
+# wine               # install later
+# wine-gecko         # install later
+# wine-mono          # install later
+# winetricks
+# lib32-freetype2
+# lib32-gnutls
+# lib32-mesa
+# lib32-vkd3d
+# lib32-vulkan-icd-loader
+# lib32-vulkan-intel
+# vkd3d
+# vulkan-tools
+
+# --- Networking ---
+freerdp
+qbittorrent
+
+# --- Desktop & UI ---
+rofi
+wev
+wtype
+xclip
+xorg-xev
+xorg-xhost
+qt6-virtualkeyboard
+cpio
+
+# --- Terminal Fun & Utilities ---
+cmatrix
+cowsay
+figlet
+lolcat
+opencode
+
+# --- Zsh ---
+zsh
+zsh-completions
+zsh-syntax-highlighting
+zsh-autosuggestions
+
+# --- GTK / Gnome Utils ---s
+gparted
+pavucontrol
+
+# --- Multimedia Support ---
+gst-libav
+gst-plugins-bad
+gst-plugins-ugly
+freerdp
+tlp
+tlp-rdw
