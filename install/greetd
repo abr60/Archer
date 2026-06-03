@@ -14,7 +14,4 @@ echo "==> Setting up greetd..."
 sudo mkdir -p /etc/greetd
 sudo cp "$CONF_SRC" /etc/greetd/config.toml
 
-# Enable service
-sudo systemctl enable greetd
-
-echo "==> Greetd setup complete."
+echo "==> Greetd config installed. Service will be enabled by services.sh"

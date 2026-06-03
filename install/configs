@@ -10,7 +10,7 @@ DOTS_DIR="$HOME/Archer"
 CONFIG_DEST="$HOME/.config"
 PAM_SOURCE="$CONFIG_DEST/hypr/assets/pam.d"
 PAM_DEST="/etc/pam.d"
-BACKUP_DIR="$HOME/.config/dots-backups/$(date +%Y%m%d_%H%M%S)"
+BACKUP_DIR="$HOME/.config/archer-backups/$(date +%Y%m%d_%H%M%S)"
 
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'

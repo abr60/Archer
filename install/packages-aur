@@ -16,8 +16,13 @@ ok()   { echo -e "${GREEN} ✓${NC} $1"; }
 warn() { echo -e "${YELLOW} !${NC} $1"; }
 
 if ! command -v yay &>/dev/null; then
-    warn "yay not found — skipping AUR packages"
-    exit 0
+    echo "==> yay not found — bootstrapping from AUR..."
+    sudo pacman -S --needed --noconfirm git base-devel
+    BUILD_DIR="$(mktemp -d)"
+    git clone https://aur.archlinux.org/yay.git "$BUILD_DIR/yay"
+    (cd "$BUILD_DIR/yay" && makepkg -si --noconfirm)
+    rm -rf "$BUILD_DIR"
+    ok "yay installed"
 fi
 
 if [[ ! -f "$PKGS_FILE" ]]; then

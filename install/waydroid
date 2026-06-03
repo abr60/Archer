@@ -42,7 +42,7 @@ fi
 # ==========================================
 # Zsh function: hide_waydroid
 # ==========================================
-ZSH_FUNCTIONS="$HOME/dots/zshrc/functions"
+ZSH_FUNCTIONS="$HOME/Archer/zshrc/functions"
 FUNC_MARKER="hide_waydroid()"
 
 if [[ -f "$ZSH_FUNCTIONS" ]] && grep -qF "$FUNC_MARKER" "$ZSH_FUNCTIONS"; then
@@ -61,7 +61,7 @@ fi
 # ==========================================
 # Zsh init: call hide_waydroid in background
 # ==========================================
-ZSH_INIT="$HOME/dots/zshrc/init"
+ZSH_INIT="$HOME/Archer/zshrc/init"
 INIT_MARKER="hide_waydroid >/dev/null 2>&1 &!"
 
 if [[ -f "$ZSH_INIT" ]] && grep -qF "$INIT_MARKER" "$ZSH_INIT"; then

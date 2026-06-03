@@ -16,7 +16,4 @@ echo "options thinkpad_acpi fan_control=1" | sudo tee /etc/modprobe.d/thinkpad_a
 # Copy config
 sudo cp "$CONF_SRC" /etc/thinkfan.conf
 
-# Enable and start service
-sudo systemctl enable --now thinkfan
-
-echo "==> Thinkfan setup complete."
+echo "==> Thinkfan config installed. Service will be enabled by services.sh"

@@ -55,7 +55,7 @@ enable_system_service NetworkManager.service
 enable_system_service NetworkManager-dispatcher.service
 enable_system_service bluetooth.service
 enable_system_service greetd.service
-enable_system_service ufw.service
+# enable_system_service ufw.service   # ufw skipped — not in use
 enable_system_service linux-enable-ir-emitter.service
 enable_system_service thinkfan.service
 

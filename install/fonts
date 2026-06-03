@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-DOTS_DIR="$HOME/dots"
+DOTS_DIR="$HOME/Archer"
 FONT_SOURCE="$DOTS_DIR/fonts"
 FONT_DEST="$HOME/.local/share/fonts"
 
@@ -17,17 +17,15 @@ ok()   { echo -e "${GREEN} ✓${NC} $1"; }
 warn() { echo -e "${YELLOW} !${NC} $1"; }
 
 if [[ ! -d "$FONT_SOURCE" ]]; then
-    echo "ERR: $FONT_SOURCE not found."
-    exit 1
+    warn "$FONT_SOURCE not found — skipping custom fonts"
+    exit 0
 fi
 
 mkdir -p "$FONT_DEST"
 
-# Copy fonts, skipping files that already exist at the destination
 echo "  Copying fonts to $FONT_DEST..."
 cp -rn "$FONT_SOURCE"/. "$FONT_DEST/" 2>/dev/null || true
 
-# Update font cache
 if command -v fc-cache &>/dev/null; then
     fc-cache -f && ok "Font cache updated"
 else

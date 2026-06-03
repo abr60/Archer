@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-DOTS_DIR="$HOME/dots"
+DOTS_DIR="$HOME/Archer"
 ZSH_DOTS_DIR="$DOTS_DIR/zshrc"
 ZSHRC_LINK="$HOME/zshrc"
 ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"

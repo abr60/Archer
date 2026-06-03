@@ -8,6 +8,9 @@ awww
 matugen-bin
 quickshell-git
 
+# --- Fonts & Theming ---
+ttf-rubik-vf
+
 # --- Cursor ---
 bibata-cursor-git
 
@@ -34,6 +37,7 @@ subliminal
 python-ffmpeg-python
 
 # --- Spotify ---
+spotify
 spicetify-cli
 spicetify-marketplace-bin
 
@@ -42,6 +46,8 @@ voxtype-bin
 wttr-bin
 
 # --- Terminal Fun ---
+cbonsai
+tty-clock
 cowfortune
 
 # --- Power & Hardware ---

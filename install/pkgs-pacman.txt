@@ -16,7 +16,6 @@ snapper
 zsh
 zsh-autosuggestions
 zsh-completions
-zsh-syntax-highlighting
 starship
 tmux
 stow
@@ -32,6 +31,7 @@ qbittorrent
 
 # --- Security & Authentication ---
 nftables
+ufw
 fprintd
 
 # --- Desktop Environment (Hyprland Ecosystem) ---
@@ -103,13 +103,13 @@ cpio
 zram-generator
 
 # --- Fonts & Theming ---
+inter-font
+ttf-jetbrains-mono-nerd
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
-ttf-jetbrains-mono-nerd
 ttf-freebanglafont
 ttf-indic-otf
-inter-font
 gnu-free-fonts
 nwg-look
 qt5ct
@@ -132,7 +132,6 @@ mpd-mpris
 mpv-mpris
 telegram-desktop
 signal-desktop
-spotify
 yazi
 neovim
 imagemagick
@@ -175,8 +174,6 @@ figlet
 lolcat
 cmatrix
 cowsay
-cbonsai
-tty-clock
 entr
 expac
 lazygit

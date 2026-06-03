@@ -110,11 +110,12 @@ run_step "thinkfan"         "Configuring Thinkfan"             false
 run_step "greetd"           "Setting up greetd"                false
 
 # --- Step 5: Applications ---
+run_step "applications"     "Setting up binaries and desktop apps"  false
 run_step "easyeffects"      "Setting up EasyEffects DSP"       false
 #run_step "waydroid"         "Configuring Waydroid networking"  false
 
 # --- Step 6: Hyprland ---
-run_step "plugins"          "Setting up Hyprland plugins"      false
+# plugins excluded
 
 # --- Step 7: Services & reload ---
 run_step "services"         "Enabling systemd services"        false
