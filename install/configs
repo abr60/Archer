@@ -2,8 +2,6 @@
 # =============================================================================
 # configs.sh — Symlink hyprland/.config → ~/.config (Using Stow)
 #            — Copy pam.d files → /etc/pam.d (with backup)
-#            — Copy wallpaper & recording scripts → ~/.local/share/omarchy/bin (with backup)
-#            — Fix screenshot & screenrecord output directories
 # =============================================================================
 
 set -euo pipefail
@@ -12,8 +10,6 @@ DOTS_DIR="$HOME/dots"
 CONFIG_DEST="$HOME/.config"
 PAM_SOURCE="$CONFIG_DEST/hypr/assets/pam.d"
 PAM_DEST="/etc/pam.d"
-WALLPAPER_SOURCE="$CONFIG_DEST/hypr/scripts/wallpaper and recording"
-OMARCHY_BIN="$HOME/.local/share/omarchy/bin"
 BACKUP_DIR="$HOME/.config/dots-backups/$(date +%Y%m%d_%H%M%S)"
 
 GREEN='\033[0;32m'
@@ -48,11 +44,10 @@ fi
 # ==========================================
 log "Removing existing config dirs that overlap with dots..."
 
-# These are the dirs present in dots/hyprland/.config
 STOW_DIRS=(
-    alacritty btop calibre cava elephant fastfetch ghostty
-    gtk-3.0 gtk-4.0 hypr mako matugen mpv rofi sioyek
-    spicetify swayosd uwsm vlc walker waybar
+    btop calibre cava fastfetch ghostty
+    gtk-3.0 gtk-4.0 hypr matugen mpv rofi sioyek
+    spicetify swayosd uwsm waybar swaync
 )
 
 for dir in "${STOW_DIRS[@]}"; do
@@ -108,59 +103,11 @@ else
     warn "pam.d source not found at $PAM_SOURCE — skipping"
 fi
 
-# ==========================================
-# 4. WALLPAPER & RECORDING SCRIPTS (with backup)
-# ==========================================
-mkdir -p "$OMARCHY_BIN"
-mkdir -p "$BACKUP_DIR/omarchy-bin"
-
-if [[ -n "$(ls -A "$OMARCHY_BIN" 2>/dev/null)" ]]; then
-    log "Backing up existing omarchy bin files → $BACKUP_DIR/omarchy-bin"
-    cp -r "$OMARCHY_BIN"/. "$BACKUP_DIR/omarchy-bin/"
-    ok "Backed up $OMARCHY_BIN"
-fi
-
-if [[ -d "$WALLPAPER_SOURCE" ]]; then
-    log "Copying wallpaper & recording scripts → $OMARCHY_BIN"
-    cp -r "$WALLPAPER_SOURCE"/. "$OMARCHY_BIN/"
-    chmod +x "$OMARCHY_BIN"/*
-    ok "Scripts copied → $OMARCHY_BIN"
-else
-    warn "'wallpaper and recording' folder not found at $WALLPAPER_SOURCE — skipping"
-fi
-
-# ==========================================
-# 5. FIX SCREENSHOT & SCREENRECORD OUTPUT DIRS
-# ==========================================
-log "Updating screenshot & screenrecord output directories..."
-
-SCREENSHOT_BIN="$OMARCHY_BIN/omarchy-cmd-screenshot"
-SCREENRECORD_BIN="$OMARCHY_BIN/omarchy-cmd-screenrecord"
-
-if [[ -f "$SCREENSHOT_BIN" ]]; then
-    sed -i 's|${XDG_PICTURES_DIR:-$HOME/Pictures}/screenshots|$HOME/Pictures/Screenshots|g' "$SCREENSHOT_BIN"
-    ok "Screenshot dir updated → ~/Pictures/Screenshots"
-else
-    warn "omarchy-cmd-screenshot not found — skipping"
-fi
-
-if [[ -f "$SCREENRECORD_BIN" ]]; then
-    sed -i 's|${XDG_VIDEOS_DIR:-$HOME/Videos/Screen Records}|$HOME/Videos/Screen Records|g' "$SCREENRECORD_BIN"
-    ok "Screenrecord dir updated → ~/Videos/Screen Records"
-else
-    warn "omarchy-cmd-screenrecord not found — skipping"
-fi
-
-mkdir -p "$HOME/Pictures/Screenshots" "$HOME/Videos/Screen Records"
-ok "Output directories created"
-
 ok "All backups saved to $BACKUP_DIR"
 
 # ==========================================
-# 6. SYSTEM SETUP
+# 4. CREATE OUTPUT DIRECTORIES
 # ==========================================
-log "Running system setup..."
-
-#xhost +si:localuser:root && ok "xhost updated for root" || warn "xhost failed — skipping"
-
-#sudo linux-enable-ir-emitter configure && ok "IR emitter configured" || warn "linux-enable-ir-emitter configure failed — skipping"
+mkdir -p "$HOME/Pictures/Screenshots"
+mkdir -p "$HOME/Videos/Screen Recordings"
+ok "Output directories created"

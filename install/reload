@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# reload.sh — Reload Hyprland and Waybar
+# reload.sh — Reload Hyprland and QuickShell
 # =============================================================================
 
 set -euo pipefail
@@ -15,13 +15,13 @@ warn() { echo -e "${YELLOW} !${NC} $1"; }
 # Reload Hyprland config
 hyprctl reload 2>/dev/null && ok "Hyprland reloaded" || warn "Hyprland not running"
 
-# Restart Waybar
-if command -v omarchy-restart-waybar &>/dev/null; then
-    omarchy-restart-waybar && ok "Waybar restarted" || warn "omarchy-restart-waybar failed"
-else
-    pkill waybar 2>/dev/null || true
+# Restart QuickShell
+if command -v quickshell &>/dev/null; then
+    pkill quickshell 2>/dev/null || true
     sleep 0.5
-    waybar &disown 2>/dev/null && ok "Waybar restarted" || warn "Waybar failed to start"
+    quickshell &disown 2>/dev/null && ok "QuickShell restarted" || warn "QuickShell failed to start"
+else
+    warn "QuickShell not found — skipping"
 fi
 
 echo -e "\n${GREEN}UI Components Refresh Complete${NC}"
