@@ -26,7 +26,6 @@ github-cli
 # --- Network ---
 networkmanager
 iwd
-wireplumber
 openbsd-netcat
 bluez-utils
 qbittorrent

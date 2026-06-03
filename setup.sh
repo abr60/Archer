@@ -120,7 +120,7 @@ run_step "zsh"              "Setting up Zsh"                   false
 # --- Step 3: Configs & dotfiles ---
 run_step "configs"          "Copying config files"             true
 run_step "fonts"            "Installing fonts"                 false
-run_step "themes"           "Applying themes"                  false
+#run_step "themes"           "Applying themes"                  false
 
 # --- Step 4: Hardware & system ---
 run_step "thinkfan"         "Configuring Thinkfan"             false
