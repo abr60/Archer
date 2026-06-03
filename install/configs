@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-DOTS_DIR="$HOME/dots"
+DOTS_DIR="$HOME/Archer"
 CONFIG_DEST="$HOME/.config"
 PAM_SOURCE="$CONFIG_DEST/hypr/assets/pam.d"
 PAM_DEST="/etc/pam.d"
@@ -45,9 +45,21 @@ fi
 log "Removing existing config dirs that overlap with dots..."
 
 STOW_DIRS=(
-    btop calibre cava fastfetch ghostty
-    gtk-3.0 gtk-4.0 hypr matugen mpv rofi sioyek
-    spicetify swayosd uwsm waybar swaync
+    btop
+    calibre
+    cava
+    fastfetch
+    ghostty
+    hypr
+    matugen
+    mpv
+    rmpc
+    rofi
+    sioyek
+    spicetify
+    swaync
+    swayosd
+    uwsm
 )
 
 for dir in "${STOW_DIRS[@]}"; do
