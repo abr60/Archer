@@ -72,7 +72,7 @@ echo ""
 gum style --foreground 214 \
     "• OVERWRITE files in ~/.config and ~/.local" \
     "• INSTALL packages via pacman and yay" \
-    "• SETUP binaries (batty) and desktop apps" \
+    "• SETUP binaries and desktop apps" \
     "• COPY fonts and themes" \
     "• CHANGE your default shell to Zsh" \
     "• INSTALL Hyprland plugins via hyprpm"
@@ -110,21 +110,32 @@ run_step() {
     ok "$label done"
 }
 
-run_step "configs"          "Copying config files"         true
-run_step "fonts"            "Installing fonts"             false
-run_step "themes"           "Applying themes"              false
-run_step "omarchy-inject"   "Injecting Omarchy overrides"  false
-run_step "applications"     "Installing applications & icons"  false
-run_step "zsh"              "Setting up Zsh"               false
-run_step "thinkfan"          "Configuring Thinkfan"         false
-run_step "greetd"           "Setting up greetd"            false
-run_step "easyeffects"     "Setting up EasyEffects DSP"    false
+# --- Step 1: Packages first (everything else depends on these) ---
+run_step "packages-pacman"  "Installing pacman packages"       true
+run_step "packages-aur"     "Installing AUR packages"          true
+
+# --- Step 2: Shell (zsh must be set up before configs that rely on it) ---
+run_step "zsh"              "Setting up Zsh"                   false
+
+# --- Step 3: Configs & dotfiles ---
+run_step "configs"          "Copying config files"             true
+run_step "fonts"            "Installing fonts"                 false
+run_step "themes"           "Applying themes"                  false
+
+# --- Step 4: Hardware & system ---
+run_step "thinkfan"         "Configuring Thinkfan"             false
+run_step "greetd"           "Setting up greetd"                false
+
+# --- Step 5: Applications ---
+run_step "easyeffects"      "Setting up EasyEffects DSP"       false
 run_step "waydroid"         "Configuring Waydroid networking"  false
-run_step "plugins"          "Setting up Hyprland plugins"  false
-run_step "services"         "Enabling systemd services"    false
-run_step "reload"           "Reloading environment"        false
-run_step "packages-pacman"  "Installing pacman packages"   false
-run_step "packages-aur"     "Installing AUR packages"      false
+
+# --- Step 6: Hyprland ---
+run_step "plugins"          "Setting up Hyprland plugins"      false
+
+# --- Step 7: Services & reload ---
+run_step "services"         "Enabling systemd services"        false
+run_step "reload"           "Reloading environment"            false
 
 # ==========================================
 # 6. DONE & REBOOT

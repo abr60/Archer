@@ -1,61 +1,48 @@
 # =============================================================================
 # pkgs-aur.txt — AUR packages
 # Installed via: yay -S --needed --noconfirm
-# Comment out anything you don't want installed yet
 # =============================================================================
 
-# --- Graphics & PDF ---
-masterpdfeditor-free
-# zotero             # install later
-
-# --- Audio & Music ---
-# moosync
-#swingmusic-bin
-
-# --- Video ---
-mpv-autosub-git
-mpv-thumbfast-git
-mpv-uosc-git
-mpv-mpris
-mpvpaper
-subliminal
-
-# --- Desktop & UI ---
-bibata-cursor-git
+# --- Wallpaper & Theming ---
+awww
 matugen-bin
-spicetify-marketplace-bin
-waybar-module-pacman-updates-git
-tabbed
 
-# --- Browsers & Social ---
+# --- Cursor ---
+bibata-cursor-git
+
+# --- Security & Authentication ---
+howdy-git
+linux-enable-ir-emitter-bin
+
+# --- Browser ---
 brave-bin
 google-chrome
+
+# --- Editor ---
 visual-studio-code-bin
 
+# --- PDF & Documents ---
+sioyek
+# masterpdfeditor-free
+
+# --- Media ---
+mpv-uosc-git
+mpv-thumbfast-git
+mpv-autosub-git
+subliminal
+python-ffmpeg-python
+
+# --- Spotify ---
+spicetify-cli
+spicetify-marketplace-bin
+
 # --- System & Utils ---
-howdy-git
-payload-dumper-go-bin
-qimgv-git
 voxtype-bin
-wifitui
 wttr-bin
-wttrbar
-awww
-# opencode
-
-# --- Waydroid (heavy — install later) ---
-# waydroid
-# waydroid-helper
-# waydroid-script-git
-
-# --- Fonts ---
-# maple-mono-nf-cn-unhinted
 
 # --- Terminal Fun ---
-cbonsai
 cowfortune
 
-# -- extra ---
-sioyek
-python-ffmpeg-python
-linux-enable-ir-emitter
+# --- Power & Hardware ---
+thinkfan
+thinkfan-cli

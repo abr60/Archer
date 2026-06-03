@@ -1,95 +1,182 @@
 # =============================================================================
 # pkgs-pacman.txt — Official Arch repo packages
 # Installed via: sudo pacman -S --needed --noconfirm
-# Comment out anything you don't want installed yet
 # =============================================================================
 
-# --- Graphics & PDF ---
-pdfarranger
-gifsicle
-
-# --- Audio & Music ---
-cava
-
-# --- Video ---
-chafa
-libcamera
-yt-dlp
-
-# --- System & Development ---
-android-tools
-android-udev
-python-pip
-python-pyqt5
-v4l2loopback-dkms
-hardinfo2
-mission-center
-ncdu
-tree
-yazi
-yq
-libev
-gocryptfs
-wireguard-tools
-openbsd-netcat
-scrcpy
-stow
-bluez-utils
-
-# --- Gaming & Wine ---
-# gamemode
-# gamescope
-# lutris
-# protonup-qt        # install later
-# steam              # install later — takes a while
-# wine               # install later
-# wine-gecko         # install later
-# wine-mono          # install later
-# winetricks
-# lib32-freetype2
-# lib32-gnutls
-# lib32-mesa
-# lib32-vkd3d
-# lib32-vulkan-icd-loader
-# lib32-vulkan-intel
-# vkd3d
-# vulkan-tools
-
-# --- Networking ---
-freerdp
-qbittorrent
-
-# --- Desktop & UI ---
-rofi
-wev
-wtype
-xclip
-xorg-xev
-xorg-xhost
-qt6-virtualkeyboard
-cpio
-
-# --- Terminal Fun & Utilities ---
-cmatrix
-cowsay
-figlet
-lolcat
-opencode
-
-# --- Zsh ---
+# --- Core System ---
+base
+base-devel
+linux
+linux-firmware
+intel-ucode
+limine
+limine-mkinitcpio-hook
+btrfs-progs
+snapper
 zsh
+zsh-autosuggestions
 zsh-completions
 zsh-syntax-highlighting
-zsh-autosuggestions
+starship
+tmux
+stow
+git
+github-cli
 
-# --- GTK / Gnome Utils ---s
-gparted
+# --- Network ---
+networkmanager
+iwd
+wireplumber
+openbsd-netcat
+bluez-utils
+qbittorrent
+
+# --- Security & Authentication ---
+nftables
+fprintd
+
+# --- Desktop Environment (Hyprland Ecosystem) ---
+hyprland
+uwsm
+hypridle
+hyprlock
+hyprcursor
+hyprpicker
+hyprsunset
+xdg-desktop-portal-hyprland
+xdg-desktop-portal-gtk
+swaync
+swayosd
+rofi
+greetd
+greetd-tuigreet
+brightnessctl
+grim
+slurp
+satty
+wev
+wtype
+
+# --- Audio ---
+pipewire
+pipewire-alsa
+pipewire-pulse
+pipewire-jack
+wireplumber
+easyeffects
+lsp-plugins
+zam-plugins-lv2
+pamixer
 pavucontrol
+playerctl
+cava
 
-# --- Multimedia Support ---
+# --- Multimedia Codecs ---
 gst-libav
 gst-plugins-bad
 gst-plugins-ugly
-freerdp
+
+# --- System Utilities ---
+btop
+baobab
+fd
+fzf
+zoxide
+fcitx5
+fcitx5-gtk
 tlp
 tlp-rdw
+thermald
+lm_sensors
+kernel-modules-hook
+pacman-contrib
+man-db
+less
+bat
+eza
+tree
+ncdu
+dust
+ripgrep
+jq
+yq
+cpio
+zram-generator
+
+# --- Fonts & Theming ---
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+ttf-jetbrains-mono-nerd
+ttf-freebanglafont
+ttf-indic-otf
+inter-font
+firacode
+gnu-free-fonts
+nwg-look
+qt5ct
+qt6ct
+kvantum
+kvantum-qt5
+
+# --- Applications ---
+ghostty
+nautilus
+gvfs-mtp
+gvfs-smb
+obsidian
+typora
+calibre
+mpv
+mpd
+mpc
+rmpc
+mpd-mpris
+mpv-mpris
+obs-studio
+telegram-desktop
+signal-desktop
+spotify
+yazi
+neovim
+libreoffice-fresh
+imagemagick
+ffmpegthumbnailer
+imv
+chafa
+libcamera
+
+# --- PDF & Documents ---
+pdfarranger
+gifsicle
+
+# --- Android ---
+android-tools
+android-udev
+scrcpy
+
+# --- Wayland Utilities ---
+wl-clipboard
+cliphist
+xdg-terminal-exec
+xdg-user-dirs
+xdg-user-dirs-gtk
+
+# --- Media Download ---
+yt-dlp
+python-pip
+
+# --- CLI Utilities ---
+gum
+translate-shell
+tldr
+fastfetch
+figlet
+lolcat
+cmatrix
+cowsay
+cbonsai
+tty-clock
+entr
+expac
+lazygit
