@@ -45,7 +45,7 @@ hyprsunset
 xdg-desktop-portal-hyprland
 xdg-desktop-portal-gtk
 swaync
-#swayosd
+swayosd
 rofi
 greetd
 greetd-tuigreet
@@ -110,7 +110,6 @@ ttf-jetbrains-mono-nerd
 ttf-freebanglafont
 ttf-indic-otf
 inter-font
-firacode
 gnu-free-fonts
 nwg-look
 qt5ct
@@ -125,29 +124,31 @@ gvfs-mtp
 gvfs-smb
 obsidian
 typora
-calibre
 mpv
 mpd
 mpc
 rmpc
 mpd-mpris
 mpv-mpris
-obs-studio
 telegram-desktop
 signal-desktop
 spotify
 yazi
 neovim
-libreoffice-fresh
 imagemagick
 ffmpegthumbnailer
 imv
 chafa
 libcamera
-
-# --- PDF & Documents ---
+file-roller
 pdfarranger
 gifsicle
+
+# --- Heavy — install later ---
+# calibre
+# obs-studio
+# libreoffice-fresh
+# waydroid
 
 # --- Android ---
 android-tools

@@ -45,5 +45,10 @@ wttr-bin
 cowfortune
 
 # --- Power & Hardware ---
-thinkfan
 thinkfan-cli
+thinkfan
+
+
+# --- Heavy — install later ---
+# waydroid
+# waydroid-helper
