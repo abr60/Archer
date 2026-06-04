@@ -148,6 +148,14 @@ run_step "easyeffects"      "Setting up EasyEffects DSP"       false
 run_step "services"         "Enabling systemd services"        false
 run_step "reload"           "Reloading environment"            false
 
+# --- Step 7: Wallpapers (optional) ---
+echo ""
+if gum confirm "Clone Wallpapers repository to ~/Wallpapers?"; then
+    run_step "wallpapers" "Cloning Wallpapers" false
+else
+    msg "Wallpapers skipped."
+fi
+
 # ==========================================
 # 6. DONE & REBOOT
 # ==========================================
