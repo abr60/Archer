@@ -117,6 +117,13 @@ run_step() {
     ok "$label done"
 }
 
+# --- Step 0: Link Archer into ~/.local/share/Archer ---
+msg "Linking Archer to ~/.local/share/Archer..."
+mkdir -p "$HOME/.local/share"
+ln -snf "$DOTS_DIR" "$HOME/.local/share/Archer"
+mkdir -p "$HOME/.local/state/Archer/toggles/hypr"
+ok "Archer linked to ~/.local/share/Archer"
+
 # --- Step 1: Packages first (everything else depends on these) ---
 run_step "packages-pacman"  "Installing pacman packages"       true
 run_step "packages-aur"     "Installing AUR packages"          true

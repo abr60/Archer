@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # =============================================================================
-# configs.sh — Symlink hyprland/.config → ~/.config (Using Stow)
-#            — Copy pam.d files → /etc/pam.d (with backup)
+# configs — Symlink config/ → ~/.config (Using Stow)
+#         — Copy pam.d files → /etc/pam.d (with backup)
 # =============================================================================
 
 set -euo pipefail
 
-DOTS_DIR="$HOME/Archer"
+DOTS_DIR="$HOME/.local/share/Archer"
 CONFIG_DEST="$HOME/.config"
 PAM_SOURCE="$CONFIG_DEST/hypr/assets/pam.d"
 PAM_DEST="/etc/pam.d"
@@ -34,8 +34,8 @@ else
     ok "stow already installed"
 fi
 
-if [[ ! -d "$DOTS_DIR/hyprland" ]]; then
-    err "$DOTS_DIR/hyprland not found. Aborting."
+if [[ ! -d "$DOTS_DIR/config" ]]; then
+    err "$DOTS_DIR/config not found. Aborting."
     exit 1
 fi
 
@@ -80,12 +80,12 @@ if [[ -e "$CONFIG_DEST/starship.toml" ]]; then
 fi
 
 # ==========================================
-# 2. STOW HYPRLAND
+# 2. STOW CONFIG
 # ==========================================
-log "Running stow to symlink hyprland/.config → ~/.config..."
+log "Running stow to symlink config/ → ~/.config..."
 cd "$DOTS_DIR"
-stow hyprland
-ok "Stow complete — ~/.config entries are now symlinked from $DOTS_DIR/hyprland"
+stow --target="$HOME/.config" config
+ok "Stow complete — ~/.config entries are now symlinked from $DOTS_DIR/config"
 
 # Make all scripts executable
 log "Ensuring scripts are executable..."
