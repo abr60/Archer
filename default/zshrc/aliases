@@ -1,0 +1,34 @@
+# --- ALIASES ---
+alias c='clear'
+alias pf='fastfetch'
+alias ls='eza -lh --group-directories-first --icons=auto'
+alias ll='eza -al --group-directories-first --icons=always'
+alias lt='eza -a --tree --level=2 --icons=always'
+alias cd="zd"
+alias ff='sudo fd -HI -a --exclude .snapshots'
+alias is='fzf --preview="bat --style=numbers --color=always {}"'
+alias nis='nvim $(fzf --preview="bat --color=always {}")'
+alias hyprclock='~/.config/hypr/scripts/hyprclock'
+alias batt='sudo ~/.cargo/bin/batty --tui'
+alias ridle='killall hypridle && hypridle &'
+
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Sync Shortcuts
+alias walls='cd ~/Wallpapers && git pull --rebase --autostash && git add . && git commit -m "sync: $(date +%Y-%m-%d\ %H:%M)" || true && git push'
+#alias fmsync='cd ~/.config/omarchy/themes/full-moon && git add . && git commit -m "theme update: $(date)" && git push && cd -'
+alias way='cd ~/waybar && git add . && git commit -m "sync: $(date)" && git push && cd -'
+
+dots() {
+    local msg="${1:-sync: $(date)}"
+    cd ~/dots && \
+    git add . && \
+    git commit -m "$msg" && \
+    git push && \
+    cd -
+}
+
+alias assets='cd ~/Assets && git add . && git commit -m "sync: $(date +%Y-%m-%d\ %H:%M)" || true && git push && cd -'

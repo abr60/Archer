@@ -65,7 +65,30 @@ echo ""
 gum confirm "Understood. Proceed?" || { msg "Aborted safely."; exit 0; }
 
 # ==========================================
-# 4. RUN SUB-SCRIPTS
+# 4. INSTALL MODE SELECTION
+# ==========================================
+echo ""
+gum style \
+    --foreground 117 \
+    --border-foreground 117 \
+    --border rounded \
+    --align center \
+    --width 50 \
+    --padding "0 1" \
+    "SELECT INSTALL MODE"
+
+echo ""
+gum style --foreground 245 \
+    "  minimal  — core packages only, installs fast" \
+    "  complete — everything including heavy/optional apps"
+
+echo ""
+export INSTALL_MODE
+INSTALL_MODE=$(gum choose --cursor "▶ " --selected.foreground 82 "minimal" "complete")
+ok "Mode selected: $INSTALL_MODE"
+
+# ==========================================
+# 5. RUN SUB-SCRIPTS
 # ==========================================
 INSTALL_DIR="$DOTS_DIR/install"
 START_TIME=$SECONDS
@@ -114,15 +137,12 @@ run_step "applications"     "Setting up binaries and desktop apps"  false
 run_step "easyeffects"      "Setting up EasyEffects DSP"       false
 #run_step "waydroid"         "Configuring Waydroid networking"  false
 
-# --- Step 6: Hyprland ---
-# plugins excluded
-
-# --- Step 7: Services & reload ---
+# --- Step 6: Services & reload ---
 run_step "services"         "Enabling systemd services"        false
 run_step "reload"           "Reloading environment"            false
 
 # ==========================================
-# 5. DONE & REBOOT
+# 6. DONE & REBOOT
 # ==========================================
 DURATION=$(( SECONDS - START_TIME ))
 echo ""
@@ -130,9 +150,17 @@ gum style \
     --foreground 82 --border-foreground 82 --border rounded \
     --align center --width 50 --padding "1 2" \
     "✓ ALL DONE!" \
-    "Finished in ${DURATION}s"
+    "Mode: $INSTALL_MODE — Finished in ${DURATION}s"
 
 echo ""
+if [[ "$INSTALL_MODE" == "minimal" ]]; then
+    gum style --foreground 245 \
+        "  To install the remaining packages later, run:" \
+        "  INSTALL_MODE=complete bash ~/Archer/install/packages-pacman" \
+        "  INSTALL_MODE=complete bash ~/Archer/install/packages-aur"
+    echo ""
+fi
+
 if gum confirm "Reboot now?"; then
     msg "Rebooting..."
     sudo reboot

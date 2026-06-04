@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 # =============================================================================
-# packages-pacman.sh — Install official repo packages
+# packages-pacman — Install official repo packages
+# Reads INSTALL_MODE from environment: "minimal" or "complete"
 # =============================================================================
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PKGS_FILE="$SCRIPT_DIR/pkgs-pacman.txt"
+PKGS_HEAVY="$SCRIPT_DIR/pkgs-pacman-heavy.txt"
+INSTALL_MODE="${INSTALL_MODE:-minimal}"
 
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -15,30 +18,40 @@ NC='\033[0m'
 ok()   { echo -e "${GREEN} ✓${NC} $1"; }
 warn() { echo -e "${YELLOW} !${NC} $1"; }
 
-if [[ ! -f "$PKGS_FILE" ]]; then
-    echo "ERR: $PKGS_FILE not found."
-    exit 1
+install_from_file() {
+    local file="$1"
+
+    if [[ ! -f "$file" ]]; then
+        warn "$file not found — skipping"
+        return
+    fi
+
+    mapfile -t PKGS < <(grep -v '^\s*#' "$file" | grep -v '^\s*$' | awk '{print $1}')
+
+    if [[ ${#PKGS[@]} -eq 0 ]]; then
+        warn "No packages found in $file"
+        return
+    fi
+
+    TO_INSTALL=()
+    for pkg in "${PKGS[@]}"; do
+        pacman -Q "$pkg" &>/dev/null || TO_INSTALL+=("$pkg")
+    done
+
+    if [[ ${#TO_INSTALL[@]} -eq 0 ]]; then
+        ok "All packages from $(basename "$file") already installed"
+        return
+    fi
+
+    echo "  Installing ${#TO_INSTALL[@]} packages from $(basename "$file")..."
+    sudo pacman -S --needed --noconfirm "${TO_INSTALL[@]}"
+    ok "$(basename "$file") done"
+}
+
+install_from_file "$PKGS_FILE"
+
+if [[ "$INSTALL_MODE" == "complete" ]]; then
+    install_from_file "$PKGS_HEAVY"
 fi
 
-# Parse packages — strip comments and blank lines
-mapfile -t PKGS < <(grep -v '^\s*#' "$PKGS_FILE" | grep -v '^\s*$' | awk '{print $1}')
-
-if [[ ${#PKGS[@]} -eq 0 ]]; then
-    warn "No packages found in $PKGS_FILE"
-    exit 0
-fi
-
-# Filter out already-installed packages
-TO_INSTALL=()
-for pkg in "${PKGS[@]}"; do
-    pacman -Q "$pkg" &>/dev/null || TO_INSTALL+=("$pkg")
-done
-
-if [[ ${#TO_INSTALL[@]} -eq 0 ]]; then
-    ok "All pacman packages already installed"
-    exit 0
-fi
-
-echo "  Installing ${#TO_INSTALL[@]} packages via pacman..."
-sudo pacman -S --needed --noconfirm "${TO_INSTALL[@]}"
-ok "Pacman packages installed"
+ok "Pacman packages done"

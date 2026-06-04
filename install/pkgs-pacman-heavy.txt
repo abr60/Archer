@@ -1,0 +1,26 @@
+# =============================================================================
+# pkgs-pacman-heavy.txt — Official Arch repo packages (complete only)
+# Installed via: sudo pacman -S --needed --noconfirm
+# =============================================================================
+
+# --- Audio DSP ---
+easyeffects
+lsp-plugins
+zam-plugins-lv2
+
+# --- Applications ---
+obsidian
+telegram-desktop
+signal-desktop
+qbittorrent
+gifsicle
+
+# --- Hardware ---
+libcamera
+
+# --- Android ---
+scrcpy
+
+# --- Heavy — install manually ---
+# calibre
+# obs-studio

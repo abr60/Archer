@@ -1,0 +1,27 @@
+# =============================================================================
+# pkgs-aur-heavy.txt — AUR packages (complete only)
+# Installed via: yay -S --needed --noconfirm
+# =============================================================================
+
+# --- Browser ---
+google-chrome
+
+# --- Editor ---
+visual-studio-code-bin
+typora
+
+# --- Media ---
+mpv-uosc-git
+mpv-thumbfast-git
+mpv-autosub-git
+subliminal
+python-ffmpeg-python
+
+# --- Spotify ---
+spotify
+spicetify-cli
+spicetify-marketplace-bin
+
+# --- Heavy — install manually ---
+# waydroid
+# waydroid-helper

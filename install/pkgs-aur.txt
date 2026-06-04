@@ -1,5 +1,5 @@
 # =============================================================================
-# pkgs-aur.txt — AUR packages
+# pkgs-aur.txt — AUR packages (minimal)
 # Installed via: yay -S --needed --noconfirm
 # =============================================================================
 
@@ -8,7 +8,7 @@ awww
 matugen-bin
 quickshell-git
 
-# --- Fonts & Theming ---
+# --- Fonts ---
 ttf-rubik-vf
 
 # --- Cursor ---
@@ -20,30 +20,18 @@ linux-enable-ir-emitter-bin
 
 # --- Browser ---
 brave-bin
-google-chrome
 
 # --- Editor ---
-visual-studio-code-bin
+gedit
 
 # --- PDF & Documents ---
 sioyek
-# masterpdfeditor-free
 
 # --- Media ---
-mpv-uosc-git
-mpv-thumbfast-git
-mpv-autosub-git
-subliminal
-python-ffmpeg-python
+rmpc
 
-# --- Spotify ---
-spotify
-spicetify-cli
-spicetify-marketplace-bin
-
-# --- System & Utils ---
-voxtype-bin
-wttr-bin
+# --- System ---
+limine-mkinitcpio-hook
 
 # --- Terminal Fun ---
 cbonsai
@@ -53,8 +41,3 @@ cowfortune
 # --- Power & Hardware ---
 thinkfan-cli
 thinkfan
-
-
-# --- Heavy — install later ---
-# waydroid
-# waydroid-helper

@@ -1,37 +1,24 @@
 # =============================================================================
-# pkgs-pacman.txt — Official Arch repo packages
+# pkgs-pacman.txt — Official Arch repo packages (minimal)
 # Installed via: sudo pacman -S --needed --noconfirm
 # =============================================================================
 
 # --- Core System ---
-base
-base-devel
-linux
-linux-firmware
-intel-ucode
-limine
-limine-mkinitcpio-hook
-btrfs-progs
-snapper
 zsh
 zsh-autosuggestions
 zsh-completions
 starship
 tmux
 stow
-git
 github-cli
 
 # --- Network ---
 networkmanager
 iwd
 openbsd-netcat
-bluez-utils
-qbittorrent
+ufw
 
 # --- Security & Authentication ---
-nftables
-ufw
 fprintd
 
 # --- Desktop Environment (Hyprland Ecosystem) ---
@@ -57,14 +44,7 @@ wev
 wtype
 
 # --- Audio ---
-pipewire
-pipewire-alsa
-pipewire-pulse
-pipewire-jack
 wireplumber
-easyeffects
-lsp-plugins
-zam-plugins-lv2
 pamixer
 pavucontrol
 playerctl
@@ -100,17 +80,15 @@ ripgrep
 jq
 yq
 cpio
-zram-generator
 
 # --- Fonts & Theming ---
 inter-font
 ttf-jetbrains-mono-nerd
-noto-fonts
-noto-fonts-cjk
 noto-fonts-emoji
-ttf-freebanglafont
-ttf-indic-otf
-gnu-free-fonts
+# noto-fonts
+# gnu-free-fonts
+
+# --- Theming ---
 nwg-look
 qt5ct
 qt6ct
@@ -122,44 +100,28 @@ ghostty
 nautilus
 gvfs-mtp
 gvfs-smb
-obsidian
-typora
 mpv
 mpd
 mpc
-rmpc
 mpd-mpris
 mpv-mpris
-telegram-desktop
-signal-desktop
 yazi
-neovim
 imagemagick
 ffmpegthumbnailer
 imv
 chafa
-libcamera
-file-roller
 pdfarranger
-gifsicle
-
-# --- Heavy — install later ---
-# calibre
-# obs-studio
-# libreoffice-fresh
-# waydroid
 
 # --- Android ---
 android-tools
 android-udev
-scrcpy
 
 # --- Wayland Utilities ---
 wl-clipboard
 cliphist
-xdg-terminal-exec
 xdg-user-dirs
 xdg-user-dirs-gtk
+xdg-terminal-exe
 
 # --- Media Download ---
 yt-dlp
