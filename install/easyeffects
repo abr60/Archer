@@ -8,7 +8,7 @@
 
 set -euo pipefail
 
-DOTS_DIR="$HOME/Archer"
+DOTS_DIR="$HOME/.local/share/Archer"
 PRESET_SOURCE="$DOTS_DIR/system/easyeffects/presets"
 IRS_DEST="$HOME/.local/share/easyeffects/irs"
 PRESET_DEST="$HOME/.local/share/easyeffects/output"

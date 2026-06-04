@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-DOTS_DIR="$HOME/Archer"
+DOTS_DIR="$HOME/.local/share/Archer"
 BIN_SOURCE="$DOTS_DIR/bin/batty"
 BIN_DEST="$HOME/.cargo/bin"
 APPS_SRC="$DOTS_DIR/applications"
