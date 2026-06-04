@@ -6,7 +6,7 @@
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTS_DIR="$(dirname "$SCRIPT_DIR")"
-CONF_SRC="$DOTS_DIR/thinkfan/thinkfan.conf"
+CONF_SRC="$DOTS_DIR/system/thinkfan/thinkfan.conf"
 
 echo "==> Setting up thinkfan..."
 

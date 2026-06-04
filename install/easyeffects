@@ -9,7 +9,7 @@
 set -euo pipefail
 
 DOTS_DIR="$HOME/Archer"
-PRESET_SOURCE="$DOTS_DIR/easyeffects/presets"
+PRESET_SOURCE="$DOTS_DIR/system/easyeffects/presets"
 IRS_DEST="$HOME/.local/share/easyeffects/irs"
 PRESET_DEST="$HOME/.local/share/easyeffects/output"
 AUTOSTART_CONF="$HOME/.config/hypr/autostart.conf"

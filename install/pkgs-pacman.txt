@@ -32,6 +32,7 @@ hyprsunset
 xdg-desktop-portal-hyprland
 xdg-desktop-portal-gtk
 swaync
+waybar
 swayosd
 rofi
 greetd
