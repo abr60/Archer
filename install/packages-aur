@@ -37,11 +37,13 @@ TOTAL=0
 INSTALLED=0
 SKIPPED=0
 declare -a AUR_FAILED=()
-declare -a AUR_REDIRECTED=()        # AUR pkg that fell back to pacman
-declare -a PACMAN_FALLBACK_OK=()    # pacman-queued pkgs installed via yay
-declare -a PACMAN_FALLBACK_FAIL=()  # pacman-queued pkgs that failed yay too
+declare -a AUR_REDIRECTED=()
+declare -a PACMAN_FALLBACK_OK=()
+declare -a PACMAN_FALLBACK_FAIL=()
+declare -a RETRY_LOG=()
 
 mkdir -p "$REPORT_DIR"
+SECTION_START=$SECONDS
 
 # --- Bootstrap yay ---
 bootstrap_yay() {
@@ -68,7 +70,6 @@ bootstrap_yay() {
 
     rm -rf "$BUILD_DIR"
 
-    # Verify yay is now available
     if ! command -v yay &>/dev/null; then
         err "yay installation appeared to succeed but yay command not found"
         exit 1
@@ -91,21 +92,20 @@ try_yay() {
         if yay -S --needed --noconfirm "$pkg" 2>/dev/null; then
             return 0
         fi
-        # Check if package exists in AUR at all
         if yay -Si "$pkg" &>/dev/null; then
-            # Exists but failed — likely network
             warn "Network issue on $pkg (attempt $attempt/$max) — retrying in 5s..."
+            RETRY_LOG+=("aur|$pkg|attempt $attempt failed — network issue")
             sleep 5
             (( attempt++ ))
         else
-            # Not in AUR
             return 1
         fi
     done
+    RETRY_LOG+=("aur|$pkg|all $max attempts failed")
     return 1
 }
 
-# --- Retry-aware pacman install (for AUR fallback) ---
+# --- Retry-aware pacman fallback ---
 try_pacman() {
     local pkg="$1"
     local attempt=1
@@ -117,12 +117,14 @@ try_pacman() {
         fi
         if sudo pacman -Si "$pkg" &>/dev/null; then
             warn "Network issue on $pkg (attempt $attempt/$max) — retrying in 5s..."
+            RETRY_LOG+=("pacman-fallback|$pkg|attempt $attempt failed — network issue")
             sleep 5
             (( attempt++ ))
         else
             return 1
         fi
     done
+    RETRY_LOG+=("pacman-fallback|$pkg|all $max attempts failed")
     return 1
 }
 
@@ -152,19 +154,16 @@ install_from_file() {
         (( current++ ))
         printf "${BLUE}[%d/%d]${NC} %s ... " "$current" "$count" "$pkg"
 
-        # Already installed
         if pacman -Q "$pkg" &>/dev/null; then
             echo -e "${CYAN}already installed${NC}"
             (( SKIPPED++ ))
             continue
         fi
 
-        # Try yay first
         if try_yay "$pkg"; then
             echo -e "${GREEN}installed via AUR${NC}"
             (( INSTALLED++ ))
         else
-            # Not in AUR — try pacman fallback
             printf "${YELLOW}not in AUR → trying pacman ...${NC} "
             if try_pacman "$pkg"; then
                 echo -e "${GREEN}installed via pacman fallback${NC}"
@@ -216,12 +215,15 @@ if [[ -f "$FALLBACK_FILE" ]] && [[ -s "$FALLBACK_FILE" ]]; then
     rm -f "$FALLBACK_FILE"
 fi
 
-# --- Summary ---
+SECTION_DURATION=$(( SECONDS - SECTION_START ))
+
+# --- Terminal summary ---
 section "AUR Summary"
-echo -e "  ${GREEN}Installed : $INSTALLED${NC}"
-echo -e "  ${CYAN}Skipped   : $SKIPPED${NC} (already present)"
-echo -e "  ${YELLOW}Redirected: ${#AUR_REDIRECTED[@]}${NC} (AUR→pacman fallback used)"
-echo -e "  ${RED}Failed    : ${#AUR_FAILED[@]}${NC} (not found anywhere)"
+echo -e "  ${GREEN}Installed  : $INSTALLED${NC}"
+echo -e "  ${CYAN}Skipped    : $SKIPPED${NC} (already present)"
+echo -e "  ${YELLOW}Redirected : ${#AUR_REDIRECTED[@]}${NC} (AUR→pacman fallback used)"
+echo -e "  ${RED}Failed     : ${#AUR_FAILED[@]}${NC} (not found anywhere)"
+echo -e "  ${BLUE}Duration   : ${SECTION_DURATION}s${NC}"
 
 # --- Write full report ---
 {
@@ -229,10 +231,20 @@ echo -e "  ${RED}Failed    : ${#AUR_FAILED[@]}${NC} (not found anywhere)"
     echo "=============================================="
     echo " AUR INSTALLATION"
     echo "=============================================="
+    echo " Duration  : ${SECTION_DURATION}s"
     echo " Installed : $INSTALLED"
     echo " Skipped   : $SKIPPED (already present)"
     echo " Redirected: ${#AUR_REDIRECTED[@]} (AUR→pacman fallback used)"
     echo " Failed    : ${#AUR_FAILED[@]} (not found anywhere)"
+
+    if [[ ${#RETRY_LOG[@]} -gt 0 ]]; then
+        echo ""
+        echo " Retry Attempts:"
+        for entry in "${RETRY_LOG[@]}"; do
+            IFS='|' read -r source pkg reason <<< "$entry"
+            echo "   ~ [$source] $pkg : $reason"
+        done
+    fi
 
     echo ""
     echo "=============================================="
@@ -240,18 +252,20 @@ echo -e "  ${RED}Failed    : ${#AUR_FAILED[@]}${NC} (not found anywhere)"
     echo "=============================================="
 
     if [[ ${#PACMAN_FALLBACK_OK[@]} -gt 0 ]]; then
-        echo " Pacman → AUR (was in pkgs-pacman.txt, found in AUR):"
+        echo " Pacman → AUR (listed in pkgs-pacman.txt, found in AUR):"
         for pkg in "${PACMAN_FALLBACK_OK[@]}"; do
-            echo "   + $pkg"
+            echo "   + $pkg  ← fix: move to pkgs-aur.txt"
         done
     else
         echo " Pacman → AUR : none"
     fi
 
+    echo ""
+
     if [[ ${#AUR_REDIRECTED[@]} -gt 0 ]]; then
-        echo " AUR → Pacman (was in pkgs-aur.txt, found in pacman):"
+        echo " AUR → Pacman (listed in pkgs-aur.txt, found in pacman):"
         for pkg in "${AUR_REDIRECTED[@]}"; do
-            echo "   + $pkg"
+            echo "   + $pkg  ← fix: move to pkgs-pacman.txt"
         done
     else
         echo " AUR → Pacman : none"
@@ -266,8 +280,8 @@ echo -e "  ${RED}Failed    : ${#AUR_FAILED[@]}${NC} (not found anywhere)"
             echo "   ✗ $pkg"
         done
         echo ""
-        echo " → These were listed in pkgs-pacman.txt but not found"
-        echo "   in official repos or AUR. Please fix your package list."
+        echo " → Listed in pkgs-pacman.txt but not found in"
+        echo "   official repos or AUR. Please fix your package list."
     else
         echo " None — all pacman packages resolved successfully."
     fi
@@ -281,19 +295,20 @@ echo -e "  ${RED}Failed    : ${#AUR_FAILED[@]}${NC} (not found anywhere)"
             echo "   ✗ $pkg"
         done
         echo ""
-        echo " → These were listed in pkgs-aur.txt but not found"
-        echo "   in AUR or official repos. Please fix your package list."
+        echo " → Listed in pkgs-aur.txt but not found in"
+        echo "   AUR or official repos. Please fix your package list."
     else
         echo " None — all AUR packages resolved successfully."
     fi
 
     echo ""
     echo "=============================================="
-    echo " END OF REPORT"
+    echo " WALLPAPERS"
     echo "=============================================="
+    echo " Status : pending (set by wallpapers script)"
+
 } >> "$REPORT_FILE"
 
-# --- Show report location ---
 echo ""
 msg "Install report saved to: $REPORT_FILE"
 ok "AUR packages done"

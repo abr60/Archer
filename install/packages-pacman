@@ -35,21 +35,25 @@ section() { echo -e "\n${BOLD}${CYAN}--- $1 ---${NC}"; }
 TOTAL=0
 INSTALLED=0
 SKIPPED=0
-FAILED=0
 declare -a PACMAN_FAILED=()
 declare -a PACMAN_REDIRECTED=()
+declare -a RETRY_LOG=()
 
 # --- Setup ---
 mkdir -p "$REPORT_DIR"
 rm -f "$FALLBACK_FILE"
 
-# Write report header (will be appended to by packages-aur)
+SECTION_START=$SECONDS
+
+# Write report header
 {
     echo "=============================================="
     echo " ARCHER INSTALLATION REPORT"
     echo "=============================================="
-    echo " Date : $(date '+%Y-%m-%d %H:%M:%S')"
-    echo " Mode : $INSTALL_MODE"
+    echo " Date     : $(date '+%Y-%m-%d %H:%M:%S')"
+    echo " Hostname : $(hostname)"
+    echo " Kernel   : $(uname -r)"
+    echo " Mode     : $INSTALL_MODE"
     echo "=============================================="
 } > "$REPORT_FILE"
 
@@ -63,24 +67,22 @@ try_pacman() {
         if sudo pacman -S --needed --noconfirm "$pkg" 2>/dev/null; then
             return 0
         fi
-        # Check if it's a network issue vs package not found
         if sudo pacman -Si "$pkg" &>/dev/null; then
-            # Package exists but download failed — retry
             warn "Network issue on $pkg (attempt $attempt/$max) — retrying in 5s..."
+            RETRY_LOG+=("pacman|$pkg|attempt $attempt failed — network issue")
             sleep 5
             (( attempt++ ))
         else
-            # Package not found in official repos at all
             return 1
         fi
     done
+    RETRY_LOG+=("pacman|$pkg|all $max attempts failed")
     return 1
 }
 
 # --- Core install function ---
 install_from_file() {
     local file="$1"
-    local source_label="$2"
 
     if [[ ! -f "$file" ]]; then
         warn "$file not found — skipping"
@@ -104,40 +106,39 @@ install_from_file() {
         (( current++ ))
         printf "${BLUE}[%d/%d]${NC} %s ... " "$current" "$count" "$pkg"
 
-        # Already installed
         if pacman -Q "$pkg" &>/dev/null; then
             echo -e "${CYAN}already installed${NC}"
             (( SKIPPED++ ))
             continue
         fi
 
-        # Try pacman
         if try_pacman "$pkg"; then
             echo -e "${GREEN}installed${NC}"
             (( INSTALLED++ ))
         else
-            # Not in official repos — queue for AUR fallback
             echo -e "${YELLOW}not in pacman → queued for AUR${NC}"
             echo "$pkg" >> "$FALLBACK_FILE"
             PACMAN_REDIRECTED+=("$pkg")
-            (( FAILED++ ))
         fi
     done
 }
 
 # --- Run ---
 msg "Installing pacman packages (mode: $INSTALL_MODE)..."
-install_from_file "$PKGS_FILE" "pacman-minimal"
+install_from_file "$PKGS_FILE"
 
 if [[ "$INSTALL_MODE" == "complete" ]]; then
-    install_from_file "$PKGS_HEAVY" "pacman-heavy"
+    install_from_file "$PKGS_HEAVY"
 fi
+
+SECTION_DURATION=$(( SECONDS - SECTION_START ))
 
 # --- Summary ---
 section "Pacman Summary"
 echo -e "  ${GREEN}Installed : $INSTALLED${NC}"
 echo -e "  ${CYAN}Skipped   : $SKIPPED${NC} (already present)"
 echo -e "  ${YELLOW}Queued    : ${#PACMAN_REDIRECTED[@]}${NC} (sent to AUR fallback)"
+echo -e "  ${BLUE}Duration  : ${SECTION_DURATION}s${NC}"
 
 # --- Write to report ---
 {
@@ -145,9 +146,19 @@ echo -e "  ${YELLOW}Queued    : ${#PACMAN_REDIRECTED[@]}${NC} (sent to AUR fallb
     echo "=============================================="
     echo " PACMAN INSTALLATION"
     echo "=============================================="
+    echo " Duration  : ${SECTION_DURATION}s"
     echo " Installed : $INSTALLED"
     echo " Skipped   : $SKIPPED (already present)"
     echo " Queued    : ${#PACMAN_REDIRECTED[@]} (sent to AUR fallback)"
+
+    if [[ ${#RETRY_LOG[@]} -gt 0 ]]; then
+        echo ""
+        echo " Retry Attempts:"
+        for entry in "${RETRY_LOG[@]}"; do
+            IFS='|' read -r source pkg reason <<< "$entry"
+            echo "   ~ $pkg : $reason"
+        done
+    fi
 } >> "$REPORT_FILE"
 
 ok "Pacman packages done"
