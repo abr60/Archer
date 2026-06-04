@@ -131,7 +131,7 @@ python-pip
 gum
 translate-shell
 tldr
-fastfetch
+# fastfetch
 figlet
 lolcat
 cmatrix
