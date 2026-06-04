@@ -1,4 +1,4 @@
-# Archer
+# Archer 🏹
 
 [![Arch Linux](https://img.shields.io/badge/Arch-Linux-1793D1?logo=arch-linux&logoColor=white)](https://archlinux.org/)
 
@@ -50,8 +50,8 @@ bash ~/Archer/setup.sh
 
 During setup you'll be asked to choose an install mode:
 
-- **minimal** — core packages only, installs fast
-- **complete** — everything including optional and heavy apps
+- **minimal** — core packages, shell, compositor, essential apps. Installs fast.
+- **complete** — everything above plus EasyEffects DSP, Obsidian, Telegram, Signal, qBittorrent, Spotify + Spicetify, VS Code, Typora, and more.
 
 > ⚠️ This is configured for my machine. Speaker DSP presets, fan curves, and hardware-specific settings are tuned for a ThinkPad T14 Gen 2 (i5). Use at your own discretion on other hardware.
 
@@ -59,21 +59,23 @@ During setup you'll be asked to choose an install mode:
 
 ## Stack
 
-| Layer          | Tool              |
-| -------------- | ----------------- |
-| Compositor     | Hyprland          |
-| Shell          | Zsh + Oh My Zsh   |
-| Terminal       | Ghostty           |
-| Bar / Shell UI | Quickshell        |
-| Notifications  | swaync            |
-| Launcher       | Rofi              |
-| Login Manager  | greetd + tuigreet |
-| Audio DSP      | EasyEffects       |
-| Fan Control    | Thinkfan          |
-| Theming        | Matugen           |
-| File Manager   | Nautilus + Yazi   |
-| Editor         | Neovim + VS Code  |
-| Music          | mpd + rmpc        |
+| Layer         | Tool                        |
+| ------------- | --------------------------- |
+| Compositor    | Hyprland                    |
+| Shell         | Zsh + Oh My Zsh             |
+| Terminal      | Ghostty                     |
+| Shell UI      | Quickshell                  |
+| Bar           | Waybar                      |
+| Notifications | swaync                      |
+| Launcher      | Rofi                        |
+| Login Manager | greetd + tuigreet           |
+| Audio DSP     | EasyEffects (complete)      |
+| Fan Control   | Thinkfan                    |
+| Theming       | Matugen                     |
+| File Manager  | Nautilus + Yazi             |
+| Editor        | Neovim / VS Code (complete) |
+| Music         | mpd + rmpc                  |
+| Browser       | Brave / Chrome (complete)   |
 
 ---
 
