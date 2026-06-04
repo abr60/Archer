@@ -122,7 +122,6 @@ wl-clipboard
 cliphist
 xdg-user-dirs
 xdg-user-dirs-gtk
-xdg-terminal-exe
 
 # --- Media Download ---
 yt-dlp

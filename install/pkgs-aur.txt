@@ -32,6 +32,7 @@ rmpc
 
 # --- System ---
 limine-mkinitcpio-hook
+xdg-terminal-exe
 
 # --- Terminal Fun ---
 cbonsai
