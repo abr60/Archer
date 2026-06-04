@@ -6,17 +6,17 @@
 # --- Wallpaper & Theming ---
 awww
 matugen-bin
-quickshell-git
+#quickshell-git
 fastfetch
 
 # --- Fonts ---
 ttf-rubik-vf
 
 # --- Cursor ---
-bibata-cursor-git
+bibata-cursor-theme-bin
 
 # --- Security & Authentication ---
-howdy-git
+howdy-bin
 linux-enable-ir-emitter-bin
 
 # --- Browser ---

@@ -4,17 +4,12 @@
 # =============================================================================
 
 # --- Core System ---
-zsh
-zsh-autosuggestions
-zsh-completions
 starship
 tmux
 stow
 github-cli
 
 # --- Network ---
-networkmanager
-iwd
 openbsd-netcat
 ufw
 
