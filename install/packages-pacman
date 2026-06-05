@@ -51,7 +51,7 @@ SECTION_START=$SECONDS
     echo " ARCHER INSTALLATION REPORT"
     echo "=============================================="
     echo " Date     : $(date '+%Y-%m-%d %H:%M:%S')"
-    echo " Hostname : $(hostname)"
+    echo " Hostname : $(cat /etc/hostname)
     echo " Kernel   : $(uname -r)"
     echo " Mode     : $INSTALL_MODE"
     echo "=============================================="
