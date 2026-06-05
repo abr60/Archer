@@ -97,6 +97,7 @@ nautilus
 gvfs-mtp
 gvfs-smb
 mpv
+ffmpeg
 mpd
 mpc
 mpd-mpris
