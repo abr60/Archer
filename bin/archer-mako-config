@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+# ============================================================
+#  mako-config — Mako notification daemon configuration hook
+#
+#  Responsibilities:
+#    1. Hook itself into theme-set (run once at boot)
+#    2. Inject custom includes into the active mako.ini
+#    3. Reload mako
+#
+#  Usage:
+#    mako-config            — full run (hook setup + inject)
+#    mako-config --mako-only — inject + reload only (called by hook)
+# ============================================================
+
+set -euo pipefail
+
+THEME_SET_SCRIPT="$HOME/.local/share/Archer/bin/theme-set"
+MAKO_INI="$HOME/.config/Archer/current/theme/mako.ini"
+CORE_LINE="include=~/.local/share/Archer/default/mako/core.ini"
+CUSTOM_LINE="include=~/.config/mako/custom.conf"
+
+HOOK_MARKER="# [mako-config-hook]"
+HOOK_CALL="bash \"\$HOME/.config/hypr/scripts/mako-config\" --mako-only"
+
+# Old markers from previous split-script era — checked during idempotency guard
+OLD_MARKERS=(
+    "mako-inject.sh"
+    "mako-inject-inline"
+)
+
+# ── Inject includes into active mako.ini and reload ──────────────────────────
+
+mako_inject() {
+    if [[ ! -f "$MAKO_INI" ]]; then
+        echo "[mako-config] WARN: $MAKO_INI not found, skipping inject"
+        return
+    fi
+
+    local needs_core=0 needs_custom=0
+    grep -qF "$CORE_LINE"   "$MAKO_INI" || needs_core=1
+    grep -qF "$CUSTOM_LINE" "$MAKO_INI" || needs_custom=1
+
+    if [[ $needs_core -eq 1 || $needs_custom -eq 1 ]]; then
+        local block="$HOOK_MARKER injected on $(date '+%Y-%m-%d %H:%M:%S')\n"
+        [[ $needs_custom -eq 1 ]] && block+="${CUSTOM_LINE}\n"
+        [[ $needs_core   -eq 1 ]] && block+="${CORE_LINE}\n"
+        sed -i "1s|^|${block}\n|" "$MAKO_INI"
+        echo "[mako-config] Injected includes into: $MAKO_INI"
+    else
+        echo "[mako-config] Skip: includes already present"
+    fi
+
+    makoctl reload 2>/dev/null || true
+}
+
+# ── Hook self into theme-set ─────────────────────────────────────────
+
+setup_hook() {
+    if [[ ! -f "$THEME_SET_SCRIPT" ]]; then
+        echo "[mako-config] WARN: $THEME_SET_SCRIPT not found, skipping hook setup"
+        return
+    fi
+
+    # Check if our current hook is already present
+    if grep -qF "$HOOK_MARKER" "$THEME_SET_SCRIPT"; then
+        echo "[mako-config] Skip: hook already present in theme-set"
+        return
+    fi
+
+    # Check for old markers from the previous split-script era and remove them
+    for marker in "${OLD_MARKERS[@]}"; do
+        if grep -qF "$marker" "$THEME_SET_SCRIPT"; then
+            echo "[mako-config] Removing stale hook lines containing: $marker"
+            sed -i "/$(sed 's/[\/&]/\\&/g' <<< "$marker")/d" "$THEME_SET_SCRIPT"
+        fi
+    done
+
+    # Inject our hook before restart-mako
+    sed -i "s|restart-mako|${HOOK_MARKER}\n${HOOK_CALL}\nrestart-mako|" "$THEME_SET_SCRIPT"
+    echo "[mako-config] Hooked into: $THEME_SET_SCRIPT"
+}
+
+# ── Entrypoint ────────────────────────────────────────────────────────────────
+
+if [[ "${1:-}" == "--mako-only" ]]; then
+    mako_inject
+    exit 0
+fi
+
+setup_hook
+mako_inject

@@ -2,7 +2,7 @@
 Version=1.0
 Name=Mistral Le
 Comment=Mistral Le
-Exec=omarchy-launch-webapp https://chat.mistral.ai/chat
+Exec=launch-webapp https://chat.mistral.ai/chat
 Terminal=false
 Type=Application
 Icon=/home/pseudo/.local/share/applications/icons/Mistral Le.png

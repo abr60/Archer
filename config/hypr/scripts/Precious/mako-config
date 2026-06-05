@@ -3,7 +3,7 @@
 #  mako-config — Mako notification daemon configuration hook
 #
 #  Responsibilities:
-#    1. Hook itself into omarchy-theme-set (run once at boot)
+#    1. Hook itself into theme-set (run once at boot)
 #    2. Inject custom includes into the active mako.ini
 #    3. Reload mako
 #
@@ -14,9 +14,9 @@
 
 set -euo pipefail
 
-THEME_SET_SCRIPT="$HOME/.local/share/omarchy/bin/omarchy-theme-set"
+THEME_SET_SCRIPT="$HOME/.local/share/Archer/bin/theme-set"
 MAKO_INI="$HOME/.config/omarchy/current/theme/mako.ini"
-CORE_LINE="include=~/.local/share/omarchy/default/mako/core.ini"
+CORE_LINE="include=~/.local/share/Archer/default/mako/core.ini"
 CUSTOM_LINE="include=~/.config/mako/custom.conf"
 
 HOOK_MARKER="# [mako-config-hook]"
@@ -53,7 +53,7 @@ mako_inject() {
     makoctl reload 2>/dev/null || true
 }
 
-# ── Hook self into omarchy-theme-set ─────────────────────────────────────────
+# ── Hook self into theme-set ─────────────────────────────────────────
 
 setup_hook() {
     if [[ ! -f "$THEME_SET_SCRIPT" ]]; then
@@ -63,7 +63,7 @@ setup_hook() {
 
     # Check if our current hook is already present
     if grep -qF "$HOOK_MARKER" "$THEME_SET_SCRIPT"; then
-        echo "[mako-config] Skip: hook already present in omarchy-theme-set"
+        echo "[mako-config] Skip: hook already present in theme-set"
         return
     fi
 
@@ -75,8 +75,8 @@ setup_hook() {
         fi
     done
 
-    # Inject our hook before omarchy-restart-mako
-    sed -i "s|omarchy-restart-mako|${HOOK_MARKER}\n${HOOK_CALL}\nomarchy-restart-mako|" "$THEME_SET_SCRIPT"
+    # Inject our hook before restart-mako
+    sed -i "s|restart-mako|${HOOK_MARKER}\n${HOOK_CALL}\nrestart-mako|" "$THEME_SET_SCRIPT"
     echo "[mako-config] Hooked into: $THEME_SET_SCRIPT"
 }
 

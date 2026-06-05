@@ -1,0 +1,86 @@
+#!/bin/bash
+
+# omarchy:summary=Set the current background image
+# omarchy:args=<path-to-image>
+# omarchy:examples=omarchy theme bg set ~/Pictures/wallpaper.png
+
+if [[ -z $1 ]]; then
+  echo "Usage: theme-bg-set <path-to-image>" >&2
+  exit 1
+fi
+
+BACKGROUND="$(realpath "$1")"
+CURRENT_BACKGROUND_LINK="$HOME/.config/Archer/current/background"
+
+if [[ ! -f "$BACKGROUND" ]]; then
+  echo "File does not exist: $BACKGROUND" >&2
+  exit 1
+fi
+
+# Create symlink to the new background
+ln -nsf "$BACKGROUND" "$CURRENT_BACKGROUND_LINK"
+
+# Ensure awww-daemon is running, then set image
+if ! pgrep -x awww-daemon >/dev/null 2>&1; then
+  uwsm-app -- awww-daemon &
+  sleep 0.3
+fi
+
+setsid uwsm-app -- awww img "$CURRENT_BACKGROUND_LINK" \
+  --transition-type grow \
+  --transition-pos "$(hyprctl cursorpos | grep -E '^[0-9]' || echo '0,0')" \
+  --transition-fps 60 \
+  --transition-duration 0.8 \
+  --resize crop >/dev/null 2>&1 &
+
+# --- MATUGEN COLOR GENERATION --------------------------------
+if command -v matugen >/dev/null 2>&1; then
+  DOMINANT=""
+  WAYBAR_CSS="$HOME/.config/waybar/matugen-color.css"
+
+  if command -v magick >/dev/null 2>&1 || command -v convert >/dev/null 2>&1; then
+    IM_CMD=$(command -v magick || command -v convert)
+    DOMINANT=$(
+      "$IM_CMD" "$BACKGROUND" \
+        -resize 100x100! \
+        -quantize transparent \
+        +dither -colors 8 \
+        -format "%c" histogram:info:- 2>/dev/null \
+      | sort -rn \
+      | grep -oP '#[0-9A-Fa-f]{6}' \
+      | while read -r hex; do
+          r=$((16#${hex:1:2})); g=$((16#${hex:3:2})); b=$((16#${hex:5:2}))
+          lum=$(( (r * 299 + g * 587 + b * 114) / 1000 ))
+          max_c=$(( r > g ? r : g )); max_c=$(( max_c > b ? max_c : b ))
+          min_c=$(( r < g ? r : g )); min_c=$(( min_c < b ? min_c : b ))
+          chroma=$(( max_c - min_c ))
+          if (( lum >= 25 && lum <= 230 && chroma >= 30 )); then
+            echo "$hex"
+            break
+          fi
+        done
+    )
+  fi
+
+  mkdir -p "$HOME/.cache/matugen"
+  if [[ -n "$DOMINANT" ]]; then
+    matugen color hex "$DOMINANT" --mode dark
+    matugen color hex "$DOMINANT" --mode dark --json hex \
+      > "$HOME/.cache/matugen/colors.json"
+  else
+    matugen image "$BACKGROUND" --mode dark
+    matugen image "$BACKGROUND" --mode dark --json hex \
+      > "$HOME/.cache/matugen/colors.json"
+  fi
+
+  for i in $(seq 1 20); do
+    if [[ -f "$WAYBAR_CSS" ]] && (( $(date +%s) - $(date -r "$WAYBAR_CSS" +%s 2>/dev/null || echo 0) <= 5 )); then
+      break
+    fi
+    sleep 0.1
+  done
+  sleep 0.15
+
+  pkill -SIGUSR2 waybar
+  pkill -f cava.py 2>/dev/null || true
+fi

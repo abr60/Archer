@@ -19,3 +19,12 @@ c2f() { [[ -z "$1" ]] && return 1; wl-paste > "$1"; }
 hide_waydroid() {
   sh -c 'find "$HOME/.local/share/applications" -name "waydroid.*.desktop" -exec grep -L "NoDisplay=true" {} + | xargs -I {} sed -i "/\[Desktop Entry\]/a NoDisplay=true" {}' 2>/dev/null
 }
+
+archer() {
+    local msg="${1:-sync: $(date +%Y-%m-%d\ %H:%M)}"
+    cd ~/Archer && \
+    git add . && \
+    git commit -m "$msg" && \
+    git push && \
+    cd -
+}

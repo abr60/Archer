@@ -1,0 +1,91 @@
+#!/bin/bash
+source "$HOME/.config/hypr/assets/lib/helpers.sh"
+
+# 1. Clear the screen first
+clear
+
+# 2. Print the logo from the external file
+cat "$HOME/.config/hypr/assets/ANSI LOGO/dots-logo.txt"
+
+
+# --- THE SAFEGUARD ---
+gum style --border rounded --border-foreground 2 --padding "1 2" \
+  "Ready to sync your configs?" \
+  "" \
+  "• This will push local changes to GitHub" \
+  "• Ensure you have an active internet connection" \
+  "" \
+  "$(gum style --foreground 8 "Repo: https://github.com/drunk-particles/dots.git")"
+
+echo
+
+if ! gum confirm "Continue with sync?"; then
+  log_info "Sync cancelled. No changes were pushed."
+  exit 0
+fi
+
+# --- HELPER: commit + push to main ---
+sync_repo() {
+  local label="$1"
+  local path="$2"
+  local default_msg="$3"
+
+  log_step "Syncing $label..."
+
+  cd "$path" || { log_error "Could not cd into $path — aborting."; exit 1; }
+
+  # Pull latest first
+  git pull --rebase --autostash origin main || { log_error "Pull failed for $label."; exit 1; }
+
+  # Only commit if there are changes
+  if git diff --quiet && git diff --cached --quiet; then
+    log_info "Nothing to commit in $label. Skipping commit."
+  else
+    local msg
+    msg=$(gum input --prompt "Commit message: " --placeholder "$default_msg")
+    git add . && git commit -m "${msg:-$default_msg}" || { log_error "Commit failed for $label."; exit 1; }
+  fi
+
+  # Push
+  git push origin main || { log_error "Push failed for $label. Check your connection or branch config."; exit 1; }
+
+  cd - > /dev/null
+}
+
+
+# Define options based on your aliases
+choice=$(gum choose --header "Select a repository to sync" \
+    " Dotfiles" \
+    "󰣇 Archer" \
+    "󰸉 Wallpapers" \
+    " Waybar Config" \
+    "󰔎 Assets" \
+    " Open Lazygit" \
+    "󱎘 Cancel")
+
+case "$choice" in
+    " Dotfiles")
+        sync_repo "Dotfiles" "$HOME/dots" "sync: $(date +%Y-%m-%d)"
+        ;;
+    "󰣇  Archer")
+        sync_repo "Archer" "$HOME/Archer" "sync: $(date +%Y-%m-%d)"
+        ;;
+    "󰸉  Wallpapers")
+        sync_repo "Wallpapers" "$HOME/Wallpapers" "sync: $(date +%Y-%m-%d)"
+        ;;
+    "  Waybar Config")
+        sync_repo "Waybar Config" "$HOME/waybar" "sync: $(date +%Y-%m-%d)"
+        ;;
+    "󰔎  Assets")
+        sync_repo "Assets" "$HOME/Assets" "theme update: $(date +%Y-%m-%d)"
+        ;;
+    "  Open Lazygit")
+        lazygit
+        ;;
+    *)
+        exit 0
+        ;;
+esac
+
+log_success "Operation Complete!"
+show_done

@@ -2,7 +2,7 @@
 Version=1.0
 Name=OpenCourseWare (MIT)
 Comment=OpenCourseWare (MIT)
-Exec=omarchy-launch-webapp https://ocw.mit.edu/
+Exec=launch-webapp https://ocw.mit.edu/
 Terminal=false
 Type=Application
 Icon=/home/pseudo/.local/share/applications/icons/OpenCourseWare (MIT).png

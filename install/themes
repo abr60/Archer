@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 # =============================================================================
-# themes.sh — Symlink themes → ~/.config/omarchy/themes
+# themes.sh — Symlink themes → ~/.config/Archer/themes
 #           — Symlink wallpapers from ~/Wallpapers/backgrounds/<theme>/
-#             → ~/.config/omarchy/themes/<theme>/backgrounds
+#             → ~/.config/Archer/themes/<theme>/backgrounds
 #
-# NOTE: ~/.local/share/omarchy/ is a git repo managed by Omarchy.
-#       Never touch its contents — doing so breaks `omarchy-update`.
+# NOTE: ~/.local/share/Archer/ is a git repo managed by Omarchy.
+#       Never touch its contents — doing so breaks `archer update`.
 # =============================================================================
 
 set -euo pipefail
 
 DOTS_DIR="$HOME/dots"
 THEME_SOURCE="$DOTS_DIR/themes"
-THEME_DEST="$HOME/.config/omarchy/themes"
+THEME_DEST="$HOME/.config/Archer/themes"
 WALLPAPERS_BASE="$HOME/Wallpapers/backgrounds"
 
 GREEN='\033[0;32m'
@@ -55,7 +55,7 @@ else
 fi
 
 # ==========================================
-# 2. SYMLINK WALLPAPERS → ~/.config/omarchy/themes/<theme>/backgrounds
+# 2. SYMLINK WALLPAPERS → ~/.config/Archer/themes/<theme>/backgrounds
 # ==========================================
 if [[ ! -d "$WALLPAPERS_BASE" ]]; then
     warn "Wallpapers folder not found at $WALLPAPERS_BASE — skipping"

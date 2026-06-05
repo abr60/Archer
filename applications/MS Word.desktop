@@ -2,7 +2,7 @@
 Version=1.0
 Name=MS Word
 Comment=MS Word
-Exec=omarchy-launch-webapp https://word.cloud.microsoft/
+Exec=launch-webapp https://word.cloud.microsoft/
 Terminal=false
 Type=Application
 Icon=/home/pseudo/.local/share/applications/icons/MS Word.png

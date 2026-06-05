@@ -2,7 +2,7 @@
 Version=1.0
 Name=Cloude
 Comment=Cloude
-Exec=omarchy-launch-webapp https://claude.ai/new
+Exec=launch-webapp https://claude.ai/new
 Terminal=false
 Type=Application
 Icon=/home/pseudo/.local/share/applications/icons/Cloude.png

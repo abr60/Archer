@@ -2,7 +2,7 @@
 Version=1.0
 Name=Notebook LLM
 Comment=Notebook LLM
-Exec=omarchy-launch-webapp https://notebooklm.google.com/
+Exec=launch-webapp https://notebooklm.google.com/
 Terminal=false
 Type=Application
 Icon=/home/pseudo/.local/share/applications/icons/Notebook LLM.png

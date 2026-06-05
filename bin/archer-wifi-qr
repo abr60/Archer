@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# =============================================================================
+# WiFi QR Generator – Fixed iwd Hex Edition (Optimized Minimal Layout)
+# ~/.config/hypr/scripts/toolbox/wifi-qr.sh
+# Deps: qrencode, gum
+# =============================================================================
+source "$HOME/.config/hypr/assets/lib/helpers.sh" 2>/dev/null
+clear
+
+cat "$HOME/.config/hypr/assets/ANSI LOGO/wifi-qr.txt" 2>/dev/null || \
+  gum style --foreground 5 --bold "   WiFi QR Generator"
+
+echo
+
+# --- Dep check ---------------------------------------------------------------
+missing=()
+for dep in qrencode gum; do
+  command -v "$dep" &>/dev/null || missing+=("$dep")
+done
+if [[ ${#missing[@]} -gt 0 ]]; then
+  gum style --border rounded --border-foreground 1 --padding "1 2" \
+    "$(gum style --foreground 1 --bold "  ✗ Missing:") ${missing[*]}" \
+    "" \
+    "$(gum style --foreground 8 "  sudo pacman -S ${missing[*]}")"
+  exit 1
+fi
+
+# --- Get current connected SSID (requires sudo) ------------------------------
+IFACE=$(sudo iwctl station list 2>/dev/null | awk '/connected/ {print $1}' | head -1)
+CURRENT_SSID=$(sudo iwctl station "$IFACE" show 2>/dev/null | awk -F ' {2,}' '/Connected network/ {print $3}')
+
+# --- List all saved networks from /var/lib/iwd (using sudo directly) --------
+mapfile -t PSK_FILES < <(sudo find /var/lib/iwd/ -maxdepth 1 -name "*.psk" 2>/dev/null)
+
+if [[ ${#PSK_FILES[@]} -eq 0 ]]; then
+  gum style --foreground 1 "  No saved networks found in /var/lib/iwd/"
+  exit 1
+fi
+
+# --- Build network list & track mappings for gum choose -----------------------
+declare -A FILE_MAP
+network_list=()
+
+for f in "${PSK_FILES[@]}"; do
+  raw_name=$(basename "$f" .psk)
+  
+  # Check if filename begins with "=" (indicating hex-encoding)
+  if [[ "$raw_name" == =* ]]; then
+    hex="${raw_name#=}"
+    escaped=$(echo "$hex" | sed "s/\(..\)/\\\\x\1/g")
+    ssid=$(printf "$escaped")
+  else
+    ssid="$raw_name"
+  fi
+
+  # Safely store the exact path mapped to this human-readable SSID
+  FILE_MAP["$ssid"]="$f"
+
+  # Highlight the active connected network
+  if [[ "$ssid" == "$CURRENT_SSID" ]]; then
+    network_list+=("$ssid  ← connected")
+  else
+    network_list+=("$ssid")
+  fi
+done
+
+echo
+chosen=$(printf '%s\n' "${network_list[@]}" | sort -u | gum choose --header "  Select a network")
+[[ -z "$chosen" ]] && { echo "Cancelled"; exit 0; }
+
+# Clean up selected choice to match dictionary index
+SSID=$(echo "$chosen" | sed 's/  ← connected//')
+PSK_FILE="${FILE_MAP[$SSID]}"
+
+# --- Read password from iwd file ---------------------------------------------
+PASS=$(sudo awk -F= '/^Passphrase/ {print $2}' "$PSK_FILE" 2>/dev/null)
+
+if [[ -z "$PASS" ]]; then
+  # Fallback to manual entry if no cleartext password found
+  echo
+  gum style --border rounded --border-foreground 3 --padding "1 2" \
+    "$(gum style --foreground 3 --bold "  ⚠ No cleartext password found")" \
+    "" \
+    "  iwd stored only a hashed key for: $SSID" \
+    "  Enter your password manually to generate the QR."
+  echo
+  PASS=$(gum input --prompt "  Password: " --password --placeholder "WiFi password")
+  [[ -z "$PASS" ]] && { echo "Cancelled"; exit 0; }
+fi
+
+# --- Generate QR -------------------------------------------------------------
+clear
+echo
+qrencode -t ansiutf8 "WIFI:S:${SSID};T:WPA;P:${PASS};;"
+echo
+
+# --- Streamlined Credentials Display -----------------------------------------
+# Uses dynamic column layouts so varying SSID sizes never break label alignment
+gum style --foreground 4 --bold "$(printf "  %-10s %s" "Network:" "$SSID")"
+gum style --foreground 7 "$(printf "  %-10s %s" "Password:" "$PASS")"
+echo
+
+# --- Auto-close --------------------------------------------------------------
+#for i in $(seq 15 -1 1); do
+ # printf "\r  Closing in %d seconds... (press any key)  " "$i"
+  read -r -s -n1 #-t1 && break
+#done
+echo

@@ -2,7 +2,7 @@
 Version=1.0
 Name=Wallhaven
 Comment=Wallhaven
-Exec=omarchy-launch-webapp https://wallhaven.cc/
+Exec=launch-webapp https://wallhaven.cc/
 Terminal=false
 Type=Application
 Icon=/home/pseudo/.local/share/applications/icons/Wallhaven.png

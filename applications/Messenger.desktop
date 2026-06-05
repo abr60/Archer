@@ -2,7 +2,7 @@
 Version=1.0
 Name=Messenger
 Comment=Messenger
-Exec=omarchy-launch-webapp https://www.facebook.com/messages/e2ee/t/7674688255962884
+Exec=launch-webapp https://www.facebook.com/messages/e2ee/t/7674688255962884
 Terminal=false
 Type=Application
 Icon=/home/pseudo/.local/share/applications/icons/Messenger.png
