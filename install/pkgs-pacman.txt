@@ -51,6 +51,11 @@ gst-libav
 gst-plugins-bad
 gst-plugins-ugly
 
+# --- GPU & Drivers ---
+vulkan-intel
+intel-media-driver
+libva-intel-driver
+
 # --- System Utilities ---
 btop
 baobab
