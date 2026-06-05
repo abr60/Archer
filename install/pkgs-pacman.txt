@@ -99,6 +99,7 @@ kvantum-qt5
 # --- Applications ---
 ghostty
 nautilus
+imv
 gvfs-mtp
 gvfs-smb
 mpv
@@ -132,7 +133,7 @@ python-pip
 gum
 translate-shell
 tldr
-# fastfetch
+fastfetch
 figlet
 lolcat
 cmatrix
