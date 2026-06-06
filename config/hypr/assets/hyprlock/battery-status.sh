@@ -7,7 +7,7 @@ battery_percentage=$(cat /sys/class/power_supply/BAT0/capacity)
 battery_status=$(cat /sys/class/power_supply/BAT0/status)
 
 # Define horizontal battery icons for each 10% segment
-battery_icons=("" "" "" "" "" "" "" "" "" "")
+battery_icons=("󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹")
 
 # Define the charging icon
 charging_icon=""
@@ -24,4 +24,4 @@ if [ "$battery_status" = "Charging" ]; then
 fi
 
 # Output the battery icon (without percentage)
-echo "$battery_icon ${PCT}%"
+echo "$battery_icon ${PCT}"
