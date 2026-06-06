@@ -1,0 +1,10 @@
+#!/bin/bash
+# Kill any existing instances of your cava script first
+if pgrep -f "cava.py" > /dev/null; then
+    pkill -f "cava.py"
+    # Return empty JSON to Waybar so it hides the module
+    echo '{"text": "", "class": "hidden"}'
+else
+    # Start it in the background
+    python3 ~/.config/waybar/scripts/cava.py
+fi

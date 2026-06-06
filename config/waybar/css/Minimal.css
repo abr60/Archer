@@ -1,0 +1,192 @@
+/* =========================================================
+   Ancient Runes - Waybar Style (Tight & Compact)
+   ========================================================= */
+
+@import "../waybar/matugen.css";
+@import "../waybar/colors.css";
+
+/* 1. GLOBAL & BASE STYLES */
+* {
+  background-color: transparent;
+  color: @on_surface;
+  border: none;
+  border-radius: 0;
+  font-family: 'CaskaydiaMono Nerd Font', 'JetBrainsMono Nerd Font';
+  font-size: 12px;
+  font-weight: bold;
+  transition: all 0.3s cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+
+window#waybar {
+  background-color: transparent;
+}
+
+#waybar > box {
+  margin: 0;
+  padding: 0 8px; /* Tighter bar padding */
+  background-color: alpha(@surface, 0.7);
+  border-bottom: 1px solid alpha(@primary, 0.1);
+}
+
+/* 2. CORE MODULES (Tightened Spacing) */
+#backlight, #custom-swaync, #battery, #cpu, #disk, #idle_inhibitor, #language, 
+#memory, #network, #pulseaudio, #temperature, #tray, 
+#custom-exit, #custom-weather, #custom-notification, #bluetooth, #custom-voxtype {
+  margin: 4px 4px; /* Reduced margin for tighter look */
+  padding: 0 6px;  /* Narrower internal padding */
+  color: alpha(@on_surface, 0.85);
+}
+
+/* 3. INDEPENDENT MUTE STATES */
+#pulseaudio:not(.microphone).muted {
+  color: @speaker-muted;
+}
+
+#pulseaudio.microphone.source-muted {
+  color: @mic-muted;
+}
+
+/* 4. BLUETOOTH (Large) */
+#bluetooth {
+  font-size: 15px;
+}
+
+/* 4. VOXTYPE (Medium) */
+#custom-voxtype {
+  font-size: 14px;
+  color: @primary;
+}
+
+#custom-weather {
+  margin: 4px -1px;
+  padding: 0 1px;
+}
+
+#custom-dots-push {
+  margin: 4px 4px;
+  padding: 0 6px;
+  font-size: 13px;
+  color: @primary;
+}
+
+
+
+/* 5. EXIT/POWER MODULE */
+#custom-exit:hover, #custom-exit:active {
+  color: #ff4d4d;
+}
+
+#custom-swaync:hover, #custom-swaync:active {
+  color: @yellow;
+}
+
+#custom-swaync {
+  font-size: 14px;
+}
+
+/* 6. WAYBAR TIMER */
+#custom-timer {
+  background-color: #1e1e2e;
+  padding: 0 8px;
+  font: 900 15px "Doto";
+  border-radius: 12px;
+}
+
+#custom-timer.disabled, #custom-timer.idle, #custom-timer.running, 
+#custom-timer.pomo_break, #custom-timer.pomo_msg, 
+#custom-timer.warning, #custom-timer.reset {
+  background-color: transparent;
+}
+
+#custom-timer.disabled, #custom-timer.idle { color: #bfbfbf; opacity: 0.6; font-weight: 400; }
+#custom-timer.select     { background-color: #373948; color: #85b2fa; }
+#custom-timer.running    { color: #cccccc; }
+#custom-timer.pomo_break { color: #f9e2af; }
+#custom-timer.pomo_msg   { color: #cba6f7; }
+#custom-timer.paused     { background-color: #404040; color: #f9e2af; }
+#custom-timer.done       { background-color: #bfbfbf; color: #11111b; }
+#custom-timer.reset      { color: #ff4d4d; }
+#custom-timer.warning    { animation: red-alert 1s ease-in-out infinite alternate; }
+
+/* 7. SPECIAL DECORATIONS */
+#clock {
+  color: @primary;
+  font-size: 13px;
+  margin: 4px 6px;
+  padding: 0 8px;
+}
+
+#custom-arch { font-size: 22px; color: @primary; }
+#custom-cpucat  { font-family: "Waycat"; color: alpha(@tertiary, 0.85); font-size: 20px; margin: 0 6px; }
+
+#mpris { color: alpha(@on_surface_variant, 0.5); font-style: italic; padding: 0 8px; }
+#mpris.playing { color: @primary; font-style: normal; font-weight: bold; }
+
+/* 8. TOOLTIPS & ANIMATIONS */
+tooltip { background: @background; border: 1px solid alpha(@outline, 0.3); border-radius: 6px; }
+tooltip label { color: @on_surface; padding: 2px 4px; }
+
+@keyframes red-alert {
+  from { color: #ff4d4d; opacity: 1; }
+  to   { color: #ff4d4d; opacity: 0.7; }
+}
+
+#custom-cava { opacity: 0; font-size: 0; }
+
+/* =========================================================
+   ULTRA-SLIM SCREENRECORDING (ANCIENT RUNES STYLE)
+   ========================================================= */
+
+#custom-screenrecording-indicator {
+  margin: 4px 2px;
+  padding: 0 4px; /* Reduced horizontal padding for a tighter fit */
+  font-family: "CaskaydiaMono Nerd Font";
+  font-size: 19px; /* Balanced size for the icon */
+  color: alpha(@primary, 0.4);
+  transition: all 0.4s ease-in-out;
+}
+
+/* Match the class from your shell script: "active" */
+#custom-screenrecording-indicator.active {
+  color: #ff4d4d;
+  background-color: transparent; /* Removed the background block */
+  border-radius: 0; 
+  border: none; /* Removed the outer border layer */
+  animation: rune-pulse 2s infinite ease-in-out;
+  /* Glow is now tied only to the icon/text itself */
+  text-shadow: 0 0 6px alpha(#ff4d4d, 0.9); 
+}
+
+@keyframes rune-pulse {
+  0% {
+    color: alpha(#ff4d4d, 0.5);
+    text-shadow: 0 0 2px alpha(#ff4d4d, 0.3);
+  }
+  50% {
+    color: #ff4d4d;
+    text-shadow: 0 0 10px alpha(#ff4d4d, 1); /* Intense center pulse */
+  }
+  100% {
+    color: alpha(#ff4d4d, 0.5);
+    text-shadow: 0 0 2px alpha(#ff4d4d, 0.3);
+  }
+}
+
+/* --- HDD MODULE --- */
+#custom-hdd {
+    margin: 4px 4px;
+    padding: 0 6px;
+    color: @secondary;
+}
+
+#custom-hdd.hdd-unmounted {
+    color: @outline;
+    opacity: 0.5;
+}
+
+#custom-wifi-qr {
+    margin: 4px 4px;
+    padding: 0 6px;
+    font-size: 18px;
+    color: @primary;
+}

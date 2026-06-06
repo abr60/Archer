@@ -13,7 +13,7 @@ fastfetch
 ttf-rubik-vf
 
 # --- Cursor ---
-bibata-cursor-theme-bin
+bibata-cursor-theme
 
 # --- Security & Authentication ---
 howdy-bin
