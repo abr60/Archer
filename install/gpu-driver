@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+MODEL="$(cat /sys/devices/virtual/dmi/id/product_name 2>/dev/null || true)"
+
+EXPECTED="20W1S6EY00"
+
+if [[ "$MODEL" != "$EXPECTED" ]]; then
+    echo "This script is intended for a ThinkPad T14 Gen 2i."
+    echo "Detected model: $MODEL"
+    exit 1
+fi
+
+PACKAGES=(
+    mesa
+    vulkan-intel
+    intel-media-driver
+)
+
+echo
+echo "ThinkPad T14 Gen 2i detected."
+echo
+echo "Packages to install:"
+printf '  - %s\n' "${PACKAGES[@]}"
+echo
+
+read -rp "Continue? [y/N] " REPLY
+
+case "$REPLY" in
+    y|Y|yes|YES)
+        sudo pacman -S --needed "${PACKAGES[@]}"
+        ;;
+    *)
+        echo "Cancelled."
+        ;;
+esac

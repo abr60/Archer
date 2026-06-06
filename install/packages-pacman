@@ -45,13 +45,13 @@ rm -f "$FALLBACK_FILE"
 
 SECTION_START=$SECONDS
 
-# Write report header
+# Write report header (Fixed unclosed quote bug here)
 {
     echo "=============================================="
     echo " ARCHER INSTALLATION REPORT"
     echo "=============================================="
     echo " Date     : $(date '+%Y-%m-%d %H:%M:%S')"
-    echo " Hostname : $(cat /etc/hostname)
+    echo " Hostname : $(cat /etc/hostname)"
     echo " Kernel   : $(uname -r)"
     echo " Mode     : $INSTALL_MODE"
     echo "=============================================="
@@ -62,11 +62,22 @@ try_pacman() {
     local pkg="$1"
     local attempt=1
     local max=3
+    local output
 
     while [[ $attempt -le $max ]]; do
-        if sudo pacman -S --needed --noconfirm "$pkg" 2>/dev/null; then
+        output=$(sudo pacman -S --needed --noconfirm "$pkg" 2>&1)
+        if [[ $? -eq 0 ]]; then
             return 0
         fi
+
+        # Smart Inspection: Catch hard unrecoverable system/conflict errors
+        if echo "$output" | grep -qiE "conflict|existing|invalid|broken|dependency|removes"; then
+            local reason
+            reason=$(echo "$output" | grep -iE "conflict|existing|depends|error:" | head -n 1 | xargs)
+            RETRY_LOG+=("pacman|$pkg|failed — conflict/dependency issue: $reason")
+            return 1 # Fail fast! Do not retry.
+        fi
+
         if sudo pacman -Si "$pkg" &>/dev/null; then
             warn "Network issue on $pkg (attempt $attempt/$max) — retrying in 5s..."
             RETRY_LOG+=("pacman|$pkg|attempt $attempt failed — network issue")
@@ -153,7 +164,7 @@ echo -e "  ${BLUE}Duration  : ${SECTION_DURATION}s${NC}"
 
     if [[ ${#RETRY_LOG[@]} -gt 0 ]]; then
         echo ""
-        echo " Retry Attempts:"
+        echo " Retry Attempts / System Failures:"
         for entry in "${RETRY_LOG[@]}"; do
             IFS='|' read -r source pkg reason <<< "$entry"
             echo "   ~ $pkg : $reason"
