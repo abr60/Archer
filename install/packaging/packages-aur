@@ -98,10 +98,15 @@ try_yay() {
 
         # Smart Inspection: Catch hard unrecoverable system/conflict errors
         if echo "$output" | grep -qiE "conflict|existing|invalid|broken|dependency|removes"; then
+            if echo "$output" | grep -qiE "conflict|removes"; then
+                if resolve_conflict "$pkg" "$output"; then
+                    return 0
+                fi
+            fi
             local reason
             reason=$(echo "$output" | grep -iE "conflict|existing|depends|error:" | head -n 1 | xargs)
             RETRY_LOG+=("aur|$pkg|failed — conflict/dependency issue: $reason")
-            return 1 # Fail fast! Do not retry.
+            return 1
         fi
 
         if yay -Si "$pkg" &>/dev/null; then

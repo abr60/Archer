@@ -57,6 +57,31 @@ SECTION_START=$SECONDS
     echo "=============================================="
 } > "$REPORT_FILE"
 
+# --- Conflict resolver ---
+resolve_conflict() {
+    local pkg="$1"
+    local output="$2"
+
+    # Extract conflicting package name from pacman output
+    local conflict
+    conflict=$(echo "$output" | grep -oP '(?<=conflict with |conflicting with )\S+' | head -1)
+    [[ -z "$conflict" ]] && conflict=$(echo "$output" | grep "removes" | grep -oP '\S+(?=\s+\()' | head -1)
+    [[ -z "$conflict" ]] && return 1
+
+    # Don't auto-remove if conflict is the same base package (safe swap)
+    local conflict_base="${conflict%%-[0-9]*}"
+    local pkg_base="${pkg%%-[0-9]*}"
+
+    warn "Conflict: $pkg conflicts with installed '$conflict'"
+
+    if gum confirm "Remove '$conflict' and install '$pkg'?"; then
+        sudo pacman -Rdd --noconfirm "$conflict" 2>/dev/null && \
+        sudo pacman -S --needed --noconfirm "$pkg" && \
+        return 0 || return 1
+    fi
+    return 1
+}
+
 # --- Install with retry ---
 try_pacman() {
     local pkg="$1"
@@ -72,10 +97,16 @@ try_pacman() {
 
         # Smart Inspection: Catch hard unrecoverable system/conflict errors
         if echo "$output" | grep -qiE "conflict|existing|invalid|broken|dependency|removes"; then
+            # Try conflict resolution first
+            if echo "$output" | grep -qiE "conflict|removes"; then
+                if resolve_conflict "$pkg" "$output"; then
+                    return 0
+                fi
+            fi
             local reason
             reason=$(echo "$output" | grep -iE "conflict|existing|depends|error:" | head -n 1 | xargs)
             RETRY_LOG+=("pacman|$pkg|failed — conflict/dependency issue: $reason")
-            return 1 # Fail fast! Do not retry.
+            return 1
         fi
 
         if sudo pacman -Si "$pkg" &>/dev/null; then
