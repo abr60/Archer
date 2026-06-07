@@ -8,26 +8,13 @@
 set -uo pipefail
 
 DOTS_DIR="$HOME/Archer"
+export ARCHER_DIR="$HOME/.local/share/Archer"
 INSTALL_DIR="$DOTS_DIR/install"
 WALLPAPERS_DIR="$HOME/Wallpapers"
 REPORT_DIR="$HOME/.local/state/Archer"
 REPORT_FILE="$REPORT_DIR/update-report.txt"
 
-# --- Colors ---
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-CYAN='\033[0;36m'
-BOLD='\033[1m'
-NC='\033[0m'
-
-msg()     { echo -e "${BLUE}==>${NC} $1"; }
-ok()      { echo -e "${GREEN} ✓${NC} $1"; }
-warn()    { echo -e "${YELLOW} !${NC} $1"; }
-err()     { echo -e "${RED} ✗${NC} $1"; }
-section() { echo -e "\n${BOLD}${CYAN}--- $1 ---${NC}"; }
-die()     { echo -e "${RED}ERR${NC} $1"; echo " FAILED: $1" >> "$REPORT_FILE"; exit 1; }
+source "$INSTALL_DIR/lib/helpers.sh"
 
 mkdir -p "$REPORT_DIR"
 START_TIME=$SECONDS
@@ -35,30 +22,19 @@ START_TIME=$SECONDS
 # ==========================================
 # 1. DEPENDENCY CHECK
 # ==========================================
-if ! command -v gum &>/dev/null; then
-    msg "Installing gum..."
-    sudo pacman -S --needed --noconfirm gum
-fi
+ensure_installed gum
 
 # ==========================================
 # 2. SHOW HEADER
 # ==========================================
 clear
-LOGO_FILE="$DOTS_DIR/install/lib/logo.txt"
-if [[ -f "$LOGO_FILE" ]]; then
-    cat "$LOGO_FILE"
-    echo ""
-fi
+LOGO_FILE="$INSTALL_DIR/lib/logo.txt"
+[[ -f "$LOGO_FILE" ]] && cat "$LOGO_FILE" && echo ""
 
 gum style \
-    --foreground 117 \
-    --border-foreground 117 \
-    --border rounded \
-    --align center \
-    --width 50 \
-    --padding "0 1" \
+    --foreground 117 --border-foreground 117 --border rounded \
+    --align center --width 50 --padding "0 1" \
     "ARCHER UPDATE"
-
 echo ""
 
 # ==========================================
@@ -70,42 +46,36 @@ cd "$DOTS_DIR"
 git fetch origin 2>/dev/null || die "Could not reach remote — check your network."
 
 LOCAL=$(git rev-parse HEAD)
-REMOTE=$(git rev-parse origin/HEAD 2>/dev/null || git rev-parse origin/main 2>/dev/null || git rev-parse origin/master 2>/dev/null)
+REMOTE=$(git rev-parse origin/HEAD 2>/dev/null || \
+         git rev-parse origin/main 2>/dev/null || \
+         git rev-parse origin/master 2>/dev/null)
 LOCAL_SHORT="${LOCAL:0:7}"
 REMOTE_SHORT="${REMOTE:0:7}"
 
-# --- Write report header ---
 {
     echo "=============================================="
     echo " ARCHER UPDATE REPORT"
     echo "=============================================="
-    echo " Date       : $(date '+%Y-%m-%d %H:%M:%S')"
-    echo " Hostname   : $(cat /etc/hostname)"
-    echo " Kernel     : $(uname -r)"
-    echo " Local      : $LOCAL_SHORT"
-    echo " Remote     : $REMOTE_SHORT"
+    echo " Date     : $(date '+%Y-%m-%d %H:%M:%S')"
+    echo " Hostname : $(cat /etc/hostname)"
+    echo " Kernel   : $(uname -r)"
+    echo " Local    : $LOCAL_SHORT"
+    echo " Remote   : $REMOTE_SHORT"
     echo "=============================================="
 } > "$REPORT_FILE"
 
-# --- Already up to date? ---
 if [[ "$LOCAL" == "$REMOTE" ]]; then
     ok "Already up to date ($LOCAL_SHORT). Nothing to do."
-    {
-        echo ""
-        echo " Status : Already up to date — no changes applied."
-        echo "=============================================="
-    } >> "$REPORT_FILE"
+    echo " Status : Already up to date — no changes applied." >> "$REPORT_FILE"
     exit 0
 fi
 
 # ==========================================
 # 4. SHOW DIFF SUMMARY
 # ==========================================
-section "Incoming Changes (remote vs local)"
+section "Incoming Changes"
 echo ""
-git log HEAD..origin/HEAD --oneline --no-decorate 2>/dev/null || \
-git log HEAD..origin/main --oneline --no-decorate 2>/dev/null || \
-git log HEAD..origin/master --oneline --no-decorate 2>/dev/null || true
+git log HEAD..origin/HEAD --oneline --no-decorate 2>/dev/null || true
 
 echo ""
 CHANGED_FILES=$(git diff --name-only HEAD...origin/HEAD 2>/dev/null | head -20 || true)
@@ -116,12 +86,9 @@ if [[ -n "$CHANGED_FILES" ]]; then
     done
 fi
 
-# --- Save diff to report ---
 {
     echo ""
-    echo "=============================================="
     echo " INCOMING CHANGES"
-    echo "=============================================="
     git log HEAD..origin/HEAD --oneline --no-decorate 2>/dev/null || true
     echo ""
     echo " Files changed:"
@@ -129,46 +96,40 @@ fi
 } >> "$REPORT_FILE"
 
 # ==========================================
-# 5. RESET & PULL (remote-first, no conflicts)
+# 5. RESET & PULL
 # ==========================================
 echo ""
 msg "Applying remote state (overwriting local)..."
-
-# Save old commit before overwriting
 OLD_COMMIT="$LOCAL"
 
 git reset --hard "$REMOTE" || die "git reset --hard failed."
-ok "Local reset to remote state ($LOCAL_SHORT → $REMOTE_SHORT)"
+ok "Reset to remote state ($LOCAL_SHORT → $REMOTE_SHORT)"
 
 {
     echo ""
-    echo "=============================================="
-    echo " RESET"
-    echo "=============================================="
-    echo " From : $OLD_COMMIT"
-    echo " To   : $REMOTE"
-    echo " Status : Success"
+    echo " RESET: $OLD_COMMIT → $REMOTE — Success"
 } >> "$REPORT_FILE"
 
 # ==========================================
-# 6. RE-APPLY INSTALL SCRIPTS
+# 6. RE-APPLY SCRIPTS
 # ==========================================
 run_step() {
     local script="$1"
     local label="$2"
+    local full_path="$INSTALL_DIR/$script"
 
     echo ""
     msg "$label"
 
-    if [[ ! -f "$INSTALL_DIR/$script" ]]; then
+    if [[ ! -f "$full_path" ]]; then
         warn "$script not found — skipping"
-        echo " SKIPPED: $label (script not found)" >> "$REPORT_FILE"
+        echo " SKIPPED: $label" >> "$REPORT_FILE"
         return
     fi
 
-    chmod +x "$INSTALL_DIR/$script"
+    chmod +x "$full_path"
 
-    if bash "$INSTALL_DIR/$script"; then
+    if bash "$full_path"; then
         ok "$label done"
         echo " OK: $label" >> "$REPORT_FILE"
     else
@@ -180,92 +141,56 @@ run_step() {
 export INSTALL_MODE="complete"
 
 section "Re-applying Scripts"
-run_step "packages-pacman"  "Syncing pacman packages"
-run_step "packages-aur"     "Syncing AUR packages"
-run_step "fonts"            "Syncing fonts"
-run_step "services"         "Syncing services"
+run_step "packaging/packages-pacman"   "Syncing pacman packages"
+run_step "packaging/packages-aur"      "Syncing AUR packages"
+run_step "config/fonts.sh"             "Syncing fonts"
+run_step "config/applications.sh"      "Syncing applications"
+run_step "services/system-services.sh" "Syncing system services"
+run_step "services/user-services.sh"   "Syncing user services"
 
 # ==========================================
-# 7. STOW — RE-APPLY CONFIG SYMLINKS
+# 7. RE-STOW CONFIG SYMLINKS
 # ==========================================
 section "Re-applying Config Symlinks"
-msg "Running stow..."
+msg "Running stow --restow..."
 
-STOW_ERRORS=()
 STOW_OUTPUT=$(stow --restow --target="$HOME/.config" config 2>&1) || true
 
 if echo "$STOW_OUTPUT" | grep -qi "conflict\|error\|cannot"; then
-    # Extract conflicting files clearly
-    while IFS= read -r line; do
-        if echo "$line" | grep -qi "conflict\|error\|cannot"; then
-            CONFLICTING_FILE=$(echo "$line" | grep -oP '(?<=existing target is )[^ ]+' || echo "$line")
-            warn "Stow conflict: $CONFLICTING_FILE"
-            STOW_ERRORS+=("$CONFLICTING_FILE")
-        fi
-    done <<< "$STOW_OUTPUT"
-
-    {
-        echo ""
-        echo "=============================================="
-        echo " STOW CONFLICTS"
-        echo "=============================================="
-        for f in "${STOW_ERRORS[@]}"; do
-            echo "   ~ $f"
-        done
-        echo " → Remove these files manually and re-run update.sh"
-    } >> "$REPORT_FILE"
+    warn "Stow conflicts detected:"
+    echo "$STOW_OUTPUT" | grep -i "conflict\|error\|cannot" | while read -r line; do
+        warn "  $line"
+    done
+    echo " STOW: Conflicts detected — resolve manually" >> "$REPORT_FILE"
 else
     ok "Config symlinks refreshed"
-    echo "" >> "$REPORT_FILE"
-    echo " STOW: Config symlinks refreshed successfully" >> "$REPORT_FILE"
+    echo " STOW: Config symlinks refreshed" >> "$REPORT_FILE"
 fi
 
 # ==========================================
-# 8. WALLPAPERS SYNC (only if already cloned)
+# 8. WALLPAPERS SYNC
 # ==========================================
 section "Wallpapers"
 
 if [[ -d "$WALLPAPERS_DIR/.git" ]]; then
-    msg "Wallpapers repo found — pulling latest..."
-    WALL_START=$SECONDS
-
+    msg "Pulling latest wallpapers..."
     if git -C "$WALLPAPERS_DIR" fetch origin && \
        git -C "$WALLPAPERS_DIR" reset --hard origin/HEAD 2>/dev/null; then
-        WALL_DURATION=$(( SECONDS - WALL_START ))
-        ok "Wallpapers updated in ${WALL_DURATION}s"
-        {
-            echo ""
-            echo "=============================================="
-            echo " WALLPAPERS"
-            echo "=============================================="
-            echo " Status   : Updated successfully"
-            echo " Duration : ${WALL_DURATION}s"
-        } >> "$REPORT_FILE"
+        ok "Wallpapers updated"
+        echo " WALLPAPERS: Updated" >> "$REPORT_FILE"
     else
         warn "Wallpapers update failed — keeping existing"
-        {
-            echo ""
-            echo "=============================================="
-            echo " WALLPAPERS"
-            echo "=============================================="
-            echo " Status : Update FAILED — existing wallpapers kept"
-        } >> "$REPORT_FILE"
+        echo " WALLPAPERS: Update failed" >> "$REPORT_FILE"
     fi
 else
     msg "Wallpapers not cloned on this machine — skipping"
-    {
-        echo ""
-        echo "=============================================="
-        echo " WALLPAPERS"
-        echo "=============================================="
-        echo " Status : Not cloned on this machine — skipped"
-    } >> "$REPORT_FILE"
+    echo " WALLPAPERS: Not cloned — skipped" >> "$REPORT_FILE"
 fi
 
 # ==========================================
 # 9. RELOAD
 # ==========================================
-run_step "reload" "Reloading UI"
+run_step "services/reload.sh" "Reloading UI"
 
 # ==========================================
 # 10. DONE
@@ -280,8 +205,6 @@ DURATION=$(( SECONDS - START_TIME ))
     echo " Total duration : ${DURATION}s"
     echo " Rolled forward : $LOCAL_SHORT → $REMOTE_SHORT"
     echo "=============================================="
-    echo " END OF REPORT"
-    echo "=============================================="
 } >> "$REPORT_FILE"
 
 echo ""
@@ -292,4 +215,4 @@ gum style \
     "$LOCAL_SHORT → $REMOTE_SHORT — ${DURATION}s"
 
 echo ""
-msg "Update report saved to: $REPORT_FILE"
+msg "Report saved to: $REPORT_FILE"

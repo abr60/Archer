@@ -1,0 +1,46 @@
+# =============================================================================
+# pkgs-aur.txt — AUR packages (minimal)
+# Installed via: yay -S --needed --noconfirm
+# =============================================================================
+
+# --- Wallpaper & Theming ---
+awww
+matugen-bin
+
+# --- Fonts ---
+# NOTE: Custom fonts in Archer/fonts/ are handled by config/fonts.sh
+# AUR fonts go here
+ttf-rubik-vf
+woff2-font-awesome
+
+# --- Cursor ---
+bibata-cursor-theme
+
+# --- Security & Authentication ---
+howdy-next-git
+linux-enable-ir-emitter-bin
+
+# --- Browser ---
+brave-bin
+
+# --- Launcher ---
+walker-bin
+
+# --- PDF & Documents ---
+sioyek
+
+# --- Media ---
+rmpc
+
+# --- System ---
+limine-mkinitcpio-hook
+xdg-terminal-exe
+
+# --- Terminal Fun ---
+cbonsai
+cowfortune
+
+# --- Power & Hardware ---
+thinkfan
+thinkfan-cli
+# batty

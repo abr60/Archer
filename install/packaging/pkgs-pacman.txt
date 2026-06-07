@@ -1,0 +1,173 @@
+# =============================================================================
+# pkgs-pacman.txt — Official Arch repo packages (minimal)
+# Installed via: sudo pacman -S --needed --noconfirm
+# Every package here must be necessary for a functional Hyprland session.
+# GPU drivers are handled dynamically by install/extras/gpu-driver.sh
+# =============================================================================
+
+# --- Core System ---
+starship
+tmux
+stow
+github-cli
+unzip
+inxi
+expac
+cpio
+
+# --- Network ---
+openbsd-netcat
+ufw
+avahi
+nss-mdns
+whois
+wireguard-tools
+
+# --- Security & Authentication ---
+fprintd
+gnome-keyring
+libsecret
+polkit-gnome
+
+# --- Desktop Environment (Hyprland Ecosystem) ---
+hyprland
+uwsm
+hypridle
+hyprlock
+hyprcursor
+hyprpicker
+hyprsunset
+xdg-desktop-portal-hyprland
+xdg-desktop-portal-gtk
+xdg-terminal-exec
+xdg-user-dirs
+xdg-user-dirs-gtk
+swaync
+waybar
+swayosd
+rofi
+sddm
+brightnessctl
+grim
+slurp
+satty
+wev
+wtype
+socat
+
+# --- Audio ---
+pamixer
+pavucontrol
+playerctl
+cava
+
+# --- Multimedia Codecs ---
+gst-libav
+gst-plugins-bad
+gst-plugins-ugly
+gst-plugin-pipewire
+
+# --- System Utilities ---
+btop
+baobab
+fd
+fzf
+zoxide
+fcitx5
+fcitx5-gtk
+fcitx5-qt
+kernel-modules-hook
+pacman-contrib
+man-db
+less
+bat
+eza
+tree
+ncdu
+dust
+ripgrep
+jq
+yq
+tldr
+fastfetch
+
+# --- Hardware & Power ---
+# NOTE: TLP and power-profiles-daemon conflict — TLP chosen for ThinkPad
+tlp
+tlp-rdw
+thermald
+lm_sensors
+
+# --- TUI Tools (used by Archer bin scripts) ---
+impala
+bluetui
+wiremix
+# lazydocker
+lazygit
+
+# --- Fonts ---
+ttf-jetbrains-mono-nerd
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+inter-font
+fontconfig
+
+# --- Theming ---
+nwg-look
+qt5ct
+qt6ct
+kvantum
+kvantum-qt5
+gnome-themes-extra
+yaru-icon-theme
+
+# --- Applications ---
+ghostty
+nautilus
+nautilus-python
+gnome-disk-utility
+sushi
+imv
+gvfs-mtp
+gvfs-smb
+gvfs-nfs
+mpv
+ffmpeg
+mpd
+# mpc
+mpd-mpris
+mpv-mpris
+yazi
+imagemagick
+ffmpegthumbnailer
+chafa
+pdfarranger
+evince
+localsend
+
+# --- OCR ---
+tesseract
+tesseract-data-eng
+
+# --- Android ---
+android-tools
+android-udev
+
+# --- Wayland Utilities ---
+wl-clipboard
+cliphist
+
+# --- Media Download ---
+yt-dlp
+python-pip
+python-gobject
+
+# --- CLI Utilities ---
+gum
+translate-shell
+figlet
+lolcat
+cmatrix
+cowsay
+entr

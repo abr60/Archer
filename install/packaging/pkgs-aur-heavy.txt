@@ -1,0 +1,28 @@
+# =============================================================================
+# pkgs-aur-heavy.txt — AUR packages (complete only)
+# Installed via: yay -S --needed --noconfirm
+# =============================================================================
+
+# --- Browser ---
+google-chrome
+
+# --- Editor ---
+visual-studio-code-bin
+typora
+
+# --- Media ---
+mpv-uosc-git
+mpv-thumbfast-git
+# mpv-autosub-git
+python-ffmpeg-python
+
+# --- Spotify ---
+spotify
+spicetify-cli
+spicetify-marketplace-bin
+
+# --- Heavy — install manually, not tracked ---
+# waydroid
+# waydroid-helper
+  subliminal        # broken dep chain currently
+# obs-studio-git    # if you need latest OBS
