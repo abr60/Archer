@@ -67,19 +67,19 @@ case "$choice" in
     " Dotfiles")
         sync_repo "Dotfiles" "$HOME/dots" "sync: $(date +%Y-%m-%d)"
         ;;
-    "󰣇  Archer")
+    "󰣇 Archer")
         sync_repo "Archer" "$HOME/Archer" "sync: $(date +%Y-%m-%d)"
         ;;
-    "󰸉  Wallpapers")
+    "󰸉 Wallpapers")
         sync_repo "Wallpapers" "$HOME/Wallpapers" "sync: $(date +%Y-%m-%d)"
         ;;
-    "  Waybar Config")
+    " Waybar Config")
         sync_repo "Waybar Config" "$HOME/waybar" "sync: $(date +%Y-%m-%d)"
         ;;
-    "󰔎  Assets")
+    "󰔎 Assets")
         sync_repo "Assets" "$HOME/Assets" "theme update: $(date +%Y-%m-%d)"
         ;;
-    "  Open Lazygit")
+    " Open Lazygit")
         lazygit
         ;;
     *)
