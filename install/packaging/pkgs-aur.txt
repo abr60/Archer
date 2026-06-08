@@ -10,14 +10,14 @@ matugen-bin
 # --- Fonts ---
 # NOTE: Custom fonts in Archer/fonts/ are handled by config/fonts.sh
 # AUR fonts go here
-ttf-rubik-vf
+#ttf-rubik-vf
 woff2-font-awesome
 
 # --- Cursor ---
 bibata-cursor-theme
 
 # --- Security & Authentication ---
-howdy-next-git
+howdy-next
 linux-enable-ir-emitter-bin
 
 # --- Browser ---
@@ -27,13 +27,13 @@ brave-bin
 walker-bin
 
 # --- PDF & Documents ---
-sioyek
+sioyek-dev
 
 # --- Media ---
 rmpc
 
 # --- System ---
-limine-mkinitcpio-hook
+#limine-mkinitcpio-hook
 xdg-terminal-exe
 
 # --- Terminal Fun ---
@@ -41,6 +41,6 @@ cbonsai
 cowfortune
 
 # --- Power & Hardware ---
-thinkfan
+#thinkfan
 thinkfan-cli
 # batty

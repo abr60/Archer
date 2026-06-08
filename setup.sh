@@ -163,7 +163,7 @@ run_step "services/system-services.sh" "Enabling system services"      false
 run_step "services/user-services.sh"   "Enabling user services"        false
 
 # ── Plugins ───────────────────────────────────────────────────────────────────
-run_step "extras/plugins.sh"          "Installing Hyprland plugins"    false
+#run_step "extras/plugins.sh"          "Installing Hyprland plugins"    false
 
 # ── Wallpapers (optional) ─────────────────────────────────────────────────────
 echo ""

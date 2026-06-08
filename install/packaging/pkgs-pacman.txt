@@ -39,7 +39,7 @@ hyprpicker
 hyprsunset
 xdg-desktop-portal-hyprland
 xdg-desktop-portal-gtk
-xdg-terminal-exec
+#xdg-terminal-exec
 xdg-user-dirs
 xdg-user-dirs-gtk
 swaync
