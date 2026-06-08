@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# =============================================================================
+# archer-set-theme — Pick which wallpaper collection to use
+# Writes selected collection to ~/.local/state/Archer/current-collection
+# Collections live in ~/Wallpapers/<collection-name>/
+#
+# Light mode auto-detection:
+#   Collection name contains "light" → matugen --mode light
+#   Everything else                  → matugen --mode dark
+# =============================================================================
+
+WALLPAPERS_DIR="$HOME/Wallpapers"
+STATE_DIR="$HOME/.local/state/Archer"
+COLLECTION_FILE="$STATE_DIR/current-collection"
+
+# ─── Guard ────────────────────────────────────────────────────────────────────
+if [[ ! -d "$WALLPAPERS_DIR" ]]; then
+    notify-send "Archer" "Wallpapers directory not found at $WALLPAPERS_DIR"
+    exit 1
+fi
+
+# ─── Find collections ─────────────────────────────────────────────────────────
+mapfile -t COLLECTIONS < <(
+    find "$WALLPAPERS_DIR" -mindepth 1 -maxdepth 1 -type d \
+    | sort \
+    | xargs -I{} basename {}
+)
+
+if [[ ${#COLLECTIONS[@]} -eq 0 ]]; then
+    notify-send "Archer" "No collections found in $WALLPAPERS_DIR"
+    exit 1
+fi
+
+# ─── Current collection ───────────────────────────────────────────────────────
+CURRENT=$(cat "$COLLECTION_FILE" 2>/dev/null || echo "")
+
+# ─── Pick via rofi ────────────────────────────────────────────────────────────
+SELECTED=$(printf '%s\n' "${COLLECTIONS[@]}" | rofi -dmenu \
+    -p "Select collection" \
+    -theme "$HOME/.config/rofi/launchers/type-1/style-5.rasi" \
+    -select "$CURRENT")
+
+[[ -z "$SELECTED" ]] && exit 0
+
+# ─── Validate ─────────────────────────────────────────────────────────────────
+if [[ ! -d "$WALLPAPERS_DIR/$SELECTED" ]]; then
+    notify-send "Archer" "Collection '$SELECTED' not found"
+    exit 1
+fi
+
+# ─── Save selection ───────────────────────────────────────────────────────────
+mkdir -p "$STATE_DIR"
+echo "$SELECTED" > "$COLLECTION_FILE"
+
+# ─── Detect mode ──────────────────────────────────────────────────────────────
+if [[ "$SELECTED" == *light* ]]; then
+    MODE="light"
+else
+    MODE="dark"
+fi
+
+notify-send "Archer" "Collection set to '$SELECTED' ($MODE mode)" \
+    --icon=preferences-desktop-wallpaper
+
+# ─── Auto-launch set-bg to pick a wallpaper from new collection ───────────────
+if command -v archer-set-bg &>/dev/null; then
+    archer-set-bg
+fi
