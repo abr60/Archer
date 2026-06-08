@@ -25,22 +25,25 @@ brave-bin
 
 # --- Launcher ---
 walker-bin
+localsend-bin
+pinta
+#yaru-icon-theme
 
 # --- PDF & Documents ---
-sioyek-dev
+#sioyek-dev
 
 # --- Media ---
 rmpc
 
 # --- System ---
 #limine-mkinitcpio-hook
-xdg-terminal-exe
+xdg-terminal-exec
 
 # --- Terminal Fun ---
 cbonsai
 cowfortune
 
 # --- Power & Hardware ---
-#thinkfan
+thinkfan
 thinkfan-cli
 # batty

@@ -76,7 +76,20 @@ mkdir -p "$HOME/.local/state/Archer/toggles/hypr"
 ok "Archer linked to $ARCHER_DIR"
 
 # ==========================================
-# 6. RUN INSTALL STEPS
+# 6. MAKE ALL SCRIPTS EXECUTABLE
+# ==========================================
+msg "Setting executable permissions..."
+find "$DOTS_DIR" -type f \( \
+    -path "*/bin/*" \
+    -o -path "*/install/*" \
+    -o -path "*/config/hypr/scripts/*" \
+    -o -name "setup.sh" \
+    -o -name "update.sh" \
+\) -exec chmod +x {} +
+ok "Script permissions set"
+
+# ==========================================
+# 7. RUN INSTALL STEPS
 # ==========================================
 START_TIME=$SECONDS
 
@@ -115,7 +128,7 @@ run_step "config/zsh.sh"              "Setting up Zsh"                 false
 
 # ── Configs & dotfiles ────────────────────────────────────────────────────────
 run_step "config/dotfiles.sh"         "Symlinking config files"        true
-#run_step "config/pam.sh"              "Installing PAM files"           false
+#run_step "config/pam.sh"             "Installing PAM files"           false
 run_step "config/fonts.sh"            "Installing fonts"               false
 run_step "config/applications.sh"     "Setting up applications"        false
 
@@ -170,7 +183,7 @@ fi
 run_step "services/reload.sh"         "Reloading UI"                   false
 
 # ==========================================
-# 7. DONE
+# 8. DONE
 # ==========================================
 DURATION=$(( SECONDS - START_TIME ))
 echo ""

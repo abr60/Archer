@@ -9,6 +9,7 @@
 starship
 tmux
 stow
+zsh
 github-cli
 unzip
 inxi
@@ -22,6 +23,7 @@ avahi
 nss-mdns
 whois
 wireguard-tools
+xorg-xhost
 
 # --- Security & Authentication ---
 fprintd
@@ -120,7 +122,6 @@ qt6ct
 kvantum
 kvantum-qt5
 gnome-themes-extra
-yaru-icon-theme
 
 # --- Applications ---
 ghostty
@@ -144,7 +145,6 @@ ffmpegthumbnailer
 chafa
 pdfarranger
 evince
-localsend
 
 # --- OCR ---
 tesseract

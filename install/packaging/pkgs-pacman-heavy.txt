@@ -18,7 +18,6 @@ qbittorrent
 gifsicle
 kdenlive
 xournalpp
-pinta
 gnome-calculator
 
 # --- Hardware ---

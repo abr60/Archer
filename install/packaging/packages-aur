@@ -237,9 +237,11 @@ if [[ "$INSTALL_MODE" == "complete" ]]; then
 fi
 
 # --- Process pacman fallbacks ---
-if [[ -f "$FALLBACK_FILE" ]] && [[ -s "$FALLBACK_FILE" ]]; then
+process_pacman_fallbacks() {
+    [[ -f "$FALLBACK_FILE" ]] && [[ -s "$FALLBACK_FILE" ]] || return 0
+
     mapfile -t FALLBACKS < "$FALLBACK_FILE"
-    local_count=${#FALLBACKS[@]}
+    local local_count=${#FALLBACKS[@]}
 
     section "Pacman Fallbacks — $local_count packages queued from packages-pacman"
 
@@ -264,7 +266,9 @@ if [[ -f "$FALLBACK_FILE" ]] && [[ -s "$FALLBACK_FILE" ]]; then
     done
 
     rm -f "$FALLBACK_FILE"
-fi
+}
+
+process_pacman_fallbacks
 
 SECTION_DURATION=$(( SECONDS - SECTION_START ))
 
