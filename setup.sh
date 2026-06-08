@@ -12,7 +12,6 @@ export ARCHER_DIR="$HOME/.local/share/Archer"
 INSTALL_DIR="$DOTS_DIR/install"
 
 source "$INSTALL_DIR/lib/helpers.sh"
-source "$INSTALL_DIR/lib/backup.sh"
 
 # ==========================================
 # 1. DEPENDENCY CHECK
@@ -43,8 +42,7 @@ gum style --foreground 214 \
     "• SETUP binaries, fonts, and desktop apps" \
     "• CONFIGURE system settings and services" \
     "• CHANGE your default shell to Zsh" \
-    "• INSTALL Hyprland plugins via hyprpm" \
-    "• BACKUP existing configs before overwriting"
+    "• INSTALL Hyprland plugins via hyprpm"
 
 echo ""
 gum confirm "Understood. Proceed?" || { msg "Aborted safely."; exit 0; }
@@ -69,12 +67,7 @@ INSTALL_MODE=$(gum choose --cursor "▶ " --selected.foreground 82 "minimal" "co
 ok "Mode selected: $INSTALL_MODE"
 
 # ==========================================
-# 5. INIT BACKUP SESSION
-# ==========================================
-init_backup_session
-
-# ==========================================
-# 6. LINK ARCHER INTO ~/.local/share/Archer
+# 5. LINK ARCHER INTO ~/.local/share/Archer
 # ==========================================
 msg "Linking Archer to $ARCHER_DIR..."
 mkdir -p "$HOME/.local/share"
@@ -83,7 +76,7 @@ mkdir -p "$HOME/.local/state/Archer/toggles/hypr"
 ok "Archer linked to $ARCHER_DIR"
 
 # ==========================================
-# 7. RUN INSTALL STEPS
+# 6. RUN INSTALL STEPS
 # ==========================================
 START_TIME=$SECONDS
 
@@ -177,12 +170,7 @@ fi
 run_step "services/reload.sh"         "Reloading UI"                   false
 
 # ==========================================
-# 8. CLOSE BACKUP SESSION
-# ==========================================
-cleanup_backup_session
-
-# ==========================================
-# 9. DONE
+# 7. DONE
 # ==========================================
 DURATION=$(( SECONDS - START_TIME ))
 echo ""
