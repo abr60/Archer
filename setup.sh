@@ -146,7 +146,7 @@ run_step "hardware/unmount-fuse.sh"       "FUSE unmount hook"              false
 run_step "hardware/swayosd.sh"            "Enabling SwayOSD"               false
 run_step "hardware/battery-monitor.sh"    "Battery monitor timer"          false
 run_step "hardware/recover-monitor.sh"    "Monitor recovery service"       false
-run_step "hardware/monitor-autodetect.sh" "Auto-detecting monitors"        false
+#run_step "hardware/monitor-autodetect.sh" "Auto-detecting monitors"        false
 
 # ── Extras ────────────────────────────────────────────────────────────────────
 run_step "extras/thinkfan.sh"         "Configuring Thinkfan"           false
