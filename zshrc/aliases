@@ -31,3 +31,12 @@ dots() {
 }
 
 alias assets='cd ~/Assets && git add . && git commit -m "sync: $(date +%Y-%m-%d\ %H:%M)" || true && git push && cd -'
+
+Archer() {
+    local msg="${1:-sync: $(date)}"
+    cd ~/Archer && \
+    git add . && \
+    git commit -m "$msg" && \
+    git push && \
+    cd -
+}

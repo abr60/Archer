@@ -11,12 +11,11 @@ section "MIME Type Defaults"
 # Update desktop database first
 update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
 
-# Browser — Brave
-xdg-settings set default-web-browser brave-browser.desktop 2>/dev/null || \
-xdg-settings set default-web-browser chromium.desktop 2>/dev/null || true
-xdg-mime default brave-browser.desktop x-scheme-handler/http  2>/dev/null || true
-xdg-mime default brave-browser.desktop x-scheme-handler/https 2>/dev/null || true
-ok "Default browser: Brave"
+# Browser — Google Chrome
+xdg-settings set default-web-browser google-chrome.desktop 2>/dev/null || true
+xdg-mime default google-chrome.desktop x-scheme-handler/http  2>/dev/null || true
+xdg-mime default google-chrome.desktop x-scheme-handler/https 2>/dev/null || true
+ok "Default browser: Google Chrome"
 
 # File manager — Nautilus
 xdg-mime default org.gnome.Nautilus.desktop inode/directory

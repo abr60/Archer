@@ -80,12 +80,12 @@ ok "Archer linked to $ARCHER_DIR"
 # ==========================================
 msg "Setting executable permissions..."
 find "$DOTS_DIR" -type f \( \
-    -path "*/bin/*" \
-    -o -path "*/install/*" \
-    -o -path "*/config/hypr/scripts/*" \
-    -o -name "setup.sh" \
-    -o -name "update.sh" \
+    -name "*.sh" \
+    -o -name "*.bash" \
+    -o -path "*/bin/*" \
+    -o -path "*/scripts/*" \
 \) -exec chmod +x {} +
+chmod +x "$DOTS_DIR/setup.sh" "$DOTS_DIR/update.sh"
 ok "Script permissions set"
 
 # ==========================================
@@ -128,7 +128,7 @@ run_step "config/zsh.sh"              "Setting up Zsh"                 false
 
 # ── Configs & dotfiles ────────────────────────────────────────────────────────
 run_step "config/dotfiles.sh"         "Symlinking config files"        true
-#run_step "config/pam.sh"             "Installing PAM files"           false
+run_step "config/pam.sh"             "Installing PAM files"           false
 run_step "config/fonts.sh"            "Installing fonts"               false
 run_step "config/applications.sh"     "Setting up applications"        false
 
@@ -169,7 +169,7 @@ run_step "services/system-services.sh" "Enabling system services"      false
 run_step "services/user-services.sh"   "Enabling user services"        false
 
 # ── Plugins ───────────────────────────────────────────────────────────────────
-#run_step "extras/plugins.sh"          "Installing Hyprland plugins"    false
+run_step "extras/plugins.sh"          "Installing Hyprland plugins"    false
 
 # ── Wallpapers (optional) ─────────────────────────────────────────────────────
 echo ""

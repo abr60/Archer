@@ -28,8 +28,9 @@ xorg-xhost
 # --- Security & Authentication ---
 fprintd
 gnome-keyring
+hyprpolkitagent
 libsecret
-polkit-gnome
+#polkit-gnome
 
 # --- Desktop Environment (Hyprland Ecosystem) ---
 hyprland

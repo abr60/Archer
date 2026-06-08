@@ -6,7 +6,8 @@
 #   Graphical (hyprlock/sddm): howdy → fingerprint → password
 #   Terminal (sudo):           howdy → password → fingerprint
 #
-# Requires: howdy-next-git, linux-enable-ir-emitter-bin
+# Requires: howdy-next-git, linux-enable-ir-emitter-bin, xorg-xhost
+# PAM configuration is handled separately by config/pam.sh
 # =============================================================================
 
 set -euo pipefail
@@ -25,13 +26,15 @@ if ! is_installed linux-enable-ir-emitter-bin; then
     exit 0
 fi
 
+# ─── Ensure xorg-xhost is installed (required for IR emitter GTK window) ─────
+ensure_installed xorg-xhost
+
 # ─── Detect IR camera ─────────────────────────────────────────────────────────
 section "IR Camera Detection"
 
 IR_DEVICE=""
 IR_PATH="/dev/v4l/by-path/pci-0000:00:14.0-usb-0:4:1.2-video-index0"
 
-# Verify the by-path symlink exists and resolves to a GREY camera
 if [[ -e "$IR_PATH" ]]; then
     FORMAT=$(v4l2-ctl --device="$IR_PATH" --list-formats 2>/dev/null | grep -i grey || true)
     if [[ -n "$FORMAT" ]]; then
@@ -40,7 +43,6 @@ if [[ -e "$IR_PATH" ]]; then
     fi
 fi
 
-# Fallback: scan all video devices for greyscale output
 if [[ -z "$IR_DEVICE" ]]; then
     warn "Stable by-path not found — scanning /dev/video* for IR camera..."
     for dev in /dev/video*; do
@@ -74,9 +76,7 @@ else
     echo ""
 
     if ask_yes_no "Configure IR emitter now?"; then
-        # Grant root display access for GTK window
         xhost +si:localuser:root 2>/dev/null || true
-
         sudo linux-enable-ir-emitter configure
         leire_exit=$?
         if [[ $leire_exit -eq 0 || $leire_exit -eq 2 ]]; then
@@ -84,8 +84,6 @@ else
         else
             warn "Configuration failed — continuing anyway"
         fi
-
-        # Revoke display access
         xhost -si:localuser:root 2>/dev/null || true
     else
         warn "Skipping IR emitter configuration — Howdy may not work"
@@ -93,7 +91,6 @@ else
     fi
 fi
 
-# Enable and start the service
 sudo systemctl enable --now "$LEIRE_SERVICE" && \
     ok "linux-enable-ir-emitter.service enabled and started" || \
     warn "Failed to enable linux-enable-ir-emitter.service"
@@ -119,7 +116,6 @@ fi
 # ─── Write Howdy config ───────────────────────────────────────────────────────
 section "Howdy Configuration"
 
-# Backup existing config
 [[ -f /etc/howdy/config.ini ]] && \
     sudo cp /etc/howdy/config.ini /etc/howdy/config.ini.bak && \
     ok "Existing config backed up to /etc/howdy/config.ini.bak"
@@ -141,7 +137,7 @@ warn_no_device = true
 max_height = 240
 frame_width = 320
 frame_height = 320
-dark_threshold = 50
+dark_threshold = 70
 force_mjpeg = false
 exposure = -1
 device_fps = 0
@@ -166,68 +162,18 @@ HOWDYCONF
 
 ok "Howdy config written to /etc/howdy/config.ini"
 
-# ─── PAM Configuration ────────────────────────────────────────────────────────
-section "PAM Configuration"
-
-# sudo — howdy → password → fingerprint
-msg "Configuring PAM for sudo..."
-sudo tee /etc/pam.d/sudo > /dev/null << 'PAMEOF'
-#%PAM-1.0
-# howdy → password → fingerprint
-#%PAM-1.0
-auth       sufficient   pam_howdy.so
-auth       include      system-auth
-
-auth       sufficient   pam_fprintd.so
-auth       required     pam_deny.so
-
-account    required     pam_unix.so
-session    required     pam_unix.so
-PAMEOF
-ok "sudo PAM: howdy → password → fingerprint"
-
-# hyprlock — howdy → fingerprint → password
-msg "Configuring PAM for hyprlock..."
-sudo tee /etc/pam.d/hyprlock > /dev/null << 'PAMEOF'
-#%PAM-1.0
-# howdy → fingerprint → password
-# TODO: hyprlock PAM — needs further investigation
-# pam_howdy.so workaround options don't work reliably with hyprlock yet
-# Current workaround: use fingerprint or password at hyprlock
-warn "hyprlock howdy integration pending — skipping for now"
-PAMEOF
-ok "hyprlock PAM: howdy → fingerprint → password"
-
-# sddm — howdy → fingerprint → password
-msg "Configuring PAM for sddm..."
-sudo tee /etc/pam.d/sddm > /dev/null << 'PAMEOF'
-#%PAM-1.0
-# howdy → fingerprint → password
-#%PAM-1.0
-auth       sufficient   pam_howdy.so
-auth       sufficient   pam_fprintd.so
-auth       sufficient   pam_unix.so try_first_pass nullok
-auth       required     pam_deny.so
-
-account    include      system-login
-session    include      system-login
-PAMEOF
-ok "sddm PAM: howdy → fingerprint → password"
-
-# ─── Clear old face models and enroll fresh ───────────────────────────────────
+# ─── Face Model Enrollment ────────────────────────────────────────────────────
 section "Face Model Enrollment"
 
 HOWDY_MODELS="/etc/howdy/models"
 sudo mkdir -p "$HOWDY_MODELS"
 
-# Remove any existing models for clean slate
 if [[ -n "$(sudo ls -A "$HOWDY_MODELS" 2>/dev/null)" ]]; then
     msg "Removing existing face models for fresh enrollment..."
     sudo howdy clear -y 2>/dev/null || sudo rm -f "$HOWDY_MODELS"/*.dat 2>/dev/null || true
     ok "Old models cleared"
 fi
 
-# Enroll face
 msg "Ready to enroll your face."
 msg "Look directly at the IR camera when prompted."
 echo ""
@@ -237,7 +183,6 @@ if ask_yes_no "Enroll your face now?"; then
         err "Enrollment failed"
         warn "Run manually: sudo howdy add"
     }
-
     msg "Testing face recognition..."
     sudo howdy test && ok "Face recognition working" || \
         warn "Test failed — check camera position and lighting"
@@ -248,12 +193,10 @@ fi
 
 # ─── Summary ──────────────────────────────────────────────────────────────────
 section "Howdy Setup Complete"
-ok "IR camera       : $IR_DEVICE"
-ok "Models          : $MODELS_DIR"
-ok "Config          : /etc/howdy/config.ini"
-ok "PAM sudo        : howdy → password → fingerprint"
-ok "PAM hyprlock    : howdy → fingerprint → password"
-ok "PAM sddm        : howdy → fingerprint → password"
+ok "IR camera  : $IR_DEVICE"
+ok "Models     : $MODELS_DIR"
+ok "Config     : /etc/howdy/config.ini"
+ok "PAM        : configured separately via config/pam.sh"
 echo ""
 warn "If face recognition fails: sudo howdy test"
 warn "To re-enroll: sudo howdy clear -y && sudo howdy add"

@@ -11,15 +11,15 @@
 TOOLBOX_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
 
 # --- Script References -------------------------------------------------------
-MEDIA="$TOOLBOX_DIR/media-download"
-DOTS="$TOOLBOX_DIR/dots-push"
-GIF="$TOOLBOX_DIR/mp4-to-gif"
-WG="$TOOLBOX_DIR/wg-manager"
-SCAN="$TOOLBOX_DIR/clamav-scanner"
-SPOOF="$TOOLBOX_DIR/mac-spoofer"
-META="$TOOLBOX_DIR/metadata_cleaner"
-SHRED="$TOOLBOX_DIR/shredder"
-WIFIQR="$TOOLBOX_DIR/wifi-qr"
+MEDIA="$TOOLBOX_DIR/archer-media-download"
+DOTS="$TOOLBOX_DIR/archer-dots-push"
+GIF="$TOOLBOX_DIR/archer-mp4-to-gif"
+WG="$TOOLBOX_DIR/archer-wg-manager"
+SCAN="$TOOLBOX_DIR/archer-clamav-scanner"
+SPOOF="$TOOLBOX_DIR/archer-mac-spoofer"
+META="$TOOLBOX_DIR/archer-metadata_cleaner"
+SHRED="$TOOLBOX_DIR/archer-shredder"
+WIFIQR="$TOOLBOX_DIR/archer-wifi-qr"
 
 # --- Theme (Catppuccin Macchiato) --------------------------------------------
 BG="#1e2030"
