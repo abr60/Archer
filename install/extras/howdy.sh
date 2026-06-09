@@ -131,7 +131,7 @@ abort_if_lid_closed = true
 disabled = false
 
 [video]
-timeout = 8
+timeout = 5
 device_path = $IR_DEVICE
 warn_no_device = true
 max_height = 240
