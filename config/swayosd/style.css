@@ -1,43 +1,47 @@
-/* it's better :)*/
+/* Matugen Earth/Olive Theme for swayOSD */
 
-@import "../omarchy/current/theme/swayosd.css";
+@import "../swayosd/matugen.css";
 
 window {
-  border-radius: 10px;
-  opacity: 0.97;
-  border: 2px solid @border-color;
-
-  background-color: @background-color;
+    border-radius: 12px;
+    opacity: 0.95;
+    /* Use outline for a subtle border that matches the theme */
+    border: 2px solid @outline_variant;
+    /* surface_container gives it a slightly distinct look from the wallpaper */
+    background-color: @surface_container;
 }
 
 label {
-  font-family: 'JetBrainsMono Nerd Font';
-  font-size: 11pt;
-
-  color: @label;
+    font-family: 'JetBrainsMono Nerd Font';
+    font-size: 11pt;
+    font-weight: bold;
+    /* Switched from @error to @on_surface for readability */
+    color: @on_surface;
 }
 
 image {
-  color: @image;
+    /* Primary (cacb77) looks great as an accent icon color */
+    color: @primary;
 }
 
 progressbar {
     border-radius: 999px;
-    padding-bottom:8px;
+    padding-bottom: 8px;
     margin: 8px 0 0 0;
-    min-height: 8px;
+    min-height: 10px;
     min-width: 180px;
 }
 
 progressbar trough {
-    background: alpha(@border-color, 0.15);
+    /* Using alpha on the container color for a subtle recessed look */
+    background: @surface_container_highest;
     border-radius: 999px;
-    border: none;
-    min-height: 8px;
+    border: 1px solid @outline_variant;
+    min-height: 10px;
 }
 
 progress {
-  background-color: alpha(@border-color, 0.8);
-  border-radius: 999px;
-  
+    /* High visibility accent for the actual progress */
+    background-color: @primary;
+    border-radius: 999px;
 }

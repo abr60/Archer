@@ -35,6 +35,3 @@ source = ~/.config/hypr/gestures.conf
 
 
 
-
-# QuickShell Layer Rules
-source = /home/pseudo/.config/quickshell/hyprland-layer-config.conf

@@ -15,16 +15,32 @@ post_hook = "hyprctl reload"
 [templates.hyprlock]
 input_path = "~/.config/matugen/templates/hyprlock.conf"
 output_path = "~/.config/hypr/hyprlock.conf"
+post_hook = "refresh-hyprlock"
 
 [templates.waybar]
 input_path = "~/.config/matugen/templates/waybar.css"
 output_path = "~/.config/waybar/matugen.css"
-post_hook = "pkill -SIGUSR2 waybar"
+post_hook = "refresh-waybar"
 
 [templates.swaync]
 input_path = "~/.config/matugen/templates/swaync.css"
 output_path = "~/.config/swaync/CSS/matugen.css"
 post_hook = "swaync-client -rs"
+
+[templates.swayosd]
+input_path = '~/.config/matugen/templates/swayosd.css'
+output_path = '~/.config/swayosd/matugen.css'
+post_hook = 'refresh-swayosd'
+
+[templates.walker]
+input_path = '~/.config/matugen/templates/walker.css'
+output_path = '~/.config/walker/matugen.css'
+post_hook = "refresh-walker"
+
+[templates.ghostty]
+input_path = '~/.config/matugen/templates/ghostty'
+output_path = '~/.config/ghostty/themes/matugen'
+post_hook = 'pkill -SIGUSR2 ghostty'
 
 [templates.rofi]
 input_path = "~/.config/matugen/templates/rofi.rasi"
@@ -42,3 +58,4 @@ output_path = "~/.config/rmpc/themes/matugen.ron"
 input_path = "~/.config/matugen/templates/spicetify.ini"
 output_path = "~/.config/spicetify/Themes/Comfy/color.ini"
 post_hook = "spicetify apply -n"
+

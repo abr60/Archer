@@ -3,6 +3,6 @@
 # omarchy:summary=Reset Waybar config to Omarchy defaults
 # omarchy:examples=omarchy refresh waybar
 
-refresh-config waybar/config.jsonc
+#refresh-config waybar/config.jsonc
 refresh-config waybar/style.css
 restart-waybar

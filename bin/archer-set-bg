@@ -214,17 +214,3 @@ else
     matugen image "$NEW_WP" --mode "$MATUGEN_MODE" --json hex \
         > "$HOME/.cache/matugen/colors.json"
 fi
-
-# ─── Wait for waybar CSS then reload ─────────────────────────────────────────
-WAYBAR_CSS="$HOME/.config/waybar/matugen.css"
-for i in $(seq 1 20); do
-    if [[ -f "$WAYBAR_CSS" ]] && \
-       (( $(date +%s) - $(date -r "$WAYBAR_CSS" +%s 2>/dev/null || echo 0) <= 5 )); then
-        break
-    fi
-    sleep 0.1
-done
-sleep 0.15
-
-# matugen post_hooks handle waybar/swaync/hyprland reloads automatically
-# via config.toml — no need to call them here
