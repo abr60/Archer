@@ -1,0 +1,81 @@
+* {
+    /* Color Palette derived from your SwayNC */
+    bg-dark:      #0e191d;  /* Dark background */
+    bg-surface:   #13242b;  /* SwayNC element background */
+    fg-main:      #e3f2f7;  /* Bright text */
+    fg-muted:     #8fa3a8;  /* Dimmed text / shortcuts */
+    accent-teal:  #1ea3b3;  /* Active/Selected vibrant teal */
+    accent-dim:   #185d66;  /* Selected background hue */
+
+    /* Universal properties */
+    background-color:   transparent;
+    text-color:         @fg-main;
+    font:               "JetBrainsMono Nerd Font 10";
+}
+
+window {
+    background-color:   @bg-dark;
+    border:             1px;
+    border-color:       @accent-dim;
+    border-radius:      8px;
+    width:              450px;
+    padding:            10px;
+}
+
+mainbox {
+    children:           [ inputbar, listview ];
+    spacing:            10px;
+}
+
+inputbar {
+    background-color:   @bg-surface;
+    border-radius:      6px;
+    padding:            8px 12px;
+    children:           [ prompt, entry ];
+}
+
+prompt {
+    text-color:         @accent-teal;
+    margin:             0px 10px 0px 0px;
+}
+
+entry {
+    text-color:         @fg-main;
+    placeholder:        "Search...";
+    placeholder-color:  @fg-muted;
+}
+
+listview {
+    fixed-height:       true;
+    lines:              8;
+    spacing:            4px;
+    scrollbar:          false;
+}
+
+element {
+    padding:            8px 12px;
+    border-radius:      6px;
+    background-color:   transparent;
+}
+
+element normal normal, element alternate normal {
+    background-color:   transparent;
+    text-color:         @fg-main;
+}
+
+element selected normal {
+    background-color:   @accent-dim;
+    text-color:         @fg-main;
+    border:             1px;
+    border-color:       @accent-teal;
+}
+
+element-icon {
+    size:               20px;
+    margin:             0px 12px 0px 0px;
+}
+
+element-text {
+    text-color:         inherit;
+    vertical-align:     0.5;
+}

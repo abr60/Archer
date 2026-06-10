@@ -2,94 +2,82 @@
    Rofi Applications Theme - Compact Consolidated Row Design
    ========================================================================== */
 
-* {
-    /* Color Palette */
-    bg-main:      #0e0e10; 
-    bg-card:      #18181c; 
-    bg-selected:  #24242a; 
-    fg-main:      #e4e4e7; 
-    fg-muted:     #a1a1aa; 
-    border-color: #27272a; /* Color of the dividing line */
+@import "matugen.rasi"
 
+* {
     background-color: transparent;
-    text-color:       @fg-main;
+    text-color:       @on-surface-variant;
     font:             "JetBrains Mono 12";
 }
 
 window {
-    background-color: @bg-main;
+    background-color: #0e0e10;
     border:           2px;
-    border-color:     @border-color;
-    border-radius:    1px; 
-    width:            520px; /* Made the total width narrower */
-    padding:          14px;  /* Tighter window padding */
+    border-color:     @outline-variant;
+    border-radius:    1px;
+    width:            520px;
+    padding:          14px;
 }
 
 mainbox {
     children: [ inputbar, listview ];
-    spacing:  12px; /* Less gap between search and apps list */
+    spacing:  12px;
 }
 
-/* Search Input Block */
 inputbar {
-    background-color: @bg-card;
+    background-color: @surface-container-low;
     border:           1px;
-    border-color:     @border-color;
+    border-color:     @outline-variant;
     border-radius:    1px;
-    padding:          4px 12px; /* More compact input bar */
+    padding:          4px 12px;
     children:         [ prompt, entry ];
 }
 
 prompt {
-    text-color: @fg-muted;
+    text-color: @outline;
     margin:     0px 6px 0px 0px;
 }
 
 entry {
-    placeholder-color: #52525b;
-    text-color:        @fg-main;
+    placeholder-color: @outline;
+    text-color:        @on-surface-variant;
 }
 
-/* Applications List Grid */
 listview {
-    border:       1px; /* Subtle outer container shell border */
+    border:        1px;
     border-radius: 1px;
-    border-color: @border-color;
-    lines:        7;   /* Shows an extra row comfortably due to thin items */
-    columns:      1;
-    spacing:      0px; /* CRITICAL: Merges the gaps completely */
-    fixed-height: false;
+    border-color:  @outline-variant;
+    lines:         7;
+    columns:       1;
+    spacing:       0px;
+    fixed-height:  false;
 }
 
-/* ─── Compact Connected Rows ─────────────────────────────────────────────── */
 element {
-    background-color: @bg-card;
-    
-    /* Subtle separating line between adjacent items like the website layout */
-    border:           0px 0px 1px 0px; 
-    border-color:     @border-color;
-    
+    background-color: @surface-container-low;
+    border:           0px 0px 1px 0px;
+    border-color:     @outline-variant;
     border-radius:    1px;
-    padding:          10px 14px; /* Shaved off vertical padding for compactness */
-    orientation:      horizontal; 
+    padding:          10px 14px;
+    orientation:      horizontal;
     children:         [ element-icon, element-text ];
 }
 
-element normal normal, element alternate normal {
-    background-color: @bg-card;
-    text-color:       @fg-main;
+element normal normal,
+element alternate normal {
+    background-color: @surface-container-low;
+    text-color:       @on-surface-variant;
 }
 
-/* Active Highlight Block */
 element selected normal {
-    background-color: @bg-selected;
-    text-color:       #ffffff;
+    background-color: @surface-container-high;
+    text-color:       @on-surface;
 }
 
 element-icon {
     background-color: transparent;
-    size:             20px; /* Scaled down system icons */
-    margin:           0px 12px 0px 0px; 
+    size:             20px;
+    margin:           0px 12px 0px 0px;
     vertical-align:   0.5;
 }
 
