@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# =============================================================================
+# archer-apps — System application launcher with custom theme and icon support
+# =============================================================================
+
+# ─── Toggle Logic ─────────────────────────────────────────────────────────────
+# If Rofi is already running, kill it and exit immediately
+if pidof rofi &>/dev/null; then
+    killall rofi
+    exit 0
+fi
+
+# ─── Launch Rofi in Desktop Run Mode ──────────────────────────────────────────
+rofi -show drun \
+     -theme "$HOME/.config/rofi/applications.rasi" \
+     -drun-display-format "{name}" \
+     -show-icons \
+     -p "Apps"

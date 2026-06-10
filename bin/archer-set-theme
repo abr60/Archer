@@ -3,11 +3,14 @@
 # archer-set-theme — Pick which wallpaper collection to use
 # Writes selected collection to ~/.local/state/Archer/current-collection
 # Collections live in ~/Wallpapers/<collection-name>/
-#
-# Light mode auto-detection:
-#   Collection name contains "light" → matugen --mode light
-#   Everything else                  → matugen --mode dark
 # =============================================================================
+
+# ─── Toggle Logic ─────────────────────────────────────────────────────────────
+# If Rofi is already running, kill it and exit immediately
+if pidof rofi &>/dev/null; then
+    killall rofi
+    exit 0
+fi
 
 WALLPAPERS_DIR="$HOME/Wallpapers"
 STATE_DIR="$HOME/.local/state/Archer"
@@ -36,8 +39,8 @@ CURRENT=$(cat "$COLLECTION_FILE" 2>/dev/null || echo "")
 
 # ─── Pick via rofi ────────────────────────────────────────────────────────────
 SELECTED=$(printf '%s\n' "${COLLECTIONS[@]}" | rofi -dmenu \
-    -p "Select collection" \
-    -theme "$HOME/.config/rofi/launchers/type-1/style-5.rasi" \
+    -p "Select Theme" \
+    -theme "$HOME/.config/rofi/set-theme.rasi" \
     -select "$CURRENT")
 
 [[ -z "$SELECTED" ]] && exit 0

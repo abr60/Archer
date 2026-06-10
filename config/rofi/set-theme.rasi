@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Rofi Theme Picker - Compact Consolidated Row Design (No Icons)
+   ========================================================================== */
+
+* {
+    /* Color Palette */
+    bg-main:      #0e0e10; 
+    bg-card:      #18181c; 
+    bg-selected:  #24242a; 
+    fg-main:      #e4e4e7; 
+    fg-muted:     #a1a1aa; 
+    border-color: #27272a; /* Color of the dividing line */
+
+    background-color: transparent;
+    text-color:       @fg-main;
+    font:             "JetBrains Mono 12";
+}
+
+window {
+    background-color: @bg-main;
+    border:           2px;
+    border-color:     @border-color;
+    border-radius:    1px; 
+    width:            520px; /* Perfectly mirrors your apps menu layout width */
+    padding:          14px;  
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    spacing:  12px; 
+}
+
+/* Search Input Block */
+inputbar {
+    background-color: @bg-card;
+    border:           1px;
+    border-color:     @border-color;
+    border-radius:    1px;
+    padding:          4px 12px; 
+    children:         [ prompt, entry ];
+}
+
+prompt {
+    text-color: @fg-muted;
+    margin:     0px 6px 0px 0px;
+}
+
+entry {
+    placeholder-color: #52525b;
+    text-color:        @fg-main;
+}
+
+/* Applications List Grid */
+listview {
+    border:       1px; 
+    border-radius: 1px;
+    border-color: @border-color;
+    lines:        7;   
+    columns:      1;
+    spacing:      0px; /* Merges rows seamlessly */
+    fixed-height: false;
+}
+
+/* ─── Compact Connected Rows ─────────────────────────────────────────────── */
+element {
+    background-color: @bg-card;
+    
+    /* Separating line layout structure */
+    border:           0px 0px 1px 0px; 
+    border-color:     @border-color;
+    
+    border-radius:    1px;
+    padding:          10px 14px; 
+    orientation:      horizontal; 
+    
+    /* Structural Fix: Handles text node distribution cleanly without icons */
+    children:         [ element-text ];
+}
+
+element normal normal, element alternate normal {
+    background-color: @bg-card;
+    text-color:       @fg-main;
+}
+
+/* Active Highlight Block */
+element selected normal {
+    background-color: @bg-selected;
+    text-color:       #ffffff;
+}
+
+/* Explicitly killed icon placeholder mapping completely */
+element-icon {
+    enabled:          false;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    vertical-align:   0.5;
+    expand:           true;
+}

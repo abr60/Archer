@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
-# services/user-services.sh — Enable required user-level systemd services
+# services/user-services.sh — Enable required user-level systemd services 
+#systemctl --user enable --now orbit
 # =============================================================================
 
 set -euo pipefail

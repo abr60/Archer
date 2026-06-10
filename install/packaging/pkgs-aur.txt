@@ -6,6 +6,7 @@
 # --- Wallpaper & Theming ---
 awww
 matugen-bin
+orbit-wifi
 
 # --- Fonts ---
 # NOTE: Custom fonts in Archer/fonts/ are handled by config/fonts.sh

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# config/applications.sh — Install desktop apps, icons, and batty binary
+# config/applications.sh
 # =============================================================================
 
 set -euo pipefail
@@ -8,15 +8,16 @@ source "$(dirname "${BASH_SOURCE[0]}")/../lib/helpers.sh"
 
 section "Applications"
 
-ARCHER_DIR="${ARCHER_DIR:-$HOME/.local/share/Archer}"
-APPS_SRC="$ARCHER_DIR/applications"
-SYSTEM_APPS_SRC="$ARCHER_DIR/system/applications"
-DESKTOP_DIR="$HOME/.local/share/applications"
-ICONS_DIR="$HOME/.local/share/icons/hicolor/48x48/apps"
+ARCHER_DIR="${ARCHER_DIR:-$HOME/Archer}"
+
+SRC="$ARCHER_DIR/applications"
+DEST="$HOME/.local/share/applications"
+
 BIN_SOURCE="$ARCHER_DIR/bin/batty"
 BIN_DEST="$HOME/.cargo/bin"
 
 # ─── batty binary ─────────────────────────────────────────────────────────────
+
 if [[ -f "$BIN_SOURCE" ]]; then
     mkdir -p "$BIN_DEST"
     cp -f "$BIN_SOURCE" "$BIN_DEST/"
@@ -26,44 +27,36 @@ else
     warn "batty binary not found at $BIN_SOURCE — skipping"
 fi
 
-# ─── Desktop files ────────────────────────────────────────────────────────────
-mkdir -p "$DESKTOP_DIR" "$ICONS_DIR"
+# ─── Applications ─────────────────────────────────────────────────────────────
 
-# User webapps
-if [[ -d "$APPS_SRC" ]]; then
-    count=$(find "$APPS_SRC" -maxdepth 1 -name "*.desktop" | wc -l)
-    if [[ "$count" -gt 0 ]]; then
-        cp "$APPS_SRC"/*.desktop "$DESKTOP_DIR/"
-        ok "Copied $count user .desktop files"
-    fi
+if [[ ! -d "$SRC" ]]; then
+    warn "Applications directory not found: $SRC"
+    exit 0
 fi
 
-# System desktop files
-if [[ -d "$SYSTEM_APPS_SRC" ]]; then
-    count=$(find "$SYSTEM_APPS_SRC" -maxdepth 1 -name "*.desktop" | wc -l)
-    if [[ "$count" -gt 0 ]]; then
-        cp "$SYSTEM_APPS_SRC"/*.desktop "$DESKTOP_DIR/"
-        ok "Copied $count system .desktop files"
-    fi
+mkdir -p "$DEST"
 
-    # Hidden desktop overrides
-    if [[ -d "$SYSTEM_APPS_SRC/hidden" ]]; then
-        cp "$SYSTEM_APPS_SRC/hidden"/*.desktop "$DESKTOP_DIR/"
-        ok "Copied hidden desktop overrides"
-    fi
-fi
+# Copy everything exactly as-is
+cp -a "$SRC"/. "$DEST"/
+ok "Copied Archer applications"
 
-# ─── Icons ────────────────────────────────────────────────────────────────────
-for icon_src in "$APPS_SRC/icons" "$SYSTEM_APPS_SRC/icons"; do
-    if [[ -d "$icon_src" ]]; then
-        count=$(find "$icon_src" -maxdepth 1 -type f | wc -l)
-        if [[ "$count" -gt 0 ]]; then
-            cp "$icon_src"/* "$ICONS_DIR/"
-            ok "Copied $count icons from $(basename "$(dirname "$icon_src")")/icons"
+# Remove any top-level desktop files that also exist in hidden/
+HIDDEN_DIR="$DEST/hidden"
+
+if [[ -d "$HIDDEN_DIR" ]]; then
+    while IFS= read -r -d '' hidden_file; do
+        name="$(basename "$hidden_file")"
+        target="$DEST/$name"
+
+        if [[ -f "$target" ]]; then
+            rm -f "$target"
+            ok "Removed hidden application: $name"
         fi
-    fi
-done
+    done < <(find "$HIDDEN_DIR" -type f -name '*.desktop' -print0)
+fi
 
 # ─── Update caches ────────────────────────────────────────────────────────────
-update-desktop-database "$DESKTOP_DIR" 2>/dev/null && ok "Desktop database updated" || true
-gtk-update-icon-cache -f -t "$HOME/.local/share/icons/hicolor" 2>/dev/null && ok "Icon cache updated" || true
+
+update-desktop-database "$DEST" 2>/dev/null \
+    && ok "Desktop database updated" \
+    || true

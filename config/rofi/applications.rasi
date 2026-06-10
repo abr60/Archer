@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Rofi Applications Theme - Compact Consolidated Row Design
+   ========================================================================== */
+
+* {
+    /* Color Palette */
+    bg-main:      #0e0e10; 
+    bg-card:      #18181c; 
+    bg-selected:  #24242a; 
+    fg-main:      #e4e4e7; 
+    fg-muted:     #a1a1aa; 
+    border-color: #27272a; /* Color of the dividing line */
+
+    background-color: transparent;
+    text-color:       @fg-main;
+    font:             "JetBrains Mono 12";
+}
+
+window {
+    background-color: @bg-main;
+    border:           2px;
+    border-color:     @border-color;
+    border-radius:    1px; 
+    width:            520px; /* Made the total width narrower */
+    padding:          14px;  /* Tighter window padding */
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    spacing:  12px; /* Less gap between search and apps list */
+}
+
+/* Search Input Block */
+inputbar {
+    background-color: @bg-card;
+    border:           1px;
+    border-color:     @border-color;
+    border-radius:    1px;
+    padding:          4px 12px; /* More compact input bar */
+    children:         [ prompt, entry ];
+}
+
+prompt {
+    text-color: @fg-muted;
+    margin:     0px 6px 0px 0px;
+}
+
+entry {
+    placeholder-color: #52525b;
+    text-color:        @fg-main;
+}
+
+/* Applications List Grid */
+listview {
+    border:       1px; /* Subtle outer container shell border */
+    border-radius: 1px;
+    border-color: @border-color;
+    lines:        7;   /* Shows an extra row comfortably due to thin items */
+    columns:      1;
+    spacing:      0px; /* CRITICAL: Merges the gaps completely */
+    fixed-height: false;
+}
+
+/* ─── Compact Connected Rows ─────────────────────────────────────────────── */
+element {
+    background-color: @bg-card;
+    
+    /* Subtle separating line between adjacent items like the website layout */
+    border:           0px 0px 1px 0px; 
+    border-color:     @border-color;
+    
+    border-radius:    1px;
+    padding:          10px 14px; /* Shaved off vertical padding for compactness */
+    orientation:      horizontal; 
+    children:         [ element-icon, element-text ];
+}
+
+element normal normal, element alternate normal {
+    background-color: @bg-card;
+    text-color:       @fg-main;
+}
+
+/* Active Highlight Block */
+element selected normal {
+    background-color: @bg-selected;
+    text-color:       #ffffff;
+}
+
+element-icon {
+    background-color: transparent;
+    size:             20px; /* Scaled down system icons */
+    margin:           0px 12px 0px 0px; 
+    vertical-align:   0.5;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    vertical-align:   0.5;
+    expand:           true;
+}
