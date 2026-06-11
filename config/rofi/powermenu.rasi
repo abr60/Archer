@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Rofi Power Menu — horizontal icon row, uptime header, no search bar
+   ========================================================================== */
+
+@import "matugen.rasi"
+
+configuration {
+    location: 0;
+    font:     "Maple Mono NF 28";
+}
+
+* {
+    border:           0;
+    margin:           0;
+    padding:          0;
+    spacing:          0;
+    background-color: @surface;
+    text-color:       @on-surface-variant;
+}
+
+window {
+    background-color: @surface;
+    border:           2px;
+    border-color:     @primary;
+    border-radius:    3px;
+    width:            520px;
+    height:           160px;
+}
+
+mainbox {
+    background-color: @surface;
+    children:         [ textbox-uptime, listview ];
+    padding:          16px;
+    spacing:          12px;
+}
+
+textbox-uptime {
+    background-color: @surface-container-high;
+    border-radius:    6px;
+    padding:          8px 16px;
+    horizontal-align: 0.0;
+    vertical-align:   0.5;
+    text-color:       @on-surface;
+    font:             "Maple Mono NF 11";
+    expand:           false;
+    str:              "";
+}
+
+listview {
+    background-color: @surface;
+    columns:          1;
+    lines:            5;
+    spacing:          80px;
+    layout:           horizontal;
+}
+
+element {
+    background-color: @surface;
+    text-color:       @on-surface-variant;
+    orientation:      horizontal;
+}
+
+element-text {
+    background-color: inherit;
+    text-color:       inherit;
+    font:             "Maple Mono NF 30";
+    expand:           false;
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+}
+
+element selected {
+    background-color: @surface;
+    text-color:       @primary;
+    border:           0px;
+}

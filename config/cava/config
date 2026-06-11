@@ -249,14 +249,14 @@
 # for matugen
 gradient = 1
 gradient_count = 8
-gradient_color_1 = '#343b39'
-gradient_color_2 = '#005046'
-gradient_color_3 = '#334b46'
-gradient_color_4 = '#2c4a60'
+gradient_color_1 = '#3d392f'
+gradient_color_2 = '#5a4400'
+gradient_color_3 = '#51452a'
+gradient_color_4 = '#324d32'
 gradient_color_5 = '#ffb4ab'
-gradient_color_6 = '#83d5c5'
-gradient_color_7 = '#b1ccc5'
-gradient_color_8 = '#accae5'
+gradient_color_6 = '#e6c26c'
+gradient_color_7 = '#d7c5a0'
+gradient_color_8 = '#afcfab'
 
 
 [smoothing]

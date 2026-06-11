@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+# cliphist-rofi — clipboard history picker with in-menu delete
+# Keybinds (inside rofi):
+#   Enter    → copy selected entry
+#   Ctrl+D   → delete selected entry (loops back)
+#   Ctrl+W   → wipe entire history
+#
+# Dependencies: cliphist, wl-copy, rofi, notify-send (optional)
+
+set -uo pipefail
+
+THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/clipboard.rasi"
+PROMPT=" Clipboard"
+
+# ── dependency check ──────────────────────────────────────────────────────────
+for cmd in cliphist wl-copy rofi; do
+    if ! command -v "$cmd" &>/dev/null; then
+        notify-send -u critical "cliphist-rofi" "Missing dependency: $cmd" 2>/dev/null
+        echo "error: missing dependency: $cmd" >&2
+        exit 1
+    fi
+done
+
+# ── notify helper (silent if notify-send absent) ──────────────────────────────
+notify() {
+    local urgency="${1:-normal}" summary="${2:-}" body="${3:-}"
+    command -v notify-send &>/dev/null && \
+        notify-send -u "$urgency" -t 2000 "$summary" "$body" 2>/dev/null || true
+}
+
+# ── rofi invocation ───────────────────────────────────────────────────────────
+open_rofi() {
+    local count
+    count=$(cliphist list | wc -l)
+    local placeholder="${count} entr$([ "$count" -eq 1 ] && echo 'y' || echo 'ies') — Ctrl+D delete · Ctrl+W wipe"
+
+    cliphist list | rofi -dmenu \
+        -display-columns 2 \
+        -p "$PROMPT" \
+        -placeholder "$placeholder" \
+        -kb-custom-1 "ctrl+d" \
+        -kb-custom-2 "ctrl+w" \
+        -kb-remove-to-eol "" \
+        $( [[ -f "$THEME" ]] && echo "-theme $THEME" )
+}
+
+# ── main loop ─────────────────────────────────────────────────────────────────
+while true; do
+    selected=$(open_rofi)
+    exitcode=$?
+
+    # Esc / empty → quit
+    [[ $exitcode -eq 1 || -z "$selected" ]] && break
+
+    case $exitcode in
+        0)  # Enter → copy
+            if cliphist decode <<< "$selected" | wl-copy; then
+                notify normal "Clipboard" "Copied to clipboard"
+            else
+                notify critical "cliphist-rofi" "Failed to copy entry"
+            fi
+            break
+            ;;
+        10) # Ctrl+D → delete entry, stay in menu
+            if cliphist delete <<< "$selected"; then
+                notify low "Clipboard" "Entry deleted"
+            else
+                notify critical "cliphist-rofi" "Failed to delete entry"
+            fi
+            # loop continues — reopen menu
+            ;;
+        11) # Ctrl+W → wipe all, quit
+            cliphist wipe && notify normal "Clipboard" "History wiped"
+            break
+            ;;
+        *)  break ;;
+    esac
+done

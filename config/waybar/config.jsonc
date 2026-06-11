@@ -74,12 +74,12 @@
     "interval": 1,
     "max-length": 35,
     "player-icons": {
-      "default": "🎶",
-      "mpd": "📻",
+      "default": "",
+      "mpd": "󰐹",
       "chromium": "",
       "spotify": "",
       "firefox": "",
-      "mpv": "📺️"
+      "mpv": "󰎁"
     },
     "status-icons": {
       "paused": "",

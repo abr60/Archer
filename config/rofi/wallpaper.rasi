@@ -1,4 +1,9 @@
-@import "../../.cache/matugen/colors.rasi"
+/* ==========================================================================
+   Rofi Wallpaper Picker — matugen M3 tokens, aligned with clipboard/emoji
+   Layout and dimensions unchanged from original
+   ========================================================================== */
+
+@import "matugen.rasi"
 
 configuration {
     show-icons:        true;
@@ -10,17 +15,19 @@ configuration {
 
 * {
     background-color: transparent;
-    text-color:       #cdd6f4;
+    text-color:       @on-surface-variant;
+    font:             "Maple Mono NF 12";
 }
 
 window {
     width:            810px;
-    background-color: #1e1e2e55;
-    border:           4px;
-    border-color:     #45475a;
-    border-radius:    14px;
+    background-color: @surface;
+    border:           2px;
+    border-color:     @outline-variant;
+    border-radius:    4px;
     location:         center;
     anchor:           center;
+    padding:          6px;
 }
 
 mainbox {
@@ -35,7 +42,7 @@ scrollbar { enabled: false; }
 listview {
     columns:       5;
     lines:         2;
-    spacing:       2px;
+    spacing:       4px;
     padding:       4px;
     fixed-columns: true;
     fixed-height:  true;
@@ -49,7 +56,7 @@ element {
     cursor:           pointer;
     padding:          4px;
     margin:           0px;
-    border-radius:    10px;
+    border-radius:    4px;
     background-color: transparent;
     border:           0px;
     border-color:     transparent;
@@ -65,8 +72,8 @@ element selected,
 element selected.normal,
 element selected.urgent,
 element selected.active {
-    background-color: #00000018;
-    border:           30px;
+    background-color: @surface;
+    border:           20px;
     border-radius:    40 3 40 3;
     border-color:     transparent;
 }
@@ -75,7 +82,7 @@ element-icon {
     size:             170px;
     horizontal-align: 0.5;
     vertical-align:   0.5;
-    border-radius:    11 11 11 11;
+    border-radius:    4px;
 }
 
 element-text {

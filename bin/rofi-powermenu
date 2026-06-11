@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+# rofi-powermenu — horizontal icon grid with text, uptime header, no search bar
+
+set -uo pipefail
+
+# ─── Toggle Logic ─────────────────────────────────────────────────────────────
+# If Rofi is already running, kill it and exit immediately
+if pidof rofi &>/dev/null; then
+    killall rofi
+    exit 0
+fi
+
+THEME="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/config.rasi"
+
+# ── uptime string ─────────────────────────────────────────────────────────────
+uptime_str() {
+    local total h m
+    total=$(awk '{printf "%d", $1}' /proc/uptime)
+    h=$(( total / 3600 ))
+    m=$(( (total % 3600) / 60 ))
+    if (( h > 0 )); then
+        printf "System UP: %d hr%s, %d min%s" \
+            "$h" "$( (( h != 1 )) && echo 's' )" \
+            "$m" "$( (( m != 1 )) && echo 's' )"
+    else
+        printf "System UP: %d min%s" "$m" "$( (( m != 1 )) && echo 's' )"
+    fi
+}
+
+# ── entries: icons with text ──────────────────────────────────────────────────
+options="󰌾  Lock\n󰑐  Reboot\n󰒲  Suspend\n⏻  Shutdown\n󰍃  Logout"
+
+# Run rofi, hiding the entry box and utilizing the prompt slot for uptime
+selected=$(printf "%b" "$options" | rofi -dmenu \
+    -no-custom \
+    -i \
+    -selected-row 0 \
+    -theme "$THEME" \
+    -p "$(uptime_str)" \
+    -theme-str 'mainbox { children: [ "inputbar", "listview" ]; } inputbar { children: [ "prompt" ]; } entry { enabled: false; }' )
+
+[[ -z "$selected" ]] && exit 0
+
+# Match the full string returned by Rofi
+case "$selected" in
+    *"Lock")     hyprlock ;;
+    *"Reboot")   systemctl reboot ;;
+    *"Suspend")  systemctl suspend ;;
+    *"Shutdown") systemctl poweroff ;;
+    *"Logout")   hyprctl dispatch exit ;;
+esac

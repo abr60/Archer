@@ -21,57 +21,13 @@ META="$TOOLBOX_DIR/archer-metadata_cleaner"
 SHRED="$TOOLBOX_DIR/archer-shredder"
 WIFIQR="$TOOLBOX_DIR/archer-wifi-qr"
 
-# --- Theme (Catppuccin Macchiato) --------------------------------------------
-BG="#1e2030"
-BORDER="#6f7690"
-TEXT="#cad3f5"
-SEL_BG="#39515A"
-SEL_TEXT="#85abbc"
-MAUVE="#c6a0f6"
-ELEMENT_BG="#c6a0f6"
-
-ROFI_THEME="
-* { background-color: transparent; text-color: $TEXT; font: 'JetBrainsMono Nerd Font 11'; }
-window {
-  background-color: $BG;
-  border: 2px;
-  border-color: $BORDER;
-  border-radius: 14px;
-  width: 420px;
-  location: center;
-  anchor: center;
-  padding: 16px;
-}
-inputbar {
-  children: [ prompt, entry ];
-  padding: 8px 10px;
-  background-color: #6f76901A;
-  border-radius: 10px;
-  margin: 0 0 10px 0;
-}
-prompt { text-color: $MAUVE; margin: 0 10px 0 0; font: 'JetBrainsMono Nerd Font Bold 11'; }
-entry  { text-color: $TEXT; placeholder: 'Search...'; placeholder-color: #6e738d; }
-listview { lines: 8; fixed-height: true; scrollbar: false; spacing: 6px; }
-element {
-  padding: 10px 12px;
-  border-radius: 10px;
-  background-color: $ELEMENT_BG;
-  text-color: $BG;
-}
-element selected {
-  background-color: $SEL_BG;
-  text-color: $SEL_TEXT;
-}
-"
-
 # --- TUI Launcher ------------------------------------------------------------
 launch_tui() {
     local script="$1"
     local title="$2"
-    local class="${3:-ghostty}" # Defaults to 'ghostty' if no class is passed
+    local class="${3:-ghostty}"
     local safe_title="${title// /_}"
-    
-    # Check if a custom class is being used; if so, skip the inline override rules
+
     if [ "$class" != "ghostty" ]; then
         hyprctl dispatch exec "ghostty --class=$class --title=$safe_title -e bash '$script'"
     else
@@ -79,9 +35,8 @@ launch_tui() {
     fi
 }
 
-
 # --- Rofi Menu ---------------------------------------------------------------
-MENU="󰕒  Media Download
+MENU="  Media Download
   Dots Push
 󰿔  MP4 → GIF
 󰖂  WireGuard VPN
@@ -93,8 +48,7 @@ MENU="󰕒  Media Download
 chosen=$(echo -e "$MENU" | rofi -dmenu \
     -i \
     -p "󱁤 Toolbox" \
-    -kb-cancel "Escape,MouseSecondary,MousePrimary" \
-    -theme-str "$ROFI_THEME")
+    -kb-cancel "Escape,MouseSecondary,MousePrimary")
 
 [[ -z "$chosen" ]] && exit 0
 
@@ -103,10 +57,10 @@ case "$chosen" in
     *"Media Download"*) launch_tui "$MEDIA" "media-download" ;;
     *"Dots Push"*)      launch_tui "$DOTS"  "dots-push"      ;;
     *"MP4"*)            launch_tui "$GIF"   "mp4-to-gif"     ;;
-    *"WireGuard"*)      bash "$WG"   &                       ;;
-    *"Malware"*)        bash "$SCAN" &                       ;;
+    *"WireGuard"*)      bash "$WG"    &                      ;;
+    *"Malware"*)        bash "$SCAN"  &                      ;;
     *"MAC Spoofer"*)    bash "$SPOOF" &                      ;;
-    *"Metadata"*)       bash "$META"   &                     ;;
-    *"Shredder"*)       bash "$SHRED"  &                     ;;
+    *"Metadata"*)       bash "$META"  &                      ;;
+    *"Shredder"*)       bash "$SHRED" &                      ;;
     *"WiFi QR"*)        launch_tui "$WIFIQR" "wifi-qr" "com.mitchellh.ghostty" ;;
 esac
