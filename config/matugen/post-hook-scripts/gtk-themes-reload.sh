@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# Force GTK3 theme reload
+gsettings set org.gnome.desktop.interface gtk-theme ""
+gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark"
+
 # Force GTK4 theme reload
 gsettings set org.gnome.desktop.interface color-scheme prefer-light
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
@@ -10,4 +14,4 @@ gsettings set org.gnome.desktop.interface color-scheme prefer-dark
    # nohup nautilus --no-default-window &>/dev/null &
 #fi
 
-#nautilus -q && nautilus &
+nautilus -q && nautilus &

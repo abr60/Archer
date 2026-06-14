@@ -7,6 +7,7 @@ version_check = false
 
 # ─── Templates ────────────────────────────────────────────────────────────────
 
+# 1. Compositor — must apply first so everything else inherits correct colors
 [templates.hyprland]
 input_path  = "~/.config/matugen/templates/hyprland.conf"
 output_path = "~/.config/hypr/bin/hyprland.conf"
@@ -16,6 +17,7 @@ post_hook   = "hyprctl reload"
 input_path  = "~/.config/matugen/templates/hyprlock.conf"
 output_path = "~/.config/hypr/hyprlock.conf"
 
+# 2. Bar & notifications — depend on compositor being up
 [templates.waybar]
 input_path  = "~/.config/matugen/templates/waybar.css"
 output_path = "~/.config/waybar/matugen.css"
@@ -31,56 +33,39 @@ input_path  = "~/.config/matugen/templates/swayosd.css"
 output_path = "~/.config/swayosd/matugen.css"
 post_hook   = "restart-swayosd"
 
-#[templates.walker]
-#input_path  = "~/.config/matugen/templates/walker.css"
-#output_path = "~/.config/walker/matugen.css"
-# no post_hook — walker not running
+# 3. Terminal
+[templates.kitty]
+input_path  = "~/.config/matugen/templates/kitty.conf"
+output_path = "~/.config/kitty/colors.conf"
+post_hook   = "pkill -USR1 kitty"
 
-#[templates.ghostty]
-#input_path  = "~/.config/matugen/templates/ghostty"
-#output_path = "~/.config/ghostty/themes/matugen"
-#post_hook   = "pkill -SIGUSR2 ghostty"
+# 4. Apps
+[templates.cava]
+input_path  = "~/.config/matugen/templates/cava-colors.ini"
+output_path = "~/.config/cava/themes/matugen"
+post_hook   = "pkill -USR1 cava"
 
+[templates.gtk3]
+input_path  = "~/.config/matugen/templates/gtk-3.0/gtk.css"
+output_path = "~/.config/gtk-3.0/gtk.css"
+
+[templates.gtk4]
+input_path  = "~/.config/matugen/templates/gtk-4.0/gtk.css"
+output_path = "~/.config/gtk-4.0/gtk.css"
+post_hook   = "~/.config/matugen/post-hook-scripts/gtk-themes-reload.sh"
+
+# 5. Passive — no post_hook, read fresh on next launch
 [templates.rofi]
 input_path  = "~/.config/matugen/templates/rofi.rasi"
 output_path = "~/.config/rofi/matugen.rasi"
-# no post_hook — rofi reads fresh on each launch
-
-[templates.cava]
-input_path = '~/.config/matugen/templates/cava-colors.ini'
-output_path = '~/.config/cava/themes/matugen'
-post_hook = 'pkill -USR1 cava'
 
 [templates.rmpc]
 input_path  = "~/.config/matugen/templates/rmpc.ron"
 output_path = "~/.config/rmpc/themes/matugen.ron"
 
+# ─── Disabled ─────────────────────────────────────────────────────────────────
+#[templates.walker]
+#[templates.ghostty]
 #[templates.spicetify]
-#input_path  = "~/.config/matugen/templates/spicetify.ini"
-#output_path = "~/.config/spicetify/Themes/Comfy/color.ini"
-#post_hook   = "spicetify apply -n"
-
-[templates.gtk3]
-input_path = '~/.config/matugen/templates/gtk-3.0/gtk.css'
-output_path = '~/.config/gtk-3.0/gtk.css'
-post_hook = 'gsettings set org.gnome.desktop.interface gtk-theme ""; gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3-{{mode}}'
-
-[templates.gtk4]
-input_path = '~/.config/matugen/templates/gtk-4.0/gtk.css'
-output_path = '~/.config/gtk-4.0/gtk.css'
-post_hook = '~/.config/matugen/post-hook-scripts/gtk-themes-reload.sh'
-
 #[templates.wlogout]
-#input_path = '~/.config/matugen/templates/wlogout.css'
-#output_path = '~/.config/wlogout/style.css'
-
-
-# in matugen.toml template
 #[templates.mode-flag]
-#input_path = '~/.config/matugen/templates/mode-flag'
-#output_path = '~/.config/matugen/current-mode'
-
-[templates.kitty]
-input_path  = "~/.config/matugen/templates/kitty.conf"
-output_path = "~/.config/kitty/colors.conf"
-post_hook   = "pkill -USR1 kitty"

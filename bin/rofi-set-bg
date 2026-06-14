@@ -8,8 +8,7 @@
 #   ~/.local/state/Archer/current-wallpaper   ← symlink to active wallpaper
 #
 # Light/dark mode:
-#   Collection name contains "light" → matugen --mode light
-#   Everything else                  → matugen --mode dark
+#   ~/.local/state/Archer/current-mode  ← "light" or "dark"
 # =============================================================================
 
 set -euo pipefail
@@ -52,11 +51,7 @@ if [[ ! -d "$BG_DIR" ]]; then
 fi
 
 # ─── Detect light/dark mode ───────────────────────────────────────────────────
-if [[ "$COLLECTION" == *light* ]]; then
-    MATUGEN_MODE="light"
-else
-    MATUGEN_MODE="dark"
-fi
+MATUGEN_MODE=$(cat "$STATE_DIR/current-mode" 2>/dev/null || echo "dark")
 
 # ─── Kill existing rofi if open ───────────────────────────────────────────────
 if pgrep -x rofi >/dev/null 2>&1; then
@@ -116,7 +111,6 @@ build_thumb() {
     local lock_file="$CACHE_DIR/$COLLECTION/.lock_${base}"
     local current_hash
 
-    # xxhash check — skip if file unchanged
     if command -v xxh64sum &>/dev/null; then
         current_hash=$(xxh64sum "$wp" | cut -d' ' -f1)
     else
@@ -140,20 +134,16 @@ build_thumb() {
 export -f build_thumb
 export CACHE_DIR COLLECTION THUMB_SIZE
 
-# Detect optimal parallel jobs
 cores=$(nproc)
 (( cores <= 2 )) && JOBS=2 || JOBS=$(( cores > 4 ? 4 : cores - 1 ))
 
-# Clean stale locks
 rm -f "$CACHE_DIR/$COLLECTION"/.lock_* 2>/dev/null || true
 
 log "START — thumbnail build"
-# Process in parallel
 printf '%s\0' "${WALLPAPERS[@]}" | \
     xargs -0 -P "$JOBS" -I{} bash -c 'build_thumb "{}"'
 log "thumbnail build done"
 
-# Clean orphaned cache entries
 for cached in "$CACHE_DIR/$COLLECTION"/*.sqre.png; do
     [[ -f "$cached" ]] || continue
     base=$(basename "$cached" .sqre.png)
@@ -228,6 +218,13 @@ disown
 DOMINANT=""
 IM_CMD=$(command -v magick || command -v convert || echo "")
 
+# Set thresholds based on mode
+if [[ "$MATUGEN_MODE" == "light" ]]; then
+    MIN_LUM=80; MAX_LUM=200; MIN_CHROMA=50
+else
+    MIN_LUM=25; MAX_LUM=230; MIN_CHROMA=30
+fi
+
 log "dominant color extraction start"
 if [[ -n "$IM_CMD" ]]; then
     DOMINANT=$(
@@ -248,7 +245,7 @@ if [[ -n "$IM_CMD" ]]; then
             min_c=$(( r < g ? r : g ))
             min_c=$(( min_c < b ? min_c : b ))
             chroma=$(( max_c - min_c ))
-            if (( lum >= 25 && lum <= 230 && chroma >= 30 )); then
+            if (( lum >= MIN_LUM && lum <= MAX_LUM && chroma >= MIN_CHROMA )); then
                 echo "$hex"
                 break
             fi

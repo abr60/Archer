@@ -10,102 +10,102 @@
 
 /*-----All Colors--------*/
 
-@define-color background #0f1417;
+@define-color background #fff8f1;
 
-@define-color error #ffb4ab;
+@define-color error #ba1a1a;
 
-@define-color error_container #93000a;
+@define-color error_container #ffdad6;
 
-@define-color inverse_on_surface #2c3134;
+@define-color inverse_on_surface #f9efe2;
 
-@define-color inverse_primary #1a6585;
+@define-color inverse_primary #e6c26c;
 
-@define-color inverse_surface #dfe3e7;
+@define-color inverse_surface #343027;
 
-@define-color on_background #dfe3e7;
+@define-color on_background #1f1b13;
 
-@define-color on_error #690005;
+@define-color on_error #ffffff;
 
-@define-color on_error_container #ffdad6;
+@define-color on_error_container #410002;
 
-@define-color on_primary #003549;
+@define-color on_primary #ffffff;
 
-@define-color on_primary_container #c3e8ff;
+@define-color on_primary_container #251a00;
 
-@define-color on_primary_fixed #001e2c;
+@define-color on_primary_fixed #251a00;
 
-@define-color on_primary_fixed_variant #004d68;
+@define-color on_primary_fixed_variant #5a4400;
 
-@define-color on_secondary #20333d;
+@define-color on_secondary #ffffff;
 
-@define-color on_secondary_container #d1e5f3;
+@define-color on_secondary_container #231a04;
 
-@define-color on_secondary_fixed #091e28;
+@define-color on_secondary_fixed #231a04;
 
-@define-color on_secondary_fixed_variant #364954;
+@define-color on_secondary_fixed_variant #51452a;
 
-@define-color on_surface #dfe3e7;
+@define-color on_surface #1f1b13;
 
-@define-color on_surface_variant #c0c7cd;
+@define-color on_surface_variant #4d4639;
 
-@define-color on_tertiary #312c4c;
+@define-color on_tertiary #ffffff;
 
-@define-color on_tertiary_container #e6deff;
+@define-color on_tertiary_container #06210a;
 
-@define-color on_tertiary_fixed #1c1736;
+@define-color on_tertiary_fixed #06210a;
 
-@define-color on_tertiary_fixed_variant #484264;
+@define-color on_tertiary_fixed_variant #324d32;
 
-@define-color outline #8a9297;
+@define-color outline #7e7667;
 
-@define-color outline_variant #41484d;
+@define-color outline_variant #d0c5b4;
 
-@define-color primary #8fcff3;
+@define-color primary #765b0b;
 
-@define-color primary_container #004d68;
+@define-color primary_container #ffdf97;
 
-@define-color primary_fixed #c3e8ff;
+@define-color primary_fixed #ffdf97;
 
-@define-color primary_fixed_dim #8fcff3;
+@define-color primary_fixed_dim #e6c26c;
 
 @define-color scrim #000000;
 
-@define-color secondary #b5c9d7;
+@define-color secondary #6a5d3f;
 
-@define-color secondary_container #364954;
+@define-color secondary_container #f3e1bb;
 
-@define-color secondary_fixed #d1e5f3;
+@define-color secondary_fixed #f3e1bb;
 
-@define-color secondary_fixed_dim #b5c9d7;
+@define-color secondary_fixed_dim #d7c5a0;
 
 @define-color shadow #000000;
 
-@define-color source_color #006c91;
+@define-color source_color #d4c3a1;
 
-@define-color surface #0f1417;
+@define-color surface #fff8f1;
 
-@define-color surface_bright #353a3d;
+@define-color surface_bright #fff8f1;
 
-@define-color surface_container #1c2023;
+@define-color surface_container #f6eddf;
 
-@define-color surface_container_high #262b2e;
+@define-color surface_container_high #f0e7d9;
 
-@define-color surface_container_highest #313539;
+@define-color surface_container_highest #eae1d4;
 
-@define-color surface_container_low #171c1f;
+@define-color surface_container_low #fcf2e5;
 
-@define-color surface_container_lowest #0a0f12;
+@define-color surface_container_lowest #ffffff;
 
-@define-color surface_dim #0f1417;
+@define-color surface_dim #e2d9cc;
 
-@define-color surface_tint #8fcff3;
+@define-color surface_tint #765b0b;
 
-@define-color surface_variant #41484d;
+@define-color surface_variant #ece1cf;
 
-@define-color tertiary #c9c1ea;
+@define-color tertiary #496548;
 
-@define-color tertiary_container #484264;
+@define-color tertiary_container #caebc6;
 
-@define-color tertiary_fixed #e6deff;
+@define-color tertiary_fixed #caebc6;
 
-@define-color tertiary_fixed_dim #c9c1ea;
+@define-color tertiary_fixed_dim #afcfab;
