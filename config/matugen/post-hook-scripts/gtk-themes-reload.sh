@@ -10,4 +10,4 @@ gsettings set org.gnome.desktop.interface color-scheme prefer-dark
    # nohup nautilus --no-default-window &>/dev/null &
 #fi
 
-nautilus -q && nautilus &
+#nautilus -q && nautilus &
