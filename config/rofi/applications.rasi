@@ -4,6 +4,16 @@
 
 @import "matugen.rasi"
 
+
+configuration {
+    display-drun:        "Pkgs";
+    matching: "prefix";
+    tokenize: false;
+    drun-match-fields: "name";
+    history: false;
+    sort: false;
+}
+
 * {
     background-color: transparent;
     text-color:       @on-surface-variant;

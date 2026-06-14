@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# =============================================================================
+# archer-matugen-scheme — Pick or directly apply a matugen color scheme.
+#
+# Writes to: ~/.local/state/Archer/matugen-scheme
+# Read by:   rofi-set-bg on every wallpaper apply
+#
+# Usage:
+#   archer-matugen-scheme                    # gum picker, save, re-apply
+#   archer-matugen-scheme --pick             # gum picker, save only
+#   archer-matugen-scheme --apply <scheme>   # direct apply (Waybar menu)
+# =============================================================================
+
+set -euo pipefail
+
+STATE_DIR="$HOME/.local/state/Archer"
+SCHEME_FILE="$STATE_DIR/matugen-scheme"
+SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
+
+mkdir -p "$STATE_DIR"
+
+CURRENT=$(cat "$SCHEME_FILE" 2>/dev/null || echo "scheme-tonal-spot")
+
+# ─── --apply <scheme> — direct from Waybar menu-actions ──────────────────────
+if [[ "${1:-}" == "--apply" ]]; then
+    SCHEME="${2:-}"
+    if [[ -z "$SCHEME" ]]; then
+        notify-send -u critical "Archer" "archer-matugen-scheme --apply requires a scheme name"
+        exit 1
+    fi
+    # fall through to apply block below
+else
+    # ─── gum choose picker ───────────────────────────────────────────────────
+    SCHEME=$(gum choose \
+        --header "Matugen Scheme  (current: $CURRENT)" \
+        --selected "$CURRENT" \
+        "scheme-tonal-spot" \
+        "scheme-content" \
+        "scheme-expressive" \
+        "scheme-fidelity" \
+        "scheme-fruit-salad" \
+        "scheme-monochrome" \
+        "scheme-neutral" \
+        "scheme-rainbow" \
+        "scheme-vibrant") || exit 0
+
+    [[ -z "$SCHEME" ]] && exit 0
+fi
+
+# ─── Save scheme ─────────────────────────────────────────────────────────────
+echo "$SCHEME" > "$SCHEME_FILE"
+
+notify-send "Archer" "Scheme → <b>$SCHEME</b>" \
+    -h string:x-canonical-private-synchronous:archer_scheme
+
+# ─── Re-apply unless --pick ───────────────────────────────────────────────────
+if [[ "${1:-}" == "--pick" ]]; then
+    exit 0
+fi
+
+CURRENT_WP_LINK="$STATE_DIR/current-wallpaper"
+if [[ ! -L "$CURRENT_WP_LINK" ]]; then
+    notify-send "Archer" "No wallpaper active — scheme saved, apply a wallpaper to see it"
+    exit 0
+fi
+
+COLLECTION=$(cat "$STATE_DIR/current-collection" 2>/dev/null || echo "")
+[[ "$COLLECTION" == *light* ]] && MODE="light" || MODE="dark"
+
+matugen image "$(readlink -f "$CURRENT_WP_LINK")" \
+    --mode "$MODE" -q --prefer saturation -t "$SCHEME"
+
+[[ -x "$SCRIPTS_DIR/matugenMagick" ]] && "$SCRIPTS_DIR/matugenMagick"

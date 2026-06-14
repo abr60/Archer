@@ -4,6 +4,17 @@
 
 @import "matugen.rasi"
 
+configuration {
+    matching: "prefix";
+    tokenize: false;
+    drun-match-fields: "name";
+    history: true;
+    sort: true;
+    case-sensitive: false;
+    kb-cancel: "Escape,MousePrimary";
+    hover-select: true;
+}
+
 * {
     background-color: transparent;
     text-color:       @on-surface-variant;

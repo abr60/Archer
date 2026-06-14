@@ -65,7 +65,37 @@ fi
 notify-send "Archer" "Collection set to '$SELECTED' ($MODE mode)" \
     --icon=preferences-desktop-wallpaper
 
-# ─── Auto-launch set-bg to pick a wallpaper from new collection ───────────────
-if command -v archer-set-bg &>/dev/null; then
-    archer-set-bg
+# ─── Apply random wallpaper from new collection ───────────────────────────────
+BG_DIR="$WALLPAPERS_DIR/$SELECTED"
+mapfile -t WALLS < <(find "$BG_DIR" -maxdepth 1 -type f \
+    \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \
+       -o -iname "*.webp" -o -iname "*.gif" \) | sort)
+
+if [[ ${#WALLS[@]} -eq 0 ]]; then
+    notify-send "Archer" "No wallpapers found in '$SELECTED'"
+    exit 1
 fi
+
+RANDOM_WALL="${WALLS[$RANDOM % ${#WALLS[@]}]}"
+ln -nsf "$RANDOM_WALL" "$STATE_DIR/current-wallpaper"
+
+# Apply via awww
+if ! pgrep -x awww-daemon >/dev/null 2>&1; then
+    uwsm-app -- awww-daemon &
+    sleep 0.3
+fi
+
+setsid uwsm-app -- awww img "$STATE_DIR/current-wallpaper" \
+    --transition-type grow \
+    --transition-pos "$(hyprctl cursorpos | grep -E '^[0-9]' || echo '0,0')" \
+    --transition-fps 60 \
+    --transition-duration 0.8 \
+    --resize crop &
+disown
+
+# Run matugen on the random wall
+sleep 0.5
+SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
+SCHEME=$(cat "$STATE_DIR/matugen-scheme" 2>/dev/null || echo "scheme-tonal-spot")
+matugen image "$RANDOM_WALL" --mode "$MODE" -q --prefer saturation -t "$SCHEME"
+[[ -x "$SCRIPTS_DIR/matugenMagick" ]] && "$SCRIPTS_DIR/matugenMagick"

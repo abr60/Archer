@@ -12,6 +12,8 @@
 #   Everything else                  → matugen --mode dark
 # =============================================================================
 
+set -euo pipefail
+
 WALLPAPERS_DIR="$HOME/Wallpapers"
 STATE_DIR="$HOME/.local/state/Archer"
 COLLECTION_FILE="$STATE_DIR/current-collection"
@@ -20,15 +22,15 @@ ROFI_THEME="$HOME/.config/rofi/wallpaper.rasi"
 CACHE_DIR="$HOME/.cache/archer/wallpaper-thumbs"
 THUMB_SIZE="500"
 MATUGEN_HYPRLOCK="$HOME/.config/hypr/bin/matugen-hyprlock.conf"
+SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
+SCHEME_FILE="$STATE_DIR/matugen-scheme"
 
 # ─── Load current collection ──────────────────────────────────────────────────
 COLLECTION=$(cat "$COLLECTION_FILE" 2>/dev/null || echo "")
 
 if [[ -z "$COLLECTION" ]]; then
-    # No collection set — prompt to set one first
     notify-send "Archer" "No collection selected. Run archer-set-theme first."
 
-    # Try to pick any collection as fallback
     COLLECTION=$(find "$WALLPAPERS_DIR" -mindepth 1 -maxdepth 1 -type d \
         | sort | head -1 | xargs basename 2>/dev/null || echo "")
 
@@ -60,7 +62,7 @@ if pgrep -x rofi >/dev/null 2>&1; then
     exit 0
 fi
 
-# ─── Bootstrap hyprlock color file ───────────────────────────────────────────
+# ─── Bootstrap hyprlock color file ────────────────────────────────────────────
 mkdir -p "$HOME/.config/hypr/bin"
 if [[ ! -f "$MATUGEN_HYPRLOCK" ]]; then
     cat > "$MATUGEN_HYPRLOCK" << 'EOF'
@@ -73,7 +75,7 @@ $error           = #ffb4ab
 EOF
 fi
 
-# ─── Read border color from matugen cache ────────────────────────────────────
+# ─── Read border color from matugen cache ─────────────────────────────────────
 C_BORDER_LIGHT="#ffffff22"
 if [[ -f "$HOME/.cache/matugen/colors.json" ]]; then
     C_SURFACE=$(jq -r '.colors.dark.surface // empty' \
@@ -102,7 +104,64 @@ if [[ ${#WALLPAPERS[@]} -eq 0 ]]; then
     exit 1
 fi
 
-# ─── Build thumbnails ─────────────────────────────────────────────────────────
+# ─── Build thumbnails (parallel, xxhash integrity) ───────────────────────────
+build_thumb() {
+    local wp="$1"
+    local base
+    base=$(basename "$wp")
+    local thumb="$CACHE_DIR/$COLLECTION/${base}.sqre.png"
+    local hash_file="$CACHE_DIR/$COLLECTION/.${base}.xxh"
+    local lock_file="$CACHE_DIR/$COLLECTION/.lock_${base}"
+    local current_hash
+
+    # xxhash check — skip if file unchanged
+    if command -v xxh64sum &>/dev/null; then
+        current_hash=$(xxh64sum "$wp" | cut -d' ' -f1)
+    else
+        current_hash=$(md5sum "$wp" | cut -d' ' -f1)
+    fi
+
+    (
+        flock -x 200
+        if [[ ! -f "$thumb" ]] || \
+           [[ ! -f "$hash_file" ]] || \
+           [[ "$current_hash" != "$(cat "$hash_file" 2>/dev/null)" ]]; then
+            ffmpeg -y -i "$wp" \
+                -vf "select=eq(n\,0),scale=${THUMB_SIZE}:${THUMB_SIZE}:force_original_aspect_ratio=increase,crop=${THUMB_SIZE}:${THUMB_SIZE}" \
+                -vframes 1 "$thumb" >/dev/null 2>&1 && \
+            echo "$current_hash" > "$hash_file"
+        fi
+        rm -f "$lock_file"
+    ) 200>"$lock_file"
+}
+
+export -f build_thumb
+export CACHE_DIR COLLECTION THUMB_SIZE
+
+# Detect optimal parallel jobs
+cores=$(nproc)
+(( cores <= 2 )) && JOBS=2 || JOBS=$(( cores > 4 ? 4 : cores - 1 ))
+
+# Clean stale locks
+rm -f "$CACHE_DIR/$COLLECTION"/.lock_* 2>/dev/null || true
+
+# Process in parallel
+printf '%s\0' "${WALLPAPERS[@]}" | \
+    xargs -0 -P "$JOBS" -I{} bash -c 'build_thumb "{}"'
+
+# Clean orphaned cache entries
+for cached in "$CACHE_DIR/$COLLECTION"/*.sqre.png; do
+    [[ -f "$cached" ]] || continue
+    base=$(basename "$cached" .sqre.png)
+    [[ -f "$BG_DIR/$base" ]] || rm -f \
+        "$cached" \
+        "$CACHE_DIR/$COLLECTION/.${base}.xxh" \
+        "$CACHE_DIR/$COLLECTION/.lock_${base}"
+done
+
+rm -f "$CACHE_DIR/$COLLECTION"/.lock_* 2>/dev/null || true
+
+# ─── Launch rofi picker ───────────────────────────────────────────────────────
 declare -A wp_map
 entries=""
 current_wall=$(basename "$(readlink -f "$CURRENT_WP_LINK" 2>/dev/null)" 2>/dev/null || echo "")
@@ -110,20 +169,12 @@ current_wall=$(basename "$(readlink -f "$CURRENT_WP_LINK" 2>/dev/null)" 2>/dev/n
 for wp in "${WALLPAPERS[@]}"; do
     base=$(basename "$wp")
     thumb="$CACHE_DIR/$COLLECTION/${base}.sqre.png"
-
-    if [[ ! -f "$thumb" ]]; then
-        ffmpeg -y -i "$wp" \
-            -vf "select=eq(n\,0),scale=${THUMB_SIZE}:${THUMB_SIZE}:force_original_aspect_ratio=increase,crop=${THUMB_SIZE}:${THUMB_SIZE}" \
-            -vframes 1 "$thumb" >/dev/null 2>&1 || continue
-    fi
-
+    [[ -f "$thumb" ]] || continue
     wp_map["$base"]="$wp"
     entries+="${base}\0icon\x1f${thumb}\n"
 done
 
-# ─── Launch rofi picker ───────────────────────────────────────────────────────
-col_count=5
-r_override="window { border-color: ${C_BORDER_LIGHT}; } listview { columns: ${col_count}; }"
+r_override="window { border-color: ${C_BORDER_LIGHT}; }"
 
 selected=$(echo -en "$entries" | rofi -dmenu -i -show-icons -no-custom \
     -theme "$ROFI_THEME" \
@@ -135,7 +186,7 @@ selected=$(echo -en "$entries" | rofi -dmenu -i -show-icons -no-custom \
 NEW_WP="${wp_map[$selected]}"
 [[ ! -f "$NEW_WP" ]] && exit 1
 
-# ─── MP4 → GIF conversion ────────────────────────────────────────────────────
+# ─── MP4 → GIF conversion ─────────────────────────────────────────────────────
 if [[ "$NEW_WP" == *.mp4 || "$NEW_WP" == *.MP4 ]]; then
     CONVERTED_GIF="$CACHE_DIR/$COLLECTION/$(basename "$NEW_WP").gif"
     if [[ ! -f "$CONVERTED_GIF" ]]; then
@@ -166,17 +217,10 @@ setsid uwsm-app -- awww img "$CURRENT_WP_LINK" \
     --resize crop &
 disown
 
-# ─── Matugen color generation ────────────────────────────────────────────────
-if ! command -v matugen &>/dev/null; then
-    exit 0
-fi
-
-mkdir -p "$HOME/.cache/matugen"
-
+# ─── Dominant color extraction ───────────────────────────────────────────────
 DOMINANT=""
 IM_CMD=$(command -v magick || command -v convert || echo "")
 
-# Extract dominant color via imagemagick histogram
 if [[ -n "$IM_CMD" ]]; then
     DOMINANT=$(
         "$IM_CMD" "$NEW_WP" \
@@ -204,13 +248,25 @@ if [[ -n "$IM_CMD" ]]; then
     )
 fi
 
-# Run matugen — prefer dominant color, fall back to image analysis
+# ─── Read active matugen scheme ───────────────────────────────────────────────
+MATUGEN_SCHEME=$(cat "$SCHEME_FILE" 2>/dev/null || echo "scheme-tonal-spot")
+
+# ─── Single matugen call — post_hooks in config.toml handle all reloads ───────
+mkdir -p "$HOME/.cache/matugen"
+
 if [[ -n "$DOMINANT" ]]; then
-    matugen color hex "$DOMINANT" --mode "$MATUGEN_MODE"
-    matugen color hex "$DOMINANT" --mode "$MATUGEN_MODE" --json hex \
-        > "$HOME/.cache/matugen/colors.json"
+    matugen color hex "$DOMINANT" --mode "$MATUGEN_MODE" -q --prefer saturation -t "$MATUGEN_SCHEME"
+    MATUGEN_EXIT=$?
 else
-    matugen image "$NEW_WP" --mode "$MATUGEN_MODE"
-    matugen image "$NEW_WP" --mode "$MATUGEN_MODE" --json hex \
-        > "$HOME/.cache/matugen/colors.json"
+    matugen image "$NEW_WP" --mode "$MATUGEN_MODE" -q --prefer saturation -t "$MATUGEN_SCHEME"
+    MATUGEN_EXIT=$?
+fi
+
+# ─── Post-matugen: run matugenMagick, notify ──────────────────────────────────
+if [[ $MATUGEN_EXIT -eq 0 ]]; then
+    # Run matugenMagick for symlink + notification
+    [[ -x "$SCRIPTS_DIR/matugenMagick" ]] && "$SCRIPTS_DIR/matugenMagick"
+else
+    notify-send -u critical "Archer" "matugen failed (exit $MATUGEN_EXIT) — colors not applied" \
+        -h string:x-canonical-private-synchronous:archer_matugen
 fi

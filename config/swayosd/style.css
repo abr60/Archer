@@ -12,7 +12,7 @@ window {
 }
 
 label {
-    font-family: 'JetBrainsMono';
+    font-family: 'JetBrainsMono Nerd Font';
     font-size: 11pt;
     font-weight: bold;
     /* Switched from @error to @on_surface for readability */

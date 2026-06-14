@@ -177,3 +177,35 @@ tooltip label {
     background-color: @surface_container;
     border-radius: 1px;
 }
+
+/* ==========================================================================
+   WAYBAR NATIVE DROP-DOWN MENU STYLES
+   ========================================================================== */
+
+/* ── Menu ── */
+menu {
+    background-color: @inverse_surface;
+    border: 1px solid alpha(@inverse_on_surface, 0.12);
+    border-radius: 8px;
+    padding: 2px;
+    margin-top: 6px;
+    box-shadow: none;
+    min-width: 0px;
+
+}
+menu menu { margin-left: 2px; margin-top: -4px; }
+/* Remove the border globally from the main menu items */
+menu menuitem {
+    border-bottom: none;
+    margin-bottom: 2px;
+    padding-bottom: 3px; /* Keeps padding uniform */
+}
+
+/* Apply the delicate divider line ONLY inside submenus */
+menu menu menuitem:not(:last-child) {
+    border-bottom: 1px solid alpha(@inverse_on_surface, 0.08);
+    margin-bottom: 2px; 
+    padding-bottom: 4px; 
+}
+menu menuitem:hover { background-color: alpha(@primary, 0.88); color: @primary; }
+menu separator { background-color: alpha(@inverse_on_surface, 0.12); min-height: 1px; margin: 4px 8px; }

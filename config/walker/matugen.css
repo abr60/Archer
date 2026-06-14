@@ -1,0 +1,116 @@
+@define-color surface                #14140c;
+@define-color surface-container-low  #1c1c14;
+@define-color surface-container-high #2b2a22;
+@define-color on-surface              #e5e3d6;
+@define-color on-surface-variant      #c9c7b6;
+@define-color outline                 #929182;
+@define-color outline-variant         #48473b;
+
+* {
+  all: unset;
+  font-family: "JetBrains Mono";
+  font-size: 12px;
+  color: @on-surface-variant;
+}
+
+scrollbar {
+  opacity: 0;
+}
+
+.normal-icons {
+  -gtk-icon-size: 16px;
+}
+
+.large-icons {
+  -gtk-icon-size: 32px;
+}
+
+.box-wrapper {
+  background-color: @surface;
+  border: 2px solid @outline-variant;
+  border-radius: 1px;
+  padding: 14px;
+  min-width: 520px;
+}
+
+.search-container {
+  background-color: @surface-container-low;
+  border: 1px solid @outline-variant;
+  border-radius: 1px;
+  padding: 4px 12px;
+  margin-bottom: 12px;
+}
+
+.input {
+  color: @on-surface-variant;
+}
+
+.input placeholder {
+  color: @outline;
+  opacity: 1;
+}
+
+.input:focus,
+.input:active {
+  box-shadow: none;
+  outline: none;
+}
+
+.list {
+  border: 1px solid @outline-variant;
+  border-radius: 1px;
+}
+
+child {
+  background-color: @surface-container-low;
+  border-bottom: 1px solid @outline-variant;
+  border-radius: 1px;
+}
+
+child:hover .item-box,
+child:selected .item-box {
+  background-color: @surface-container-high;
+}
+
+child:selected .item-box * {
+  color: @on-surface;
+}
+
+.item-box {
+  padding-left: 14px;
+  background-color: @surface-container-low;
+}
+
+.item-text-box {
+  all: unset;
+  padding: 10px 14px;
+}
+
+.item-text {
+  color: inherit;
+}
+
+.item-image {
+  -gtk-icon-size: 0;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.item-subtext {
+  font-size: 0px;
+  min-height: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.current {
+  font-style: italic;
+}
+
+.keybind-hints {
+  background-color: @surface-container-low;
+  padding: 10px;
+  margin-top: 10px;
+}

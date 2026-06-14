@@ -8,7 +8,6 @@
   "spacing": 0,
 
   "modules-left": [
-    "custom/arch",
     "cpu",
     "memory",
     "mpris",
@@ -17,19 +16,14 @@
   ],
 
   "modules-center": [
-    //"custom/idle-indicator",
     "custom/voxtype",
     "custom/weather",
-    "custom/cava",
     "clock",
-    "custom/cava",
     "custom/updatespacman",
     "custom/hdd"
   ],
 
   "modules-right": [
-    //"custom/cpucat",
-    //"custom/mako-history",
     "group/tray-expander",
     "custom/wifi-qr",
     "network",
@@ -37,25 +31,18 @@
     "pulseaudio#microphone",
     "pulseaudio",
     "battery",
-    //"custom/exit"
-    "custom/swaync"
+    "custom/swaync",
+    "custom/menu"
   ],
 
   // ────────────────────────────────────────────────
   // LEFT MODULES
   // ────────────────────────────────────────────────
-
-  "custom/arch": {
-    "format": " ",
-    "on-click": "omarchy-menu",
-    "on-click-right": "xdg-terminal-exec",
-    "tooltip": false
-  },
-
+ 
   "cpu": {
     "interval": 5,
     "format": "{usage}% 󰍛",
-    "on-click": "timeout 20s omarchy-launch-floating-terminal-with-presentation btop",
+    "on-click": "timeout 20s launch-floating-terminal-with-presentation btop",
     "states": { "warning": 70, "critical": 90 },
     "tooltip": false
   },
@@ -92,7 +79,7 @@
     "tooltip": false
   },
 
-"custom/timer": {
+  "custom/timer": {
     "exec": "~/.config/waybar/assets/scripts/timer",
     "return-type": "json",
     "format": "{}",
@@ -103,19 +90,13 @@
     "on-scroll-down": "~/.config/waybar/assets/scripts/timer up",
     "tooltip": true,
     "escape": true
-},
-
-"custom/wifi-qr": {
-    "format": "󰐲",
-    "on-click": "hyprctl dispatch exec 'ghostty --class=wifi-qr --title=wifi-qr -e ~/.config/hypr/scripts/toolbox/wifi-qr'",
-    "tooltip": "Scan to connect to Wi-Fi"
-},
+  },
 
   "custom/screenrecording-indicator": {
-    "exec": "$OMARCHY_PATH/default/waybar/indicators/screen-recording.sh",
+    "exec": "$ARCHER_PATH/default/waybar/indicators/screen-recording.sh",
     "signal": 8,
     "return-type": "json",
-    "on-click": "omarchy-capture-screenrecording"
+    "on-click": "capture-screenrecording"
   },
 
   // ────────────────────────────────────────────────
@@ -123,7 +104,7 @@
   // ────────────────────────────────────────────────
 
   "custom/voxtype": {
-    "exec": "omarchy-voxtype-status",
+    "exec": "voxtype-status",
     "return-type": "json",
     "format": "{icon}",
     "format-icons": {
@@ -132,8 +113,8 @@
       "transcribing": "󰔟"
     },
     "tooltip": true,
-    "on-click-right": "omarchy-voxtype-config",
-    "on-click": "omarchy-voxtype-model"
+    "on-click-right": "voxtype-config",
+    "on-click": "voxtype-model"
   },
 
   "custom/weather": {
@@ -142,13 +123,6 @@
     "return-type": "json",
     "interval": 60,
     "tooltip": false
-  },
-
-  "custom/cava": {
-    "format": "{}",
-    "exec": "~/.config/waybar/assets/scripts/cava.py",
-    "return-type": "json",
-    "hide-empty-text": true
   },
 
   "clock": {
@@ -164,24 +138,24 @@
         "today": "<span color='#ff6699'><b>{}</b></span>"
       }
     },
-    "on-click-right": "~/.local/share/omarchy/bin/omarchy-cmd-tzupdate"
+    "on-click-right": "~/.local/share/Archer/bin/cmd-tzupdate"
   },
 
   "custom/updatespacman": {
     "format": "{} {icon}",
-    "format-icons": { "has-updates": "👹", "updated": " " },
+    "format-icons": { "has-updates": "👹", "updated": " " },
     "return-type": "json",
     "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300",
-    "on-click": "omarchy-launch-floating-terminal-with-presentation omarchy-update"
+    "on-click": "launch-floating-terminal-with-presentation omarchy-update"
   },
 
-"custom/hdd": {
+  "custom/hdd": {
     "exec": "~/.config/hypr/scripts/hdd/hdd-status",
     "return-type": "json",
     "interval": 3,
     "on-click": "~/.config/hypr/scripts/hdd/hdd-unmount",
     "tooltip": true
-},
+  },
 
   // ────────────────────────────────────────────────
   // RIGHT MODULES & GROUPS
@@ -197,7 +171,6 @@
       "custom/expand-icon",
       "backlight",
       "temperature"
-      //"custom/dots-push"
     ]
   },
 
@@ -214,44 +187,35 @@
     "tooltip": false
   },
 
-  "custom/idle-indicator": {
-    "on-click": "omarchy-toggle-idle",
-    "exec": "$OMARCHY_PATH/default/waybar/indicators/idle.sh",
-    "signal": 9,
-    "return-type": "json"
-  },
-
   "temperature": {
     "hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
     "format": "{temperatureC}°C",
-    "format-critical": " {temperatureC}°C",
+    "format-critical": " {temperatureC}°C",
     "critical-threshold": 75,
     "interval": 5,
     "tooltip": false
   },
 
-  "custom/notification-silencing-indicator": {
-    "on-click": "omarchy-toggle-notification-silencing",
-    "exec": "$OMARCHY_PATH/default/waybar/indicators/notification-silencing.sh",
-    "signal": 10,
-    "return-type": "json"
+  "custom/wifi-qr": {
+    "format": "󰐲",
+    "on-click": "hyprctl dispatch exec 'ghostty --class=wifi-qr --title=wifi-qr -e archer-wifi-qr'",
+    "tooltip": "Scan to connect to Wi-Fi"
   },
 
-  "tray": {
-    "icon-size": 12,
-    "spacing": 17
-  },
-
-"network": {
-    "interval": 3,
-    "format-wifi": "  {frequency}GHz | {signalStrength}%", //| {bandwidthTotalBytes}
-    "format-ethernet": "{ifname} 󰀂",
-    "format-disconnected": "󰖪 Damn!",
-    "format-alt": "<span foreground='#88c0d0'> {bandwidthDownBytes:>8}</span> <span foreground='#d08770'> {bandwidthUpBytes:>8}</span>",
-    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+  "network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format": "{icon}",
+    "format-wifi": "{icon}  {frequency}GHz | {signalStrength}%",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz) | {signalStrength}%",
     "tooltip-format-ethernet": "Connected",
-    "on-click": "mode", 
-    "on-click-right": "timeout 15s omarchy-launch-wifi"
+    "tooltip-format-disconnected": "Disconnected",
+    "format-alt": "<span foreground='#88c0d0'> {bandwidthDownBytes:>8}</span> <span foreground='#d08770'> {bandwidthUpBytes:>8}</span>",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "mode",
+    "on-click-right": "timeout 15s launch-wifi"
   },
 
   "bluetooth": {
@@ -262,7 +226,7 @@
     "tooltip-format-enumerate-connected-battery": "{device_alias} {device_battery_percentage}%",
     "tooltip-format-enumerate-connected": "{device_alias}",
     "on-click-right": "rfkill toggle bluetooth",
-    "on-click": "timeout 15s omarchy-launch-floating-terminal-with-presentation bluetui"
+    "on-click": "timeout 15s launch-floating-terminal-with-presentation bluetui"
   },
 
   "pulseaudio#microphone": {
@@ -283,14 +247,14 @@
     "max-volume": 130,
     "reverse-scrolling": 1,
     "on-click": "pamixer -t",
-    "on-click-right": "timeout 15s omarchy-launch-audio",
+    "on-click-right": "timeout 15s launch-audio",
     "tooltip": false
   },
 
   "battery": {
     "format": "{capacity} {icon}",
     "format-charging": "{icon} {capacity}",
-    "format-plugged": " {capacity}",
+    "format-plugged": " {capacity}",
     "format-icons": {
       "charging": ["⚡"],
       "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
@@ -298,13 +262,7 @@
     "format-full": "󰂅",
     "states": { "warning": 20, "critical": 10 },
     "interval": 5,
-    "on-click": "omarchy-menu power"
-  },
-
-  "custom/exit": {
-    "format": "",
-    "on-click": "GSK_RENDERER=ngl omarchy-menu system",
-    "tooltip": false
+    "on-click": "menu power"
   },
 
   	"custom/swaync": {
@@ -329,12 +287,28 @@
 		"escape": true
 	},
 
-  // ────────────────────────────────────────────────
-  // UNUSED / EXTRA MODULES
-  // ────────────────────────────────────────────────
+// ─── Add to your Waybar modules ───────────────────────────────────────────────
+// Place the module wherever you want in your bar config, e.g. "modules-right"
 
-  "custom/cpucat": {
-    "format": "{}",
-    "exec": "~/.config/waybar/assets/scripts/catloop"
-  }
+"custom/menu": {
+    "format": " ",
+    "menu": "on-click",
+    "menu-file": "$HOME/.config/waybar/assets/menu/menu.xml",
+    "menu-actions": {
+        "scheme_tonal_spot":  "archer-matugen-scheme --apply scheme-tonal-spot",
+        "scheme_content":     "archer-matugen-scheme --apply scheme-content",
+        "scheme_expressive":  "archer-matugen-scheme --apply scheme-expressive",
+        "scheme_fidelity":    "archer-matugen-scheme --apply scheme-fidelity",
+        "scheme_fruit_salad": "archer-matugen-scheme --apply scheme-fruit-salad",
+        "scheme_monochrome":  "archer-matugen-scheme --apply scheme-monochrome",
+        "scheme_neutral":     "archer-matugen-scheme --apply scheme-neutral",
+        "scheme_rainbow":     "archer-matugen-scheme --apply scheme-rainbow",
+        "scheme_vibrant":     "archer-matugen-scheme --apply scheme-vibrant",
+
+        // ── Stubbed — wire these when animation profiles are ready ──
+        "anim_fast":   "ln -sf ~/.config/hypr/animations/fast.conf ~/.config/hypr/animations.conf && hyprctl reload",
+        "anim_smooth": "ln -sf ~/.config/hypr/animations/fluid.conf ~/.config/hypr/animations.conf && hyprctl reload"
+    }
+}
+
 }

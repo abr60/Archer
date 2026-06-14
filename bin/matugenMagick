@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# =============================================================================
+# matugenMagick — Post-matugen tasks: XDG bg symlink + completion notify
+#
+# Called by archer-set-bg after a successful matugen run.
+# Reads active wallpaper from Archer state symlink.
+# =============================================================================
+
+STATE_DIR="$HOME/.local/state/Archer"
+CURRENT_WP_LINK="$STATE_DIR/current-wallpaper"
+
+# Resolve actual wallpaper path
+wallpaper_path=$(readlink -f "$CURRENT_WP_LINK" 2>/dev/null || echo "")
+
+if [[ -z "$wallpaper_path" || ! -f "$wallpaper_path" ]]; then
+    notify-send -u critical "MatugenMagick" "Could not resolve current wallpaper path"
+    exit 1
+fi
+
+# ─── XDG wallpaper symlink ────────────────────────────────────────────────────
+# Some GTK apps and portals read ~/.local/share/bg as the current wallpaper
+mkdir -p "$HOME/.local/share"
+ln -sf "$wallpaper_path" "$HOME/.local/share/bg"
+
+# ─── Completion notification ──────────────────────────────────────────────────
+notify-send \
+    -h string:x-canonical-private-synchronous:archer_matugen \
+    "Archer" "Wallpaper & colors applied" \
+    -i "$HOME/.local/share/bg"

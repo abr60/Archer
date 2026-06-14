@@ -10,7 +10,7 @@
     border: none;
     border-radius: 0; 
     font-family: 'CaskaydiaMono Nerd Font', 'JetBrainsMono Nerd Font', sans-serif;
-    font-size: 12px; 
+    font-size: 13px; 
     font-weight: 700;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -177,3 +177,34 @@ tooltip label {
     background-color: @surface_container;
     border-radius: 1px;
 }
+
+/* ==========================================================================
+   WAYBAR NATIVE DROP-DOWN MENU STYLES
+   ========================================================================== */
+
+/* ── Menu ── */
+menu {
+    background-color: @surface_container_low;
+    border: 1px solid alpha(@on_surface, 0.12);
+    border-radius: 8px;
+    padding: 2px;
+    margin-top: 6px;
+    box-shadow: none;
+    min-width: 0px;
+
+}
+menu menu { margin-left: 2px; margin-top: -4px; }
+menu menuitem {
+    border-bottom: none;
+    margin-bottom: 2px;
+    padding-bottom: 3px; /* Keeps padding uniform */
+}
+
+/* Apply the delicate divider line ONLY inside submenus */
+menu menu menuitem:not(:last-child) {
+    border-bottom: 1px solid alpha(@on_surface, 0.08);
+    margin-bottom: 2px; 
+    padding-bottom: 4px; 
+}
+menu menuitem:hover { background-color: alpha(@primary, 0.44); color: @primary; }
+menu separator { background-color: alpha(@on_surface, 0.12); min-height: 1px; margin: 4px 8px; }

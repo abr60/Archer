@@ -150,7 +150,7 @@ run_step "hardware/wifi-powersave.sh"     "WiFi powersave rules"           false
 run_step "hardware/fast-shutdown.sh"      "Fast shutdown config"           false
 run_step "hardware/unmount-fuse.sh"       "FUSE unmount hook"              false
 run_step "hardware/swayosd.sh"            "Enabling SwayOSD"               false
-run_step "hardware/battery-monitor.sh"    "Battery monitor timer"          false
+#run_step "hardware/tlp-battery.sh"    "Battery monitor timer"          false
 run_step "hardware/recover-monitor.sh"    "Monitor recovery service"       false
 #run_step "hardware/monitor-autodetect.sh" "Auto-detecting monitors"        false
 

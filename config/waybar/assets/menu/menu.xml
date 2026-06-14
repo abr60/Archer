@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkMenu" id="menu">
+
+    <!-- ── SECTION 1: MATUGEN COLOR SCHEMES ───────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label">  Matugen Color Schemes</property>
+        <property name="sensitive">false</property> <!-- Makes it an unclickable header -->
+      </object>
+    </child>
+    <child><object class="GtkSeparatorMenuItem"/></child>
+    <child>
+      <object class="GtkMenuItem" id="scheme_tonal_spot">
+        <property name="label">󰁨  Tonal Spot (default)</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="scheme_content">
+        <property name="label">  Content</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="scheme_expressive">
+        <property name="label">󱜙  Expressive</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="scheme_fidelity">
+        <property name="label">  Fidelity</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="scheme_fruit_salad">
+        <property name="label">  Fruit Salad</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="scheme_monochrome">
+        <property name="label">  Monochrome</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="scheme_neutral">
+        <property name="label">󰱴  Neutral</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="scheme_rainbow">
+        <property name="label">  Rainbow</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="scheme_vibrant">
+        <property name="label">󰌁  Vibrant</property>
+      </object>
+    </child>
+
+    <!-- Large gap separator between categories -->
+    <child><object class="GtkSeparatorMenuItem"/></child>
+
+    <!-- ── SECTION 2: HYPRLAND ANIMATIONS ─────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label">  Hyprland Animations</property>
+        <property name="sensitive">false</property> <!-- Unclickable header -->
+      </object>
+    </child>
+    <child><object class="GtkSeparatorMenuItem"/></child>
+    <child>
+      <object class="GtkMenuItem" id="anim_fast">
+        <property name="label">󱐋  Snappy &amp; Fast</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="anim_smooth">
+        <property name="label">󱤉  Smooth &amp; Fluid</property>
+      </object>
+    </child>
+
+  </object>
+</interface>

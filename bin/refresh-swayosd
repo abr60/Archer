@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# omarchy:summary=Overwrite the user configs for swayosd (controls on-screen feedback for changing volume/songs etc) with the Omarchy defaults and restart the service.
+# 1. Kill the running SwayOSD daemon instantly
+pkill -x swayosd-server
 
-refresh-config swayosd/config.toml
-refresh-config swayosd/style.css
-restart-swayosd
+# 2. Restart the daemon cleanly in the background using your custom stylesheet
+# (Using 'setsid' ensures it keeps running even if this script exits)
+setsid swayosd-server -s ~/.config/swayosd/style.css > /dev/null 2>&1 &

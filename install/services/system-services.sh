@@ -35,9 +35,9 @@ _enable() {
 }
 
 _enable NetworkManager.service
-_enable NetworkManager-dispatcher.service
+_enable NetworkManager-dispatcher.service`
 _enable bluetooth.service
-_enable tlp.service
+#_enable tlp.service
 _enable thinkfan.service
 _enable ufw.service
 _enable sddm.service
