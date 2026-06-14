@@ -36,10 +36,10 @@ post_hook   = "restart-swayosd"
 #output_path = "~/.config/walker/matugen.css"
 # no post_hook — walker not running
 
-[templates.ghostty]
-input_path  = "~/.config/matugen/templates/ghostty"
-output_path = "~/.config/ghostty/themes/matugen"
-post_hook   = "pkill -SIGUSR2 ghostty"
+#[templates.ghostty]
+#input_path  = "~/.config/matugen/templates/ghostty"
+#output_path = "~/.config/ghostty/themes/matugen"
+#post_hook   = "pkill -SIGUSR2 ghostty"
 
 [templates.rofi]
 input_path  = "~/.config/matugen/templates/rofi.rasi"
@@ -79,3 +79,8 @@ post_hook = '~/.config/matugen/post-hook-scripts/gtk-themes-reload.sh'
 #[templates.mode-flag]
 #input_path = '~/.config/matugen/templates/mode-flag'
 #output_path = '~/.config/matugen/current-mode'
+
+[templates.kitty]
+input_path  = "~/.config/matugen/templates/kitty.conf"
+output_path = "~/.config/kitty/colors.conf"
+post_hook   = "pkill -USR1 kitty"

@@ -25,6 +25,8 @@ MATUGEN_HYPRLOCK="$HOME/.config/hypr/bin/matugen-hyprlock.conf"
 SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
 SCHEME_FILE="$STATE_DIR/matugen-scheme"
 
+log() { echo "[$(date +%T.%3N)] $*" | systemd-cat -t archer-set-bg; }
+
 # ─── Load current collection ──────────────────────────────────────────────────
 COLLECTION=$(cat "$COLLECTION_FILE" 2>/dev/null || echo "")
 
@@ -145,9 +147,11 @@ cores=$(nproc)
 # Clean stale locks
 rm -f "$CACHE_DIR/$COLLECTION"/.lock_* 2>/dev/null || true
 
+log "START — thumbnail build"
 # Process in parallel
 printf '%s\0' "${WALLPAPERS[@]}" | \
     xargs -0 -P "$JOBS" -I{} bash -c 'build_thumb "{}"'
+log "thumbnail build done"
 
 # Clean orphaned cache entries
 for cached in "$CACHE_DIR/$COLLECTION"/*.sqre.png; do
@@ -190,9 +194,11 @@ NEW_WP="${wp_map[$selected]}"
 if [[ "$NEW_WP" == *.mp4 || "$NEW_WP" == *.MP4 ]]; then
     CONVERTED_GIF="$CACHE_DIR/$COLLECTION/$(basename "$NEW_WP").gif"
     if [[ ! -f "$CONVERTED_GIF" ]]; then
+        log "mp4→gif conversion start"
         ffmpeg -i "$NEW_WP" \
             -vf "fps=24,scale=1920:-1:flags=lanczos,crop=1920:1080,split[s0][s1];[s0]palettegen=max_colors=128[p];[s1][p]paletteuse=dither=sierra2_4a" \
             "$CONVERTED_GIF" >/dev/null 2>&1
+        log "mp4→gif conversion done"
     fi
     TARGET_WP="$CONVERTED_GIF"
 else
@@ -209,6 +215,7 @@ if ! pgrep -x awww-daemon >/dev/null 2>&1; then
     sleep 0.3
 fi
 
+log "awww launched"
 setsid uwsm-app -- awww img "$CURRENT_WP_LINK" \
     --transition-type grow \
     --transition-pos "$(hyprctl cursorpos | grep -E '^[0-9]' || echo '0,0')" \
@@ -221,6 +228,7 @@ disown
 DOMINANT=""
 IM_CMD=$(command -v magick || command -v convert || echo "")
 
+log "dominant color extraction start"
 if [[ -n "$IM_CMD" ]]; then
     DOMINANT=$(
         "$IM_CMD" "$NEW_WP" \
@@ -247,6 +255,7 @@ if [[ -n "$IM_CMD" ]]; then
         done
     )
 fi
+log "dominant color extraction done: ${DOMINANT:-NONE}"
 
 # ─── Read active matugen scheme ───────────────────────────────────────────────
 MATUGEN_SCHEME=$(cat "$SCHEME_FILE" 2>/dev/null || echo "scheme-tonal-spot")
@@ -255,17 +264,21 @@ MATUGEN_SCHEME=$(cat "$SCHEME_FILE" 2>/dev/null || echo "scheme-tonal-spot")
 mkdir -p "$HOME/.cache/matugen"
 
 if [[ -n "$DOMINANT" ]]; then
+    log "matugen start (hex: $DOMINANT)"
     matugen color hex "$DOMINANT" --mode "$MATUGEN_MODE" -q --prefer saturation -t "$MATUGEN_SCHEME"
     MATUGEN_EXIT=$?
 else
+    log "matugen start (image fallback)"
     matugen image "$NEW_WP" --mode "$MATUGEN_MODE" -q --prefer saturation -t "$MATUGEN_SCHEME"
     MATUGEN_EXIT=$?
 fi
+log "matugen done (exit $MATUGEN_EXIT)"
 
 # ─── Post-matugen: run matugenMagick, notify ──────────────────────────────────
 if [[ $MATUGEN_EXIT -eq 0 ]]; then
-    # Run matugenMagick for symlink + notification
+    log "matugenMagick start"
     [[ -x "$SCRIPTS_DIR/matugenMagick" ]] && "$SCRIPTS_DIR/matugenMagick"
+    log "DONE"
 else
     notify-send -u critical "Archer" "matugen failed (exit $MATUGEN_EXIT) — colors not applied" \
         -h string:x-canonical-private-synchronous:archer_matugen
