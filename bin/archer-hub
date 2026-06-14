@@ -53,5 +53,5 @@ case "$chosen" in
     *"MAC Spoofer"*)    bash "$SPOOF" &                      ;;
     *"Metadata"*)       bash "$META"  &                      ;;
     *"Shredder"*)       bash "$SHRED" &                      ;;
-    *"WiFi QR"*)        launch_tui "$WIFIQR" "wifi-qr" "wifi-qr" ;;
+    *"WiFi QR"*)        hyprctl dispatch exec "[float; size 302 416; move 967 40; pin] kitty --class=wifi-qr --title=wifi-qr -e bash '$WIFIQR'" ;;
 esac
