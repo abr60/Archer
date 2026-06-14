@@ -20,12 +20,13 @@
     "custom/weather",
     "clock",
     "custom/updatespacman",
+     "custom/mode",
     "custom/hdd"
   ],
 
   "modules-right": [
     "group/tray-expander",
-    "custom/wifi-qr",
+    //"custom/wifi-qr",
     "network",
     "bluetooth",
     "pulseaudio#microphone",
@@ -201,6 +202,15 @@
     "on-click": "hyprctl dispatch exec 'ghostty --class=wifi-qr --title=wifi-qr -e archer-wifi-qr'",
     "tooltip": "Scan to connect to Wi-Fi"
   },
+
+"custom/mode": {
+    "exec": "cat ~/.local/state/Archer/current-mode-icon 2>/dev/null || echo '󰖔'",
+    "interval": 1,
+    "format": "{}",
+    "return-type": "",
+    "on-click": "archer-set-mode $([ \"$(cat ~/.local/state/Archer/current-mode)\" = 'dark' ] && echo light || echo dark)",
+    "tooltip": false
+},
 
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],

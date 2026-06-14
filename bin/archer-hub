@@ -1,16 +1,10 @@
 #!/usr/bin/env bash
 # =============================================================================
 # Toolbox – Unified Hub Launcher
-# ~/.config/hypr/scripts/toolbox/toolbox
-#
-# Hyprland keybind:
-#   bind = ALT, M, exec, ~/.config/hypr/scripts/toolbox/toolbox
 # =============================================================================
 
-# --- Dynamic Path Resolution -------------------------------------------------
 TOOLBOX_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
 
-# --- Script References -------------------------------------------------------
 MEDIA="$TOOLBOX_DIR/archer-media-download"
 DOTS="$TOOLBOX_DIR/archer-dots-push"
 GIF="$TOOLBOX_DIR/archer-mp4-to-gif"
@@ -21,21 +15,19 @@ META="$TOOLBOX_DIR/archer-metadata_cleaner"
 SHRED="$TOOLBOX_DIR/archer-shredder"
 WIFIQR="$TOOLBOX_DIR/archer-wifi-qr"
 
-# --- TUI Launcher ------------------------------------------------------------
 launch_tui() {
     local script="$1"
     local title="$2"
-    local class="${3:-ghostty}"
+    local class="${3:-kitty}"
     local safe_title="${title// /_}"
 
-    if [ "$class" != "ghostty" ]; then
-        hyprctl dispatch exec "ghostty --class=$class --title=$safe_title -e bash '$script'"
+    if [ "$class" != "kitty" ]; then
+        hyprctl dispatch exec "kitty --class=$class --title=$safe_title -e bash '$script'"
     else
-        hyprctl dispatch exec "[float; size 900 600; center] ghostty --title=$safe_title -e bash '$script'"
+        hyprctl dispatch exec "[float; size 900 600; center] kitty --title=$safe_title -e bash '$script'"
     fi
 }
 
-# --- Rofi Menu ---------------------------------------------------------------
 MENU="  Media Download
   Dots Push
 󰿔  MP4 → GIF
@@ -52,7 +44,6 @@ chosen=$(echo -e "$MENU" | rofi -dmenu \
 
 [[ -z "$chosen" ]] && exit 0
 
-# --- Dispatch ----------------------------------------------------------------
 case "$chosen" in
     *"Media Download"*) launch_tui "$MEDIA" "media-download" ;;
     *"Dots Push"*)      launch_tui "$DOTS"  "dots-push"      ;;
@@ -62,5 +53,5 @@ case "$chosen" in
     *"MAC Spoofer"*)    bash "$SPOOF" &                      ;;
     *"Metadata"*)       bash "$META"  &                      ;;
     *"Shredder"*)       bash "$SHRED" &                      ;;
-    *"WiFi QR"*)        launch_tui "$WIFIQR" "wifi-qr" "com.mitchellh.ghostty" ;;
+    *"WiFi QR"*)        launch_tui "$WIFIQR" "wifi-qr" "wifi-qr" ;;
 esac

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+MODE="${1:-dark}"
+STATE_DIR="$HOME/.local/state/Archer"
+SCHEME_FILE="$STATE_DIR/matugen-scheme"
+
+echo "$MODE" > "$STATE_DIR/current-mode"
+[[ "$MODE" == "light" ]] && echo "󰖙" > "$STATE_DIR/current-mode-icon" || echo "󰖔" > "$STATE_DIR/current-mode-icon"
+
+if [[ "$MODE" == "light" ]]; then
+    gsettings set org.gnome.desktop.interface color-scheme prefer-light
+else
+    gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+fi
+
+if [[ "$MODE" == "light" ]]; then
+    echo "scheme-vibrant" > "$SCHEME_FILE"
+else
+    echo "scheme-tonal-spot" > "$SCHEME_FILE"
+fi
+
+CURRENT_WP="$(readlink -f "$STATE_DIR/current-wallpaper")"
+SCHEME=$(cat "$SCHEME_FILE" 2>/dev/null || echo "scheme-tonal-spot")
+SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
+
+matugen image "$CURRENT_WP" --mode "$MODE" -q --prefer saturation -t "$SCHEME"
+[[ -x "$SCRIPTS_DIR/matugenMagick" ]] && "$SCRIPTS_DIR/matugenMagick"

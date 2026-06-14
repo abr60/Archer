@@ -37,7 +37,7 @@ post_hook   = "restart-swayosd"
 [templates.kitty]
 input_path  = "~/.config/matugen/templates/kitty.conf"
 output_path = "~/.config/kitty/colors.conf"
-#post_hook   = "pkill -USR1 kitty"
+post_hook   = "pkill -USR1 kitty"
 
 # 4. Apps
 [templates.cava]

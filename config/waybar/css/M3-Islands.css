@@ -137,7 +137,7 @@ tooltip label {
 
 /* Connectivity Icons */
 #custom-wifi-qr, #bluetooth {
-    font-size: 15px;
+    font-size: 18px;
     color: @primary; 
 }
 
@@ -177,6 +177,13 @@ tooltip label {
     background-color: @surface_container;
     border-radius: 1px;
 }
+
+#custom-mode {
+    color: @primary;
+    font-size: 19px;
+    padding: 0 8px;
+}
+
 
 /* ==========================================================================
    WAYBAR NATIVE DROP-DOWN MENU STYLES
