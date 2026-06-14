@@ -56,6 +56,14 @@ MODE=$(printf 'dark\nlight\n' | rofi -dmenu \
 
 [[ -z "$MODE" ]] && exit 0
 
+# ─── Determine color scheme ───────────────────────────────────────────────────
+if [[ "$MODE" == "light" ]]; then
+    echo "scheme-vibrant" > "$SCHEME_FILE"
+else
+    # keep whatever scheme was previously selected
+    SCHEME=$(cat "$SCHEME_FILE" 2>/dev/null || echo "scheme-tonal-spot")
+fi
+
 # ─── Save state ───────────────────────────────────────────────────────────────
 mkdir -p "$STATE_DIR"
 echo "$SELECTED" > "$COLLECTION_FILE"

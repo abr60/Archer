@@ -64,8 +64,7 @@ if [[ ! -L "$CURRENT_WP_LINK" ]]; then
     exit 0
 fi
 
-COLLECTION=$(cat "$STATE_DIR/current-collection" 2>/dev/null || echo "")
-[[ "$COLLECTION" == *light* ]] && MODE="light" || MODE="dark"
+MODE=$(cat "$STATE_DIR/current-mode" 2>/dev/null || echo "dark")
 
 matugen image "$(readlink -f "$CURRENT_WP_LINK")" \
     --mode "$MODE" -q --prefer saturation -t "$SCHEME"

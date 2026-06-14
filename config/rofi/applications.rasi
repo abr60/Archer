@@ -21,7 +21,7 @@ configuration {
 }
 
 window {
-    background-color: #0e0e10;
+    background-color: @surface;
     border:           2px;
     border-color:     @outline-variant;
     border-radius:    1px;
