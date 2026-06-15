@@ -8,62 +8,62 @@
     browser_column_widths: [20, 38, 42],
     background_color: None,
     modal_backdrop: true,
-    text_color: Some("#3a665c"),
+    text_color: Some("#496548"),
     header_background_color: None,
     modal_background_color: None,
-    preview_label_style: (fg: "#006c4a"),
-    preview_metadata_group_style: (fg: "#1a6967", modifiers: "Bold"),
+    preview_label_style: (fg: "#3d6a00"),
+    preview_metadata_group_style: (fg: "#30694d", modifiers: "Bold"),
     song_table_album_separator: None,
     show_song_table_header: true,
     tab_bar: (
-        active_style: (fg: "#ffffff", bg: "#3a665c", modifiers: "Bold"),
-        inactive_style: (fg: "#3a665c"),
+        active_style: (fg: "#ffffff", bg: "#496548", modifiers: "Bold"),
+        inactive_style: (fg: "#496548"),
     ),
-    highlighted_item_style: (fg: "#3a665c", modifiers: "Bold"),
-    current_item_style: (fg: "#3a665c", bg: "#00e29e", modifiers: "Bold"),
-    borders_style: (fg: "#3a665c", modifiers: "Bold"),
-    highlight_border_style: (fg: "#3a665c"),
+    highlighted_item_style: (fg: "#496548", modifiers: "Bold"),
+    current_item_style: (fg: "#496548", bg: "#84dd00", modifiers: "Bold"),
+    borders_style: (fg: "#496548", modifiers: "Bold"),
+    highlight_border_style: (fg: "#496548"),
     symbols: (song: "󰝚 ", dir: "󱍙 ", playlist: "󰲸 ", marker: "* ", ellipsis: "...",
-        song_style: (fg: "#006c4a"), song_highlighted_style: None, song_current_style: (fg: "#ffffff"),
-        dir_style: (fg: "#006c4a"), dir_highlighted_style: None, dir_current_style: (fg: "#ffffff"),
-        playlist_style: (fg: "#006c4a"), playlist_highlighted_style: None, playlist_current_style: (fg: "#ffffff"),
-        marker_style: (fg: "#1a6967"), marker_highlighted_style: (fg: "#1a6967"), marker_current_style: (fg: "#ffffff"),
+        song_style: (fg: "#3d6a00"), song_highlighted_style: None, song_current_style: (fg: "#ffffff"),
+        dir_style: (fg: "#3d6a00"), dir_highlighted_style: None, dir_current_style: (fg: "#ffffff"),
+        playlist_style: (fg: "#3d6a00"), playlist_highlighted_style: None, playlist_current_style: (fg: "#ffffff"),
+        marker_style: (fg: "#30694d"), marker_highlighted_style: (fg: "#30694d"), marker_current_style: (fg: "#ffffff"),
     ),
     progress_bar: (
         symbols: ["=", "=", "=", "=", "=" ],
         track_style: (fg: "#ffffff"),
-        elapsed_style: (fg: "#3a665c"),
-        thumb_style: (fg: "#3a665c"),
+        elapsed_style: (fg: "#496548"),
+        thumb_style: (fg: "#496548"),
         use_track_when_empty: false,
     ),
     scrollbar: (
         symbols: ["┋", "█", "󰄿", "󰄼"],
         track_style: (fg: "#ffffff"),
-        ends_style: (fg: "#006c4a"),
-        thumb_style: (fg: "#006c4a"),
+        ends_style: (fg: "#3d6a00"),
+        thumb_style: (fg: "#3d6a00"),
     ),
     song_table_format: [
         (
             prop: (kind: Group([
                 (kind: Text(" ")),
-                (kind: Property(Title), style: (fg: "#006c4a"),
-                    default: (kind: Property(Filename), style: (fg: "#006c4a"),
-                        default: (kind: Text("Unknown Title"), style: (fg: "#3a665c")))),
+                (kind: Property(Title), style: (fg: "#3d6a00"),
+                    default: (kind: Property(Filename), style: (fg: "#3d6a00"),
+                        default: (kind: Text("Unknown Title"), style: (fg: "#496548")))),
             ])),
             width: "92%",
             label_prop: (kind: Group([
                 (kind: Text("Title "), style: (modifiers: "Bold")),
-                (kind: Text(""), style: (fg: "#3a665c"))
+                (kind: Text(""), style: (fg: "#496548"))
             ]))
         ),
         (
-            prop: (kind: Property(Duration), style: (fg: "#006c4a"),
+            prop: (kind: Property(Duration), style: (fg: "#3d6a00"),
                 default: (kind: Text("-"))),
             width: "8%",
             alignment: Right,
             label_prop: (kind: Group([
                 (kind: Text("Length "), style: (modifiers: "Bold")),
-                (kind: Text(" "), style: (fg: "#3a665c"))
+                (kind: Text(" "), style: (fg: "#496548"))
             ]))
         ),
     ],
@@ -131,20 +131,20 @@
                 ),
                 (size: "5", borders: "ALL", border_symbols: Library("rounded_collapsed_top"),
                   border_title: [
-                            (kind: Text("─"), style: (fg: "#3a665c")),
+                            (kind: Text("─"), style: (fg: "#496548")),
                         (kind: Transform(Replace(content: (kind: Sticker("rating")), replacements: [
-                            (match:  "1", replace: (kind: Group([(kind: Text("["), style: (fg: "#3a665c")), (kind: Text(" "),         style: (fg: "#3a665c")), (kind: Text("    ")), (kind: Text("]"), style: (fg: "#3a665c"))]))),
-                            (match:  "2", replace: (kind: Group([(kind: Text("["), style: (fg: "#3a665c")), (kind: Text(" "),         style: (fg: "#3a665c")), (kind: Text("    ")), (kind: Text("]"), style: (fg: "#3a665c"))]))),
-                            (match:  "3", replace: (kind: Group([(kind: Text("["), style: (fg: "#3a665c")), (kind: Text("  "),       style: (fg: "#3a665c")), (kind: Text("   ")), (kind: Text("]"), style: (fg: "#3a665c"))]))),
-                            (match:  "4", replace: (kind: Group([(kind: Text("["), style: (fg: "#3a665c")), (kind: Text("  "),       style: (fg: "#3a665c")), (kind: Text("   ")), (kind: Text("]"), style: (fg: "#3a665c"))]))),
-                            (match:  "5", replace: (kind: Group([(kind: Text("["), style: (fg: "#3a665c")), (kind: Text("   "),     style: (fg: "#3a665c")), (kind: Text("  ")), (kind: Text("]"), style: (fg: "#3a665c"))]))),
-                            (match:  "6", replace: (kind: Group([(kind: Text("["), style: (fg: "#3a665c")), (kind: Text("   "),     style: (fg: "#3a665c")), (kind: Text("  ")), (kind: Text("]"), style: (fg: "#3a665c"))]))),
-                            (match:  "7", replace: (kind: Group([(kind: Text("["), style: (fg: "#3a665c")), (kind: Text("    "),   style: (fg: "#3a665c")), (kind: Text(" ")), (kind: Text("]"), style: (fg: "#3a665c"))]))),
-                            (match:  "8", replace: (kind: Group([(kind: Text("["), style: (fg: "#3a665c")), (kind: Text("    "),   style: (fg: "#3a665c")), (kind: Text(" ")), (kind: Text("]"), style: (fg: "#3a665c"))]))),
-                            (match:  "9", replace: (kind: Group([(kind: Text("["), style: (fg: "#3a665c")), (kind: Text("     "), style: (fg: "#3a665c")), (kind: Text("]"), style: (fg: "#3a665c"))]))),
-                            (match: "10", replace: (kind: Group([(kind: Text("["), style: (fg: "#3a665c")), (kind: Text("     "), style: (fg: "#3a665c")), (kind: Text("]"), style: (fg: "#3a665c"))]))),
-                        ])), default: (kind: Text("─"),style: (fg: "#3a665c"))),
-                            (kind: Text("─"), style: (fg: "#3a665c")),
+                            (match:  "1", replace: (kind: Group([(kind: Text("["), style: (fg: "#496548")), (kind: Text(" "),         style: (fg: "#496548")), (kind: Text("    ")), (kind: Text("]"), style: (fg: "#496548"))]))),
+                            (match:  "2", replace: (kind: Group([(kind: Text("["), style: (fg: "#496548")), (kind: Text(" "),         style: (fg: "#496548")), (kind: Text("    ")), (kind: Text("]"), style: (fg: "#496548"))]))),
+                            (match:  "3", replace: (kind: Group([(kind: Text("["), style: (fg: "#496548")), (kind: Text("  "),       style: (fg: "#496548")), (kind: Text("   ")), (kind: Text("]"), style: (fg: "#496548"))]))),
+                            (match:  "4", replace: (kind: Group([(kind: Text("["), style: (fg: "#496548")), (kind: Text("  "),       style: (fg: "#496548")), (kind: Text("   ")), (kind: Text("]"), style: (fg: "#496548"))]))),
+                            (match:  "5", replace: (kind: Group([(kind: Text("["), style: (fg: "#496548")), (kind: Text("   "),     style: (fg: "#496548")), (kind: Text("  ")), (kind: Text("]"), style: (fg: "#496548"))]))),
+                            (match:  "6", replace: (kind: Group([(kind: Text("["), style: (fg: "#496548")), (kind: Text("   "),     style: (fg: "#496548")), (kind: Text("  ")), (kind: Text("]"), style: (fg: "#496548"))]))),
+                            (match:  "7", replace: (kind: Group([(kind: Text("["), style: (fg: "#496548")), (kind: Text("    "),   style: (fg: "#496548")), (kind: Text(" ")), (kind: Text("]"), style: (fg: "#496548"))]))),
+                            (match:  "8", replace: (kind: Group([(kind: Text("["), style: (fg: "#496548")), (kind: Text("    "),   style: (fg: "#496548")), (kind: Text(" ")), (kind: Text("]"), style: (fg: "#496548"))]))),
+                            (match:  "9", replace: (kind: Group([(kind: Text("["), style: (fg: "#496548")), (kind: Text("     "), style: (fg: "#496548")), (kind: Text("]"), style: (fg: "#496548"))]))),
+                            (match: "10", replace: (kind: Group([(kind: Text("["), style: (fg: "#496548")), (kind: Text("     "), style: (fg: "#496548")), (kind: Text("]"), style: (fg: "#496548"))]))),
+                        ])), default: (kind: Text("─"),style: (fg: "#496548"))),
+                            (kind: Text("─"), style: (fg: "#496548")),
                   ],
                   border_title_position: Bottom,
                   border_title_alignment: Right,
@@ -160,10 +160,10 @@
             direction: Vertical, panes: [
               (size: "3", borders: "ALL", border_symbols: Rounded ,
                   border_title: [
-                         (kind: Property(Status(Elapsed)),style: (fg: "#3a665c")),
+                         (kind: Property(Status(Elapsed)),style: (fg: "#496548")),
                          (kind: Property(Status(StateV2(playing_label: "─󱦟─", paused_label: "  ", stopped_label: "  "))),
                              style: (modifiers: "Bold")),
-                         (kind: Property(Status(Duration)),style: (fg: "#3a665c")),
+                         (kind: Property(Status(Duration)),style: (fg: "#496548")),
                       ],
                   border_title_position: Top,
                   border_title_alignment: Center,
@@ -177,24 +177,24 @@
              (size: "100%", pane: Pane(Property(content: [
                              (kind: Text(" "), style: (modifiers: "Bold")),
                              (kind: Property(Status(StateV2(playing_label: "", paused_label: "", stopped_label: ""))),
-                                 style: (fg: "#3a665c")),
+                                 style: (fg: "#496548")),
                              (kind: Text("  "), style: (modifiers: "Bold")),
-                             (kind: Property(Song(FileExtension)), style: (fg: "#3a665c")),
+                             (kind: Property(Song(FileExtension)), style: (fg: "#496548")),
                              (kind: Text(" ")),
                              (kind: Property(Widget(ScanStatus)), style: (modifiers: "Bold")),
                              (kind: Text(" ")),
-                             (kind: Property(Status(InputBuffer())), style: (fg: "#3a665c")),
+                             (kind: Property(Status(InputBuffer())), style: (fg: "#496548")),
                          ], align: Left))
              ),
             ]),
         "tab_bar_right": Split(direction: Horizontal, panes: [
                  (size: "100%", pane: Pane(Property(content: [
-                                 (kind: Transform(Replace(content: (kind: Property(Status(Partition)), style: (fg: "#3a665c")), replacements: [
+                                 (kind: Transform(Replace(content: (kind: Property(Status(Partition)), style: (fg: "#496548")), replacements: [
                                      (match:  "default", replace: (kind: Group([(kind: Text(""))]))),
                                    ]))),
                                  (kind: Text(" ")),
                                  (kind: Text(" 󱡬"), style: (modifiers: "Bold")),
-                                 (kind: Property(Status(Volume)), style: (fg: "#3a665c")),
+                                 (kind: Property(Status(Volume)), style: (fg: "#496548")),
                                  (kind: Text("% "), style: (modifiers: "Bold"))
                              ], align: Right))
                  ),
@@ -204,9 +204,9 @@
             panes: [
                (size: "100%", pane: Pane(Property(content: [
                                (kind: Text("[ "),style: (modifiers: "Bold")),
-                               (kind: Property(Status(Elapsed)),style: (fg: "#3a665c")),
+                               (kind: Property(Status(Elapsed)),style: (fg: "#496548")),
                                (kind: Text(" / "),style: (modifiers: "Bold")),
-                               (kind: Property(Status(Duration)),style: (fg: "#3a665c")),
+                               (kind: Property(Status(Duration)),style: (fg: "#496548")),
                                (kind: Text(" 󱦟"),style: (modifiers: "Bold")),
                                (kind: Text(" ]"),style: (modifiers: "Bold")),
                            ], align: Left))
@@ -245,8 +245,8 @@
                                          on_style: (modifiers: "Bold"),
                                          off_style: (modifiers: "Bold"))))),
                          (kind: Text(" | "),style: (modifiers: "Bold")),
-                         (kind: Property(Status(Crossfade)),style: (fg: "#3a665c"),
-                          default: (kind: Text("󰴽"), style: (fg: "#3a665c"))),
+                         (kind: Property(Status(Crossfade)),style: (fg: "#496548"),
+                          default: (kind: Text("󰴽"), style: (fg: "#496548"))),
                          (kind: Text(" | "),style: (modifiers: "Bold")),
                          (kind: Transform(Replace(content: (kind: Property(Status(InputMode()))), replacements: [
                                  (match:  "Normal", replace: (kind: Group([(kind: Text("N"),style: (modifiers: "Bold"))]))),
@@ -261,11 +261,11 @@
             panes: [
                 (size: "100%", pane: Pane(Property(content: [
                                 (kind: Text("[ "),style: (modifiers: "Bold")),
-                                (kind: Property(Song(Bits())),default: (kind: Text(" "), style: (fg: "#3a665c")), style: (fg: "#3a665c")),
-                                (kind: Text(" bit"),style: (fg: "#3a665c")),
+                                (kind: Property(Song(Bits())),default: (kind: Text(" "), style: (fg: "#496548")), style: (fg: "#496548")),
+                                (kind: Text(" bit"),style: (fg: "#496548")),
                                 (kind: Text(" | "),style: (modifiers: "Bold")),
-                                (kind: Property(Status(Bitrate)),default: (kind: Text(" "), style: (fg: "#3a665c")),style: (fg: "#3a665c")),
-                                (kind: Text(" kbps"),style: (fg: "#3a665c")),
+                                (kind: Property(Status(Bitrate)),default: (kind: Text(" "), style: (fg: "#496548")),style: (fg: "#496548")),
+                                (kind: Text(" kbps"),style: (fg: "#496548")),
                                 (kind: Text(" ]"),style: (modifiers: "Bold"))
                             ], align: Left))
                 ),
@@ -276,17 +276,17 @@
             panes: [
                  (size: "100%", pane: Pane(Property(content: [
                                  (kind: Transform(Replace(content:
-                                     (kind: Property(Song(Artist)), style: (fg: "#3a665c"),
-                                         default: (kind: Text("Unknown Artist"), style: (fg: "#3a665c"))),
+                                     (kind: Property(Song(Artist)), style: (fg: "#496548"),
+                                         default: (kind: Text("Unknown Artist"), style: (fg: "#496548"))),
                                    replacements: [
-                                     (match:  "", replace: (kind: Group([(kind: Text("Unknown Artist"), style: (fg: "#3a665c"))]))),
+                                     (match:  "", replace: (kind: Group([(kind: Text("Unknown Artist"), style: (fg: "#496548"))]))),
                                    ]))),
-                                 (kind: Text(" - "), style: (fg: "#3a665c")),
+                                 (kind: Text(" - "), style: (fg: "#496548")),
                                  (kind: Transform(Replace(content:
-                                    (kind: Property(Song(Album)),style: (fg: "#3a665c"),
-                                        default: (kind: Text("Unknown Album"), style: (fg: "#3a665c"))),
+                                    (kind: Property(Song(Album)),style: (fg: "#496548"),
+                                        default: (kind: Text("Unknown Album"), style: (fg: "#496548"))),
                                    replacements: [
-                                     (match:  "", replace: (kind: Group([(kind: Text("Unknown Album"), style: (fg: "#3a665c"))]))),
+                                     (match:  "", replace: (kind: Group([(kind: Text("Unknown Album"), style: (fg: "#496548"))]))),
                                    ]))),
                              ], align: Center, scroll_speed: 6))
                  ),
@@ -297,9 +297,9 @@
             panes: [
                  (size: "100%", pane: Pane(Property(content: [
                                  (kind: Text("[ "),style: (modifiers: "Bold")),
-                                 (kind: Property(Status(QueueTimeRemaining(separator: " "))),style: (fg: "#3a665c")),
+                                 (kind: Property(Status(QueueTimeRemaining(separator: " "))),style: (fg: "#496548")),
                                  (kind: Text(" / "),style: (modifiers: "Bold")),
-                                 (kind: Property(Status(QueueTimeTotal(separator: " "))),style: (fg: "#3a665c")),
+                                 (kind: Property(Status(QueueTimeTotal(separator: " "))),style: (fg: "#496548")),
                                  (kind: Text(" 󱎫"),style: (modifiers: "Bold")),
                              ], align: Right))
                  ),
@@ -310,13 +310,13 @@
             panes: [
                   (size: "100%", pane: Pane(Property(content: [
                                   (kind: Text("[ "),style: (modifiers: "Bold")),
-                                  (kind: Property(Song(SampleRate())),default: (kind: Text(" "), style: (fg: "#3a665c")), style: (fg: "#3a665c")),
-                                  (kind: Text(" Hz"),style: (fg: "#3a665c")),
+                                  (kind: Property(Song(SampleRate())),default: (kind: Text(" "), style: (fg: "#496548")), style: (fg: "#496548")),
+                                  (kind: Text(" Hz"),style: (fg: "#496548")),
                                   (kind: Text(" | "),style: (modifiers: "Bold")),
-                                  (kind: Property(Song(Position)), style: (fg: "#3a665c"),
-                                      default: (kind: Text("0"), style: (fg: "#3a665c"))),
+                                  (kind: Property(Song(Position)), style: (fg: "#496548"),
+                                      default: (kind: Text("0"), style: (fg: "#496548"))),
                                   (kind: Text(" / "),style: (modifiers: "Bold")),
-                                  (kind: Property(Status(QueueLength())),style: (fg: "#3a665c")),
+                                  (kind: Property(Status(QueueLength())),style: (fg: "#496548")),
                                   (kind: Text(" 󰴍"),style: (modifiers: "Bold")),
                                   (kind: Text(" ]"),style: (modifiers: "Bold"))
                               ], align: Left))
@@ -339,31 +339,31 @@
                    (size: "100%", pane: Pane(Property(content: [
                                    (kind: Text("[ "),style: (modifiers: "Bold")),
                                    (kind: Transform(Replace(content:
-                                       (kind: Property(Song(Other("date"))),style: (fg: "#3a665c"),
-                                           default: (kind: Text("Unknown Date"), style: (fg: "#3a665c"))),
+                                       (kind: Property(Song(Other("date"))),style: (fg: "#496548"),
+                                           default: (kind: Text("Unknown Date"), style: (fg: "#496548"))),
                                    replacements: [
-                                     (match:  "", replace: (kind: Group([(kind: Text("Unknown Date"), style: (fg: "#3a665c"))]))),
+                                     (match:  "", replace: (kind: Group([(kind: Text("Unknown Date"), style: (fg: "#496548"))]))),
                                    ]))),
                                    (kind: Text(" | "),style: (modifiers: "Bold")),
                                    (kind: Transform(Replace(content:
-                                       (kind: Property(Song(Track)),style: (fg: "#3a665c"),
-                                           default: (kind: Text("0"), style: (fg: "#3a665c"))),
+                                       (kind: Property(Song(Track)),style: (fg: "#496548"),
+                                           default: (kind: Text("0"), style: (fg: "#496548"))),
                                    replacements: [
-                                     (match:  "", replace: (kind: Group([(kind: Text("0"), style: (fg: "#3a665c"))]))),
+                                     (match:  "", replace: (kind: Group([(kind: Text("0"), style: (fg: "#496548"))]))),
                                    ]))),
                                    (kind: Text(" / "),style: (modifiers: "Bold")),
                                    (kind: Transform(Replace(content:
-                                       (kind: Property(Song(Disc)),style: (fg: "#3a665c"),
-                                           default: (kind: Text("0"), style: (fg: "#3a665c"))),
+                                       (kind: Property(Song(Disc)),style: (fg: "#496548"),
+                                           default: (kind: Text("0"), style: (fg: "#496548"))),
                                    replacements: [
-                                     (match:  "", replace: (kind: Group([(kind: Text("0"), style: (fg: "#3a665c"))]))),
+                                     (match:  "", replace: (kind: Group([(kind: Text("0"), style: (fg: "#496548"))]))),
                                    ]))),
                                    (kind: Text(" 󰥠 | "),style: (modifiers: "Bold")),
                                    (kind: Transform(Replace(content:
-                                       (kind: Property(Song(Other("genre"))),style: (fg: "#3a665c"),
-                                           default: (kind: Text("Unknown Genre"), style: (fg: "#3a665c"))),
+                                       (kind: Property(Song(Other("genre"))),style: (fg: "#496548"),
+                                           default: (kind: Text("Unknown Genre"), style: (fg: "#496548"))),
                                    replacements: [
-                                     (match:  "", replace: (kind: Group([(kind: Text("Unknown Genre"), style: (fg: "#3a665c"))]))),
+                                     (match:  "", replace: (kind: Group([(kind: Text("Unknown Genre"), style: (fg: "#496548"))]))),
                                    ]))),
                                ], align: Right))
                    ),
@@ -389,9 +389,9 @@
         ),
     },
     cava: (bar_symbols: ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'], bar_width: 2, bar_spacing: 1, bg_color: None, bar_color: Gradient({
-            0: "#46ffb8",
-            50: "#006c4a",
-            100: "#002114",
+            0: "#97fc00",
+            50: "#3d6a00",
+            100: "#0f2000",
         })),
     lyrics:(timestamp: false, alignment: Center),
     border_symbol_sets: {
