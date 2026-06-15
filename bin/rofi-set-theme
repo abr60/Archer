@@ -37,7 +37,7 @@ CURRENT=$(cat "$COLLECTION_FILE" 2>/dev/null || echo "")
 # ─── Pick collection via rofi ─────────────────────────────────────────────────
 SELECTED=$(printf '%s\n' "${COLLECTIONS[@]}" | rofi -dmenu \
     -p "Select Theme" \
-    -theme "$HOME/.config/rofi/set-theme.rasi" \
+    #-theme "$HOME/.config/rofi/set-theme.rasi" \
     -select "$CURRENT")
 
 [[ -z "$SELECTED" ]] && exit 0

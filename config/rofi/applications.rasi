@@ -26,7 +26,7 @@ window {
     border-color:     @outline-variant;
     border-radius:    1px;
     width:            520px;
-    padding:          14px;
+    padding:          8px;
 }
 
 mainbox {
