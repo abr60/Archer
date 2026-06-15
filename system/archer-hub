@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Toolbox – Unified Hub Launcher | 󰖂  WireGuard VPN #󰒃  Malware Scanner #󰗨  Metadata Cleaner #󰆴  Secure Shredder
+# Toolbox – Unified Hub Launcher
 # =============================================================================
 
 TOOLBOX_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
@@ -13,7 +13,6 @@ SCAN="$TOOLBOX_DIR/archer-clamav-scanner"
 SPOOF="$TOOLBOX_DIR/archer-mac-spoofer"
 META="$TOOLBOX_DIR/archer-metadata_cleaner"
 SHRED="$TOOLBOX_DIR/archer-shredder"
-SPOTI="$TOOLBOX_DIR/archer-spotify-music-download"
 WIFIQR="$TOOLBOX_DIR/archer-wifi-qr"
 
 launch_tui() {
@@ -29,10 +28,13 @@ launch_tui() {
     fi
 }
 
-MENU="  Github Push
-  YTdlp
-  Spotify
+MENU="  Media Download
+  Dots Push
 󰿔  MP4 → GIF
+󰖂  WireGuard VPN
+󰒃  Malware Scanner
+󰗨  Metadata Cleaner
+󰆴  Secure Shredder
 󰖩  WiFi QR"
 
 chosen=$(echo -e "$MENU" | rofi -dmenu \
@@ -43,14 +45,13 @@ chosen=$(echo -e "$MENU" | rofi -dmenu \
 [[ -z "$chosen" ]] && exit 0
 
 case "$chosen" in
-    *"YTdlp"*)          launch_tui "$MEDIA" "media-download" ;;
-    *"Github Push"*)    launch_tui "$DOTS"  "dots-push"      ;;
+    *"Media Download"*) launch_tui "$MEDIA" "media-download" ;;
+    *"Dots Push"*)      launch_tui "$DOTS"  "dots-push"      ;;
     *"MP4"*)            launch_tui "$GIF"   "mp4-to-gif"     ;;
     *"WireGuard"*)      bash "$WG"    &                      ;;
     *"Malware"*)        bash "$SCAN"  &                      ;;
     *"MAC Spoofer"*)    bash "$SPOOF" &                      ;;
     *"Metadata"*)       bash "$META"  &                      ;;
-    *"Spotify"*)        launch_tui "$SPOTI" &  "archer-spotify-music-download"                 ;;
     *"Shredder"*)       bash "$SHRED" &                      ;;
     *"WiFi QR"*)        hyprctl dispatch exec "[float; size 302 416; move 967 40; pin] kitty --class=wifi-qr --title=wifi-qr -e bash '$WIFIQR'" ;;
 esac
