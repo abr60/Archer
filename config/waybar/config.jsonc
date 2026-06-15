@@ -150,6 +150,15 @@
     "on-click": "launch-floating-terminal-with-presentation omarchy-update"
   },
 
+  "custom/mode": {
+    "exec": "cat ~/.local/state/Archer/current-mode-icon 2>/dev/null || echo '󰖔'",
+    "interval": 1,
+    "signal": 1, 
+    "format": "{}",
+    "on-click": "archer-set-mode $([ \"$(cat ~/.local/state/Archer/current-mode)\" = 'dark' ] && echo light || echo dark) && pkill -SIGRTMIN+1 waybar",
+    "tooltip": false
+},
+
   "custom/hdd": {
     "exec": "~/.config/hypr/scripts/hdd/hdd-status",
     "return-type": "json",
@@ -202,15 +211,6 @@
     "on-click": "hyprctl dispatch exec 'ghostty --class=wifi-qr --title=wifi-qr -e archer-wifi-qr'",
     "tooltip": "Scan to connect to Wi-Fi"
   },
-
-"custom/mode": {
-    "exec": "cat ~/.local/state/Archer/current-mode-icon 2>/dev/null || echo '󰖔'",
-    "interval": 1,
-    "format": "{}",
-    "return-type": "",
-    "on-click": "archer-set-mode $([ \"$(cat ~/.local/state/Archer/current-mode)\" = 'dark' ] && echo light || echo dark)",
-    "tooltip": false
-},
 
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
