@@ -42,7 +42,7 @@ post_hook   = "pkill -USR1 kitty"
 # 4. Apps
 [templates.cava]
 input_path  = "~/.config/matugen/templates/cava-colors.ini"
-output_path = "~/.config/cava/themes/matugen"
+output_path = "~/.config/cava/config"
 post_hook   = "pkill -USR1 cava"
 
 [templates.gtk3]
