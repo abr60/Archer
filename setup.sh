@@ -150,9 +150,8 @@ run_step "hardware/wifi-powersave.sh"     "WiFi powersave rules"           false
 run_step "hardware/fast-shutdown.sh"      "Fast shutdown config"           false
 run_step "hardware/unmount-fuse.sh"       "FUSE unmount hook"              false
 run_step "hardware/swayosd.sh"            "Enabling SwayOSD"               false
-#run_step "hardware/tlp-battery.sh"    "Battery monitor timer"          false
 run_step "hardware/recover-monitor.sh"    "Monitor recovery service"       false
-#run_step "hardware/monitor-autodetect.sh" "Auto-detecting monitors"        false
+#run_step "hardware/monitor-autodetect.sh" "Auto-detecting monitors"       false
 
 # ── Extras ────────────────────────────────────────────────────────────────────
 run_step "extras/thinkfan.sh"         "Configuring Thinkfan"           false
@@ -161,8 +160,8 @@ run_step "extras/gpu-driver.sh"       "Installing GPU drivers"         false
 run_step "extras/howdy.sh"            "Setting up Howdy face recognition" false
 
 # ── Login ─────────────────────────────────────────────────────────────────────
-run_step "login/sddm.sh"              "Setting up SDDM"                false
-run_step "login/plymouth.sh"          "Setting up Plymouth"            false
+#run_step "login/sddm.sh"              "Setting up SDDM"                false
+#run_step "login/plymouth.sh"          "Setting up Plymouth"            false
 
 # ── Services ──────────────────────────────────────────────────────────────────
 run_step "services/system-services.sh" "Enabling system services"      false

@@ -95,9 +95,7 @@ tldr
 fastfetch
 
 # --- Hardware & Power ---
-# NOTE: TLP and power-profiles-daemon conflict — TLP chosen for ThinkPad
-tlp
-tlp-rdw
+power-profiles-daemon
 thermald
 lm_sensors
 

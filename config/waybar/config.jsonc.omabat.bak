@@ -20,7 +20,7 @@
     "custom/weather",
     "clock",
     "custom/updatespacman",
-  //"custom/mode",
+     "custom/mode",
     "custom/hdd"
   ],
 
@@ -148,7 +148,7 @@
     "format-icons": { "has-updates": "👹", "updated": " " },
     "return-type": "json",
     "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300",
-    "on-click": "launch-floating-terminal-with-presentation update"
+    "on-click": "launch-floating-terminal-with-presentation omarchy-update"
   },
 
   "custom/mode": {
@@ -182,9 +182,7 @@
       "custom/expand-icon",
       "backlight",
       "temperature"
-    ,
-    "custom/omabat"
-]
+    ]
   },
 
   "custom/expand-icon": {
@@ -264,13 +262,6 @@
     "tooltip": false
   },
 
-  "custom/omabat": {
-    "exec": "'/home/pseudo/.local/bin/omabat' waybar",
-    "return-type": "json",
-    "interval": 5,
-    "tooltip": true,
-    "on-click": "omarchy-launch-or-focus-tui '/home/pseudo/.local/bin/omabat'"
-  },
   "battery": {
     "format": "{capacity} {icon}",
     "format-charging": "{icon} {capacity}",
