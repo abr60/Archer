@@ -30,6 +30,7 @@ fprintd
 gnome-keyring
 hyprpolkitagent
 libsecret
+libinput
 #polkit-gnome
 
 # --- Desktop Environment (Hyprland Ecosystem) ---
