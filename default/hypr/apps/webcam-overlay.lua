@@ -1,0 +1,5 @@
+hl.window_rule({ float = true,            match = { title = "WebcamOverlay" } })
+hl.window_rule({ pin = true,              match = { title = "WebcamOverlay" } })
+hl.window_rule({ no_initial_focus = true, match = { title = "WebcamOverlay" } })
+hl.window_rule({ no_dim = true,           match = { title = "WebcamOverlay" } })
+hl.window_rule({ move = "(monitor_w-window_w-40) (monitor_h-window_h-40)", match = { title = "WebcamOverlay" } })

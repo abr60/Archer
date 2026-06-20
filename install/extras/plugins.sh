@@ -17,14 +17,14 @@ spinner "Updating hyprpm..." hyprpm update || warn "hyprpm update failed — con
 
 # ─── hyprland-plugins (official) ──────────────────────────────────────────────
 msg "Adding hyprland-plugins repo..."
-hyprpm add "https://github.com/hyprwm/hyprland-plugins" || warn "Failed to add hyprland-plugins repo"
+hyprpm add "https://github.com/hyprwm/hyprland-plugins" || warn "Failed to add hyprland-plugins"
 
-# ─── hyprexpo (sandwichfarm fork) ─────────────────────────────────────────────
-msg "Adding hyprexpo (sandwichfarm fork)..."
-hyprpm add "https://github.com/sandwichfarm/hyprexpo" || warn "Failed to add sandwichfarm/hyprexpo"
+# ─── scrolloverview ───────────────────────────────────────────────────────────
+msg "Adding scrolloverview..."
+hyprpm add "https://github.com/TentacleSama4254/scrolloverview" || warn "Failed to add scrolloverview"
 
 # ─── Enable plugins ───────────────────────────────────────────────────────────
-hyprpm enable hyprexpo && ok "hyprexpo enabled" || warn "Failed to enable hyprexpo"
+hyprpm enable scrolloverview && ok "scrolloverview enabled" || warn "Failed to enable scrolloverview"
 
 # ─── Reload ───────────────────────────────────────────────────────────────────
 hyprpm reload && ok "Plugins reloaded" || warn "hyprpm reload failed"

@@ -1,17 +1,21 @@
 #!/bin/bash
-
-# omarchy:summary=Pull the latest Omarchy git changes
-
+# archer:summary=Pull the latest Archer git changes
 set -e
 
-echo -e "\e[32mUpdate Omarchy\e[0m"
-
+echo -e "\e[32mUpdate Archer\e[0m"
 update-time
+
+ARCHER_PATH="${ARCHER_PATH:-$HOME/Archer}"
+
+if [[ ! -d "$ARCHER_PATH/.git" ]]; then
+  echo "No git repo found at $ARCHER_PATH — skipping git pull"
+  exit 0
+fi
 
 # Suppress Hyprland config errors while git updates default config files mid-pull
 hyprctl keyword debug:suppress_errors true &>/dev/null || true
 
-git -C $OMARCHY_PATH pull --autostash
-git -C $OMARCHY_PATH --no-pager diff --check || git -C $OMARCHY_PATH reset --merge
+git -C "$ARCHER_PATH" pull --autostash
+git -C "$ARCHER_PATH" --no-pager diff --check || git -C "$ARCHER_PATH" reset --merge
 
 hyprctl reload &>/dev/null || true

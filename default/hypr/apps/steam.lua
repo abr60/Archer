@@ -1,0 +1,7 @@
+hl.window_rule({ float = true,  match = { class = "steam" } })
+hl.window_rule({ center = true, match = { class = "steam", title = "Steam" } })
+hl.window_rule({ tag = "-default-opacity", match = { class = "steam.*" } })
+hl.window_rule({ opacity = "1 1",          match = { class = "steam.*" } })
+hl.window_rule({ size = "1100 700",        match = { class = "steam", title = "Steam" } })
+hl.window_rule({ size = "460 800",         match = { class = "steam", title = "Friends List" } })
+hl.window_rule({ idle_inhibit = "fullscreen", match = { class = "steam" } })

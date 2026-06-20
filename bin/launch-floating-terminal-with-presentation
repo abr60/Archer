@@ -1,7 +1,5 @@
 #!/bin/bash
-
-# omarchy:summary=Launch a floating terminal with the Omarchy presentation wrapper
-# omarchy:args=<command>
-
+# archer:summary=Launch a floating terminal with the Archer presentation wrapper
+# archer:args=<command>
 cmd="$*"
-exec setsid uwsm-app -- xdg-terminal-exec --app-id=org.omarchy.terminal --title=Omarchy -e bash -c "show-logo; $cmd; if (( \$? != 130 )); then show-done; fi"
+exec setsid uwsm-app -- xdg-terminal-exec --app-id=org.archer.terminal --title=Archer -e bash -c "show-logo; $cmd; if (( \$? != 130 )); then show-done; fi"

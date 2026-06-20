@@ -1,0 +1,1 @@
+/home/pseudo/.config/hypr/animations/fluid.lua

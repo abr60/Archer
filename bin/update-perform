@@ -1,25 +1,5 @@
 #!/bin/bash
-
-# omarchy:summary=Run the full Omarchy update pipeline
-# omarchy:requires-sudo=true
-
 set -e
-
-# Ensure screensaver/sleep doesn't set in during updates
 hyprctl dispatch tagwindow +noidle &>/dev/null || true
-
-# Perform all update steps
-update-keyring
-update-available-reset
-update-system-pkgs
-migrate
-update-aur-pkgs
-update-orphan-pkgs
-hook post-update
-
-update-analyze-logs
-
-update-restart
-
-# Re-enable screensaver/sleep after updates
+sudo pacman -Syu
 hyprctl dispatch tagwindow -- -noidle &>/dev/null || true

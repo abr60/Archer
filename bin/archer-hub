@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Toolbox – Unified Hub Launcher | 󰖂  WireGuard VPN #󰒃  Malware Scanner #󰗨  Metadata Cleaner #󰆴  Secure Shredder
+# Toolbox – Unified Hub Launcher
 # =============================================================================
 
 TOOLBOX_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
@@ -11,7 +11,7 @@ GIF="$TOOLBOX_DIR/archer-mp4-to-gif"
 WG="$TOOLBOX_DIR/archer-wg-manager"
 SCAN="$TOOLBOX_DIR/archer-clamav-scanner"
 SPOOF="$TOOLBOX_DIR/archer-mac-spoofer"
-META="$TOOLBOX_DIR/archer-metadata_cleaner"
+META="$TOOLBOX_DIR/archer-metadata-cleaner"
 SHRED="$TOOLBOX_DIR/archer-shredder"
 SPOTI="$TOOLBOX_DIR/archer-spotify-music-download"
 WIFIQR="$TOOLBOX_DIR/archer-wifi-qr"
@@ -20,12 +20,14 @@ launch_tui() {
     local script="$1"
     local title="$2"
     local class="${3:-kitty}"
-    local safe_title="${title// /_}"
 
     if [ "$class" != "kitty" ]; then
-        hyprctl dispatch exec "kitty --class=$class --title=$safe_title -e bash '$script'"
+        uwsm-app -- kitty --class="$class" --title="$title" -e bash "$script" &
     else
-        hyprctl dispatch exec "[float; size 900 600; center] kitty --title=$safe_title -e bash '$script'"
+        uwsm-app -- kitty --title="$title" \
+            --override initial_window_width=900 \
+            --override initial_window_height=600 \
+            -e bash "$script" &
     fi
 }
 
@@ -43,14 +45,14 @@ chosen=$(echo -e "$MENU" | rofi -dmenu \
 [[ -z "$chosen" ]] && exit 0
 
 case "$chosen" in
-    *"YTdlp"*)          launch_tui "$MEDIA" "media-download" ;;
-    *"Github Push"*)    launch_tui "$DOTS"  "dots-push"      ;;
-    *"MP4"*)            launch_tui "$GIF"   "mp4-to-gif"     ;;
-    *"WireGuard"*)      bash "$WG"    &                      ;;
-    *"Malware"*)        bash "$SCAN"  &                      ;;
-    *"MAC Spoofer"*)    bash "$SPOOF" &                      ;;
-    *"Metadata"*)       bash "$META"  &                      ;;
-    *"Spotify"*)        launch_tui "$SPOTI" &  "archer-spotify-music-download"                 ;;
-    *"Shredder"*)       bash "$SHRED" &                      ;;
-    *"WiFi QR"*)        hyprctl dispatch exec "[float; size 302 416; move 967 40; pin] kitty --class=wifi-qr --title=wifi-qr -e bash '$WIFIQR'" ;;
+    *"YTdlp"*)       launch_tui "$MEDIA" "media-download" "media-download" ;;
+    *"Github Push"*) launch_tui "$DOTS"  "dots-push"      "dots-push"      ;;
+    *"MP4"*)         launch_tui "$GIF"   "mp4-to-gif"     "mp4-to-gif"     ;;
+    *"WireGuard"*)   bash "$WG"    &                      ;;
+    *"Malware"*)     bash "$SCAN"  &                      ;;
+    *"MAC Spoofer"*) bash "$SPOOF" &                      ;;
+    *"Metadata"*)    bash "$META"  &                      ;;
+    *"Spotify"*)     launch_tui "$SPOTI" "archer-spotify-music-download" ;;
+    *"Shredder"*)    bash "$SHRED" &                      ;;
+    *"WiFi QR"*)     uwsm-app -- kitty --class=wifi-qr --title=wifi-qr -e bash "$WIFIQR" & ;;
 esac

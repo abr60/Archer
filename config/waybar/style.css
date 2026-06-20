@@ -1,1 +1,260 @@
-/home/pseudo/.config/waybar/css/M3-Islands.css
+/* =========================================================
+   cherry.css — Material You · Waybar Theme
+   ========================================================= */
+
+@import "../waybar/matugen.css";
+
+
+/* ── Reset ─────────────────────────────────────────────── */
+
+* {
+    color:       @on_surface;
+    border:      none;
+    border-radius: 0;
+    font-family: 'CaskaydiaMono Nerd Font', 'JetBrainsMono Nerd Font', sans-serif;
+    font-size:   13px;
+    font-weight: 700;
+    transition:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+window#waybar {
+    background-color: transparent;
+}
+
+
+/* ── Tooltip ────────────────────────────────────────────── */
+
+tooltip {
+    background:    @surface_container_low;
+    border:        1px solid alpha(@on_surface, 0.15);
+    border-radius: 4px;
+}
+
+tooltip label {
+    color: @on_surface;
+}
+
+
+/* ── Islands ────────────────────────────────────────────── */
+
+.modules-left,
+.modules-center,
+.modules-right {
+    background-color: @surface_container;
+    border:           1px solid alpha(@on_surface, 0.12);
+    border-radius:    6px;
+    margin:           3px 4px 0px 4px;
+    padding:          1px 2px;
+    box-shadow:       0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+#modules-center {
+    padding: 1px 10px;
+}
+
+
+/* ── Inline Separators ──────────────────────────────────── */
+
+.modules-left > widget > *,
+.modules-right > widget > *,
+.modules-center > widget > label,
+.modules-center > widget > box {
+    padding:      0 6px;
+    border-right: 1px solid alpha(@on_surface, 0.12);
+}
+
+.modules-left > widget:last-child > *,
+.modules-center > widget:last-child > label,
+.modules-center > widget:last-child > box,
+.modules-right > widget:last-child > * {
+    border-right:  none;
+    padding-right: 4px;
+}
+
+
+/* ── Module Hover ───────────────────────────────────────── */
+
+.modules-left > widget > *:hover,
+.modules-center > widget > *:hover,
+.modules-right > widget > *:hover {
+    background-color: alpha(@primary, 0.28);
+    border-radius:    4px;
+    color:            @on_surface;
+}
+
+
+/* ── Workspaces ─────────────────────────────────────────── */
+
+#workspaces button {
+    color:   alpha(@on_surface, 0.4);
+    padding: 0 4px;
+}
+
+#workspaces button.active {
+    color:            @on_surface;
+    background-color: alpha(@primary, 0.15);
+    border-radius:    4px;
+}
+
+#workspaces button:hover {
+    background-color: alpha(@primary, 0.25);
+    border-radius:    4px;
+    color:            @primary;
+}
+
+
+/* ── Clock ──────────────────────────────────────────────── */
+
+#clock {
+    font-size:   12px;
+    font-weight: 800;
+    color:       @on_surface;
+}
+
+
+/* ── MPRIS ──────────────────────────────────────────────── */
+
+#mpris {
+    font-style: italic;
+    color:      alpha(@on_surface, 0.7);
+}
+
+#mpris.playing {
+    font-style:  normal;
+    font-weight: bold;
+    color:       @on_surface;
+}
+
+
+/* ── Custom Modules ─────────────────────────────────────── */
+
+#custom-timer {
+    font: 900 13px "Doto";
+}
+
+#custom-mode {
+    color:   @primary;
+    font-size: 16px;
+    padding: 0 7px;
+}
+
+#custom-weather {
+    color: @on_surface;
+}
+
+#custom-wifi-qr,
+#bluetooth {
+    font-size: 18px;
+    color:     @primary;
+}
+
+#custom-wifi-qr:hover {
+    color:            @tertiary;
+    font-size:        19px;
+    background-color: @surface_container;
+    border-radius:    1px;
+}
+
+#custom-cava,
+#custom-arch {
+    opacity:   0;
+    font-size: 0;
+    padding:   0;
+    margin:    0;
+}
+
+
+/* ── swaync Bell ────────────────────────────────────────── */
+
+#custom-swaync:hover {
+    font-size:               13px;
+    animation-name:          bell-shake;
+    animation-duration:      0.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+}
+
+@keyframes bell-shake {
+    0%   { margin-left:  0px;  margin-right:  0px; }
+    15%  { margin-left:  6px;  margin-right: -6px; }
+    30%  { margin-left: -5px;  margin-right:  5px; }
+    45%  { margin-left:  4px;  margin-right: -4px; }
+    60%  { margin-left: -3px;  margin-right:  3px; }
+    75%  { margin-left:  2px;  margin-right: -2px; }
+    90%  { margin-left: -1px;  margin-right:  1px; }
+    100% { margin-left:  0px;  margin-right:  0px; }
+}
+
+
+/* ── Tray ───────────────────────────────────────────────── */
+
+#group-tray-expander widget {
+    padding: 0 2px;
+    border:  none;
+}
+
+
+/* ── State Colors ───────────────────────────────────────── */
+
+#pulseaudio:not(.microphone).muted,
+#pulseaudio.microphone.source-muted {
+    color: alpha(@on_surface, 0.4);
+}
+
+#battery.charging,
+#battery.plugged {
+    color: @secondary;
+}
+
+#cpu.warning,
+#memory.warning,
+#battery.warning {
+    color: @tertiary;
+}
+
+#battery.critical:not(.charging),
+#network.disconnected,
+#custom-timer.reset {
+    color: @error;
+}
+
+
+/* ── Dropdown Menu ──────────────────────────────────────── */
+
+menu {
+    background-color: @surface_container_low;
+    border:           1px solid alpha(@on_surface, 0.12);
+    border-radius:    8px;
+    padding:          2px;
+    margin-top:       6px;
+    box-shadow:       none;
+    min-width:        0px;
+}
+
+menu menu {
+    margin-left: 2px;
+    margin-top: -4px;
+}
+
+menu menuitem {
+    border-bottom: none;
+    margin-bottom: 2px;
+    padding-bottom: 3px;
+}
+
+menu menu menuitem:not(:last-child) {
+    border-bottom:  1px solid alpha(@on_surface, 0.08);
+    margin-bottom:  2px;
+    padding-bottom: 4px;
+}
+
+menu menuitem:hover {
+    background-color: alpha(@primary, 0.44);
+    color:            @primary;
+}
+
+menu separator {
+    background-color: alpha(@on_surface, 0.12);
+    min-height:       1px;
+    margin:           4px 8px;
+}

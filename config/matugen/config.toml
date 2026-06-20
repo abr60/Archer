@@ -7,10 +7,9 @@ version_check = false
 
 # ─── Templates ────────────────────────────────────────────────────────────────
 
-# 1. Compositor — must apply first so everything else inherits correct colors
-[templates.hyprland]
-input_path  = "~/.config/matugen/templates/hyprland.conf"
-output_path = "~/.config/hypr/bin/hyprland.conf"
+[templates.hyprland_lua]
+input_path  = "~/.config/matugen/templates/hyprland.lua"
+output_path = "~/.config/hypr/bin/colors.lua"
 post_hook   = "hyprctl reload"
 
 [templates.hyprlock]
