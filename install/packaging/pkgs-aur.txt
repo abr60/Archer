@@ -17,29 +17,29 @@ woff2-font-awesome
 bibata-cursor-theme
 
 # --- Security & Authentication ---
-howdy-next
-linux-enable-ir-emitter-bin
+#howdy-next
+#linux-enable-ir-emitter-bin
 
 # --- Browser ---
-brave-bin
+#brave-bin
 
 # --- Launcher ---
-localsend-bin
-pinta
+#localsend-bin
+#pinta
 #yaru-icon-theme
 
 # --- PDF & Documents ---
 #sioyek-appimage
 
 # --- Media ---
-rmpc
+#rmpc
 
 # --- System ---
 #limine-mkinitcpio-hook
 xdg-terminal-exec
 
 # --- Terminal Fun ---
-cbonsai
+#cbonsai
 cowfortune
 
 # --- Power & Hardware ---

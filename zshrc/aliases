@@ -34,9 +34,9 @@ alias fan-auto='sudo systemctl restart thinkfan'
 alias walls='cd ~/Wallpapers && git pull --rebase --autostash && git add . && git commit -m "sync: $(date +%Y-%m-%d\ %H:%M)" || true && git push'
 alias way='cd ~/waybar && git add . && git commit -m "sync: $(date)" && git push && cd -'
 alias assets='cd ~/Assets && git add . && git commit -m "sync: $(date +%Y-%m-%d\ %H:%M)" || true && git push && cd -'
-alias archer-stow='stow -v -d ~/Archer -t ~/.config config'
-alias archer-unstow='stow -Dv -d ~/Archer -t ~/.config config'
-alias archer-restow='stow -Rv -d ~/Archer -t ~/.config config'
+alias stow='stow -v -d ~/Archer -t ~/.config config'
+alias unstow='stow -Dv -d ~/Archer -t ~/.config config'
+alias restow='stow -Rv -d ~/Archer -t ~/.config config'
 
 dots() {
     local msg="${1:-sync: $(date)}"

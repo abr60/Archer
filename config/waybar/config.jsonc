@@ -75,7 +75,7 @@
       "default": ""
     },
     "on-click": "playerctl play-pause",
-    "on-click-right": "timeout 15s kitty --class kitty --title rmpc -e rmpc",
+    "on-click-right": "kitty --class kitty --title rmpc -e rmpc",
     "on-scroll-up": "playerctl next",
     "on-scroll-down": "playerctl previous",
     "tooltip": false

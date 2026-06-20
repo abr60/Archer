@@ -21,9 +21,9 @@ fi
 # ─── All subdirs present in config/ that should be stowed ────────────────────
 STOW_DIRS=(
     autostart btop cava calibre fastfetch fcitx5 fontconfig
-    ghostty hypr matugen mpv rmpc
+    kitty hypr matugen mpv rmpc
     rofi sioyek spicetify swaync swayosd
-    systemd tmux uwsm walker waybar
+    systemd tmux uwsm waybar kitty
 )
 
 # ─── Remove existing targets to prevent Stow fold conflicts ──────────────────
@@ -40,6 +40,7 @@ done
 [[ -e "$CONFIG_DEST/starship.toml" ]] && rm -f "$CONFIG_DEST/starship.toml"
 
 # ─── Stow ─────────────────────────────────────────────────────────────────────
+mkdir -p "$HOME/.config"
 msg "Running stow..."
 cd "$ARCHER_REAL"
 stow --target="$HOME/.config" --verbose=1 config
