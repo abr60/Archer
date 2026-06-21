@@ -6,7 +6,7 @@
 #   Graphical (hyprlock/sddm): howdy → fingerprint → password
 #   Terminal (sudo):           howdy → password → fingerprint
 #
-# Requires: howdy-next-git, linux-enable-ir-emitter-bin, xorg-xhost
+# Requires: howdy-next, linux-enable-ir-emitter-bin, xorg-xhost
 # PAM configuration is handled separately by config/pam.sh
 # =============================================================================
 
@@ -16,8 +16,8 @@ source "$(dirname "${BASH_SOURCE[0]}")/../lib/helpers.sh"
 section "Howdy Face Recognition Setup"
 
 # ─── Guard ────────────────────────────────────────────────────────────────────
-if ! is_installed howdy-next-git; then
-    warn "howdy-next-git not installed — skipping"
+if ! is_installed howdy-next; then
+    warn "howdy-next not installed — skipping"
     exit 0
 fi
 

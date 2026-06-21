@@ -21,7 +21,7 @@ hyprpm add "https://github.com/hyprwm/hyprland-plugins" || warn "Failed to add h
 
 # ─── scrolloverview ───────────────────────────────────────────────────────────
 msg "Adding scrolloverview..."
-hyprpm add "https://github.com/TentacleSama4254/scrolloverview" || warn "Failed to add scrolloverview"
+hyprpm add "https://github.com/yayuuu/hyprland-scroll-overview" || warn "Failed to add scrolloverview"
 
 # ─── Enable plugins ───────────────────────────────────────────────────────────
 hyprpm enable scrolloverview && ok "scrolloverview enabled" || warn "Failed to enable scrolloverview"
