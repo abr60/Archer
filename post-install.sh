@@ -205,7 +205,32 @@ else
 fi
 
 # ==========================================
-# 12. SPICETIFY
+# 12. PLYMOUTH BOOT THEME
+# ==========================================
+step "Plymouth Boot Theme"
+gum style --foreground 245 "Install Archer Plymouth theme for LUKS unlock screen."
+echo ""
+if gum confirm "Set up Plymouth theme?"; then
+    run_step "login/plymouth.sh" "Plymouth theme"
+else
+    msg "Plymouth skipped."
+fi
+
+# ==========================================
+# 13. LIMINE BOOTLOADER CONFIG
+# ==========================================
+step "Limine Bootloader"
+gum style --foreground 245 "Deploy Limine config with auto-detected LUKS PARTUUID."
+echo ""
+if gum confirm "Deploy Limine config?"; then
+    refresh-limine
+    ok "Limine config deployed"
+else
+    msg "Limine skipped."
+fi
+
+# ==========================================
+# 14. SPICETIFY
 # ==========================================
 step "Spicetify (Spotify theming)"
 gum style --foreground 245 "Apply Spicetify theme to Spotify."
