@@ -20,6 +20,7 @@ require("hypr.animations")
 require("hypr.bindings")
 require("hypr.rules")
 require("hypr.autostart")
+require("hypr.plugins")
 require("hypr.gestures")
 
 -- --- 3. Toggle config flags dynamically ---

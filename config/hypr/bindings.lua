@@ -33,3 +33,6 @@ a.bind("ALT + X", "Study",        "[float; size 700 200; center] kitty --class=Y
 
 -- === Wifi QR popup ===
 a.bind("SUPER + Q", "Wifi QR", "[float; size 302 416; move 967 40; pin] kitty --class=wifi-qr --title=wifi-qr -e archer-wifi-qr")
+
+-- === Plugin Bindings ===
+hl.bind("HOME", hl.dsp.exec_cmd("scrolloverview:overview toggle"))
