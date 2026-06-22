@@ -1,88 +1,83 @@
 #!/usr/bin/env bash
 # =============================================================================
-# login/plymouth.sh — Install and configure Plymouth boot splash
-# Uses the Archer/omarchy Plymouth theme from default/plymouth/
-# Configures plymouth-login PAM for graphical user password prompt
+# install/login/plymouth.sh — Install and configure Archer Plymouth theme
 # =============================================================================
 
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/../lib/helpers.sh"
-source "$(dirname "${BASH_SOURCE[0]}")/../lib/backup.sh"
 
 section "Plymouth Boot Splash"
 
 ARCHER_DIR="${ARCHER_DIR:-$HOME/.local/share/Archer}"
-PLYMOUTH_SRC="$ARCHER_DIR/default/plymouth"
-PLYMOUTH_THEME_DEST="/usr/share/plymouth/themes/archer"
-
-load_backup_session
+THEME_SRC="$ARCHER_DIR/default/plymouth/archer"
+THEME_DEST="/usr/share/plymouth/themes/archer"
 
 # ─── Install Plymouth ─────────────────────────────────────────────────────────
 ensure_installed plymouth
 
-# ─── Install theme files ──────────────────────────────────────────────────────
-if [[ ! -d "$PLYMOUTH_SRC" ]]; then
-    warn "Plymouth theme source not found at $PLYMOUTH_SRC — skipping"
+# ─── Validate source ──────────────────────────────────────────────────────────
+if [[ ! -d "$THEME_SRC" ]]; then
+    warn "Plymouth theme source not found at $THEME_SRC — skipping"
     exit 0
 fi
 
-sudo mkdir -p "$PLYMOUTH_THEME_DEST"
-sudo cp "$PLYMOUTH_SRC"/*.png "$PLYMOUTH_THEME_DEST/" 2>/dev/null || true
-sudo cp "$PLYMOUTH_SRC"/*.script "$PLYMOUTH_THEME_DEST/" 2>/dev/null || true
+# ─── Install theme files ──────────────────────────────────────────────────────
+sudo mkdir -p "$THEME_DEST"
+sudo cp "$THEME_SRC/archer.plymouth"    "$THEME_DEST/"
+sudo cp "$THEME_SRC/archer.script"      "$THEME_DEST/"
+sudo cp "$THEME_SRC/entry.png"          "$THEME_DEST/"
+sudo cp "$THEME_SRC/lock.png"           "$THEME_DEST/"
+sudo cp "$THEME_SRC/bullet.png"         "$THEME_DEST/"
+sudo cp "$THEME_SRC/progress_box.png"   "$THEME_DEST/"
+sudo cp "$THEME_SRC/progress_bar.png"   "$THEME_DEST/"
+ok "Theme files installed to $THEME_DEST"
 
-# Install .plymouth manifest — rename from omarchy to archer
-if [[ -f "$PLYMOUTH_SRC/omarchy.plymouth" ]]; then
-    sudo cp "$PLYMOUTH_SRC/omarchy.plymouth" "$PLYMOUTH_THEME_DEST/archer.plymouth"
-    # Fix internal paths to point to archer theme dir
-    sudo sed -i \
-        's|/usr/share/plymouth/themes/omarchy|/usr/share/plymouth/themes/archer|g' \
-        "$PLYMOUTH_THEME_DEST/archer.plymouth"
-    ok "Plymouth theme installed to $PLYMOUTH_THEME_DEST"
+# ─── Install wallpaper ────────────────────────────────────────────────────────
+WALLPAPER_SRC="$ARCHER_DIR/default/plymouth/plymouth.png"
+if [[ -f "$WALLPAPER_SRC" ]]; then
+    sudo cp "$WALLPAPER_SRC" "$THEME_DEST/plymouth.png"
+    ok "Wallpaper installed"
 else
-    warn "omarchy.plymouth manifest not found — skipping theme install"
-    exit 0
+    warn "plymouth.png not found at $WALLPAPER_SRC"
+    warn "Copy your wallpaper manually to $THEME_DEST/plymouth.png"
+fi
+
+# ─── Regenerate assets ────────────────────────────────────────────────────────
+if [[ -f "$THEME_SRC/generate_assets.py" ]]; then
+    msg "Regenerating PNG assets..."
+    python3 "$THEME_SRC/generate_assets.py"
+    sudo cp "$THEME_SRC"/*.png "$THEME_DEST/"
+    ok "Assets regenerated"
 fi
 
 # ─── Set as default theme ─────────────────────────────────────────────────────
 sudo plymouth-set-default-theme archer
-ok "Plymouth theme set to archer"
+ok "Plymouth default theme set to archer"
 
-# ─── Configure mkinitcpio ─────────────────────────────────────────────────────
-MKINITCPIO_CONF="/etc/mkinitcpio.conf"
-backup_file "$MKINITCPIO_CONF"
-
-if ! grep -q 'plymouth' "$MKINITCPIO_CONF"; then
-    sudo sed -i 's/^HOOKS=(\(.*\)udev\(.*\))/HOOKS=(\1udev plymouth\2)/' "$MKINITCPIO_CONF"
+# ─── Ensure plymouth hook is in mkinitcpio ────────────────────────────────────
+MKINITCPIO="/etc/mkinitcpio.conf"
+if ! grep -q 'plymouth' "$MKINITCPIO"; then
+    sudo sed -i 's/^\(HOOKS=([^)]*udev\)/\1 plymouth/' "$MKINITCPIO"
     ok "Plymouth hook added to mkinitcpio.conf"
 else
-    ok "Plymouth already in mkinitcpio.conf — skipping"
+    ok "Plymouth hook already present in mkinitcpio.conf"
 fi
 
-# ─── Rebuild initramfs ────────────────────────────────────────────────────────
-msg "Rebuilding initramfs (this may take a moment)..."
-sudo mkinitcpio -P && ok "Initramfs rebuilt" || warn "mkinitcpio failed — run manually"
-
-# ─── PAM login integration ────────────────────────────────────────────────────
-# Configures plymouth-login so a graphical password prompt appears
-# before SDDM starts (no disk encryption required)
-PAM_LOGIN="/etc/pam.d/login"
-backup_file "$PAM_LOGIN"
-
-if ! grep -q "pam_plymouth" "$PAM_LOGIN" 2>/dev/null; then
-    if [[ -f /usr/lib/security/pam_plymouth.so ]]; then
-        sudo sed -i '/auth.*include.*system-local-login/a auth       optional     pam_plymouth.so' "$PAM_LOGIN"
-        sudo sed -i '/session.*include.*system-local-login/a session    optional     pam_plymouth.so' "$PAM_LOGIN"
-        ok "Plymouth PAM login integration configured"
+# ─── Ensure splash in limine.conf ─────────────────────────────────────────────
+LIMINE_CONF="/boot/limine/limine.conf"
+if [[ -f "$LIMINE_CONF" ]]; then
+    if ! grep -q 'splash' "$LIMINE_CONF"; then
+        sudo sed -i 's/\(cmdline:.*\)rw/\1rw quiet splash/' "$LIMINE_CONF"
+        ok "Added 'quiet splash' to limine.conf cmdline"
     else
-        warn "pam_plymouth.so not found — skipping PAM integration"
-        warn "Install plymouth with PAM support for graphical password prompt"
+        ok "splash already present in limine.conf"
     fi
 else
-    ok "Plymouth PAM already configured — skipping"
+    warn "limine.conf not found at $LIMINE_CONF — add 'quiet splash' to cmdline manually"
 fi
 
-# ─── Kernel cmdline ───────────────────────────────────────────────────────────
-warn "Remember to add 'splash' and 'quiet' to your kernel parameters"
-warn "in your bootloader config for Plymouth to show on boot"
+# ─── Rebuild UKI ──────────────────────────────────────────────────────────────
+msg "Rebuilding UKI (this may take a moment)..."
+sudo mkinitcpio -p linux && ok "UKI rebuilt successfully" || warn "mkinitcpio failed — run manually"
 
-ok "Plymouth setup complete"
+ok "Plymouth setup complete — reboot to see the theme"
