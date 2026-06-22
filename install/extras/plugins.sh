@@ -28,3 +28,24 @@ hyprpm enable scrolloverview && ok "scrolloverview enabled" || warn "Failed to e
 
 # ─── Reload ───────────────────────────────────────────────────────────────────
 hyprpm reload && ok "Plugins reloaded" || warn "hyprpm reload failed"
+
+# ─── Inject into hyprland.lua ─────────────────────────────────────────────────
+HYPR_LUA="$HOME/.config/hypr/hyprland.lua"
+if ! grep -q 'require("hypr.plugins")' "$HYPR_LUA"; then
+    sed -i '/require("hypr.gestures")/i require("hypr.plugins")' "$HYPR_LUA"
+    ok "Injected require(\"hypr.plugins\") into hyprland.lua"
+fi
+
+# ─── Inject plugin bindings into bindings.lua ─────────────────────────────────
+BINDINGS="$HOME/.config/hypr/bindings.lua"
+if ! grep -q 'scrolloverview' "$BINDINGS"; then
+    cat >> "$BINDINGS" << 'EOF'
+
+-- === Plugin Bindings ===
+hl.bind("HOME", hl.dsp.exec_cmd("scrolloverview:overview toggle"))
+EOF
+    ok "Injected plugin bindings into bindings.lua"
+fi
+
+# ─── Reload Hyprland ──────────────────────────────────────────────────────────
+hyprctl reload && ok "Hyprland reloaded" || warn "hyprctl reload failed"
