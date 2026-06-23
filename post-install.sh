@@ -193,44 +193,7 @@ else
 fi
 
 # ==========================================
-# 11. SDDM THEME
-# ==========================================
-step "SDDM Login Theme"
-gum style --foreground 245 "Set up the SDDM login screen theme."
-echo ""
-if gum confirm "Set up SDDM theme?"; then
-    run_step "login/sddm.sh" "SDDM theme"
-else
-    msg "SDDM skipped."
-fi
-
-# ==========================================
-# 12. PLYMOUTH BOOT THEME
-# ==========================================
-step "Plymouth Boot Theme"
-gum style --foreground 245 "Install Archer Plymouth theme for LUKS unlock screen."
-echo ""
-if gum confirm "Set up Plymouth theme?"; then
-    run_step "login/plymouth.sh" "Plymouth theme"
-else
-    msg "Plymouth skipped."
-fi
-
-# ==========================================
-# 13. LIMINE BOOTLOADER CONFIG
-# ==========================================
-step "Limine Bootloader"
-gum style --foreground 245 "Deploy Limine config with auto-detected LUKS PARTUUID."
-echo ""
-if gum confirm "Deploy Limine config?"; then
-    refresh-limine
-    ok "Limine config deployed"
-else
-    msg "Limine skipped."
-fi
-
-# ==========================================
-# 14. SPICETIFY
+# 11. SPICETIFY
 # ==========================================
 step "Spicetify (Spotify theming)"
 gum style --foreground 245 "Apply Spicetify theme to Spotify."

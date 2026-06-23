@@ -76,6 +76,19 @@ else
     warn "limine.conf not found at $LIMINE_CONF — add 'quiet splash' to cmdline manually"
 fi
 
+# ─── Remove default Arch splash BMP ──────────────────────────────────────────
+PRESET="/etc/mkinitcpio.d/linux.preset"
+if [[ -f "$PRESET" ]]; then
+    if grep -q 'splash-arch.bmp' "$PRESET"; then
+        sudo sed -i 's/default_options="--splash \/usr\/share\/systemd\/bootctl\/splash-arch.bmp"/default_options=""/' "$PRESET"
+        ok "Arch splash BMP removed from mkinitcpio preset"
+    else
+        ok "Arch splash BMP already removed"
+    fi
+else
+    warn "mkinitcpio preset not found at $PRESET"
+fi
+
 # ─── Rebuild UKI ──────────────────────────────────────────────────────────────
 msg "Rebuilding UKI (this may take a moment)..."
 sudo mkinitcpio -p linux && ok "UKI rebuilt successfully" || warn "mkinitcpio failed — run manually"

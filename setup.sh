@@ -41,6 +41,7 @@ gum style --foreground 214 \
     "• INSTALL core packages via pacman and yay" \
     "• SETUP binaries, fonts, and desktop apps" \
     "• CONFIGURE system settings and services" \
+    "• SETUP SDDM, Plymouth and Limine boot stack" \
     "• CHANGE your default shell to Zsh"
 
 echo ""
@@ -155,13 +156,24 @@ run_step "hardware/fast-shutdown.sh"      "Fast shutdown config"           false
 run_step "hardware/unmount-fuse.sh"       "FUSE unmount hook"              false
 run_step "hardware/swayosd.sh"            "Enabling SwayOSD"               false
 run_step "hardware/recover-monitor.sh"    "Monitor recovery service"       false
+run_step "extras/thinkfan.sh"             "Configuring Thinkfan"           false
 
 # ── Services ──────────────────────────────────────────────────────────────────
 run_step "services/system-services.sh"    "Enabling system services"       false
 run_step "services/user-services.sh"      "Enabling user services"         false
 
-# ── Thinkfan (ThinkPad only) ──────────────────────────────────────────────────
-run_step "extras/thinkfan.sh"             "Configuring Thinkfan"           false
+# ── Login / Boot Stack ────────────────────────────────────────────────────────
+run_step "login/sddm.sh"                  "Setting up SDDM"                false
+run_step "login/plymouth.sh"              "Setting up Plymouth"            false
+
+echo ""
+section "Configuring Limine bootloader"
+if command -v refresh-limine &>/dev/null; then
+    bash "$DOTS_DIR/bin/refresh-limine" || warn "Limine config had errors — run refresh-limine manually"
+    ok "Limine config done"
+else
+    warn "refresh-limine not found — run it manually after reboot"
+fi
 
 # ── Reload ────────────────────────────────────────────────────────────────────
 run_step "services/reload.sh"             "Reloading UI"                   false
@@ -182,7 +194,7 @@ gum style --foreground 117 \
     "  Next: the post-install wizard will run automatically" \
     "  on your first login to guide you through:" \
     "  Git, timezone, plugins, wallpapers, GPU drivers," \
-    "  Howdy, Spicetify, SDDM theme and more."
+    "  Howdy, Spicetify and more."
 
 echo ""
 if [[ "$INSTALL_MODE" == "minimal" ]]; then
@@ -193,7 +205,7 @@ if [[ "$INSTALL_MODE" == "minimal" ]]; then
     echo ""
 fi
 
-if gum confirm "Reboot now to start your first session?"; then
+if gum confirm "Reboot now to start your first Archer session?"; then
     msg "Rebooting..."
     sudo reboot
 else
