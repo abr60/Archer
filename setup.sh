@@ -164,7 +164,6 @@ run_step "services/user-services.sh"      "Enabling user services"         false
 
 # ── Login / Boot Stack ────────────────────────────────────────────────────────
 run_step "login/sddm.sh"                  "Setting up SDDM"                false
-run_step "login/plymouth.sh"              "Setting up Plymouth"            false
 
 echo ""
 section "Configuring Limine bootloader"
@@ -174,6 +173,8 @@ if command -v refresh-limine &>/dev/null; then
 else
     warn "refresh-limine not found — run it manually after reboot"
 fi
+
+run_step "login/plymouth.sh"              "Setting up Plymouth"            false
 
 # ── Reload ────────────────────────────────────────────────────────────────────
 run_step "services/reload.sh"             "Reloading UI"                   false
