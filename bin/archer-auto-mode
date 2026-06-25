@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# =============================================================================
+# archer-auto-mode — Apply correct light/dark mode based on current time.
+#                    Called by cron at 6:30 AM and 6:30 PM, and at boot.
+#
+# Light mode: 06:30 – 18:29
+# Dark mode:  18:30 – 06:29
+# =============================================================================
+
+SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
+
+HOUR=$(date +%H)
+MIN=$(date +%M)
+TIME=$(( HOUR * 60 + MIN ))
+
+LIGHT_START=$(( 6 * 60 + 30 ))   # 06:30 = 390
+DARK_START=$(( 18 * 60 + 30 ))   # 18:30 = 1110
+
+if (( TIME >= LIGHT_START && TIME < DARK_START )); then
+    MODE="light"
+else
+    MODE="dark"
+fi
+
+"$SCRIPTS_DIR/archer-set-mode" "$MODE"
