@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 # =============================================================================
-# archer-set-theme — Pick which wallpaper collection to use
-# Writes selected collection to ~/.local/state/Archer/current-collection
-# Collections live in ~/Wallpapers/<collection-name>/
+# rofi-set-theme — Pick wallpaper collection + mode, apply random wallpaper,
+#                  then delegate all color/theme work to archer-set-mode.
+#
+# State files:
+#   ~/.local/state/Archer/current-collection  ← active collection name
+#   ~/.local/state/Archer/current-wallpaper   ← symlink to active wallpaper
+#   ~/.local/state/Archer/current-mode        ← "light" or "dark"
 # =============================================================================
 
 set -uo pipefail
@@ -16,7 +20,6 @@ WALLPAPERS_DIR="$HOME/Wallpapers"
 STATE_DIR="$HOME/.local/state/Archer"
 COLLECTION_FILE="$STATE_DIR/current-collection"
 MODE_FILE="$STATE_DIR/current-mode"
-SCHEME_FILE="$STATE_DIR/matugen-scheme"
 SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
 
 if [[ ! -d "$WALLPAPERS_DIR" ]]; then
@@ -60,20 +63,9 @@ MODE=$(printf 'dark\nlight\n' | rofi -dmenu \
 
 [[ -z "$MODE" ]] && exit 0
 
-# ─── Determine color scheme ────────────────────────────────────────────────────
-# Light mode forces scheme-vibrant for better contrast/legibility.
-# Dark mode keeps whatever scheme was previously selected.
-if [[ "$MODE" == "light" ]]; then
-    SCHEME="scheme-fidelity"
-    echo "$SCHEME" > "$SCHEME_FILE"
-else
-    SCHEME=$(cat "$SCHEME_FILE" 2>/dev/null || echo "scheme-tonal-spot")
-fi
-
-# ─── Save state ────────────────────────────────────────────────────────────────
+# ─── Save collection state ────────────────────────────────────────────────────
 mkdir -p "$STATE_DIR"
 echo "$SELECTED" > "$COLLECTION_FILE"
-echo "$MODE"     > "$MODE_FILE"
 
 notify-send "Archer" "Collection set to '$SELECTED' ($MODE mode)" \
     --icon=preferences-desktop-wallpaper
@@ -92,7 +84,7 @@ fi
 RANDOM_WALL="${WALLS[$RANDOM % ${#WALLS[@]}]}"
 ln -nsf "$RANDOM_WALL" "$STATE_DIR/current-wallpaper"
 
-# ─── Apply via awww ─────────────────────────────────────────────────────────────
+# ─── Apply via awww ───────────────────────────────────────────────────────────
 if ! pgrep -x awww-daemon >/dev/null 2>&1; then
     uwsm-app -- awww-daemon &
     sleep 0.3
@@ -106,56 +98,5 @@ setsid uwsm-app -- awww img "$STATE_DIR/current-wallpaper" \
     --resize crop &
 disown
 
-# ─── Dominant color extraction ─────────────────────────────────────────────────
-DOMINANT=""
-IM_CMD=$(command -v magick || command -v convert || echo "")
-
-if [[ "$MODE" == "light" ]]; then
-    MIN_LUM=80; MAX_LUM=200; MIN_CHROMA=50
-else
-    MIN_LUM=25; MAX_LUM=230; MIN_CHROMA=30
-fi
-
-if [[ -n "$IM_CMD" ]]; then
-    DOMINANT=$(
-        "$IM_CMD" "$RANDOM_WALL" \
-            -resize 100x100! \
-            -quantize transparent \
-            +dither -colors 8 \
-            -format "%c" histogram:info:- 2>/dev/null \
-        | sort -rn \
-        | grep -oP '#[0-9A-Fa-f]{6}' \
-        | while read -r hex; do
-            r=$((16#${hex:1:2}))
-            g=$((16#${hex:3:2}))
-            b=$((16#${hex:5:2}))
-            lum=$(( (r * 299 + g * 587 + b * 114) / 1000 ))
-            max_c=$(( r > g ? r : g ))
-            max_c=$(( max_c > b ? max_c : b ))
-            min_c=$(( r < g ? r : g ))
-            min_c=$(( min_c < b ? min_c : b ))
-            chroma=$(( max_c - min_c ))
-            if (( lum >= MIN_LUM && lum <= MAX_LUM && chroma >= MIN_CHROMA )); then
-                echo "$hex"
-                break
-            fi
-        done
-    )
-fi
-
-# ─── Run matugen ────────────────────────────────────────────────────────────────
-if [[ -n "$DOMINANT" ]]; then
-    matugen color hex "$DOMINANT" --mode "$MODE" -q --prefer saturation -t "$SCHEME"
-    MATUGEN_EXIT=$?
-else
-    matugen image "$RANDOM_WALL" --mode "$MODE" -q --prefer saturation -t "$SCHEME"
-    MATUGEN_EXIT=$?
-fi
-
-# ─── Post-matugen: matugenMagick, notify ────────────────────────────────────────
-if [[ $MATUGEN_EXIT -eq 0 ]]; then
-    [[ -x "$SCRIPTS_DIR/matugenMagick" ]] && "$SCRIPTS_DIR/matugenMagick"
-else
-    notify-send -u critical "Archer" "matugen failed (exit $MATUGEN_EXIT) — colors not applied" \
-        -h string:x-canonical-private-synchronous:archer_matugen
-fi
+# ─── Delegate color/theme pipeline to archer-set-mode ────────────────────────
+"$SCRIPTS_DIR/archer-set-mode" "$MODE"

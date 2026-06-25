@@ -52,7 +52,7 @@ post_hook   = 'gtk-theme-reload'
 [templates.gtk4]
 input_path  = "~/.config/matugen/templates/gtk-4.0/gtk.css"
 output_path = "~/.config/gtk-4.0/colors.css"
-post_hook   = 'gtk-theme-reload "{{image}}" "{{mode}}"'
+post_hook   = 'gtk-theme-reload "{{image}}"'
 
 # 5. Passive — no post_hook, read fresh on next launch
 [templates.rofi]

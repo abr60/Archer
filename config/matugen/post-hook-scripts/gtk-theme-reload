@@ -91,8 +91,8 @@ fi
 gsettings set org.gnome.desktop.interface icon-theme "$ICON_THEME" 2>/dev/null
 
 # ─── Restart Nautilus to apply icon/theme changes (GTK4 apps need restart) ─────
-if pgrep -x nautilus >/dev/null 2>&1; then
-    nautilus -q
-    sleep 0.3
-    nohup nautilus --no-default-window >/dev/null 2>&1 & disown
-fi
+#if pgrep -x nautilus >/dev/null 2>&1; then
+ #   nautilus -q
+ #   sleep 0.3
+ #   nohup nautilus --no-default-window >/dev/null 2>&1 & disown
+#fi

@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(fff9e7ff)",
+  background = "rgba(121318ff)",
 
-  error = "rgba(ba1a1aff)",
+  error = "rgba(ffb4abff)",
 
-  error_container = "rgba(ffdad6ff)",
+  error_container = "rgba(93000aff)",
 
-  inverse_on_surface = "rgba(f7f1d9ff)",
+  inverse_on_surface = "rgba(2f3036ff)",
 
-  inverse_primary = "rgba(dbc900ff)",
+  inverse_primary = "rgba(495d92ff)",
 
-  inverse_surface = "rgba(333121ff)",
+  inverse_surface = "rgba(e3e2e9ff)",
 
-  on_background = "rgba(1e1c0eff)",
+  on_background = "rgba(e3e2e9ff)",
 
-  on_error = "rgba(ffffffff)",
+  on_error = "rgba(690005ff)",
 
-  on_error_container = "rgba(410002ff)",
+  on_error_container = "rgba(ffdad6ff)",
 
-  on_primary = "rgba(ffffffff)",
+  on_primary = "rgba(182e60ff)",
 
-  on_primary_container = "rgba(1f1c00ff)",
+  on_primary_container = "rgba(dae2ffff)",
 
-  on_primary_fixed = "rgba(1f1c00ff)",
+  on_primary_fixed = "rgba(001848ff)",
 
-  on_primary_fixed_variant = "rgba(4f4800ff)",
+  on_primary_fixed_variant = "rgba(314578ff)",
 
-  on_secondary = "rgba(ffffffff)",
+  on_secondary = "rgba(2a3042ff)",
 
-  on_secondary_container = "rgba(1a1d00ff)",
+  on_secondary_container = "rgba(dce2f9ff)",
 
-  on_secondary_fixed = "rgba(1a1d00ff)",
+  on_secondary_fixed = "rgba(151b2cff)",
 
-  on_secondary_fixed_variant = "rgba(464a20ff)",
+  on_secondary_fixed_variant = "rgba(404659ff)",
 
-  on_surface = "rgba(1e1c0eff)",
+  on_surface = "rgba(e3e2e9ff)",
 
-  on_surface_variant = "rgba(4a4736ff)",
+  on_surface_variant = "rgba(c5c6d0ff)",
 
-  on_tertiary = "rgba(ffffffff)",
+  on_tertiary = "rgba(422741ff)",
 
-  on_tertiary_container = "rgba(121f00ff)",
+  on_tertiary_container = "rgba(fed6f9ff)",
 
-  on_tertiary_fixed = "rgba(121f00ff)",
+  on_tertiary_fixed = "rgba(2b122bff)",
 
-  on_tertiary_fixed_variant = "rgba(3a4d1aff)",
+  on_tertiary_fixed_variant = "rgba(5a3d59ff)",
 
-  outline = "rgba(7b7764ff)",
+  outline = "rgba(8f909aff)",
 
-  outline_variant = "rgba(ccc7b0ff)",
+  outline_variant = "rgba(45464fff)",
 
-  primary = "rgba(695f00ff)",
+  primary = "rgba(b2c5ffff)",
 
-  primary_container = "rgba(fae500ff)",
+  primary_container = "rgba(314578ff)",
 
-  primary_fixed = "rgba(fae500ff)",
+  primary_fixed = "rgba(dae2ffff)",
 
-  primary_fixed_dim = "rgba(dbc900ff)",
+  primary_fixed_dim = "rgba(b2c5ffff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(5d6136ff)",
+  secondary = "rgba(c0c6ddff)",
 
-  secondary_container = "rgba(e3e7afff)",
+  secondary_container = "rgba(404659ff)",
 
-  secondary_fixed = "rgba(e3e7afff)",
+  secondary_fixed = "rgba(dce2f9ff)",
 
-  secondary_fixed_dim = "rgba(c6ca95ff)",
+  secondary_fixed_dim = "rgba(c0c6ddff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(b0a21dff)",
+  source_color = "rgba(385bafff)",
 
-  surface = "rgba(fff9e7ff)",
+  surface = "rgba(121318ff)",
 
-  surface_bright = "rgba(fff9e7ff)",
+  surface_bright = "rgba(38393fff)",
 
-  surface_container = "rgba(f4eed7ff)",
+  surface_container = "rgba(1e1f25ff)",
 
-  surface_container_high = "rgba(eee8d1ff)",
+  surface_container_high = "rgba(292a2fff)",
 
-  surface_container_highest = "rgba(e9e3ccff)",
+  surface_container_highest = "rgba(33343aff)",
 
-  surface_container_low = "rgba(faf4dcff)",
+  surface_container_low = "rgba(1a1b21ff)",
 
-  surface_container_lowest = "rgba(ffffffff)",
+  surface_container_lowest = "rgba(0d0e13ff)",
 
-  surface_dim = "rgba(e0dac3ff)",
+  surface_dim = "rgba(121318ff)",
 
-  surface_tint = "rgba(695f00ff)",
+  surface_tint = "rgba(b2c5ffff)",
 
-  surface_variant = "rgba(e9e3ccff)",
+  surface_variant = "rgba(45464fff)",
 
-  tertiary = "rgba(516530ff)",
+  tertiary = "rgba(e1bbdcff)",
 
-  tertiary_container = "rgba(d3eba8ff)",
+  tertiary_container = "rgba(5a3d59ff)",
 
-  tertiary_fixed = "rgba(d3eba8ff)",
+  tertiary_fixed = "rgba(fed6f9ff)",
 
-  tertiary_fixed_dim = "rgba(b7cf8fff)",
+  tertiary_fixed_dim = "rgba(e1bbdcff)",
 
-  image = "/home/pseudo/Wallpapers/Nature/wallhaven-poyvgj.jpg",
+  image = "/home/pseudo/Wallpapers/Lively/gas_station.gif",
 }
