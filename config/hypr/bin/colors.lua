@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(0e1513ff)",
+  background = "rgba(fff9e7ff)",
 
-  error = "rgba(ffb4abff)",
+  error = "rgba(ba1a1aff)",
 
-  error_container = "rgba(93000aff)",
+  error_container = "rgba(ffdad6ff)",
 
-  inverse_on_surface = "rgba(2b3230ff)",
+  inverse_on_surface = "rgba(f7f1d9ff)",
 
-  inverse_primary = "rgba(046b5cff)",
+  inverse_primary = "rgba(dbc900ff)",
 
-  inverse_surface = "rgba(dee4e1ff)",
+  inverse_surface = "rgba(333121ff)",
 
-  on_background = "rgba(dee4e1ff)",
+  on_background = "rgba(1e1c0eff)",
 
-  on_error = "rgba(690005ff)",
+  on_error = "rgba(ffffffff)",
 
-  on_error_container = "rgba(ffdad6ff)",
+  on_error_container = "rgba(410002ff)",
 
-  on_primary = "rgba(00382fff)",
+  on_primary = "rgba(ffffffff)",
 
-  on_primary_container = "rgba(a0f2dfff)",
+  on_primary_container = "rgba(1f1c00ff)",
 
-  on_primary_fixed = "rgba(00201bff)",
+  on_primary_fixed = "rgba(1f1c00ff)",
 
-  on_primary_fixed_variant = "rgba(005045ff)",
+  on_primary_fixed_variant = "rgba(4f4800ff)",
 
-  on_secondary = "rgba(1c352fff)",
+  on_secondary = "rgba(ffffffff)",
 
-  on_secondary_container = "rgba(cde8e0ff)",
+  on_secondary_container = "rgba(1a1d00ff)",
 
-  on_secondary_fixed = "rgba(06201bff)",
+  on_secondary_fixed = "rgba(1a1d00ff)",
 
-  on_secondary_fixed_variant = "rgba(334b46ff)",
+  on_secondary_fixed_variant = "rgba(464a20ff)",
 
-  on_surface = "rgba(dee4e1ff)",
+  on_surface = "rgba(1e1c0eff)",
 
-  on_surface_variant = "rgba(bec9c5ff)",
+  on_surface_variant = "rgba(4a4736ff)",
 
-  on_tertiary = "rgba(123348ff)",
+  on_tertiary = "rgba(ffffffff)",
 
-  on_tertiary_container = "rgba(c9e6ffff)",
+  on_tertiary_container = "rgba(121f00ff)",
 
-  on_tertiary_fixed = "rgba(001e2fff)",
+  on_tertiary_fixed = "rgba(121f00ff)",
 
-  on_tertiary_fixed_variant = "rgba(2b4a5fff)",
+  on_tertiary_fixed_variant = "rgba(3a4d1aff)",
 
-  outline = "rgba(89938fff)",
+  outline = "rgba(7b7764ff)",
 
-  outline_variant = "rgba(3f4946ff)",
+  outline_variant = "rgba(ccc7b0ff)",
 
-  primary = "rgba(84d6c3ff)",
+  primary = "rgba(695f00ff)",
 
-  primary_container = "rgba(005045ff)",
+  primary_container = "rgba(fae500ff)",
 
-  primary_fixed = "rgba(a0f2dfff)",
+  primary_fixed = "rgba(fae500ff)",
 
-  primary_fixed_dim = "rgba(84d6c3ff)",
+  primary_fixed_dim = "rgba(dbc900ff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(b1ccc4ff)",
+  secondary = "rgba(5d6136ff)",
 
-  secondary_container = "rgba(334b46ff)",
+  secondary_container = "rgba(e3e7afff)",
 
-  secondary_fixed = "rgba(cde8e0ff)",
+  secondary_fixed = "rgba(e3e7afff)",
 
-  secondary_fixed_dim = "rgba(b1ccc4ff)",
+  secondary_fixed_dim = "rgba(c6ca95ff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(01443aff)",
+  source_color = "rgba(b0a21dff)",
 
-  surface = "rgba(0e1513ff)",
+  surface = "rgba(fff9e7ff)",
 
-  surface_bright = "rgba(343b38ff)",
+  surface_bright = "rgba(fff9e7ff)",
 
-  surface_container = "rgba(1b211fff)",
+  surface_container = "rgba(f4eed7ff)",
 
-  surface_container_high = "rgba(252b29ff)",
+  surface_container_high = "rgba(eee8d1ff)",
 
-  surface_container_highest = "rgba(303634ff)",
+  surface_container_highest = "rgba(e9e3ccff)",
 
-  surface_container_low = "rgba(171d1bff)",
+  surface_container_low = "rgba(faf4dcff)",
 
-  surface_container_lowest = "rgba(090f0eff)",
+  surface_container_lowest = "rgba(ffffffff)",
 
-  surface_dim = "rgba(0e1513ff)",
+  surface_dim = "rgba(e0dac3ff)",
 
-  surface_tint = "rgba(84d6c3ff)",
+  surface_tint = "rgba(695f00ff)",
 
-  surface_variant = "rgba(3f4946ff)",
+  surface_variant = "rgba(e9e3ccff)",
 
-  tertiary = "rgba(abcae4ff)",
+  tertiary = "rgba(516530ff)",
 
-  tertiary_container = "rgba(2b4a5fff)",
+  tertiary_container = "rgba(d3eba8ff)",
 
-  tertiary_fixed = "rgba(c9e6ffff)",
+  tertiary_fixed = "rgba(d3eba8ff)",
 
-  tertiary_fixed_dim = "rgba(abcae4ff)",
+  tertiary_fixed_dim = "rgba(b7cf8fff)",
 
-  image = "/home/pseudo/Wallpapers/Canopy/malachite.jpg",
+  image = "/home/pseudo/Wallpapers/Nature/wallhaven-poyvgj.jpg",
 }

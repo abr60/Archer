@@ -24,5 +24,8 @@ CURRENT_WP="$(readlink -f "$STATE_DIR/current-wallpaper")"
 SCHEME=$(cat "$SCHEME_FILE" 2>/dev/null || echo "scheme-tonal-spot")
 SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
 
+# in archer-set-mode, after writing $MODE to state file:
+"$HOME/.local/share/Archer/bin/theme-set-vscode" "$MODE"
+
 matugen image "$CURRENT_WP" --mode "$MODE" -q --prefer saturation -t "$SCHEME"
 [[ -x "$SCRIPTS_DIR/matugenMagick" ]] && "$SCRIPTS_DIR/matugenMagick"
