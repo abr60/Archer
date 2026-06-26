@@ -27,7 +27,17 @@ is_done() { [[ -f "$STATE_DIR/$1.done" ]]; }
 mark_done() { touch "$STATE_DIR/$1.done"; }
 
 is_thinkpad() {
-    grep -qi "thinkpad" /sys/devices/virtual/dmi/id/product_name 2>/dev/null
+    local dmi="/sys/devices/virtual/dmi/id"
+
+    for file in product_family product_name board_name sys_vendor; do
+        [[ -r "$dmi/$file" ]] || continue
+
+        if grep -qi "thinkpad" "$dmi/$file"; then
+            return 0
+        fi
+    done
+
+    return 1
 }
 
 run_step() {
