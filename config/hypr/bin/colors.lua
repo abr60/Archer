@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(0e1514ff)",
+  background = "rgba(fff8f5ff)",
 
-  error = "rgba(ffb4abff)",
+  error = "rgba(ba1a1aff)",
 
-  error_container = "rgba(93000aff)",
+  error_container = "rgba(ffdad6ff)",
 
-  inverse_on_surface = "rgba(2b3230ff)",
+  inverse_on_surface = "rgba(ffede4ff)",
 
-  inverse_primary = "rgba(006a62ff)",
+  inverse_primary = "rgba(ffb688ff)",
 
-  inverse_surface = "rgba(dde4e2ff)",
+  inverse_surface = "rgba(3c2d24ff)",
 
-  on_background = "rgba(dde4e2ff)",
+  on_background = "rgba(261910ff)",
 
-  on_error = "rgba(690005ff)",
+  on_error = "rgba(ffffffff)",
 
-  on_error_container = "rgba(ffdad6ff)",
+  on_error_container = "rgba(410002ff)",
 
-  on_primary = "rgba(003732ff)",
+  on_primary = "rgba(ffffffff)",
 
-  on_primary_container = "rgba(9ef2e6ff)",
+  on_primary_container = "rgba(311300ff)",
 
-  on_primary_fixed = "rgba(00201dff)",
+  on_primary_fixed = "rgba(311300ff)",
 
-  on_primary_fixed_variant = "rgba(005049ff)",
+  on_primary_fixed_variant = "rgba(733600ff)",
 
-  on_secondary = "rgba(1c3531ff)",
+  on_secondary = "rgba(ffffffff)",
 
-  on_secondary_container = "rgba(cce8e3ff)",
+  on_secondary_container = "rgba(2c1700ff)",
 
-  on_secondary_fixed = "rgba(05201dff)",
+  on_secondary_fixed = "rgba(2c1700ff)",
 
-  on_secondary_fixed_variant = "rgba(324b48ff)",
+  on_secondary_fixed_variant = "rgba(5f401dff)",
 
-  on_surface = "rgba(dde4e2ff)",
+  on_surface = "rgba(261910ff)",
 
-  on_surface_variant = "rgba(bec9c6ff)",
+  on_surface_variant = "rgba(544339ff)",
 
-  on_tertiary = "rgba(163349ff)",
+  on_tertiary = "rgba(ffffffff)",
 
-  on_tertiary_container = "rgba(cde5ffff)",
+  on_tertiary_container = "rgba(271900ff)",
 
-  on_tertiary_fixed = "rgba(001d32ff)",
+  on_tertiary_fixed = "rgba(271900ff)",
 
-  on_tertiary_fixed_variant = "rgba(2e4961ff)",
+  on_tertiary_fixed_variant = "rgba(5d4202ff)",
 
-  outline = "rgba(899390ff)",
+  outline = "rgba(877367ff)",
 
-  outline_variant = "rgba(3f4947ff)",
+  outline_variant = "rgba(dac2b4ff)",
 
-  primary = "rgba(82d5caff)",
+  primary = "rgba(974800ff)",
 
-  primary_container = "rgba(005049ff)",
+  primary_container = "rgba(ffdbc7ff)",
 
-  primary_fixed = "rgba(9ef2e6ff)",
+  primary_fixed = "rgba(ffdbc7ff)",
 
-  primary_fixed_dim = "rgba(82d5caff)",
+  primary_fixed_dim = "rgba(ffb688ff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(b1ccc7ff)",
+  secondary = "rgba(7a5832ff)",
 
-  secondary_container = "rgba(324b48ff)",
+  secondary_container = "rgba(ffdcbbff)",
 
-  secondary_fixed = "rgba(cce8e3ff)",
+  secondary_fixed = "rgba(ffdcbbff)",
 
-  secondary_fixed_dim = "rgba(b1ccc7ff)",
+  secondary_fixed_dim = "rgba(ebbe90ff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(24857bff)",
+  source_color = "rgba(a25d2bff)",
 
-  surface = "rgba(0e1514ff)",
+  surface = "rgba(fff8f5ff)",
 
-  surface_bright = "rgba(343a39ff)",
+  surface_bright = "rgba(fff8f5ff)",
 
-  surface_container = "rgba(1a2120ff)",
+  surface_container = "rgba(ffeadfff)",
 
-  surface_container_high = "rgba(252b2aff)",
+  surface_container_high = "rgba(fde3d5ff)",
 
-  surface_container_highest = "rgba(303635ff)",
+  surface_container_highest = "rgba(f7ddcfff)",
 
-  surface_container_low = "rgba(161d1cff)",
+  surface_container_low = "rgba(fff1eaff)",
 
-  surface_container_lowest = "rgba(090f0eff)",
+  surface_container_lowest = "rgba(ffffffff)",
 
-  surface_dim = "rgba(0e1514ff)",
+  surface_dim = "rgba(efd5c7ff)",
 
-  surface_tint = "rgba(82d5caff)",
+  surface_tint = "rgba(974800ff)",
 
-  surface_variant = "rgba(3f4947ff)",
+  surface_variant = "rgba(f7ddcfff)",
 
-  tertiary = "rgba(aec9e6ff)",
+  tertiary = "rgba(78591aff)",
 
-  tertiary_container = "rgba(2e4961ff)",
+  tertiary_container = "rgba(ffdea7ff)",
 
-  tertiary_fixed = "rgba(cde5ffff)",
+  tertiary_fixed = "rgba(ffdea7ff)",
 
-  tertiary_fixed_dim = "rgba(aec9e6ff)",
+  tertiary_fixed_dim = "rgba(e9c177ff)",
 
-  image = "/home/pseudo/Wallpapers/Lively/pokemon-emerald-waterfall.gif",
+  image = "/home/pseudo/Wallpapers/RGB/wallhaven-3qrdr6.jpg",
 }
