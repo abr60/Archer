@@ -82,6 +82,9 @@ done
 echo ""
 gum confirm "Proceed with installation?" || { msg "Aborted."; exit 0; }
 
+# Start timer after user confirmation
+START_TIME=$(date +%s)
+
 # =============================================================================
 # Install packages
 # =============================================================================
@@ -167,5 +170,61 @@ echo ""
 echo "Install finished: $(date)" >> "$LOG_FILE"
 echo "Installed: ${INSTALLED[*]:-none}" >> "$LOG_FILE"
 echo "Failed: ${FAILED[*]:-none}" >> "$LOG_FILE"
+
+END_TIME=$(date +%s)
+TOTAL_TIME=$((END_TIME - START_TIME))
+MINUTES=$((TOTAL_TIME / 60))
+SECONDS_LEFT=$((TOTAL_TIME % 60))
+
+echo "Total Time: ${MINUTES}m ${SECONDS_LEFT}s (${TOTAL_TIME} seconds)" >> "$LOG_FILE"
+
+# =============================================================================
+# Performance Summary
+# =============================================================================
+echo ""
+
+gum style --foreground 141 \
+"⏱️ Total time: ${MINUTES}m $(printf "%02d" "$SECONDS_LEFT")s (${TOTAL_TIME} seconds)"
+
+if (( ${#INSTALLED[@]} == 0 )); then
+    gum style --foreground 244 \
+    "✓ Nothing needed installing. All packages were already present."
+
+elif (( TOTAL_TIME <= 30 )); then
+    gum style --foreground 46 \
+    "⚡ Holy speed! Installation finished in a flash."
+    gum style --foreground 46 \
+    "🚀 Your internet connection is absolutely elite. Keep flexing that bandwidth!"
+
+elif (( TOTAL_TIME <= 60 )); then
+    gum style --foreground 153 \
+    "🏹 Nice! That was quick."
+    gum style --foreground 153 \
+    "📦 Pacman barely had time to unpack its bags."
+
+elif (( TOTAL_TIME <= 180 )); then
+    gum style --foreground 214 \
+    "☕ Not bad."
+    gum style --foreground 214 \
+    "📦 Just enough time to grab a coffee while Arch did its thing."
+
+elif (( TOTAL_TIME <= 300 )); then
+    gum style --foreground 208 \
+    "🐢 Well... that took a hot minute."
+    gum style --foreground 208 \
+    "📡 Either your mirror was taking a nap or the AUR was compiling the universe."
+
+else
+    gum style --foreground 196 \
+    "💀 Congratulations. You witnessed geological time."
+    gum style --foreground 196 \
+    "📶 Your Wi-Fi connection straight up sucks. Are you stealing internet from a toaster?"
+    gum style --foreground 244 \
+    "📡 If it wasn't the Wi-Fi, blame the mirrors. They can defend themselves."
+    gum style --foreground 226 \
+    "💡 Suggestion: Fix your router, yell at your ISP, or move closer to civilization."
+fi
+
+echo ""
 
 [[ ${#FAILED[@]} -gt 0 ]] && exit 1 || exit 0
