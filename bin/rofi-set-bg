@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 # =============================================================================
-# rofi-set-bg — Pick wallpaper from current collection, apply via awww,
+# rofi-set-bg — Pick wallpaper from current theme collection, apply via awww,
 #               then delegate all color/theme work to archer-set-mode.
 #
 # State files:
-#   ~/.local/state/Archer/current-collection  ← active collection name
+#   ~/.local/state/Archer/current-theme       ← active theme name
 #   ~/.local/state/Archer/current-wallpaper   ← symlink to active wallpaper
 #   ~/.local/state/Archer/current-mode        ← "light" or "dark"
 # =============================================================================
 
 set -euo pipefail
 
-WALLPAPERS_DIR="$HOME/Wallpapers"
+THEMES_DIR="$HOME/.local/share/Archer/Themes"
 STATE_DIR="$HOME/.local/state/Archer"
-COLLECTION_FILE="$STATE_DIR/current-collection"
+THEME_FILE="$STATE_DIR/current-theme"
 CURRENT_WP_LINK="$STATE_DIR/current-wallpaper"
 ROFI_THEME="$HOME/.config/rofi/wallpaper.rasi"
 CACHE_DIR="$HOME/.cache/archer/wallpaper-thumbs"
@@ -29,22 +29,22 @@ if pgrep -x rofi >/dev/null 2>&1; then
     exit 0
 fi
 
-# ─── Load current collection ──────────────────────────────────────────────────
-COLLECTION=$(cat "$COLLECTION_FILE" 2>/dev/null || echo "")
+# ─── Load current theme ───────────────────────────────────────────────────────
+THEME=$(cat "$THEME_FILE" 2>/dev/null || echo "")
 
-if [[ -z "$COLLECTION" ]]; then
-    notify-send "Archer" "No collection selected. Run archer-set-theme first."
-    COLLECTION=$(find "$WALLPAPERS_DIR" -mindepth 1 -maxdepth 1 -type d \
+if [[ -z "$THEME" ]]; then
+    notify-send "Archer" "No theme selected. Run archer-set-theme first."
+    THEME=$(find "$THEMES_DIR" -mindepth 1 -maxdepth 1 -type d \
         | sort | head -1 | xargs basename 2>/dev/null || echo "")
-    [[ -z "$COLLECTION" ]] && exit 1
+    [[ -z "$THEME" ]] && exit 1
     mkdir -p "$STATE_DIR"
-    echo "$COLLECTION" > "$COLLECTION_FILE"
+    echo "$THEME" > "$THEME_FILE"
 fi
 
-BG_DIR="$WALLPAPERS_DIR/$COLLECTION"
+BG_DIR="$THEMES_DIR/$THEME/Walls"
 
 if [[ ! -d "$BG_DIR" ]]; then
-    notify-send "Archer" "Collection '$COLLECTION' not found at $BG_DIR"
+    notify-send "Archer" "Theme Walls directory not found at $BG_DIR"
     exit 1
 fi
 
@@ -73,7 +73,7 @@ if [[ -f "$HOME/.cache/matugen/colors.json" ]]; then
 fi
 
 # ─── Find wallpapers in collection ────────────────────────────────────────────
-mkdir -p "$CACHE_DIR/$COLLECTION"
+mkdir -p "$CACHE_DIR/$THEME"
 
 declare -A seen
 declare -a WALLPAPERS
@@ -89,7 +89,7 @@ done < <(find -L "$BG_DIR" -maxdepth 1 -type f \
     2>/dev/null | sort)
 
 if [[ ${#WALLPAPERS[@]} -eq 0 ]]; then
-    notify-send "Archer" "No wallpapers found in '$COLLECTION'"
+    notify-send "Archer" "No wallpapers found in '$THEME'"
     exit 1
 fi
 
@@ -98,9 +98,9 @@ build_thumb() {
     local wp="$1"
     local base
     base=$(basename "$wp")
-    local thumb="$CACHE_DIR/$COLLECTION/${base}.sqre.png"
-    local hash_file="$CACHE_DIR/$COLLECTION/.${base}.xxh"
-    local lock_file="$CACHE_DIR/$COLLECTION/.lock_${base}"
+    local thumb="$CACHE_DIR/$THEME/${base}.sqre.png"
+    local hash_file="$CACHE_DIR/$THEME/.${base}.xxh"
+    local lock_file="$CACHE_DIR/$THEME/.lock_${base}"
     local current_hash
 
     if command -v xxh64sum &>/dev/null; then
@@ -113,7 +113,7 @@ build_thumb() {
         flock -x 200
         if [[ ! -f "$thumb" ]] || \
            [[ ! -f "$hash_file" ]] || \
-           [[ "$current_hash" != "$(cat "$hash_file" 2>/dev/null)" ]]; then
+           [[ "$current_hash" != "$(cat "$hash_file" 2>/dev/null)" ]]; then 
             ffmpeg -y -i "$wp" \
                 -vf "select=eq(n\,0),scale=${THUMB_SIZE}:${THUMB_SIZE}:force_original_aspect_ratio=increase,crop=${THUMB_SIZE}:${THUMB_SIZE}" \
                 -vframes 1 "$thumb" >/dev/null 2>&1 && \
@@ -124,12 +124,12 @@ build_thumb() {
 }
 
 export -f build_thumb
-export CACHE_DIR COLLECTION THUMB_SIZE
+export CACHE_DIR THEME THUMB_SIZE
 
 cores=$(nproc)
 (( cores <= 2 )) && JOBS=2 || JOBS=$(( cores > 4 ? 4 : cores - 1 ))
 
-rm -f "$CACHE_DIR/$COLLECTION"/.lock_* 2>/dev/null || true
+rm -f "$CACHE_DIR/$THEME"/.lock_* 2>/dev/null || true
 
 log "START — thumbnail build"
 printf '%s\0' "${WALLPAPERS[@]}" | \
@@ -137,16 +137,16 @@ printf '%s\0' "${WALLPAPERS[@]}" | \
 log "thumbnail build done"
 
 # ─── Prune stale thumbnails ───────────────────────────────────────────────────
-for cached in "$CACHE_DIR/$COLLECTION"/*.sqre.png; do
+for cached in "$CACHE_DIR/$THEME"/*.sqre.png; do
     [[ -f "$cached" ]] || continue
     base=$(basename "$cached" .sqre.png)
     [[ -f "$BG_DIR/$base" ]] || rm -f \
         "$cached" \
-        "$CACHE_DIR/$COLLECTION/.${base}.xxh" \
-        "$CACHE_DIR/$COLLECTION/.lock_${base}"
+        "$CACHE_DIR/$THEME/.${base}.xxh" \
+        "$CACHE_DIR/$THEME/.lock_${base}"
 done
 
-rm -f "$CACHE_DIR/$COLLECTION"/.lock_* 2>/dev/null || true
+rm -f "$CACHE_DIR/$THEME"/.lock_* 2>/dev/null || true
 
 # ─── Launch rofi picker ───────────────────────────────────────────────────────
 declare -A wp_map
@@ -155,7 +155,7 @@ current_wall=$(basename "$(readlink -f "$CURRENT_WP_LINK" 2>/dev/null)" 2>/dev/n
 
 for wp in "${WALLPAPERS[@]}"; do
     base=$(basename "$wp")
-    thumb="$CACHE_DIR/$COLLECTION/${base}.sqre.png"
+    thumb="$CACHE_DIR/$THEME/${base}.sqre.png"
     [[ -f "$thumb" ]] || continue
     wp_map["$base"]="$wp"
     entries+="${base}\0icon\x1f${thumb}\n"
