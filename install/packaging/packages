@@ -100,6 +100,33 @@ pkg_in_pacman() {
     pacman -Si "$1" &>/dev/null 2>&1
 }
 
+bootstrap_yay() {
+    if ! command -v yay &>/dev/null; then
+        echo -e "  \033[33m[....]\033[0m 'yay' not found. Bootstrapping AUR helper..."
+        
+        # Ensure base-devel and git are present first
+        sudo pacman -S --noconfirm --needed base-devel git >> "$LOG_FILE" 2>&1
+        
+        local tmp_dir
+        tmp_dir=$(mktemp -d)
+        
+        if git clone https://aur.archlinux.org/yay-bin.git "$tmp_dir" >> "$LOG_FILE" 2>&1; then
+            (
+                cd "$tmp_dir" || exit 1
+                makepkg -si --noconfirm >> "$LOG_FILE" 2>&1
+            )
+            
+            if command -v yay &>/dev/null; then
+                echo -e "\r  \033[32m[ ok ]\033[0m 'yay' successfully installed"
+                return 0
+            fi
+        fi
+        
+        echo -e "\r  \033[31m[fail]\033[0m Failed to install 'yay'. AUR packages will fail."
+        return 1
+    fi
+}
+
 install_pkg() {
     local pkg="$1"
 
@@ -137,6 +164,9 @@ install_pkg() {
 echo ""
 section "Installing $LIST_LABEL packages"
 echo "Install started: $(date)" >> "$LOG_FILE"
+
+# Bootstrap yay first so it's ready for any AUR packages
+bootstrap_yay
 
 for pkg in "${PKGS[@]}"; do
     install_pkg "$pkg"
@@ -189,31 +219,26 @@ gum style --foreground 141 \
 if (( ${#INSTALLED[@]} == 0 )); then
     gum style --foreground 244 \
     "✓ Nothing needed installing. All packages were already present."
-
 elif (( TOTAL_TIME <= 30 )); then
     gum style --foreground 46 \
     "⚡ Holy speed! Installation finished in a flash."
     gum style --foreground 46 \
     "🚀 Your internet connection is absolutely elite. Keep flexing that bandwidth!"
-
 elif (( TOTAL_TIME <= 60 )); then
     gum style --foreground 153 \
     "🏹 Nice! That was quick."
     gum style --foreground 153 \
     "📦 Pacman barely had time to unpack its bags."
-
 elif (( TOTAL_TIME <= 180 )); then
     gum style --foreground 214 \
     "☕ Not bad."
     gum style --foreground 214 \
     "📦 Just enough time to grab a coffee while Arch did its thing."
-
 elif (( TOTAL_TIME <= 300 )); then
     gum style --foreground 208 \
     "🐢 Well... that took a hot minute."
     gum style --foreground 208 \
     "📡 Either your mirror was taking a nap or the AUR was compiling the universe."
-
 else
     gum style --foreground 196 \
     "💀 Congratulations. You witnessed geological time."
