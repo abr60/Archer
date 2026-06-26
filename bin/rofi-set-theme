@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # =============================================================================
-# rofi-set-theme — Pick wallpaper collection + mode, apply random wallpaper,
-#                  then delegate all color/theme work to archer-set-mode.
+# rofi-set-theme — Pick a theme + mode, apply a random wallpaper from the
+#                  theme, then delegate all color/theme work to archer-set-mode.
 #
 # State files:
-#   ~/.local/state/Archer/current-collection  ← active collection name
+#   ~/.local/state/Archer/current-theme       ← active theme name
 #   ~/.local/state/Archer/current-wallpaper   ← symlink to active wallpaper
 #   ~/.local/state/Archer/current-mode        ← "light" or "dark"
 # =============================================================================
@@ -16,41 +16,41 @@ if pidof rofi &>/dev/null; then
     exit 0
 fi
 
-WALLPAPERS_DIR="$HOME/Wallpapers"
+THEMES_DIR="$HOME/.local/share/Archer/Themes"
 STATE_DIR="$HOME/.local/state/Archer"
-COLLECTION_FILE="$STATE_DIR/current-collection"
+THEME_FILE="$STATE_DIR/current-theme"
 MODE_FILE="$STATE_DIR/current-mode"
 SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
 
-if [[ ! -d "$WALLPAPERS_DIR" ]]; then
-    notify-send "Archer" "Wallpapers directory not found at $WALLPAPERS_DIR"
+if [[ ! -d "$THEMES_DIR" ]]; then
+    notify-send "Archer" "Themes directory not found at $THEMES_DIR"
     exit 1
 fi
 
-# ─── Find collections ─────────────────────────────────────────────────────────
-mapfile -t COLLECTIONS < <(
-    find "$WALLPAPERS_DIR" -mindepth 1 -maxdepth 1 -type d \
+# ─── Find themes ──────────────────────────────────────────────────────────────
+mapfile -t THEMES < <(
+    find "$THEMES_DIR" -mindepth 1 -maxdepth 1 -type d \
     | sort \
     | xargs -I{} basename {}
 )
 
-if [[ ${#COLLECTIONS[@]} -eq 0 ]]; then
-    notify-send "Archer" "No collections found in $WALLPAPERS_DIR"
+if [[ ${#THEMES[@]} -eq 0 ]]; then
+    notify-send "Archer" "No themes found in $THEMES_DIR"
     exit 1
 fi
 
-CURRENT=$(cat "$COLLECTION_FILE" 2>/dev/null || echo "")
+CURRENT=$(cat "$THEME_FILE" 2>/dev/null || echo "")
 
-# ─── Pick collection via rofi ─────────────────────────────────────────────────
-SELECTED=$(printf '%s\n' "${COLLECTIONS[@]}" | rofi -dmenu \
+# ─── Pick theme via rofi ──────────────────────────────────────────────────────
+SELECTED_THEME=$(printf '%s\n' "${THEMES[@]}" | rofi -dmenu \
     -p "Select Theme" \
     -theme "$HOME/.config/rofi/set-theme.rasi" \
     -select "$CURRENT")
 
-[[ -z "$SELECTED" ]] && exit 0
+[[ -z "$SELECTED_THEME" ]] && exit 0
 
-if [[ ! -d "$WALLPAPERS_DIR/$SELECTED" ]]; then
-    notify-send "Archer" "Collection '$SELECTED' not found"
+if [[ ! -d "$THEMES_DIR/$SELECTED_THEME" ]]; then
+    notify-send "Archer" "Theme '$SELECTED_THEME' not found"
     exit 1
 fi
 
@@ -63,21 +63,24 @@ MODE=$(printf 'dark\nlight\n' | rofi -dmenu \
 
 [[ -z "$MODE" ]] && exit 0
 
-# ─── Save collection state ────────────────────────────────────────────────────
+# ─── Save theme state ─────────────────────────────────────────────────────────
 mkdir -p "$STATE_DIR"
-echo "$SELECTED" > "$COLLECTION_FILE"
+echo "$SELECTED_THEME" > "$THEME_FILE"
 
-notify-send "Archer" "Collection set to '$SELECTED' ($MODE mode)" \
+notify-send "Archer" "Theme set to '$SELECTED_THEME' ($MODE mode)" \
     --icon=preferences-desktop-wallpaper
 
-# ─── Pick random wallpaper from new collection ────────────────────────────────
-BG_DIR="$WALLPAPERS_DIR/$SELECTED"
-mapfile -t WALLS < <(find -L "$BG_DIR" -maxdepth 1 -type f \
+# ─── Pick random wallpaper from selected theme ────────────────────────────────
+BG_DIR="$THEMES_DIR/$SELECTED_THEME/Walls"
+
+mapfile -t WALLS < <(
+    find -L "$BG_DIR" -maxdepth 1 -type f \
     \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \
-       -o -iname "*.webp" -o -iname "*.gif" \) | sort)
+       -o -iname "*.webp" -o -iname "*.gif" \) | sort
+)
 
 if [[ ${#WALLS[@]} -eq 0 ]]; then
-    notify-send "Archer" "No wallpapers found in '$SELECTED'"
+    notify-send "Archer" "No wallpapers found in '$SELECTED_THEME'"
     exit 1
 fi
 
@@ -98,5 +101,5 @@ setsid uwsm-app -- awww img "$STATE_DIR/current-wallpaper" \
     --resize crop &
 disown
 
-# ─── Delegate color/theme pipeline to archer-set-mode ────────────────────────
+# ─── Delegate color/theme pipeline to archer-set-mode ─────────────────────────
 "$SCRIPTS_DIR/archer-set-mode" "$MODE"
