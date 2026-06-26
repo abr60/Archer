@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
-# rofi-set-theme — Pick a theme + mode, apply a random wallpaper from the
-#                  theme, then delegate all color/theme work to archer-set-mode.
+# rofi-set-theme — Pick a theme, automatically detect the current system mode,
+#                  apply a random wallpaper, and trigger the color pipeline.
 #
 # State files:
 #   ~/.local/state/Archer/current-theme       ← active theme name
@@ -54,14 +54,8 @@ if [[ ! -d "$THEMES_DIR/$SELECTED_THEME" ]]; then
     exit 1
 fi
 
-# ─── Pick mode via rofi ───────────────────────────────────────────────────────
-CURRENT_MODE=$(cat "$MODE_FILE" 2>/dev/null || echo "dark")
-MODE=$(printf 'dark\nlight\n' | rofi -dmenu \
-    -p "Select Mode" \
-    -theme "$HOME/.config/rofi/set-theme.rasi" \
-    -select "$CURRENT_MODE")
-
-[[ -z "$MODE" ]] && exit 0
+# ─── Auto-detect active system mode ───────────────────────────────────────────
+MODE=$(cat "$MODE_FILE" 2>/dev/null || echo "dark")
 
 # ─── Save theme state ─────────────────────────────────────────────────────────
 mkdir -p "$STATE_DIR"
