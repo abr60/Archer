@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(fff8f5ff)",
+  background = "rgba(1a1111ff)",
 
-  error = "rgba(ba1a1aff)",
+  error = "rgba(ffb4abff)",
 
-  error_container = "rgba(ffdad6ff)",
+  error_container = "rgba(93000aff)",
 
-  inverse_on_surface = "rgba(ffede4ff)",
+  inverse_on_surface = "rgba(382e2eff)",
 
-  inverse_primary = "rgba(ffb688ff)",
+  inverse_primary = "rgba(904a4bff)",
 
-  inverse_surface = "rgba(3c2d24ff)",
+  inverse_surface = "rgba(f0deddff)",
 
-  on_background = "rgba(261910ff)",
+  on_background = "rgba(f0deddff)",
 
-  on_error = "rgba(ffffffff)",
+  on_error = "rgba(690005ff)",
 
-  on_error_container = "rgba(410002ff)",
+  on_error_container = "rgba(ffdad6ff)",
 
-  on_primary = "rgba(ffffffff)",
+  on_primary = "rgba(561d20ff)",
 
-  on_primary_container = "rgba(311300ff)",
+  on_primary_container = "rgba(ffdad9ff)",
 
-  on_primary_fixed = "rgba(311300ff)",
+  on_primary_fixed = "rgba(3b080dff)",
 
-  on_primary_fixed_variant = "rgba(733600ff)",
+  on_primary_fixed_variant = "rgba(733335ff)",
 
-  on_secondary = "rgba(ffffffff)",
+  on_secondary = "rgba(442929ff)",
 
-  on_secondary_container = "rgba(2c1700ff)",
+  on_secondary_container = "rgba(ffdad9ff)",
 
-  on_secondary_fixed = "rgba(2c1700ff)",
+  on_secondary_fixed = "rgba(2c1515ff)",
 
-  on_secondary_fixed_variant = "rgba(5f401dff)",
+  on_secondary_fixed_variant = "rgba(5d3f3fff)",
 
-  on_surface = "rgba(261910ff)",
+  on_surface = "rgba(f0deddff)",
 
-  on_surface_variant = "rgba(544339ff)",
+  on_surface_variant = "rgba(d7c1c1ff)",
 
-  on_tertiary = "rgba(ffffffff)",
+  on_tertiary = "rgba(422c05ff)",
 
-  on_tertiary_container = "rgba(271900ff)",
+  on_tertiary_container = "rgba(ffdeadff)",
 
-  on_tertiary_fixed = "rgba(271900ff)",
+  on_tertiary_fixed = "rgba(281900ff)",
 
-  on_tertiary_fixed_variant = "rgba(5d4202ff)",
+  on_tertiary_fixed_variant = "rgba(5b431aff)",
 
-  outline = "rgba(877367ff)",
+  outline = "rgba(a08c8bff)",
 
-  outline_variant = "rgba(dac2b4ff)",
+  outline_variant = "rgba(524343ff)",
 
-  primary = "rgba(974800ff)",
+  primary = "rgba(ffb3b2ff)",
 
-  primary_container = "rgba(ffdbc7ff)",
+  primary_container = "rgba(733335ff)",
 
-  primary_fixed = "rgba(ffdbc7ff)",
+  primary_fixed = "rgba(ffdad9ff)",
 
-  primary_fixed_dim = "rgba(ffb688ff)",
+  primary_fixed_dim = "rgba(ffb3b2ff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(7a5832ff)",
+  secondary = "rgba(e6bdbcff)",
 
-  secondary_container = "rgba(ffdcbbff)",
+  secondary_container = "rgba(5d3f3fff)",
 
-  secondary_fixed = "rgba(ffdcbbff)",
+  secondary_fixed = "rgba(ffdad9ff)",
 
-  secondary_fixed_dim = "rgba(ebbe90ff)",
+  secondary_fixed_dim = "rgba(e6bdbcff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(a25d2bff)",
+  source_color = "rgba(dd575dff)",
 
-  surface = "rgba(fff8f5ff)",
+  surface = "rgba(1a1111ff)",
 
-  surface_bright = "rgba(fff8f5ff)",
+  surface_bright = "rgba(423736ff)",
 
-  surface_container = "rgba(ffeadfff)",
+  surface_container = "rgba(271d1dff)",
 
-  surface_container_high = "rgba(fde3d5ff)",
+  surface_container_high = "rgba(322827ff)",
 
-  surface_container_highest = "rgba(f7ddcfff)",
+  surface_container_highest = "rgba(3d3232ff)",
 
-  surface_container_low = "rgba(fff1eaff)",
+  surface_container_low = "rgba(221919ff)",
 
-  surface_container_lowest = "rgba(ffffffff)",
+  surface_container_lowest = "rgba(140c0cff)",
 
-  surface_dim = "rgba(efd5c7ff)",
+  surface_dim = "rgba(1a1111ff)",
 
-  surface_tint = "rgba(974800ff)",
+  surface_tint = "rgba(ffb3b2ff)",
 
-  surface_variant = "rgba(f7ddcfff)",
+  surface_variant = "rgba(524343ff)",
 
-  tertiary = "rgba(78591aff)",
+  tertiary = "rgba(e4c18dff)",
 
-  tertiary_container = "rgba(ffdea7ff)",
+  tertiary_container = "rgba(5b431aff)",
 
-  tertiary_fixed = "rgba(ffdea7ff)",
+  tertiary_fixed = "rgba(ffdeadff)",
 
-  tertiary_fixed_dim = "rgba(e9c177ff)",
+  tertiary_fixed_dim = "rgba(e4c18dff)",
 
-  image = "/home/pseudo/Wallpapers/RGB/wallhaven-3qrdr6.jpg",
+  image = "/home/pseudo/Wallpapers/RGB/wallhaven-jew7eq.jpg",
 }

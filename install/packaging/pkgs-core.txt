@@ -1,8 +1,6 @@
 # =============================================================================
-# pkgs-pacman.txt — Official Arch repo packages (minimal)
-# Installed via: sudo pacman -S --needed --noconfirm
-# Every package here must be necessary for a functional Hyprland session.
-# GPU drivers are handled dynamically by install/extras/gpu-driver.sh
+# pkgs-core.txt — Core packages (installed on fresh install)
+# Installed via: archer-install (auto-detects pacman vs AUR)
 # =============================================================================
 
 # --- Core System ---
@@ -10,18 +8,15 @@ starship
 tmux
 stow
 zsh
-github-cli
 unzip
-inxi
-expac
-cpio
+pacman-contrib
+man-db
+less
 
 # --- Network ---
-openbsd-netcat
 ufw
 avahi
 nss-mdns
-whois
 wireguard-tools
 xorg-xhost
 
@@ -31,9 +26,8 @@ gnome-keyring
 hyprpolkitagent
 libsecret
 libinput
-#polkit-gnome
 
-# --- Desktop Environment (Hyprland Ecosystem) ---
+# --- Desktop Environment ---
 hyprland
 uwsm
 hypridle
@@ -43,7 +37,6 @@ hyprpicker
 hyprsunset
 xdg-desktop-portal-hyprland
 xdg-desktop-portal-gtk
-#xdg-terminal-exec
 xdg-user-dirs
 xdg-user-dirs-gtk
 swaync
@@ -54,16 +47,16 @@ sddm
 brightnessctl
 grim
 slurp
-satty
-wev
 wtype
 socat
 
 # --- Audio ---
 pamixer
-pavucontrol
 playerctl
 cava
+mpd
+mpd-mpris
+mpv-mpris
 
 # --- Multimedia Codecs ---
 gst-libav
@@ -73,38 +66,24 @@ gst-plugin-pipewire
 
 # --- System Utilities ---
 btop
-baobab
 fd
 fzf
 zoxide
-fcitx5
-fcitx5-gtk
-fcitx5-qt
-kernel-modules-hook
-pacman-contrib
-man-db
-less
 bat
 eza
-tree
-ncdu
-dust
 ripgrep
 jq
-yq
-tldr
-fastfetch
+go-yq
 
 # --- Hardware & Power ---
 power-profiles-daemon
 thermald
 lm_sensors
 
-# --- TUI Tools (used by Archer bin scripts) ---
+# --- TUI Tools ---
 impala
 bluetui
 wiremix
-# lazydocker
 lazygit
 
 # --- Fonts ---
@@ -112,7 +91,6 @@ ttf-jetbrains-mono-nerd
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
-inter-font
 fontconfig
 
 # --- Theming ---
@@ -131,24 +109,13 @@ gnome-disk-utility
 sushi
 imv
 gvfs-mtp
-gvfs-smb
-gvfs-nfs
 mpv
 ffmpeg
-mpd
-# mpc
-mpd-mpris
-mpv-mpris
-yazi
 imagemagick
-ffmpegthumbnailer
-chafa
-pdfarranger
-evince
+gum
 
-# --- OCR ---
-tesseract
-tesseract-data-eng
+# --- Media Download ---
+yt-dlp
 
 # --- Android ---
 android-tools
@@ -158,16 +125,16 @@ android-udev
 wl-clipboard
 cliphist
 
-# --- Media Download ---
-yt-dlp
-python-pip
-python-gobject
-
-# --- CLI Utilities ---
-gum
-translate-shell
-figlet
-lolcat
+# --- Terminal Fun ---
 cmatrix
 cowsay
-entr
+
+# --- AUR ---
+awww
+matugen-bin
+bibata-cursor-theme
+woff2-font-awesome
+xdg-terminal-exec
+cowfortune
+rmpc
+google-chrome

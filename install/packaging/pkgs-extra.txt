@@ -1,0 +1,68 @@
+# =============================================================================
+# pkgs-extra.txt — Extra packages (installed post-boot, on demand)
+# Installed via: archer-install --extra (auto-detects pacman vs AUR)
+# =============================================================================
+
+# --- System Utilities ---
+inxi
+expac
+wev
+tree
+ncdu
+dust
+tldr
+whois
+entr
+
+# --- Hardware & Power ---
+#thinkfan
+#thinkfan-cli
+
+# --- Audio ---
+pavucontrol
+#easyeffects
+#lsp-plugins
+#zam-plugins-lv2
+#calf
+
+# --- Applications ---
+obsidian
+telegram-desktop
+signal-desktop
+qbittorrent
+gifsicle
+kdenlive
+evince
+pdfarranger
+satty
+
+# --- File Manager ---
+yazi
+ffmpegthumbnailer
+chafa
+
+# --- Fonts ---
+inter-font
+
+# --- Network Storage ---
+gvfs-smb
+gvfs-nfs
+
+# --- OCR ---
+tesseract
+tesseract-data-eng
+
+# --- Development ---
+github-cli
+python-pip
+python-gobject
+
+# --- Android ---
+scrcpy
+
+# --- Camera ---
+v4l-utils
+
+# --- AUR ---
+visual-studio-code-bin
+python-ffmpeg-python

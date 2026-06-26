@@ -31,7 +31,7 @@ alias fan-auto='sudo systemctl restart thinkfan'
 # =============================================================================
 
 # --- Sync Shortcuts ---
-alias walls='cd ~/Wallpapers && git pull --rebase --autostash && git add . && git commit -m "sync: $(date +%Y-%m-%d\ %H:%M)" || true && git push'
+alias walls='cd ~/Walls && git pull --rebase --autostash && git add . && git commit -m "sync: $(date +%Y-%m-%d\ %H:%M)" || true && git push'
 alias way='cd ~/waybar && git add . && git commit -m "sync: $(date)" && git push && cd -'
 alias assets='cd ~/Assets && git add . && git commit -m "sync: $(date +%Y-%m-%d\ %H:%M)" || true && git push && cd -'
 alias stow='stow -v -d ~/Archer -t ~/.config config'

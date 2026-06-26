@@ -7,7 +7,6 @@ clear
 # 2. Print the logo from the external file
 cat "$HOME/.config/hypr/assets/ANSI LOGO/dots-logo.txt"
 
-
 # --- THE SAFEGUARD ---
 gum style --border rounded --border-foreground 2 --padding "1 2" \
   "Ready to sync your configs?" \
@@ -52,12 +51,11 @@ sync_repo() {
   cd - > /dev/null
 }
 
-
 # Define options based on your aliases
 choice=$(gum choose --header "Select a repository to sync" \
     " Dotfiles" \
     "󰣇 Archer" \
-    "󰸉 Wallpapers" \
+    "󰸉 Walls" \
     " Waybar Config" \
     "󰔎 Assets" \
     " Open Lazygit" \
@@ -70,13 +68,13 @@ case "$choice" in
     "󰣇 Archer")
         sync_repo "Archer" "$HOME/Archer" "sync: $(date +%Y-%m-%d)"
         ;;
-    "󰸉 Wallpapers")
-        sync_repo "Wallpapers" "$HOME/Wallpapers" "sync: $(date +%Y-%m-%d)"
+    "󰸉 Walls")
+        sync_repo "Walls" "$HOME/Walls" "sync: $(date +%Y-%m-%d)"
         ;;
     " Waybar Config")
         sync_repo "Waybar Config" "$HOME/waybar" "sync: $(date +%Y-%m-%d)"
         ;;
-    "󰔎 Assets")
+    "󰔎  Assets")
         sync_repo "Assets" "$HOME/Assets" "theme update: $(date +%Y-%m-%d)"
         ;;
     " Open Lazygit")

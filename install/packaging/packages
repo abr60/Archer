@@ -1,0 +1,157 @@
+#!/usr/bin/env bash
+# =============================================================================
+# Archer - Package Installer
+# Usage:
+#   bash packages        # installs core (pkgs-core.txt)
+#   bash packages extra  # installs extra (pkgs-extra.txt)
+# =============================================================================
+
+set -uo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MODE="${1:-core}"
+LOG_DIR="$HOME/.local/state/Archer/logs"
+LOG_FILE="$LOG_DIR/install-packages-${MODE}.log"
+
+mkdir -p "$LOG_DIR"
+
+source "$(dirname "$SCRIPT_DIR")/lib/helpers.sh"
+
+# =============================================================================
+# Select package list
+# =============================================================================
+if [[ "$MODE" == "extra" ]]; then
+    PKG_LIST="$SCRIPT_DIR/pkgs-extra.txt"
+    LIST_LABEL="EXTRA"
+else
+    PKG_LIST="$SCRIPT_DIR/pkgs-core.txt"
+    LIST_LABEL="CORE"
+fi
+
+if [[ ! -f "$PKG_LIST" ]]; then
+    die "Package list not found: $PKG_LIST"
+fi
+
+# =============================================================================
+# Parse package list
+# =============================================================================
+mapfile -t PKGS < <(grep -v '^\s*#' "$PKG_LIST" | grep -v '^\s*$' | awk '{print $1}')
+
+if [[ ${#PKGS[@]} -eq 0 ]]; then
+    die "No packages found in $PKG_LIST"
+fi
+
+# =============================================================================
+# Display packages to be installed
+# =============================================================================
+echo ""
+gum style \
+    --foreground 117 --border-foreground 117 --border rounded \
+    --align center --width 50 --padding "0 1" \
+    "$LIST_LABEL PACKAGES TO INSTALL" \
+    "${#PKGS[@]} packages"
+
+echo ""
+cols=3
+count=0
+row=""
+for pkg in "${PKGS[@]}"; do
+    row+="$(printf "  %-30s" "$pkg")"
+    (( count++ ))
+    if (( count % cols == 0 )); then
+        gum style --foreground 245 "$row"
+        row=""
+    fi
+done
+[[ -n "$row" ]] && gum style --foreground 245 "$row"
+
+echo ""
+gum confirm "Proceed with installation?" || { msg "Aborted."; exit 0; }
+
+# =============================================================================
+# Install packages
+# =============================================================================
+INSTALLED=()
+FAILED=()
+SKIPPED=()
+
+pkg_is_installed() {
+    pacman -Q "$1" &>/dev/null
+}
+
+pkg_in_pacman() {
+    pacman -Si "$1" &>/dev/null 2>&1
+}
+
+install_pkg() {
+    local pkg="$1"
+
+    if pkg_is_installed "$pkg"; then
+        SKIPPED+=("$pkg")
+        echo -e "  \033[90m[skip]\033[0m $pkg already installed"
+        return 0
+    fi
+
+    echo -ne "  \033[33m[....]\033[0m $pkg"
+
+    if pkg_in_pacman "$pkg"; then
+        if sudo pacman -S --noconfirm --needed "$pkg" >> "$LOG_FILE" 2>&1; then
+            if pkg_is_installed "$pkg"; then
+                INSTALLED+=("$pkg")
+                echo -e "\r  \033[32m[ ok ]\033[0m $pkg"
+                return 0
+            fi
+        fi
+    else
+        if yay -S --noconfirm --needed "$pkg" >> "$LOG_FILE" 2>&1; then
+            if pkg_is_installed "$pkg"; then
+                INSTALLED+=("$pkg")
+                echo -e "\r  \033[32m[ ok ]\033[0m $pkg \033[90m(aur)\033[0m"
+                return 0
+            fi
+        fi
+    fi
+
+    FAILED+=("$pkg")
+    echo -e "\r  \033[31m[fail]\033[0m $pkg"
+    echo "FAILED: $pkg" >> "$LOG_FILE"
+}
+
+echo ""
+section "Installing $LIST_LABEL packages"
+echo "Install started: $(date)" >> "$LOG_FILE"
+
+for pkg in "${PKGS[@]}"; do
+    install_pkg "$pkg"
+done
+
+# =============================================================================
+# Summary
+# =============================================================================
+echo ""
+gum style \
+    --foreground 82 --border-foreground 82 --border rounded \
+    --align center --width 50 --padding "0 1" \
+    "PACKAGE INSTALL SUMMARY"
+
+echo ""
+gum style --foreground 82  "  ✓ Installed : ${#INSTALLED[@]}"
+gum style --foreground 245 "  - Skipped   : ${#SKIPPED[@]} (already present)"
+gum style --foreground 196 "  ✗ Failed    : ${#FAILED[@]}"
+
+if [[ ${#FAILED[@]} -gt 0 ]]; then
+    echo ""
+    gum style --foreground 196 "  Failed packages:"
+    for pkg in "${FAILED[@]}"; do
+        gum style --foreground 196 "    • $pkg"
+    done
+    echo ""
+    gum style --foreground 245 "  See full log: $LOG_FILE"
+fi
+
+echo ""
+echo "Install finished: $(date)" >> "$LOG_FILE"
+echo "Installed: ${INSTALLED[*]:-none}" >> "$LOG_FILE"
+echo "Failed: ${FAILED[*]:-none}" >> "$LOG_FILE"
+
+[[ ${#FAILED[@]} -gt 0 ]] && exit 1 || exit 0

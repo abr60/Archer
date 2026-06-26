@@ -54,26 +54,7 @@ echo ""
 gum confirm "Understood. Proceed?" || { msg "Aborted safely."; exit 0; }
 
 # ==========================================
-# 4. INSTALL MODE SELECTION
-# ==========================================
-echo ""
-gum style \
-    --foreground 117 --border-foreground 117 --border rounded \
-    --align center --width 50 --padding "0 1" \
-    "SELECT INSTALL MODE"
-
-echo ""
-gum style --foreground 245 \
-    "  minimal  — core packages only, installs fast" \
-    "  complete — everything including heavy/optional apps"
-
-echo ""
-export INSTALL_MODE
-INSTALL_MODE=$(gum choose --cursor "▶ " --selected.foreground 82 "minimal" "complete")
-ok "Mode selected: $INSTALL_MODE"
-
-# ==========================================
-# 5. LINK ARCHER INTO ~/.local/share/Archer
+# 4. LINK ARCHER INTO ~/.local/share/Archer
 # ==========================================
 msg "Linking Archer to $ARCHER_DIR..."
 mkdir -p "$HOME/.local/share"
@@ -82,7 +63,7 @@ mkdir -p "$HOME/.local/state/Archer/toggles/hypr"
 ok "Archer linked to $ARCHER_DIR"
 
 # ==========================================
-# 6. MAKE ALL SCRIPTS EXECUTABLE
+# 5. MAKE ALL SCRIPTS EXECUTABLE
 # ==========================================
 msg "Setting executable permissions..."
 find "$DOTS_DIR" -type f \( \
@@ -95,7 +76,7 @@ chmod +x "$DOTS_DIR/setup.sh" "$DOTS_DIR/update.sh" "$DOTS_DIR/post-install.sh"
 ok "Script permissions set"
 
 # ==========================================
-# 7. RUN INSTALL STEPS
+# 6. RUN INSTALL STEPS
 # ==========================================
 START_TIME=$SECONDS
 
@@ -126,8 +107,7 @@ run_step() {
 }
 
 # ── Packages ──────────────────────────────────────────────────────────────────
-run_step "packaging/packages-pacman"  "Installing pacman packages"     true
-run_step "packaging/packages-aur"     "Installing AUR packages"        true
+run_step "packaging/packages"         "Installing core packages"       true
 
 # ── Shell ─────────────────────────────────────────────────────────────────────
 run_step "config/zsh.sh"              "Setting up Zsh"                 false
@@ -180,7 +160,7 @@ run_step "login/plymouth.sh"              "Setting up Plymouth"            false
 run_step "services/reload.sh"             "Reloading UI"                   false
 
 # ==========================================
-# 8. DONE
+# 7. DONE
 # ==========================================
 DURATION=$(( SECONDS - START_TIME ))
 echo ""
@@ -198,15 +178,8 @@ gum style --foreground 117 \
     "  Howdy, Spicetify and more."
 
 echo ""
-if [[ "$INSTALL_MODE" == "minimal" ]]; then
-    gum style --foreground 245 \
-        "  To install complete packages later:" \
-        "  INSTALL_MODE=complete bash ~/Archer/install/packaging/packages-pacman" \
-        "  INSTALL_MODE=complete bash ~/Archer/install/packaging/packages-aur"
-    echo ""
-fi
 
-if gum confirm "Reboot now to start your first Archer session?"; then
+if gum confirm "Reboot Now? Recommended"; then
     msg "Rebooting..."
     sudo reboot
 else
