@@ -1,6 +1,7 @@
 # =============================================================================
 # pkgs-extra.txt — Extra packages (installed post-boot, on demand)
 # Installed via: archer-install --extra (auto-detects pacman vs AUR)
+# Tagged packages are opt-in — installed only when called with --tag <tag>
 # =============================================================================
 
 # --- System Utilities ---
@@ -14,16 +15,16 @@ tldr
 whois
 entr
 
-# --- Hardware & Power ---
-#thinkfan
-#thinkfan-cli
+# --- Hardware & Power (ThinkPad only) ---
+thinkfan          # [tag:thinkfan]
+thinkfan-cli      # [tag:thinkfan]
 
 # --- Audio ---
 pavucontrol
-#easyeffects
-#lsp-plugins
-#zam-plugins-lv2
-#calf
+easyeffects       # [tag:easyeffects]
+lsp-plugins       # [tag:easyeffects]
+zam-plugins-lv2   # [tag:easyeffects]
+calf              # [tag:easyeffects]
 
 # --- Applications ---
 obsidian

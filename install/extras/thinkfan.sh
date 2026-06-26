@@ -9,11 +9,11 @@ source "$(dirname "${BASH_SOURCE[0]}")/../lib/helpers.sh"
 section "Thinkfan"
 
 # -----------------------------------------------------------------------------
-# Install thinkfan if missing
+# Install thinkfan packages via the tagged package list
 # -----------------------------------------------------------------------------
 if ! is_installed thinkfan; then
-    info "Installing thinkfan..."
-    yay -S --noconfirm thinkfan
+    info "Installing thinkfan packages..."
+    bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag thinkfan
 fi
 
 # -----------------------------------------------------------------------------
@@ -73,8 +73,6 @@ CONF_SRC="$ARCHER_DIR/system/thinkfan/thinkfan.conf"
 
 if [[ -f "$CONF_SRC" ]]; then
     sudo cp "$CONF_SRC" /etc/thinkfan.conf
-    # Patch in the currently detected hwmon path, since the repo config
-    # may have been generated on a previous boot with a different index.
     sudo sed -i -E "s|/sys/devices/platform/coretemp\.0/hwmon/hwmon[0-9]+|${HWMON_PATH}|" /etc/thinkfan.conf
     ok "thinkfan.conf installed from Archer repo (hwmon path patched to $HWMON_PATH)"
 else

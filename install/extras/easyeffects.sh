@@ -15,11 +15,10 @@ IRS_DEST="$HOME/.local/share/easyeffects/irs"
 PRESET_DEST="$HOME/.local/share/easyeffects/output"
 IRS_BASE_URL="https://github.com/shuhaowu/linux-thinkpad-speaker-improvements/raw/main/ThinkPadT14Gen1"
 
-# ─── Install EasyEffects if missing ───────────────────────────────────────────
+# ─── Install EasyEffects packages via the tagged package list ─────────────────
 if ! command -v easyeffects &>/dev/null; then
-    ensure_installed easyeffects
-    ensure_installed lsp-plugins
-    ensure_installed calf
+    info "Installing EasyEffects packages..."
+    bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag easyeffects
 fi
 
 mkdir -p "$IRS_DEST" "$PRESET_DEST"

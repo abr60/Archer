@@ -2,16 +2,24 @@
 # =============================================================================
 # Archer - Package Installer
 # Usage:
-#   bash packages        # installs core (pkgs-core.txt)
-#   bash packages extra  # installs extra (pkgs-extra.txt)
+#   bash packages              # installs core (pkgs-core.txt)
+#   bash packages extra        # installs extra (pkgs-extra.txt), untagged only
+#   bash packages extra --tag <tag>  # installs only lines tagged [tag:<tag>]
 # =============================================================================
 
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MODE="${1:-core}"
+TAG=""
+
+# Parse --tag argument
+if [[ "${2:-}" == "--tag" && -n "${3:-}" ]]; then
+    TAG="${3}"
+fi
+
 LOG_DIR="$HOME/.local/state/Archer/logs"
-LOG_FILE="$LOG_DIR/install-packages-${MODE}.log"
+LOG_FILE="$LOG_DIR/install-packages-${MODE}${TAG:+-$TAG}.log"
 
 mkdir -p "$LOG_DIR"
 
@@ -22,7 +30,7 @@ source "$(dirname "$SCRIPT_DIR")/lib/helpers.sh"
 # =============================================================================
 if [[ "$MODE" == "extra" ]]; then
     PKG_LIST="$SCRIPT_DIR/pkgs-extra.txt"
-    LIST_LABEL="EXTRA"
+    LIST_LABEL="EXTRA${TAG:+ [tag:$TAG]}"
 else
     PKG_LIST="$SCRIPT_DIR/pkgs-core.txt"
     LIST_LABEL="CORE"
@@ -35,7 +43,13 @@ fi
 # =============================================================================
 # Parse package list
 # =============================================================================
-mapfile -t PKGS < <(grep -v '^\s*#' "$PKG_LIST" | grep -v '^\s*$' | awk '{print $1}')
+if [[ -n "$TAG" ]]; then
+    # Only lines containing [tag:<TAG>]
+    mapfile -t PKGS < <(grep "\[tag:${TAG}\]" "$PKG_LIST" | grep -v '^\s*#' | grep -v '^\s*$' | awk '{print $1}')
+else
+    # Only untagged lines (no [tag:...] present)
+    mapfile -t PKGS < <(grep -v '^\s*#' "$PKG_LIST" | grep -v '^\s*$' | grep -v '\[tag:' | awk '{print $1}')
+fi
 
 if [[ ${#PKGS[@]} -eq 0 ]]; then
     die "No packages found in $PKG_LIST"
