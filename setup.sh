@@ -123,16 +123,12 @@ run_step "hardware/swayosd.sh"            "SwayOSD"                         fals
 run_step "hardware/recover-monitor.sh"    "Monitor recovery"                false
 
 # ── Services ──────────────────────────────────────────────────────────────────
-run_step "services/system-services.sh"    "System services"                 false
-run_step "services/user-services.sh"      "User services"                   false
+run_step "services/all.sh"    "services"                 false
 
 # ── Login / Boot Stack ────────────────────────────────────────────────────────
 run_step "login/sddm.sh"                  "SDDM"                            false
 run_step "login/limine.sh"                "Limine bootloader"               false
 run_step "login/plymouth.sh"              "Plymouth"                        false
-
-# ── Reload ────────────────────────────────────────────────────────────────────
-run_step "services/reload.sh"             "Reloading UI"                    false
 
 # ==========================================
 # 7. DONE
