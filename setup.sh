@@ -100,7 +100,6 @@ else
     warn "plugins.sh not found — skipping"
 fi
 
-run_step "config/pam.sh"                  "Installing PAM files"            false
 run_step "config/fonts.sh"                "Installing fonts"                false
 run_step "config/applications.sh"         "Setting up applications"         false
 
