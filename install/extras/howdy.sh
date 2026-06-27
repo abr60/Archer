@@ -77,7 +77,7 @@ else
         sudo linux-enable-ir-emitter configure
         leire_exit=$?
         if [[ $leire_exit -lt 3 ]]; then
-    ok "IR emitter configured (or already working)"
+            ok "IR emitter configured (or already working)"
         else
             warn "Configuration failed — continuing anyway"
         fi
