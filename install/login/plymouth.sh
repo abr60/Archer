@@ -14,6 +14,13 @@ THEME_DEST="/usr/share/plymouth/themes/archer"
 
 # ─── Install Plymouth ─────────────────────────────────────────────────────────
 ensure_installed plymouth
+ensure_installed ttf-liberation
+
+# ─── Remove default Plymouth theme to avoid conflicts ────────────────────────
+if is_installed plymouth-theme-spinner; then
+    sudo pacman -Rns --noconfirm plymouth-theme-spinner 2>/dev/null || true
+    ok "Removed default plymouth-theme-spinner"
+fi
 
 # ─── Validate source ──────────────────────────────────────────────────────────
 if [[ ! -d "$THEME_SRC" ]]; then
@@ -43,8 +50,6 @@ else
 fi
 
 # ─── Regenerate assets (optional) ────────────────────────────────────────────
-# By default uses pre-built PNGs from dotfiles.
-# To regenerate: REGEN_ASSETS=true bash install/login/plymouth.sh
 if [[ "${REGEN_ASSETS:-false}" == "true" ]]; then
     if command -v python3 &>/dev/null; then
         pip install pillow --break-system-packages -q
@@ -56,35 +61,16 @@ if [[ "${REGEN_ASSETS:-false}" == "true" ]]; then
     fi
 fi
 
-# ─── Set as default theme ─────────────────────────────────────────────────────
-sudo plymouth-set-default-theme archer
-ok "Plymouth default theme set to archer"
-
 # ─── Ensure plymouth hook is in mkinitcpio ────────────────────────────────────
 MKINITCPIO="/etc/mkinitcpio.conf"
 if ! grep -q 'plymouth' "$MKINITCPIO"; then
-    sudo sed -i 's/^\(HOOKS=([^)]*udev\)/\1 plymouth/' "$MKINITCPIO"
-    ok "Plymouth hook added to mkinitcpio.conf"
+    sudo sed -i 's/\(HOOKS=([^)]*udev\)/\1 plymouth/' "$MKINITCPIO"
+    ok "Plymouth hook added after udev in mkinitcpio.conf"
 else
     ok "Plymouth hook already present in mkinitcpio.conf"
 fi
 
-# ─── Remove default Arch splash BMP ──────────────────────────────────────────
-PRESET="/etc/mkinitcpio.d/linux.preset"
-if [[ -f "$PRESET" ]]; then
-    if grep -q 'splash-arch.bmp' "$PRESET"; then
-        sudo sed -i 's/default_options="--splash \/usr\/share\/systemd\/bootctl\/splash-arch.bmp"/default_options=""/' "$PRESET"
-        ok "Arch splash BMP removed from mkinitcpio preset"
-    else
-        ok "Arch splash BMP already removed"
-    fi
-else
-    warn "mkinitcpio preset not found at $PRESET"
-fi
-
 # ─── Ensure splash in limine.conf ─────────────────────────────────────────────
-# Note: limine.conf must already exist at /boot/limine/limine.conf
-# Run refresh-limine before this script if it doesn't exist yet
 LIMINE_CONF="/boot/limine/limine.conf"
 if [[ -f "$LIMINE_CONF" ]]; then
     if ! grep -q 'splash' "$LIMINE_CONF"; then
@@ -95,11 +81,14 @@ if [[ -f "$LIMINE_CONF" ]]; then
     fi
 else
     warn "limine.conf not found at $LIMINE_CONF"
-    warn "Run refresh-limine first, then re-run this script to add splash to cmdline"
+    warn "Run limine.sh first, then re-run this script to add splash to cmdline"
 fi
 
-# ─── Rebuild UKI ──────────────────────────────────────────────────────────────
-msg "Rebuilding UKI (this may take a moment)..."
-sudo mkinitcpio -p linux && ok "UKI rebuilt successfully" || warn "mkinitcpio failed — run manually"
+# ─── Set as default theme and rebuild initramfs ───────────────────────────────
+msg "Setting archer as default Plymouth theme and rebuilding initramfs..."
+sudo plymouth-set-default-theme -R archer && ok "Plymouth theme set and initramfs rebuilt" || {
+    warn "plymouth-set-default-theme -R failed — trying manual rebuild"
+    sudo mkinitcpio -p linux && ok "initramfs rebuilt manually" || warn "mkinitcpio failed — run manually"
+}
 
 ok "Plymouth setup complete — reboot to see the theme"
