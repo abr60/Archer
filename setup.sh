@@ -114,6 +114,16 @@ run_step "config/zsh.sh"              "Setting up Zsh"                 false
 
 # ── Configs & dotfiles ────────────────────────────────────────────────────────
 run_step "config/dotfiles.sh"         "Symlinking config files"        true
+
+# Clean injected Lua plugin lines (called directly to allow the --clean flag)
+echo ""
+section "Cleaning plugin configs"
+if [[ -f "$INSTALL_DIR/extras/plugins.sh" ]]; then
+    bash "$INSTALL_DIR/extras/plugins.sh" --clean
+else
+    warn "plugins.sh not found — skipping clean"
+fi
+
 run_step "config/pam.sh"              "Installing PAM files"           false
 run_step "config/fonts.sh"            "Installing fonts"               false
 run_step "config/applications.sh"     "Setting up applications"        false

@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(1a110eff)",
+  background = "rgba(f8f9ffff)",
 
-  error = "rgba(ffb4abff)",
+  error = "rgba(ba1a1aff)",
 
-  error_container = "rgba(93000aff)",
+  error_container = "rgba(ffdad6ff)",
 
-  inverse_on_surface = "rgba(382e2aff)",
+  inverse_on_surface = "rgba(ebf1fdff)",
 
-  inverse_primary = "rgba(8e4d2fff)",
+  inverse_primary = "rgba(a0c9ffff)",
 
-  inverse_surface = "rgba(f1dfd8ff)",
+  inverse_surface = "rgba(2b313aff)",
 
-  on_background = "rgba(f1dfd8ff)",
+  on_background = "rgba(161c24ff)",
 
-  on_error = "rgba(690005ff)",
+  on_error = "rgba(ffffffff)",
 
-  on_error_container = "rgba(ffdad6ff)",
+  on_error_container = "rgba(410002ff)",
 
-  on_primary = "rgba(542106ff)",
+  on_primary = "rgba(ffffffff)",
 
-  on_primary_container = "rgba(ffdbcdff)",
+  on_primary_container = "rgba(001c37ff)",
 
-  on_primary_fixed = "rgba(360f00ff)",
+  on_primary_fixed = "rgba(001c37ff)",
 
-  on_primary_fixed_variant = "rgba(71361aff)",
+  on_primary_fixed_variant = "rgba(00487fff)",
 
-  on_secondary = "rgba(442a1fff)",
+  on_secondary = "rgba(ffffffff)",
 
-  on_secondary_container = "rgba(ffdbcdff)",
+  on_secondary_container = "rgba(0f1a37ff)",
 
-  on_secondary_fixed = "rgba(2c160cff)",
+  on_secondary_fixed = "rgba(0f1a37ff)",
 
-  on_secondary_fixed_variant = "rgba(5d4034ff)",
+  on_secondary_fixed_variant = "rgba(3b4665ff)",
 
-  on_surface = "rgba(f1dfd8ff)",
+  on_surface = "rgba(161c24ff)",
 
-  on_surface_variant = "rgba(d8c2baff)",
+  on_surface_variant = "rgba(414750ff)",
 
-  on_tertiary = "rgba(373106ff)",
+  on_tertiary = "rgba(ffffffff)",
 
-  on_tertiary_container = "rgba(efe3a9ff)",
+  on_tertiary_container = "rgba(151543ff)",
 
-  on_tertiary_fixed = "rgba(201c00ff)",
+  on_tertiary_fixed = "rgba(151543ff)",
 
-  on_tertiary_fixed_variant = "rgba(4e471bff)",
+  on_tertiary_fixed_variant = "rgba(414271ff)",
 
-  outline = "rgba(a08d85ff)",
+  outline = "rgba(717782ff)",
 
-  outline_variant = "rgba(53443eff)",
+  outline_variant = "rgba(c1c7d2ff)",
 
-  primary = "rgba(ffb596ff)",
+  primary = "rgba(0061a7ff)",
 
-  primary_container = "rgba(71361aff)",
+  primary_container = "rgba(d2e4ffff)",
 
-  primary_fixed = "rgba(ffdbcdff)",
+  primary_fixed = "rgba(d2e4ffff)",
 
-  primary_fixed_dim = "rgba(ffb596ff)",
+  primary_fixed_dim = "rgba(a0c9ffff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(e6beadff)",
+  secondary = "rgba(535e7eff)",
 
-  secondary_container = "rgba(5d4034ff)",
+  secondary_container = "rgba(dae2ffff)",
 
-  secondary_fixed = "rgba(ffdbcdff)",
+  secondary_fixed = "rgba(dae2ffff)",
 
-  secondary_fixed_dim = "rgba(e6beadff)",
+  secondary_fixed_dim = "rgba(bbc6eaff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(ae4912ff)",
+  source_color = "rgba(0c7cd2ff)",
 
-  surface = "rgba(1a110eff)",
+  surface = "rgba(f8f9ffff)",
 
-  surface_bright = "rgba(423733ff)",
+  surface_bright = "rgba(f8f9ffff)",
 
-  surface_container = "rgba(271e1aff)",
+  surface_container = "rgba(e9eefaff)",
 
-  surface_container_high = "rgba(322824ff)",
+  surface_container_high = "rgba(e3e8f4ff)",
 
-  surface_container_highest = "rgba(3d322eff)",
+  surface_container_highest = "rgba(dde3eeff)",
 
-  surface_container_low = "rgba(231a16ff)",
+  surface_container_low = "rgba(eff4ffff)",
 
-  surface_container_lowest = "rgba(140c09ff)",
+  surface_container_lowest = "rgba(ffffffff)",
 
-  surface_dim = "rgba(1a110eff)",
+  surface_dim = "rgba(d5dae6ff)",
 
-  surface_tint = "rgba(ffb596ff)",
+  surface_tint = "rgba(0061a7ff)",
 
-  surface_variant = "rgba(53443eff)",
+  surface_variant = "rgba(dde3eeff)",
 
-  tertiary = "rgba(d2c78fff)",
+  tertiary = "rgba(595a8bff)",
 
-  tertiary_container = "rgba(4e471bff)",
+  tertiary_container = "rgba(e1dfffff)",
 
-  tertiary_fixed = "rgba(efe3a9ff)",
+  tertiary_fixed = "rgba(e1dfffff)",
 
-  tertiary_fixed_dim = "rgba(d2c78fff)",
+  tertiary_fixed_dim = "rgba(c2c1f9ff)",
 
-  image = "/home/pseudo/Walls/Nature/wallhaven-qrl55q.jpg",
+  image = "/home/pseudo/Walls/Nature/wallhaven-e8wr1r.jpg",
 }
