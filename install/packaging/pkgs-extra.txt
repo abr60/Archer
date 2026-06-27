@@ -27,12 +27,11 @@ zam-plugins-lv2   # [tag:easyeffects]
 calf              # [tag:easyeffects]
 
 # --- Facial recognition ---
-howdy-next-git    # [tag:howdy-next-git]
-linux-enable-ir-emitter # [tag:ir-emitter]
+howdy    # [tag:howdy]
+linux-enable-ir-emitter # [tag:howdy]
 
 # --- Hyprpm Plugins ---
 cmake             # [tag:Hyprpm]
-hyprland-headers  # [tag:Hyprpm]
 pkgconf           # [tag:Hyprpm]
 ninja             # [tag:Hyprpm]
 

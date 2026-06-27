@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(16130bff)",
+  background = "rgba(eefdf7ff)",
 
-  error = "rgba(ffb4abff)",
+  error = "rgba(ba1a1aff)",
 
-  error_container = "rgba(93000aff)",
+  error_container = "rgba(ffdad6ff)",
 
-  inverse_on_surface = "rgba(343027ff)",
+  inverse_on_surface = "rgba(e5f4efff)",
 
-  inverse_primary = "rgba(745b0cff)",
+  inverse_primary = "rgba(00dfc2ff)",
 
-  inverse_surface = "rgba(eae1d4ff)",
+  inverse_surface = "rgba(263330ff)",
 
-  on_background = "rgba(eae1d4ff)",
+  on_background = "rgba(111e1bff)",
 
-  on_error = "rgba(690005ff)",
+  on_error = "rgba(ffffffff)",
 
-  on_error_container = "rgba(ffdad6ff)",
+  on_error_container = "rgba(410002ff)",
 
-  on_primary = "rgba(3d2e00ff)",
+  on_primary = "rgba(ffffffff)",
 
-  on_primary_container = "rgba(ffdf90ff)",
+  on_primary_container = "rgba(00201bff)",
 
-  on_primary_fixed = "rgba(241a00ff)",
+  on_primary_fixed = "rgba(00201bff)",
 
-  on_primary_fixed_variant = "rgba(584400ff)",
+  on_primary_fixed_variant = "rgba(005045ff)",
 
-  on_secondary = "rgba(392f15ff)",
+  on_secondary = "rgba(ffffffff)",
 
-  on_secondary_container = "rgba(f2e1bbff)",
+  on_secondary_container = "rgba(002020ff)",
 
-  on_secondary_fixed = "rgba(231b04ff)",
+  on_secondary_fixed = "rgba(002020ff)",
 
-  on_secondary_fixed_variant = "rgba(51462aff)",
+  on_secondary_fixed_variant = "rgba(1e4e4dff)",
 
-  on_surface = "rgba(eae1d4ff)",
+  on_surface = "rgba(111e1bff)",
 
-  on_surface_variant = "rgba(cfc5b4ff)",
+  on_surface_variant = "rgba(3c4946ff)",
 
-  on_tertiary = "rgba(1a361eff)",
+  on_tertiary = "rgba(ffffffff)",
 
-  on_tertiary_container = "rgba(c9ecc8ff)",
+  on_tertiary_container = "rgba(001f24ff)",
 
-  on_tertiary_fixed = "rgba(04210bff)",
+  on_tertiary_fixed = "rgba(001f24ff)",
 
-  on_tertiary_fixed_variant = "rgba(304d33ff)",
+  on_tertiary_fixed_variant = "rgba(004f58ff)",
 
-  outline = "rgba(989080ff)",
+  outline = "rgba(6c7a76ff)",
 
-  outline_variant = "rgba(4c4639ff)",
+  outline_variant = "rgba(bbcac5ff)",
 
-  primary = "rgba(e4c36cff)",
+  primary = "rgba(006b5cff)",
 
-  primary_container = "rgba(584400ff)",
+  primary_container = "rgba(00feddff)",
 
-  primary_fixed = "rgba(ffdf90ff)",
+  primary_fixed = "rgba(00feddff)",
 
-  primary_fixed_dim = "rgba(e4c36cff)",
+  primary_fixed_dim = "rgba(00dfc2ff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(d5c5a0ff)",
+  secondary = "rgba(386665ff)",
 
-  secondary_container = "rgba(51462aff)",
+  secondary_container = "rgba(bbeceaff)",
 
-  secondary_fixed = "rgba(f2e1bbff)",
+  secondary_fixed = "rgba(bbeceaff)",
 
-  secondary_fixed_dim = "rgba(d5c5a0ff)",
+  secondary_fixed_dim = "rgba(a0cfceff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(a48213ff)",
+  source_color = "rgba(01443aff)",
 
-  surface = "rgba(16130bff)",
+  surface = "rgba(eefdf7ff)",
 
-  surface_bright = "rgba(3d392fff)",
+  surface_bright = "rgba(eefdf7ff)",
 
-  surface_container = "rgba(231f17ff)",
+  surface_container = "rgba(e3f1ecff)",
 
-  surface_container_high = "rgba(2e2a21ff)",
+  surface_container_high = "rgba(ddebe6ff)",
 
-  surface_container_highest = "rgba(39342bff)",
+  surface_container_highest = "rgba(d7e6e0ff)",
 
-  surface_container_low = "rgba(1f1b13ff)",
+  surface_container_low = "rgba(e8f7f1ff)",
 
-  surface_container_lowest = "rgba(110e07ff)",
+  surface_container_lowest = "rgba(ffffffff)",
 
-  surface_dim = "rgba(16130bff)",
+  surface_dim = "rgba(cfddd8ff)",
 
-  surface_tint = "rgba(e4c36cff)",
+  surface_tint = "rgba(006b5cff)",
 
-  surface_variant = "rgba(4c4639ff)",
+  surface_variant = "rgba(d7e6e0ff)",
 
-  tertiary = "rgba(adcfadff)",
+  tertiary = "rgba(1c6773ff)",
 
-  tertiary_container = "rgba(304d33ff)",
+  tertiary_container = "rgba(a9eefbff)",
 
-  tertiary_fixed = "rgba(c9ecc8ff)",
+  tertiary_fixed = "rgba(a9eefbff)",
 
-  tertiary_fixed_dim = "rgba(adcfadff)",
+  tertiary_fixed_dim = "rgba(8ed1deff)",
 
-  image = "/home/pseudo/Walls/Canopy/pexels-nikiemmert-17359682.jpg",
+  image = "/home/pseudo/Walls/Canopy/malachite.jpg",
 }

@@ -9,6 +9,15 @@ source "$(dirname "${BASH_SOURCE[0]}")/../lib/helpers.sh"
 HYPR_LUA="$HOME/.config/hypr/hyprland.lua"
 BINDINGS="$HOME/.config/hypr/bindings.lua"
 
+if [[ "${1:-}" != "--clean" ]]; then
+    if [[ ! -f "$HYPR_LUA" ]]; then
+        die "hyprland.lua not found at $HYPR_LUA"
+    fi
+    if [[ ! -f "$BINDINGS" ]]; then
+        die "bindings.lua not found at $BINDINGS"
+    fi
+fi
+
 # ─── Clean Mode (Triggered by --clean) ────────────────────────────────────────
 if [[ "${1:-}" == "--clean" ]]; then
     section "Cleaning Hyprland Plugin Configs"
@@ -38,7 +47,7 @@ section "Hyprland Plugins"
 # -----------------------------------------------------------------------------
 # Install Hyprpm development dependencies via the tagged package list
 # -----------------------------------------------------------------------------
-if ! is_installed cmake || ! is_installed hyprland-headers; then
+if ! is_installed cmake; then
     msg "Installing hyprpm build dependencies via tags..."
     bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag Hyprpm
 fi
@@ -52,11 +61,11 @@ spinner "Updating hyprpm..." hyprpm update || warn "hyprpm update failed — con
 
 # ─── hyprland-plugins (official) ──────────────────────────────────────────────
 msg "Adding hyprland-plugins repo..."
-hyprpm add "https://github.com/hyprwm/hyprland-plugins" || warn "Failed to add hyprland-plugins"
+hyprpm add "https://github.com/hyprwm/hyprland-plugins" 2>/dev/null || true
 
 # ─── scrolloverview ───────────────────────────────────────────────────────────
 msg "Adding scrolloverview..."
-hyprpm add "https://github.com/yayuuu/hyprland-scroll-overview" || warn "Failed to add scrolloverview"
+hyprpm add "https://github.com/yayuuu/hyprland-scroll-overview" 2>/dev/null || true
 
 # ─── Enable plugins ───────────────────────────────────────────────────────────
 hyprpm enable scrolloverview && ok "scrolloverview enabled" || warn "Failed to enable scrolloverview"

@@ -17,7 +17,7 @@ IRS_BASE_URL="https://github.com/shuhaowu/linux-thinkpad-speaker-improvements/ra
 
 # ─── Install EasyEffects packages via the tagged package list ─────────────────
 if ! command -v easyeffects &>/dev/null; then
-    info "Installing EasyEffects packages..."
+    msg "Installing EasyEffects packages..."
     bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag easyeffects
 fi
 
@@ -39,16 +39,26 @@ for local_name in "${!IRS_FILES[@]}"; do
     if [[ -f "$dest" ]]; then
         ok "Already exists: $local_name"
     else
-        spinner "Downloading $local_name..." \
-            curl -fsSL "$IRS_BASE_URL/$remote_name" -o "$dest" && \
-            ok "Downloaded $local_name" || warn "Failed to download $local_name"
+        if spinner "Downloading $local_name..." \
+            curl -fsSL "$IRS_BASE_URL/$remote_name" -o "$dest"; then
+            ok "Downloaded $local_name"
+        else
+            warn "Failed to download $local_name"
+        fi
     fi
 done
 
 # ─── Copy presets ─────────────────────────────────────────────────────────────
 if [[ -d "$PRESET_SOURCE" ]]; then
-    cp "$PRESET_SOURCE"/*.json "$PRESET_DEST/"
-    ok "EasyEffects presets installed"
+    shopt -s nullglob
+    jsons=("$PRESET_SOURCE"/*.json)
+    if [[ ${#jsons[@]} -gt 0 ]]; then
+        cp "${jsons[@]}" "$PRESET_DEST/"
+        ok "EasyEffects presets installed"
+    else
+        warn "No .json presets found in $PRESET_SOURCE"
+    fi
+    shopt -u nullglob
 else
     warn "Preset source not found at $PRESET_SOURCE — skipping"
 fi

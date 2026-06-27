@@ -19,9 +19,7 @@ section "Howdy Face Recognition Setup"
 # Install Howdy and IR emitter packages via the tagged package list
 # -----------------------------------------------------------------------------
 if ! is_installed howdy-next-git || ! is_installed linux-enable-ir-emitter; then
-    info "Installing Howdy and IR emitter packages via tags..."
-    bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag howdy-next-git
-    bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag ir-emitter
+    bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag howdy
 fi
 
 # Ensure basic core utilities are present
@@ -78,8 +76,8 @@ else
         xhost +si:localuser:root 2>/dev/null || true
         sudo linux-enable-ir-emitter configure
         leire_exit=$?
-        if [[ $leire_exit -eq 0 || $leire_exit -eq 2 ]]; then
-            ok "IR emitter configured (or already working)"
+        if [[ $leire_exit -lt 3 ]]; then
+    ok "IR emitter configured (or already working)"
         else
             warn "Configuration failed — continuing anyway"
         fi
@@ -188,6 +186,17 @@ if ask_yes_no "Enroll your face now?"; then
 else
     warn "Face enrollment skipped"
     warn "Run manually: sudo howdy add"
+fi
+
+# ─── PAM Configuration ────────────────────────────────────────────────────────
+section "PAM Configuration"
+
+PAM_SCRIPT="$(dirname "${BASH_SOURCE[0]}")/../config/pam.sh"
+
+if [[ -f "$PAM_SCRIPT" ]]; then
+    bash "$PAM_SCRIPT" && ok "PAM configured" || warn "PAM configuration had errors"
+else
+    warn "pam.sh not found at $PAM_SCRIPT — configure manually"
 fi
 
 # ─── Summary ──────────────────────────────────────────────────────────────────

@@ -12,7 +12,7 @@ section "Thinkfan"
 # Install thinkfan packages via the tagged package list
 # -----------------------------------------------------------------------------
 if ! is_installed thinkfan; then
-    info "Installing thinkfan packages..."
+    msg "Installing thinkfan packages..."
     bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag thinkfan
 fi
 
@@ -26,7 +26,7 @@ ok "thinkpad_acpi: fan_control=1 written to modprobe.d"
 if lsmod | grep -q thinkpad_acpi; then
     sudo modprobe -r thinkpad_acpi 2>/dev/null || true
 fi
-sudo modprobe thinkpad_acpi fan_control=1
+sudo modprobe thinkpad_acpi fan_control=1 || true
 ok "thinkpad_acpi module reloaded with fan_control=1"
 
 if [[ ! -f /proc/acpi/ibm/fan ]]; then
