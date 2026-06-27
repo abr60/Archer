@@ -146,7 +146,6 @@ run_step "hardware/fast-shutdown.sh"      "Fast shutdown config"           false
 run_step "hardware/unmount-fuse.sh"       "FUSE unmount hook"              false
 run_step "hardware/swayosd.sh"            "Enabling SwayOSD"               false
 run_step "hardware/recover-monitor.sh"    "Monitor recovery service"       false
-run_step "extras/thinkfan.sh"             "Configuring Thinkfan"           false
 
 # ── Services ──────────────────────────────────────────────────────────────────
 run_step "services/system-services.sh"    "Enabling system services"       false
@@ -154,16 +153,7 @@ run_step "services/user-services.sh"      "Enabling user services"         false
 
 # ── Login / Boot Stack ────────────────────────────────────────────────────────
 run_step "login/sddm.sh"                  "Setting up SDDM"                false
-
-echo ""
-section "Configuring Limine bootloader"
-if command -v refresh-limine &>/dev/null; then
-    bash "$DOTS_DIR/bin/refresh-limine" || warn "Limine config had errors — run refresh-limine manually"
-    ok "Limine config done"
-else
-    warn "refresh-limine not found — run it manually after reboot"
-fi
-
+run_step "login/limine.sh"                "Configuring Limine bootloader"  false
 run_step "login/plymouth.sh"              "Setting up Plymouth"            false
 
 # ── Reload ────────────────────────────────────────────────────────────────────
@@ -178,7 +168,7 @@ gum style \
     --foreground 82 --border-foreground 82 --border rounded \
     --align center --width 50 --padding "1 2" \
     "✓ BASE INSTALL DONE!" \
-    "Mode: $INSTALL_MODE — Finished in ${DURATION}s"
+    "Finished in ${DURATION}s"
 
 echo ""
 gum style --foreground 117 \

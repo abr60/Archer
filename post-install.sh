@@ -394,7 +394,7 @@ fi
 # --- Spicetify ---
 if [[ "$DO_SPICETIFY" == true ]]; then
     section "Spicetify"
-    spicetify backup apply >> "$LOG_FILE" 2>&1 && mark_done "spicetify" && ok "Spicetify done" || warn "Spicetify had errors"
+    spicetify apply >> "$LOG_FILE" 2>&1 && mark_done "spicetify" && ok "Spicetify done" || warn "Spicetify had errors"
 fi
 
 # --- SSH ---
