@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(fff8f6ff)",
+  background = "rgba(1a110fff)",
 
-  error = "rgba(ba1a1aff)",
+  error = "rgba(ffb4abff)",
 
-  error_container = "rgba(ffdad6ff)",
+  error_container = "rgba(93000aff)",
 
-  inverse_on_surface = "rgba(ffede7ff)",
+  inverse_on_surface = "rgba(392e2cff)",
 
-  inverse_primary = "rgba(ffb596ff)",
+  inverse_primary = "rgba(904b3cff)",
 
-  inverse_surface = "rgba(3d2d26ff)",
+  inverse_surface = "rgba(f1dfdbff)",
 
-  on_background = "rgba(271812ff)",
+  on_background = "rgba(f1dfdbff)",
 
-  on_error = "rgba(ffffffff)",
+  on_error = "rgba(690005ff)",
 
-  on_error_container = "rgba(410002ff)",
+  on_error_container = "rgba(ffdad6ff)",
 
-  on_primary = "rgba(ffffffff)",
+  on_primary = "rgba(561f13ff)",
 
-  on_primary_container = "rgba(360f00ff)",
+  on_primary_container = "rgba(ffdad3ff)",
 
-  on_primary_fixed = "rgba(360f00ff)",
+  on_primary_fixed = "rgba(3a0a03ff)",
 
-  on_primary_fixed_variant = "rgba(7c2e00ff)",
+  on_primary_fixed_variant = "rgba(733427ff)",
 
-  on_secondary = "rgba(ffffffff)",
+  on_secondary = "rgba(442a24ff)",
 
-  on_secondary_container = "rgba(2f1500ff)",
+  on_secondary_container = "rgba(ffdad3ff)",
 
-  on_secondary_fixed = "rgba(2f1500ff)",
+  on_secondary_fixed = "rgba(2c1510ff)",
 
-  on_secondary_fixed_variant = "rgba(623f21ff)",
+  on_secondary_fixed_variant = "rgba(5d3f39ff)",
 
-  on_surface = "rgba(271812ff)",
+  on_surface = "rgba(f1dfdbff)",
 
-  on_surface_variant = "rgba(55433bff)",
+  on_surface_variant = "rgba(d8c2bdff)",
 
-  on_tertiary = "rgba(ffffffff)",
+  on_tertiary = "rgba(3c2f04ff)",
 
-  on_tertiary_container = "rgba(2a1800ff)",
+  on_tertiary_container = "rgba(f9e0a6ff)",
 
-  on_tertiary_fixed = "rgba(2a1800ff)",
+  on_tertiary_fixed = "rgba(241a00ff)",
 
-  on_tertiary_fixed_variant = "rgba(633f06ff)",
+  on_tertiary_fixed_variant = "rgba(544519ff)",
 
-  outline = "rgba(88726aff)",
+  outline = "rgba(a08c88ff)",
 
-  outline_variant = "rgba(dbc1b7ff)",
+  outline_variant = "rgba(534340ff)",
 
-  primary = "rgba(a33e00ff)",
+  primary = "rgba(ffb4a4ff)",
 
-  primary_container = "rgba(ffdbcdff)",
+  primary_container = "rgba(733427ff)",
 
-  primary_fixed = "rgba(ffdbcdff)",
+  primary_fixed = "rgba(ffdad3ff)",
 
-  primary_fixed_dim = "rgba(ffb596ff)",
+  primary_fixed_dim = "rgba(ffb4a4ff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(7d5636ff)",
+  secondary = "rgba(e7bdb4ff)",
 
-  secondary_container = "rgba(ffdcc3ff)",
+  secondary_container = "rgba(5d3f39ff)",
 
-  secondary_fixed = "rgba(ffdcc3ff)",
+  secondary_fixed = "rgba(ffdad3ff)",
 
-  secondary_fixed_dim = "rgba(f0bc95ff)",
+  secondary_fixed_dim = "rgba(e7bdb4ff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(ae4912ff)",
+  source_color = "rgba(774034ff)",
 
-  surface = "rgba(fff8f6ff)",
+  surface = "rgba(1a110fff)",
 
-  surface_bright = "rgba(fff8f6ff)",
+  surface_bright = "rgba(423734ff)",
 
-  surface_container = "rgba(ffe9e2ff)",
+  surface_container = "rgba(271d1bff)",
 
-  surface_container_high = "rgba(fee2d8ff)",
+  surface_container_high = "rgba(322825ff)",
 
-  surface_container_highest = "rgba(f8ddd2ff)",
+  surface_container_highest = "rgba(3d3230ff)",
 
-  surface_container_low = "rgba(fff1ecff)",
+  surface_container_low = "rgba(231917ff)",
 
-  surface_container_lowest = "rgba(ffffffff)",
+  surface_container_lowest = "rgba(140c0aff)",
 
-  surface_dim = "rgba(f0d4caff)",
+  surface_dim = "rgba(1a110fff)",
 
-  surface_tint = "rgba(a33e00ff)",
+  surface_tint = "rgba(ffb4a4ff)",
 
-  surface_variant = "rgba(f8ddd2ff)",
+  surface_variant = "rgba(534340ff)",
 
-  tertiary = "rgba(7e561dff)",
+  tertiary = "rgba(dbc48cff)",
 
-  tertiary_container = "rgba(ffddb6ff)",
+  tertiary_container = "rgba(544519ff)",
 
-  tertiary_fixed = "rgba(ffddb6ff)",
+  tertiary_fixed = "rgba(f9e0a6ff)",
 
-  tertiary_fixed_dim = "rgba(f2bd7aff)",
+  tertiary_fixed_dim = "rgba(dbc48cff)",
 
-  image = "/home/pseudo/Walls/Nature/wallhaven-qrl55q.jpg",
+  image = "/home/pseudo/Walls/Canopy/wallhaven-7p8783.jpg",
 }
