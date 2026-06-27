@@ -1,0 +1,13 @@
+[Unit]
+Description=Archer Auto Mode — apply light/dark mode on startup
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sleep 10
+ExecStart=%h/.local/share/Archer/bin/archer-auto-mode
+RemainAfterExit=no
+
+[Install]
+WantedBy=graphical-session.target

@@ -8,6 +8,14 @@ source "$(dirname "${BASH_SOURCE[0]}")/../lib/helpers.sh"
 
 section "Hyprland Plugins"
 
+# -----------------------------------------------------------------------------
+# Install Hyprpm development dependencies via the tagged package list
+# -----------------------------------------------------------------------------
+if ! is_installed cmake || ! is_installed hyprland-headers; then
+    info "Installing hyprpm build dependencies via tags..."
+    bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag Hyprpm
+fi
+
 if ! command -v hyprpm &>/dev/null; then
     warn "hyprpm not found — skipping plugin setup"
     exit 0

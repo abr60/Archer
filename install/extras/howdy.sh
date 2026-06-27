@@ -6,7 +6,7 @@
 #   Graphical (hyprlock/sddm): howdy → fingerprint → password
 #   Terminal (sudo):           howdy → password → fingerprint
 #
-# Requires: howdy-next, linux-enable-ir-emitter-bin, xorg-xhost
+# Requires: howdy-next-git, linux-enable-ir-emitter, xorg-xhost, v4l-utils
 # PAM configuration is handled separately by config/pam.sh
 # =============================================================================
 
@@ -15,19 +15,18 @@ source "$(dirname "${BASH_SOURCE[0]}")/../lib/helpers.sh"
 
 section "Howdy Face Recognition Setup"
 
-# ─── Guard ────────────────────────────────────────────────────────────────────
-if ! is_installed howdy-next; then
-    warn "howdy-next not installed — skipping"
-    exit 0
+# -----------------------------------------------------------------------------
+# Install Howdy and IR emitter packages via the tagged package list
+# -----------------------------------------------------------------------------
+if ! is_installed howdy-next-git || ! is_installed linux-enable-ir-emitter; then
+    info "Installing Howdy and IR emitter packages via tags..."
+    bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag howdy-next-git
+    bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag ir-emitter
 fi
 
-if ! is_installed linux-enable-ir-emitter-bin; then
-    warn "linux-enable-ir-emitter-bin not installed — skipping"
-    exit 0
-fi
-
-# ─── Ensure xorg-xhost is installed (required for IR emitter GTK window) ─────
+# Ensure basic core utilities are present
 ensure_installed xorg-xhost
+ensure_installed v4l-utils
 
 # ─── Detect IR camera ─────────────────────────────────────────────────────────
 section "IR Camera Detection"
