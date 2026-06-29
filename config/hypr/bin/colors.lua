@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(0e1513ff)",
+  background = "rgba(fff8f8ff)",
 
-  error = "rgba(ffb4abff)",
+  error = "rgba(ba1a1aff)",
 
-  error_container = "rgba(93000aff)",
+  error_container = "rgba(ffdad6ff)",
 
-  inverse_on_surface = "rgba(2b3230ff)",
+  inverse_on_surface = "rgba(ffecf2ff)",
 
-  inverse_primary = "rgba(046b5cff)",
+  inverse_primary = "rgba(ffafd3ff)",
 
-  inverse_surface = "rgba(dee4e1ff)",
+  inverse_surface = "rgba(3b2c32ff)",
 
-  on_background = "rgba(dee4e1ff)",
+  on_background = "rgba(25181dff)",
 
-  on_error = "rgba(690005ff)",
+  on_error = "rgba(ffffffff)",
 
-  on_error_container = "rgba(ffdad6ff)",
+  on_error_container = "rgba(410002ff)",
 
-  on_primary = "rgba(00382fff)",
+  on_primary = "rgba(ffffffff)",
 
-  on_primary_container = "rgba(a0f2dfff)",
+  on_primary_container = "rgba(3d0026ff)",
 
-  on_primary_fixed = "rgba(00201bff)",
+  on_primary_fixed = "rgba(3d0026ff)",
 
-  on_primary_fixed_variant = "rgba(005045ff)",
+  on_primary_fixed_variant = "rgba(8b005cff)",
 
-  on_secondary = "rgba(1c352fff)",
+  on_secondary = "rgba(ffffffff)",
 
-  on_secondary_container = "rgba(cde8e0ff)",
+  on_secondary_container = "rgba(32101aff)",
 
-  on_secondary_fixed = "rgba(06201bff)",
+  on_secondary_fixed = "rgba(32101aff)",
 
-  on_secondary_fixed_variant = "rgba(334b46ff)",
+  on_secondary_fixed_variant = "rgba(643b45ff)",
 
-  on_surface = "rgba(dee4e1ff)",
+  on_surface = "rgba(25181dff)",
 
-  on_surface_variant = "rgba(bec9c5ff)",
+  on_surface_variant = "rgba(524249ff)",
 
-  on_tertiary = "rgba(123348ff)",
+  on_tertiary = "rgba(ffffffff)",
 
-  on_tertiary_container = "rgba(c9e6ffff)",
+  on_tertiary_container = "rgba(380b10ff)",
 
-  on_tertiary_fixed = "rgba(001e2fff)",
+  on_tertiary_fixed = "rgba(380b10ff)",
 
-  on_tertiary_fixed_variant = "rgba(2b4a5fff)",
+  on_tertiary_fixed_variant = "rgba(6f3638ff)",
 
-  outline = "rgba(89938fff)",
+  outline = "rgba(857279ff)",
 
-  outline_variant = "rgba(3f4946ff)",
+  outline_variant = "rgba(d7c1c8ff)",
 
-  primary = "rgba(84d6c3ff)",
+  primary = "rgba(b5007aff)",
 
-  primary_container = "rgba(005045ff)",
+  primary_container = "rgba(ffd8e7ff)",
 
-  primary_fixed = "rgba(a0f2dfff)",
+  primary_fixed = "rgba(ffd8e7ff)",
 
-  primary_fixed_dim = "rgba(84d6c3ff)",
+  primary_fixed_dim = "rgba(ffafd3ff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(b1ccc4ff)",
+  secondary = "rgba(7f525cff)",
 
-  secondary_container = "rgba(334b46ff)",
+  secondary_container = "rgba(ffd9e0ff)",
 
-  secondary_fixed = "rgba(cde8e0ff)",
+  secondary_fixed = "rgba(ffd9e0ff)",
 
-  secondary_fixed_dim = "rgba(b1ccc4ff)",
+  secondary_fixed_dim = "rgba(f1b7c4ff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(01443aff)",
+  source_color = "rgba(a2196eff)",
 
-  surface = "rgba(0e1513ff)",
+  surface = "rgba(fff8f8ff)",
 
-  surface_bright = "rgba(343b38ff)",
+  surface_bright = "rgba(fff8f8ff)",
 
-  surface_container = "rgba(1b211fff)",
+  surface_container = "rgba(ffe8efff)",
 
-  surface_container_high = "rgba(252b29ff)",
+  surface_container_high = "rgba(fae2eaff)",
 
-  surface_container_highest = "rgba(303634ff)",
+  surface_container_highest = "rgba(f4dce4ff)",
 
-  surface_container_low = "rgba(171d1bff)",
+  surface_container_low = "rgba(fff0f4ff)",
 
-  surface_container_lowest = "rgba(090f0eff)",
+  surface_container_lowest = "rgba(ffffffff)",
 
-  surface_dim = "rgba(0e1513ff)",
+  surface_dim = "rgba(ebd4dcff)",
 
-  surface_tint = "rgba(84d6c3ff)",
+  surface_tint = "rgba(b5007aff)",
 
-  surface_variant = "rgba(3f4946ff)",
+  surface_variant = "rgba(f4dce4ff)",
 
-  tertiary = "rgba(abcae4ff)",
+  tertiary = "rgba(8b4c4fff)",
 
-  tertiary_container = "rgba(2b4a5fff)",
+  tertiary_container = "rgba(ffdad9ff)",
 
-  tertiary_fixed = "rgba(c9e6ffff)",
+  tertiary_fixed = "rgba(ffdad9ff)",
 
-  tertiary_fixed_dim = "rgba(abcae4ff)",
+  tertiary_fixed_dim = "rgba(ffb3b4ff)",
 
-  image = "/home/pseudo/Walls/Canopy/malachite.jpg",
+  image = "/home/pseudo/Walls/RGB/wallhaven-856dlk.png",
 }

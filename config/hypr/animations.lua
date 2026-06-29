@@ -1,1 +1,1 @@
-/home/pseudo/.config/hypr/animations/fluid.lua
+/home/pseudo/.config/hypr/animations/fast.lua
