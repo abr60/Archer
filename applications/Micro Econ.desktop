@@ -5,5 +5,5 @@ Comment=Micro Econ
 Exec=launch-webapp https://saylordotorg.github.io/text_microeconomics-theory-through-applications/index.html
 Terminal=false
 Type=Application
-Icon=/home/pseudo/.local/share/applications/icons/Micro Econ.png
+Icon=~/.local/share/applications/icons/Micro Econ.png
 StartupNotify=true

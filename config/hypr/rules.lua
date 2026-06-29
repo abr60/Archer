@@ -62,3 +62,11 @@ hl.window_rule({ scroll_touchpad = 0.2, match = { class = "^(kitty)$" } })
 hl.window_rule({ float = true,     match = { class = "^(kitty)$", title = "^(rmpc-full)$" } })
 hl.window_rule({ size = "900 600", match = { class = "^(kitty)$", title = "^(rmpc-full)$" } })
 hl.window_rule({ center = true,    match = { class = "^(kitty)$", title = "^(rmpc-full)$" } })
+
+-- Cava desktop visualizer
+hl.window_rule({ float = true,      match = { class = "^(cava-desktop)$" } })
+hl.window_rule({ no_focus = true,   match = { class = "^(cava-desktop)$" } })
+hl.window_rule({ pin = true,        match = { class = "^(cava-desktop)$" } })
+hl.window_rule({ move = "0 640",    match = { class = "^(cava-desktop)$" } })
+hl.window_rule({ size = "1280 80",  match = { class = "^(cava-desktop)$" } })
+hl.window_rule({ opacity = "1.0",   match = { class = "^(cava-desktop)$" } })

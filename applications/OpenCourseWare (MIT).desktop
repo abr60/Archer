@@ -5,5 +5,5 @@ Comment=OpenCourseWare (MIT)
 Exec=launch-webapp https://ocw.mit.edu/
 Terminal=false
 Type=Application
-Icon=/home/pseudo/.local/share/applications/icons/OpenCourseWare (MIT).png
+Icon=~/.local/share/applications/icons/OpenCourseWare (MIT).png
 StartupNotify=true

@@ -5,5 +5,5 @@ Comment=Grok
 Exec=launch-webapp https://grok.com/
 Terminal=false
 Type=Application
-Icon=/home/pseudo/.local/share/applications/icons/Grok.png
+Icon=~/.local/share/applications/icons/Grok.png
 StartupNotify=true

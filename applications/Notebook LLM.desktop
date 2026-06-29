@@ -5,5 +5,5 @@ Comment=Notebook LLM
 Exec=launch-webapp https://notebooklm.google.com/
 Terminal=false
 Type=Application
-Icon=/home/pseudo/.local/share/applications/icons/Notebook LLM.png
+Icon=~/.local/share/applications/icons/Notebook LLM.png
 StartupNotify=true

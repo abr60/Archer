@@ -5,5 +5,5 @@ Comment=GitHub
 Exec=launch-webapp https://github.com/drunk-particles/Archer
 Terminal=false
 Type=Application
-Icon=/home/pseudo/.local/share/applications/icons/GitHub.png
+Icon=~/.local/share/applications/icons/GitHub.png
 StartupNotify=true

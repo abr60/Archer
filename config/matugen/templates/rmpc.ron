@@ -388,7 +388,7 @@
             ]
         ),
     },
-    cava: (bar_symbols: ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'], bar_width: 2, bar_spacing: 1, bg_color: None, bar_color: Gradient({
+    cava: (bar_symbols: ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'], bar_width: 1, bar_spacing: 1, bg_color: None, bar_color: Gradient({
             0: "{{colors.primary_container.default.hex}}",
             50: "{{colors.primary.default.hex}}",
             100: "{{colors.on_primary_container.default.hex}}",

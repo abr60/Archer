@@ -5,5 +5,5 @@ Comment=Mistral Le
 Exec=launch-webapp https://chat.mistral.ai/chat
 Terminal=false
 Type=Application
-Icon=/home/pseudo/.local/share/applications/icons/Mistral Le.png
+Icon=~/.local/share/applications/icons/Mistral Le.png
 StartupNotify=true

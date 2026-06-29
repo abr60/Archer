@@ -5,5 +5,5 @@ Comment=Facebook
 Exec=launch-webapp https://www.facebook.com/
 Terminal=false
 Type=Application
-Icon=/home/pseudo/.local/share/applications/icons/Facebook.png
+Icon=~/.local/share/applications/icons/Facebook.png
 StartupNotify=true

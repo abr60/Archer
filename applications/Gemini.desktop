@@ -5,5 +5,5 @@ Comment=Gemini
 Exec=launch-webapp https://gemini.google.com/app
 Terminal=false
 Type=Application
-Icon=/home/pseudo/.local/share/applications/icons/Gemini.png
+Icon=~/.local/share/applications/icons/Gemini.png
 StartupNotify=true

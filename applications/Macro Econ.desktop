@@ -5,5 +5,5 @@ Comment=Macro Econ
 Exec=launch-webapp https://saylordotorg.github.io/text_macroeconomics-theory-through-applications/
 Terminal=false
 Type=Application
-Icon=/home/pseudo/.local/share/applications/icons/Macro Econ.png
+Icon=~/.local/share/applications/icons/Macro Econ.png
 StartupNotify=true

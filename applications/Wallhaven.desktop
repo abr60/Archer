@@ -5,5 +5,5 @@ Comment=Wallhaven
 Exec=launch-webapp https://wallhaven.cc/
 Terminal=false
 Type=Application
-Icon=/home/pseudo/.local/share/applications/icons/Wallhaven.png
+Icon=~/.local/share/applications/icons/Wallhaven.png
 StartupNotify=true

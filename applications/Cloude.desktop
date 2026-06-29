@@ -5,5 +5,5 @@ Comment=Cloude
 Exec=launch-webapp https://claude.ai/new
 Terminal=false
 Type=Application
-Icon=/home/pseudo/.local/share/applications/icons/Cloude.png
+Icon=~/.local/share/applications/icons/Cloude.png
 StartupNotify=true
