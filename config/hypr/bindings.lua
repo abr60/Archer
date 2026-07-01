@@ -4,6 +4,7 @@
 a.bind("SUPER + SPACE",     "Applications launcher",  "rofi-applications")
 a.bind("SUPER + ALT + RETURN", "Tmux",               a.launch("xdg-terminal-exec --dir=\"$(cmd-terminal-cwd)\" bash -c \"tmux attach || tmux new -s Work\""))
 a.bind("XF86Favorites",    "Theme Mode",              "archer-set-mode $([ \"$(cat ~/.local/state/Archer/current-mode)\" = 'dark' ] && echo light || echo dark) && pkill -SIGRTMIN+1 waybar")
+a.bind("SUPER + B",        "waybar-theme",   a.launch("waybar-theme"))
 
 -- === Apps ===
 a.bind("SUPER + SHIFT + M", "Music",      { launch = "spotify", focus = "spotify" })

@@ -145,7 +145,7 @@
 
   "custom/updatespacman": {
     "format": "{} {icon}",
-    "format-icons": { "has-updates": "👹", "updated": " " },
+    "format-icons": { "has-updates": "✨", "updated": " " },
     "return-type": "json",
     "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300",
     "on-click": "launch-floating-terminal-with-presentation update"
@@ -253,7 +253,7 @@
 
   "pulseaudio": {
     "format": "{icon}  {volume}",
-    "format-muted": "🚫Muted",
+    "format-muted": "🔇 Muted",
     "format-icons": ["", "", ""],
     "max-volume": 130,
     "reverse-scrolling": 1,
@@ -267,12 +267,12 @@
     "return-type": "json",
     "interval": 5,
     "tooltip": true,
-    "on-click": "omarchy-launch-or-focus-tui '/home/pseudo/.local/bin/omabat'"
+    "on-click": "launch-or-focus-tui '/home/pseudo/.local/bin/omabat'"
   },
   "battery": {
     "format": "{capacity} {icon}",
     "format-charging": "{icon} {capacity}",
-    "format-plugged": " {capacity}",
+    "format-plugged": " {capacity}",
     "format-icons": {
       "charging": ["⚡"],
       "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]

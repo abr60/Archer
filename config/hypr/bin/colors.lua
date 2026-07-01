@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(fff9e5ff)",
+  background = "rgba(13140dff)",
 
-  error = "rgba(ba1a1aff)",
+  error = "rgba(ffb4abff)",
 
-  error_container = "rgba(ffdad6ff)",
+  error_container = "rgba(93000aff)",
 
-  inverse_on_surface = "rgba(f7f1d9ff)",
+  inverse_on_surface = "rgba(303129ff)",
 
-  inverse_primary = "rgba(d9c900ff)",
+  inverse_primary = "rgba(566422ff)",
 
-  inverse_surface = "rgba(333121ff)",
+  inverse_surface = "rgba(e4e3d7ff)",
 
-  on_background = "rgba(1e1c0eff)",
+  on_background = "rgba(e4e3d7ff)",
 
-  on_error = "rgba(ffffffff)",
+  on_error = "rgba(690005ff)",
 
-  on_error_container = "rgba(410002ff)",
+  on_error_container = "rgba(ffdad6ff)",
 
-  on_primary = "rgba(ffffffff)",
+  on_primary = "rgba(2a3500ff)",
 
-  on_primary_container = "rgba(1f1c00ff)",
+  on_primary_container = "rgba(d9eb99ff)",
 
-  on_primary_fixed = "rgba(1f1c00ff)",
+  on_primary_fixed = "rgba(171e00ff)",
 
-  on_primary_fixed_variant = "rgba(4e4800ff)",
+  on_primary_fixed_variant = "rgba(3f4c0bff)",
 
-  on_secondary = "rgba(ffffffff)",
+  on_secondary = "rgba(2e331bff)",
 
-  on_secondary_container = "rgba(1a1e00ff)",
+  on_secondary_container = "rgba(e0e6c3ff)",
 
-  on_secondary_fixed = "rgba(1a1e00ff)",
+  on_secondary_fixed = "rgba(191e08ff)",
 
-  on_secondary_fixed_variant = "rgba(454a21ff)",
+  on_secondary_fixed_variant = "rgba(444930ff)",
 
-  on_surface = "rgba(1e1c0eff)",
+  on_surface = "rgba(e4e3d7ff)",
 
-  on_surface_variant = "rgba(4a4736ff)",
+  on_surface_variant = "rgba(c7c8b8ff)",
 
-  on_tertiary = "rgba(ffffffff)",
+  on_tertiary = "rgba(033730ff)",
 
-  on_tertiary_container = "rgba(111f00ff)",
+  on_tertiary_container = "rgba(bdece1ff)",
 
-  on_tertiary_fixed = "rgba(111f00ff)",
+  on_tertiary_fixed = "rgba(00201bff)",
 
-  on_tertiary_fixed_variant = "rgba(394d1bff)",
+  on_tertiary_fixed_variant = "rgba(214e46ff)",
 
-  outline = "rgba(7b7764ff)",
+  outline = "rgba(909283ff)",
 
-  outline_variant = "rgba(ccc7b1ff)",
+  outline_variant = "rgba(46483cff)",
 
-  primary = "rgba(686000ff)",
+  primary = "rgba(bdce80ff)",
 
-  primary_container = "rgba(f7e600ff)",
+  primary_container = "rgba(3f4c0bff)",
 
-  primary_fixed = "rgba(f7e600ff)",
+  primary_fixed = "rgba(d9eb99ff)",
 
-  primary_fixed_dim = "rgba(d9c900ff)",
+  primary_fixed_dim = "rgba(bdce80ff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(5d6236ff)",
+  secondary = "rgba(c4caa9ff)",
 
-  secondary_container = "rgba(e2e7b0ff)",
+  secondary_container = "rgba(444930ff)",
 
-  secondary_fixed = "rgba(e2e7b0ff)",
+  secondary_fixed = "rgba(e0e6c3ff)",
 
-  secondary_fixed_dim = "rgba(c5cb96ff)",
+  secondary_fixed_dim = "rgba(c4caa9ff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(7e750aff)",
+  source_color = "rgba(374113ff)",
 
-  surface = "rgba(fff9e5ff)",
+  surface = "rgba(13140dff)",
 
-  surface_bright = "rgba(fff9e5ff)",
+  surface_bright = "rgba(393a31ff)",
 
-  surface_container = "rgba(f4eed7ff)",
+  surface_container = "rgba(1f2019ff)",
 
-  surface_container_high = "rgba(eee8d1ff)",
+  surface_container_high = "rgba(292b23ff)",
 
-  surface_container_highest = "rgba(e8e3ccff)",
+  surface_container_highest = "rgba(34352dff)",
 
-  surface_container_low = "rgba(faf4dcff)",
+  surface_container_low = "rgba(1b1c15ff)",
 
-  surface_container_lowest = "rgba(ffffffff)",
+  surface_container_lowest = "rgba(0d0f08ff)",
 
-  surface_dim = "rgba(dfdac3ff)",
+  surface_dim = "rgba(13140dff)",
 
-  surface_tint = "rgba(686000ff)",
+  surface_tint = "rgba(bdce80ff)",
 
-  surface_variant = "rgba(e8e3ccff)",
+  surface_variant = "rgba(46483cff)",
 
-  tertiary = "rgba(506531ff)",
+  tertiary = "rgba(a1d0c5ff)",
 
-  tertiary_container = "rgba(d2eca9ff)",
+  tertiary_container = "rgba(214e46ff)",
 
-  tertiary_fixed = "rgba(d2eca9ff)",
+  tertiary_fixed = "rgba(bdece1ff)",
 
-  tertiary_fixed_dim = "rgba(b6cf90ff)",
+  tertiary_fixed_dim = "rgba(a1d0c5ff)",
 
-  image = "/home/pseudo/Walls/Nature/wallhaven-xepjvl.jpg",
+  image = "/home/pseudo/Walls/Nature/wallhaven-xezpxv.jpg",
 }
