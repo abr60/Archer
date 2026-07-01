@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(0e1416ff)",
+  background = "rgba(fff9e5ff)",
 
-  error = "rgba(ffb4abff)",
+  error = "rgba(ba1a1aff)",
 
-  error_container = "rgba(93000aff)",
+  error_container = "rgba(ffdad6ff)",
 
-  inverse_on_surface = "rgba(2b3133ff)",
+  inverse_on_surface = "rgba(f7f1d9ff)",
 
-  inverse_primary = "rgba(006876ff)",
+  inverse_primary = "rgba(d9c900ff)",
 
-  inverse_surface = "rgba(dee3e5ff)",
+  inverse_surface = "rgba(333121ff)",
 
-  on_background = "rgba(dee3e5ff)",
+  on_background = "rgba(1e1c0eff)",
 
-  on_error = "rgba(690005ff)",
+  on_error = "rgba(ffffffff)",
 
-  on_error_container = "rgba(ffdad6ff)",
+  on_error_container = "rgba(410002ff)",
 
-  on_primary = "rgba(00363eff)",
+  on_primary = "rgba(ffffffff)",
 
-  on_primary_container = "rgba(a0efffff)",
+  on_primary_container = "rgba(1f1c00ff)",
 
-  on_primary_fixed = "rgba(001f25ff)",
+  on_primary_fixed = "rgba(1f1c00ff)",
 
-  on_primary_fixed_variant = "rgba(004e59ff)",
+  on_primary_fixed_variant = "rgba(4e4800ff)",
 
-  on_secondary = "rgba(1c3439ff)",
+  on_secondary = "rgba(ffffffff)",
 
-  on_secondary_container = "rgba(cde7edff)",
+  on_secondary_container = "rgba(1a1e00ff)",
 
-  on_secondary_fixed = "rgba(051f23ff)",
+  on_secondary_fixed = "rgba(1a1e00ff)",
 
-  on_secondary_fixed_variant = "rgba(334b4fff)",
+  on_secondary_fixed_variant = "rgba(454a21ff)",
 
-  on_surface = "rgba(dee3e5ff)",
+  on_surface = "rgba(1e1c0eff)",
 
-  on_surface_variant = "rgba(bfc8caff)",
+  on_surface_variant = "rgba(4a4736ff)",
 
-  on_tertiary = "rgba(262f4dff)",
+  on_tertiary = "rgba(ffffffff)",
 
-  on_tertiary_container = "rgba(dbe1ffff)",
+  on_tertiary_container = "rgba(111f00ff)",
 
-  on_tertiary_fixed = "rgba(101a37ff)",
+  on_tertiary_fixed = "rgba(111f00ff)",
 
-  on_tertiary_fixed_variant = "rgba(3c4665ff)",
+  on_tertiary_fixed_variant = "rgba(394d1bff)",
 
-  outline = "rgba(899295ff)",
+  outline = "rgba(7b7764ff)",
 
-  outline_variant = "rgba(3f484aff)",
+  outline_variant = "rgba(ccc7b1ff)",
 
-  primary = "rgba(82d3e3ff)",
+  primary = "rgba(686000ff)",
 
-  primary_container = "rgba(004e59ff)",
+  primary_container = "rgba(f7e600ff)",
 
-  primary_fixed = "rgba(a0efffff)",
+  primary_fixed = "rgba(f7e600ff)",
 
-  primary_fixed_dim = "rgba(82d3e3ff)",
+  primary_fixed_dim = "rgba(d9c900ff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(b1cbd1ff)",
+  secondary = "rgba(5d6236ff)",
 
-  secondary_container = "rgba(334b4fff)",
+  secondary_container = "rgba(e2e7b0ff)",
 
-  secondary_fixed = "rgba(cde7edff)",
+  secondary_fixed = "rgba(e2e7b0ff)",
 
-  secondary_fixed_dim = "rgba(b1cbd1ff)",
+  secondary_fixed_dim = "rgba(c5cb96ff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(197381ff)",
+  source_color = "rgba(7e750aff)",
 
-  surface = "rgba(0e1416ff)",
+  surface = "rgba(fff9e5ff)",
 
-  surface_bright = "rgba(343a3cff)",
+  surface_bright = "rgba(fff9e5ff)",
 
-  surface_container = "rgba(1b2122ff)",
+  surface_container = "rgba(f4eed7ff)",
 
-  surface_container_high = "rgba(252b2cff)",
+  surface_container_high = "rgba(eee8d1ff)",
 
-  surface_container_highest = "rgba(303637ff)",
+  surface_container_highest = "rgba(e8e3ccff)",
 
-  surface_container_low = "rgba(171d1eff)",
+  surface_container_low = "rgba(faf4dcff)",
 
-  surface_container_lowest = "rgba(090f10ff)",
+  surface_container_lowest = "rgba(ffffffff)",
 
-  surface_dim = "rgba(0e1416ff)",
+  surface_dim = "rgba(dfdac3ff)",
 
-  surface_tint = "rgba(82d3e3ff)",
+  surface_tint = "rgba(686000ff)",
 
-  surface_variant = "rgba(3f484aff)",
+  surface_variant = "rgba(e8e3ccff)",
 
-  tertiary = "rgba(bcc5ebff)",
+  tertiary = "rgba(506531ff)",
 
-  tertiary_container = "rgba(3c4665ff)",
+  tertiary_container = "rgba(d2eca9ff)",
 
-  tertiary_fixed = "rgba(dbe1ffff)",
+  tertiary_fixed = "rgba(d2eca9ff)",
 
-  tertiary_fixed_dim = "rgba(bcc5ebff)",
+  tertiary_fixed_dim = "rgba(b6cf90ff)",
 
-  image = "/home/pseudo/Walls/Painting/wallhaven-9ozyek.jpg",
+  image = "/home/pseudo/Walls/Nature/wallhaven-xepjvl.jpg",
 }

@@ -2,7 +2,7 @@
 
 # Ensure Archer, Matugen, and local bins are in the path
 export ARCHER_PATH=$HOME/.local/share/Archer
-export PATH=$ARCHER_PATH/bin:$HOME/.local/bin:$HOME/.config/matugen/post-hook-scripts:$PATH
+export PATH=$HOME/.config/matugen/bin:$HOME/.local/bin:$ARCHER_PATH/bin:$PATH
 
 # Set default terminal and editor
 source ~/.config/uwsm/default

@@ -20,7 +20,7 @@ THEMES_DIR="$HOME/.local/share/Archer/Themes"
 STATE_DIR="$HOME/.local/state/Archer"
 THEME_FILE="$STATE_DIR/current-theme"
 MODE_FILE="$STATE_DIR/current-mode"
-SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
+SCRIPTS_DIR="$HOME/.config/matugen/bin"
 
 if [[ ! -d "$THEMES_DIR" ]]; then
     notify-send "Archer" "Themes directory not found at $THEMES_DIR"

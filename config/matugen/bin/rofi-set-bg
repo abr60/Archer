@@ -19,7 +19,7 @@ ROFI_THEME="$HOME/.config/rofi/wallpaper.rasi"
 CACHE_DIR="$HOME/.cache/archer/wallpaper-thumbs"
 THUMB_SIZE="500"
 MATUGEN_HYPRLOCK="$HOME/.config/hypr/bin/matugen-hyprlock.conf"
-SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
+SCRIPTS_DIR="$HOME/.config/matugen/bin"
 
 log() { echo "[$(date +%T.%3N)] $*" | systemd-cat -t rofi-set-bg; }
 

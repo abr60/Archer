@@ -7,11 +7,13 @@
 # Dark mode:  18:30 – 06:29
 # =============================================================================
 
-SCRIPTS_DIR="$HOME/.local/share/Archer/bin"
+# Updated path to the post-hook scripts directory
+SCRIPTS_DIR="$HOME/.config/matugen/post-hook-scripts"
 
+# Force base-10 math (10#) to prevent octal errors at 08 and 09 minutes/hours
 HOUR=$(date +%H)
 MIN=$(date +%M)
-TIME=$(( HOUR * 60 + MIN ))
+TIME=$(( 10#$HOUR * 60 + 10#$MIN ))
 
 LIGHT_START=$(( 6 * 60 + 30 ))   # 06:30 = 390
 DARK_START=$(( 18 * 60 + 30 ))   # 18:30 = 1110
@@ -22,4 +24,5 @@ else
     MODE="dark"
 fi
 
+# Wrapped in quotes to handle potential spaces safely
 "$SCRIPTS_DIR/archer-set-mode" "$MODE"

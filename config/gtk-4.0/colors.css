@@ -1,144 +1,187 @@
 /*
 * GTK colors generated with Matugen
-* The source template is here: ~/.config/matugen/templates/gtk-4.0/gtk.css
+* Template: ~/.config/matugen/templates/gtk-4.0/gtk.css
 */
 
 @media (prefers-color-scheme: light) {
     /* Accents */
-    @define-color accent_color #006876;
-    @define-color accent_hover_color rgba(0, 104, 118, 0.08);
-    @define-color accent_vibrant_hover_color rgba(0, 104, 118, 0.18);
-    @define-color accent_active_color rgba(0, 104, 118, 0.1);
-    @define-color accent_vibrant_active_color rgba(0, 104, 118, 0.26);
+    @define-color accent_color #686000;
+    @define-color accent_hover_color rgba(104, 96, 0, 0.08);
+    @define-color accent_vibrant_hover_color rgba(104, 96, 0, 0.18);
+    @define-color accent_active_color rgba(104, 96, 0, 0.1);
+    @define-color accent_vibrant_active_color rgba(104, 96, 0, 0.26);
     @define-color accent_fg_color #ffffff;
-    @define-color accent_bg_color #006876;
+    @define-color accent_bg_color #686000;
     @define-color destructive_bg_color #ffdad6;
     @define-color destructive_fg_color #410002;
     @define-color destructive_color #ba1a1a;
     @define-color success_bg_color #B5CCBA;
     @define-color success_fg_color #213528;
     @define-color success_color #374B3E;
+
     /* Base surfaces */
-    @define-color window_bg_color #f5fafc;
-    @define-color window_fg_color #171d1e;
-    @define-color headerbar_bg_color #e9eff0;
-    @define-color headerbar_backdrop_color #e9eff0;
-    @define-color headerbar_fg_color #171d1e;
-    @define-color card_bg_color #e9eff0;
-    @define-color card_fg_color #171d1e;
-    @define-color sidebar_bg_color #f5fafc;
-    @define-color sidebar_fg_color #171d1e;
-    @define-color sidebar_row_active_bg_color #cde7ed;
-    @define-color sidebar_row_active_fg_color #051f23;
-    @define-color secondary_sidebar_bg_color #eff5f6;
-    @define-color secondary_sidebar_backdrop_color #eff5f6;
-    @define-color secondary_sidebar_fg_color #3f484a;
+    @define-color window_bg_color #fff9e5;
+    @define-color window_fg_color #1e1c0e;
+    @define-color headerbar_bg_color #f4eed7;
+    @define-color headerbar_backdrop_color #f4eed7;
+    @define-color headerbar_fg_color #1e1c0e;
+    @define-color card_bg_color #f4eed7;
+    @define-color card_fg_color #1e1c0e;
+    @define-color sidebar_bg_color #fff9e5;
+    @define-color sidebar_fg_color #1e1c0e;
+    @define-color sidebar_row_active_bg_color #e2e7b0;
+    @define-color sidebar_row_active_fg_color #1a1e00;
+    @define-color secondary_sidebar_bg_color #faf4dc;
+    @define-color secondary_sidebar_backdrop_color #faf4dc;
+    @define-color secondary_sidebar_fg_color #4a4736;
     @define-color sidebar_border_color @sidebar_bg_color;
     @define-color sidebar_backdrop_color @sidebar_bg_color;
     @define-color view_bg_color #ffffff;
-    @define-color view_fg_color #171d1e;
+    @define-color view_fg_color #1e1c0e;
     @define-color overview_bg_color #ffffff;
-    @define-color overview_fg_color #171d1e;
+    @define-color overview_fg_color #1e1c0e;
+
     /* Popups */
-    @define-color popover_bg_color #dee3e5;
-    @define-color popover_fg_color #171d1e;
-    @define-color popover_fg_hover_color rgba(23, 29, 30, 0.08);
-    @define-color dialog_bg_color #e3e9eb;
-    @define-color dialog_fg_color #171d1e;
-    @define-color thumbnail_bg_color #e3e9eb;
-    @define-color thumbnail_fg_color #171d1e;
+    @define-color popover_bg_color #e8e3cc;
+    @define-color popover_fg_color #1e1c0e;
+    @define-color popover_fg_hover_color rgba(30, 28, 14, 0.08);
+    @define-color popover_fg_active_color rgba(30, 28, 14, 0.14);
+    @define-color dialog_bg_color #eee8d1;
+    @define-color dialog_fg_color #1e1c0e;
+    @define-color thumbnail_bg_color #eee8d1;
+    @define-color thumbnail_fg_color #1e1c0e;
 
-    /* Material */
-    @define-color inverse_on_surface #ecf2f3;
-    @define-color inverse_primary #82d3e3;
-    @define-color inverse_surface #2b3133;
-    @define-color surface_container_highest #dee3e5;
-    @define-color surface_container_high #e3e9eb;
-    @define-color on_surface_variant #3f484a;
-    @define-color surface_variant #dbe4e6;
+    /* Material tokens */
+    @define-color inverse_on_surface #f7f1d9;
+    @define-color inverse_primary #d9c900;
+    @define-color inverse_surface #333121;
+    @define-color surface_container_highest #e8e3cc;
+    @define-color surface_container_high #eee8d1;
+    @define-color surface_container_low #faf4dc;
+    @define-color on_surface_variant #4a4736;
+    @define-color surface_variant #e8e3cc;
+    @define-color outline #7b7764;
+    @define-color outline_variant #ccc7b1;
 
-    @define-color outline #6f797b;
-
-    /* Material state layers */
-    @define-color inverse_on_surface_hover rgba(236, 242, 243, 0.08);
-    @define-color inverse_on_surface_active rgba(236, 242, 243, 0.18);
-    @define-color inverse_primary_hover rgba(130, 211, 227, 0.08);
-    @define-color inverse_primary_active rgba(130, 211, 227, 0.18);
+    /* State layers */
+    @define-color inverse_on_surface_hover rgba(247, 241, 217, 0.08);
+    @define-color inverse_on_surface_active rgba(247, 241, 217, 0.18);
+    @define-color inverse_primary_hover rgba(217, 201, 0, 0.08);
+    @define-color inverse_primary_active rgba(217, 201, 0, 0.18);
 }
 
 @media (prefers-color-scheme: dark) {
     /* Accents */
-    @define-color accent_color #82d3e3;
-    @define-color accent_hover_color rgba(130, 211, 227, 0.08);
-    @define-color accent_vibrant_hover_color rgba(130, 211, 227, 0.18);
-    @define-color accent_active_color rgba(130, 211, 227, 0.1);
-    @define-color accent_vibrant_active_color rgba(130, 211, 227, 0.2);
-    @define-color accent_fg_color #00363e;
-    @define-color accent_bg_color #82d3e3;
+    @define-color accent_color #d9c900;
+    @define-color accent_hover_color rgba(217, 201, 0, 0.08);
+    @define-color accent_vibrant_hover_color rgba(217, 201, 0, 0.18);
+    @define-color accent_active_color rgba(217, 201, 0, 0.1);
+    @define-color accent_vibrant_active_color rgba(217, 201, 0, 0.2);
+    @define-color accent_fg_color #363100;
+    @define-color accent_bg_color #d9c900;
     @define-color destructive_bg_color #93000a;
     @define-color destructive_fg_color #ffdad6;
     @define-color destructive_color #ffb4ab;
     @define-color success_bg_color #374B3E;
     @define-color success_fg_color #D1E9D6;
     @define-color success_color #B5CCBA;
+
     /* Base surfaces */
-    @define-color window_bg_color #0e1416;
-    @define-color window_fg_color #dee3e5;
-    @define-color headerbar_bg_color #1b2122;
-    @define-color headerbar_backdrop_color #1b2122;
-    @define-color headerbar_fg_color #dee3e5;
-    @define-color card_bg_color #1b2122;
-    @define-color card_fg_color #dee3e5;
-    @define-color sidebar_bg_color #0e1416;
-    @define-color sidebar_fg_color #dee3e5;
-    @define-color sidebar_row_active_bg_color #334b4f;
-    @define-color sidebar_row_active_fg_color #cde7ed;
-    @define-color secondary_sidebar_bg_color #171d1e;
-    @define-color secondary_sidebar_backdrop_color #171d1e;
-    @define-color secondary_sidebar_fg_color #bfc8ca;
+    @define-color window_bg_color #151407;
+    @define-color window_fg_color #e8e3cc;
+    @define-color headerbar_bg_color #222012;
+    @define-color headerbar_backdrop_color #222012;
+    @define-color headerbar_fg_color #e8e3cc;
+    @define-color card_bg_color #222012;
+    @define-color card_fg_color #e8e3cc;
+    @define-color sidebar_bg_color #151407;
+    @define-color sidebar_fg_color #e8e3cc;
+    @define-color sidebar_row_active_bg_color #454a21;
+    @define-color sidebar_row_active_fg_color #e2e7b0;
+    @define-color secondary_sidebar_bg_color #1e1c0e;
+    @define-color secondary_sidebar_backdrop_color #1e1c0e;
+    @define-color secondary_sidebar_fg_color #ccc7b1;
     @define-color sidebar_border_color @sidebar_bg_color;
     @define-color sidebar_backdrop_color @sidebar_bg_color;
-    @define-color view_bg_color #090f10;
-    @define-color view_fg_color #dee3e5;
-    @define-color overview_bg_color #090f10;
-    @define-color overview_fg_color #dee3e5;
+    @define-color view_bg_color #100e03;
+    @define-color view_fg_color #e8e3cc;
+    @define-color overview_bg_color #100e03;
+    @define-color overview_fg_color #e8e3cc;
+
     /* Popups */
-    @define-color popover_bg_color #303637;
-    @define-color popover_fg_color #dee3e5;
-    @define-color popover_fg_hover_color rgba(222, 227, 229, 0.08);
-    @define-color dialog_bg_color #252b2c;
-    @define-color dialog_fg_color #dee3e5;
-    @define-color thumbnail_bg_color #252b2c;
-    @define-color thumbnail_fg_color #dee3e5;
+    @define-color popover_bg_color #373525;
+    @define-color popover_fg_color #e8e3cc;
+    @define-color popover_fg_hover_color rgba(232, 227, 204, 0.08);
+    @define-color popover_fg_active_color rgba(232, 227, 204, 0.14);
+    @define-color dialog_bg_color #2c2a1b;
+    @define-color dialog_fg_color #e8e3cc;
+    @define-color thumbnail_bg_color #2c2a1b;
+    @define-color thumbnail_fg_color #e8e3cc;
 
-    /* Material */
-    @define-color inverse_on_surface #2b3133;
-    @define-color inverse_primary #006876;
-    @define-color inverse_surface #dee3e5;
-    @define-color surface_container_highest #303637;
-    @define-color surface_container_high #252b2c;
-    @define-color on_surface_variant #bfc8ca;
-    @define-color surface_variant #3f484a;
+    /* Material tokens */
+    @define-color inverse_on_surface #333121;
+    @define-color inverse_primary #686000;
+    @define-color inverse_surface #e8e3cc;
+    @define-color surface_container_highest #373525;
+    @define-color surface_container_high #2c2a1b;
+    @define-color surface_container_low #1e1c0e;
+    @define-color on_surface_variant #ccc7b1;
+    @define-color surface_variant #4a4736;
+    @define-color outline #95917d;
+    @define-color outline_variant #4a4736;
 
-    @define-color outline #899295;
-
-    /* Material state layers */
-    @define-color inverse_on_surface_hover rgba(43, 49, 51, 0.08);
-    @define-color inverse_on_surface_active rgba(43, 49, 51, 0.18);
-    @define-color inverse_primary_hover rgba(0, 104, 118, 0.08);
-    @define-color inverse_primary_active rgba(0, 104, 118, 0.18);
+    /* State layers */
+    @define-color inverse_on_surface_hover rgba(51, 49, 33, 0.08);
+    @define-color inverse_on_surface_active rgba(51, 49, 33, 0.18);
+    @define-color inverse_primary_hover rgba(104, 96, 0, 0.08);
+    @define-color inverse_primary_active rgba(104, 96, 0, 0.18);
 }
 
+/* ── Global ───────────────────────────────────────────────────────────────── */
+
 * {
+  font-family: "Cascadia Code NF", "Cascadia Mono NF", sans-serif;
   caret-color: @accent_color;
+  transition: all 120ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 window {
   background: @window_bg_color;
 }
 
+/* ── Custom Keyframes ────────────────────────────────────────────────────── */
+
+@keyframes popover_reveal {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes selection_flash {
+  0% { filter: brightness(1); }
+  40% { filter: brightness(1.25); }
+  100% { filter: brightness(1); }
+}
+
+/* ── Tactile Micro-Interactions ──────────────────────────────────────────── */
+
+button:active,
+popover > contents list > row:active,
+gridview > child:active,
+.entry:active {
+  transform: scale(0.96);
+  transition-duration: 50ms;
+}
+
+button:hover,
+.entry:focus {
+  box-shadow: 0 0 0 2px rgba(139, 148, 122, 0.2);
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
+
 .text-button {
-  border-radius: 999px;
+  border-radius: 8px;
+  padding: 6px 14px;
 }
 
 .text-button,
@@ -146,13 +189,38 @@ window {
   font-weight: 500;
 }
 
+button.back {
+  border-radius: 8px;
+  background-color: @accent_hover_color;
+  padding-left: 6px;
+  padding-right: 8px;
+}
+
+button.back * {
+  font-size: 12px;
+}
+
+button.back:hover {
+  background-color: @accent_vibrant_hover_color;
+}
+
+button.back:active {
+  background-color: @accent_active_color;
+}
+
+headerbar button {
+  border-radius: 8px;
+}
+
+/* ── Split button ─────────────────────────────────────────────────────────── */
+
 splitbutton {
   background-color: transparent;
 }
 
 splitbutton button {
-  border-top-left-radius: 999px;
-  border-bottom-left-radius: 999px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
@@ -164,157 +232,14 @@ splitbutton separator {
 splitbutton menubutton {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-  border-top-right-radius: 999px;
-  border-bottom-right-radius: 999px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
-.popup-menu-item {
-  background-color: transparent;
-  border-radius: 999px;
-}
-
-#NautilusPathBar #NautilusPathButton *,
-.nautilus-pathbar .nautilus-path-button * {
-    color: @sidebar_row_active_fg_color;
-    font-weight: 400;
-}
-
-#NautilusPathBar #NautilusPathButton,
-.nautilus-pathbar .nautilus-path-button {
-    background: @accent_active_color;
-    border-radius: 4px;
-    margin: 0;
-    margin-right: 2px;
-}
-
-#NautilusPathBar #NautilusPathButton:hover,
-.nautilus-pathbar .nautilus-path-button:hover {
-    background: @accent_vibrant_hover_color;
-}
-
-#NautilusPathBar #NautilusPathButton:active,
-.nautilus-pathbar .nautilus-path-button:active {
-    background: @accent_vibrant_active_color;
-}
-
-#NautilusPathButton,
-.nautilus-pathbar {
-    background: transparent;
-}
-
-#NautilusPathBar box box:first-child #NautilusPathButton,
-.nautilus-pathbar box box:first-child .nautilus-path-button {
-    border-radius: 24px 4px 4px 24px;
-}
-
-#NautilusPathBar box box:last-child #NautilusPathButton,
-.nautilus-pathbar box box:last-child .nautilus-path-button {
-    border-radius: 4px 24px 24px 4px;
-}
-
-#NautilusPathBar #NautilusPathButton.current-dir.current-dir,
-.nautilus-pathbar .nautilus-path-button.current-dir.current-dir {
-    border-radius: 999px;
-}
-
-#NautilusPathBar .dim-label,
-.nautilus-pathbar .dim-label {
-    font-size: 0;
-}
-
-#NautilusPathBar button .dim-label,
-.nautilus-pathbar button .dim-label {
-    font-size: 14px;
-    opacity: 100%;
-}
-
-#NautilusPathBar button,
-.nautilus-pathbar button {
-    border-radius: 8px;
-}
-#NautilusPathBar button:checked,
-.nautilus-pathbar button:checked {
-    background: @accent_vibrant_hover_color;
-}
-
-headerbar button {
-  border-radius: 999px;
-}
-
-headerbar >windowhandle box stack > box:nth-child(2) {
-	background: @accent_active_color;
-	border-radius: 8px;
-}
-
-.nautilus-list-view,
-.nautilus-grid-view {
-  background: @secondary_sidebar_bg_color;
-  border-radius: 16px;
-}
-
-.navigation-sidebar row * {
-  color: @sidebar_fg_color;
-  font-weight: 500;
-  font-size: 13px;
-}
-
-.navigation-sidebar row {
-  border-radius: 999px;
-  padding: 2px;
-}
-
-.navigation-sidebar row:hover {
-  background: @accent_hover_color;
-}
-
-.navigation-sidebar row:active {
-  background: @accent_active_color;
-}
-
-.navigation-sidebar row:selected {
-  background: @sidebar_row_active_bg_color;
-}
-
-.navigation-sidebar row:selected * {
-  color: @sidebar_row_active_fg_color;
-}
-
-banner widget {
-  border-radius: 16px 0 0 16px;
-  margin-bottom: 8px;
-  background-color: @secondary_sidebar_bg_color;
-}
-
-.boxed-list {
-  box-shadow: none;
-  background-color: @window_bg_color;
-}
-
-.boxed-list row {
-  background: @card_bg_color;
-  border-radius: 4px;
-  border: none;
-  margin-bottom: 2px;
-}
-
-.boxed-list row.activatable:hover {
-  background-color: @thumbnail_bg_color;
-}
-
-.boxed-list row.activatable:active {
-  background-color: @popover_bg_color;
-}
-
-.horizontal>listview>row {
-  background-color: transparent;
-}
-
-.boxed-list row:insensitive {
-  background-color: @card_bg_color;
-}
+/* ── Toggle buttons ───────────────────────────────────────────────────────── */
 
 .text-button.toggle {
-  border-radius: 4px;
+  border-radius: 6px;
   background-color: @surface_container_highest;
   margin-left: 2px;
 }
@@ -332,31 +257,21 @@ banner widget {
   font-weight: 400;
 }
 
-.boxed-list row:first-child {
-  border-radius: 16px 16px 4px 4px;
-}
-
-.boxed-list row:last-child {
-  border-radius: 4px 4px 16px 16px;
-  margin-bottom: 0;
-}
-
 .text-button.toggle:first-child {
-  border-radius: 16px 4px 4px 16px;
+  border-radius: 8px 4px 4px 8px;
 }
 
 .text-button.toggle:last-child {
-  border-radius: 4px 16px 16px 4px;
+  border-radius: 4px 8px 8px 4px;
 }
 
-.boxed-list row:first-child:last-child,
 .text-button.toggle:first-child:last-child {
-  border-radius: 16px;
+  border-radius: 8px;
 }
 
 .text-button.toggle:checked {
   background-color: @accent_bg_color;
-  border-radius: 999px;
+  border-radius: 8px;
 }
 
 .text-button.toggle:checked * {
@@ -364,26 +279,126 @@ banner widget {
   font-weight: 500;
 }
 
-button.back {
-  border-radius: 999px;
-  background-color: @accent_hover_color;
-  padding-left: 4px;
-  padding-right: 6px;
+/* ── Headerbar tab switcher ───────────────────────────────────────────────── */
+
+headerbar > windowhandle box stack > box:nth-child(2) {
+  background: @accent_active_color;
+  border-radius: 8px;
 }
 
-button.back * {
-  font-size: 12px;
+/* ── Nautilus path bar ────────────────────────────────────────────────────── */
+
+#NautilusPathBar #NautilusPathButton *,
+.nautilus-pathbar .nautilus-path-button * {
+  color: @sidebar_row_active_fg_color;
+  font-weight: 400;
 }
 
-button.back:hover {
-  background-color: @accent_hover_color;
+#NautilusPathBar #NautilusPathButton,
+.nautilus-pathbar .nautilus-path-button {
+  background: @accent_active_color;
+  border-radius: 6px;
+  margin: 0;
+  margin-right: 2px;
 }
 
-button.back:active {
-  background-color: @accent_active_color;
+#NautilusPathBar #NautilusPathButton:hover,
+.nautilus-pathbar .nautilus-path-button:hover {
+  background: @accent_vibrant_hover_color;
 }
 
-/* switch */
+#NautilusPathBar #NautilusPathButton:active,
+.nautilus-pathbar .nautilus-path-button:active {
+  background: @accent_vibrant_active_color;
+}
+
+#NautilusPathButton,
+.nautilus-pathbar {
+  background: transparent;
+}
+
+#NautilusPathBar box box:first-child #NautilusPathButton,
+.nautilus-pathbar box box:first-child .nautilus-path-button {
+  border-radius: 8px 4px 4px 8px;
+}
+
+#NautilusPathBar box box:last-child #NautilusPathButton,
+.nautilus-pathbar box box:last-child .nautilus-path-button {
+  border-radius: 4px 8px 8px 4px;
+}
+
+#NautilusPathBar #NautilusPathButton.current-dir.current-dir,
+.nautilus-pathbar .nautilus-path-button.current-dir.current-dir {
+  border-radius: 8px;
+}
+
+#NautilusPathBar .dim-label,
+.nautilus-pathbar .dim-label {
+  font-size: 0;
+}
+
+#NautilusPathBar button .dim-label,
+.nautilus-pathbar button .dim-label {
+  font-size: 14px;
+  opacity: 100%;
+}
+
+#NautilusPathBar button,
+.nautilus-pathbar button {
+  border-radius: 6px;
+}
+
+#NautilusPathBar button:checked,
+.nautilus-pathbar button:checked {
+  background: @accent_vibrant_hover_color;
+}
+
+/* ── Nautilus views ───────────────────────────────────────────────────────── */
+
+.nautilus-list-view,
+.nautilus-grid-view {
+  background: @secondary_sidebar_bg_color;
+}
+
+/* ── Boxed list ───────────────────────────────────────────────────────────── */
+
+.boxed-list row {
+  background: @card_bg_color;
+  border-radius: 4px;
+  border: none;
+  margin-bottom: 2px;
+}
+
+.boxed-list row.activatable:hover {
+  background-color: @thumbnail_bg_color;
+}
+
+.boxed-list row.activatable:active {
+  background-color: @popover_bg_color;
+}
+
+.boxed-list row:insensitive {
+  background-color: @card_bg_color;
+}
+
+.boxed-list row:first-child {
+  border-radius: 10px 10px 4px 4px;
+}
+
+.boxed-list row:last-child {
+  border-radius: 4px 4px 10px 10px;
+  margin-bottom: 0;
+}
+
+.boxed-list row:first-child:last-child {
+  border-radius: 10px;
+}
+
+.horizontal > listview > row {
+  background-color: transparent;
+}
+
+/* ── Switch ───────────────────────────────────────────────────────────────── */
 
 switch {
   background: @secondary_sidebar_bg_color;
@@ -401,18 +416,19 @@ switch slider {
   margin: 3px;
   min-width: 0;
   min-height: 0;
+  transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 switch:checked slider {
   background: @accent_fg_color;
   outline: transparent 2px solid;
-  margin: 0px;
+  margin: 0;
 }
 
-/* toast */
+/* ── Toast ────────────────────────────────────────────────────────────────── */
 
 toast {
-  border-radius: 999px;
+  border-radius: 10px;
   padding: 6px 6px 6px 10px;
   background-color: @inverse_surface;
   color: @inverse_on_surface;
@@ -447,9 +463,7 @@ toast button:last-child:active {
   background-color: @inverse_on_surface_active;
 }
 
-.collapse-spacing.vertical {
-  padding-bottom: 0;
-}
+/* ── Tabs ─────────────────────────────────────────────────────────────────── */
 
 tabbox {
   padding: 0;
@@ -459,7 +473,7 @@ tabbox tabboxchild tab,
 tabbox tabboxchild {
   background: transparent;
   padding: 0 8px 3px;
-  border-radius: 999px;
+  border-radius: 8px;
 }
 
 tabbox tabboxchild tab {
@@ -490,52 +504,482 @@ tab:selected .tab-title label {
   color: @accent_color;
 }
 
-/* popup menu */
-
-popover listview.view row,
-popover listview.view row:first-child,
-popover listview.view row:last-child {
-  background: transparent;
-  border-radius: 8px;
-}
-
-popover contents,
-popover arrow {
-  background: @secondary_sidebar_bg_color;
-}
-
-popover listview.view row:hover {
-  background: @popover_fg_hover_color;
-}
-
-popover listview.view row:active {
-  background: @popover_fg_active_color;
-}
-
-modelbutton {
-  padding: 2px 10px;
-}
-
-modelbutton * {
-  color: @popover_fg_color;
-}
-
-modelbutton:hover {
-  background-color: @popover_fg_hover_color;
-}
+/* ── Tooltip ──────────────────────────────────────────────────────────────── */
 
 tooltip {
   background-color: @inverse_surface;
   color: @inverse_on_surface;
   font-size: 11px;
-  padding: 5px 9px;
+  padding: 4px 8px;
+  border-radius: 6px;
 }
 
-/* search */
+/* ── Selection & views ────────────────────────────────────────────────────── */
+
+iconview:selected,
+.view:selected {
+  color: @accent_fg_color;
+  background-color: @accent_bg_color;
+  animation: selection_flash 180ms ease-out; /* Instant flash feedback upon selecting */
+}
+
+iconview:hover,
+iconview:selected {
+  border-radius: 8px;
+}
+
+textview text {
+  background-color: @secondary_sidebar_bg_color;
+}
+
+textview border {
+  background-color: @card_bg_color;
+  color: @outline;
+}
+
+/* ── Grid view ────────────────────────────────────────────────────────────── */
+
+gridview > child {
+  padding: 6px;
+  border-radius: 8px;
+}
+
+gridview > child:hover {
+  background-color: @accent_hover_color;
+  border-radius: 10px;
+  transform: translateY(-1px); /* Delicate micro-lift animation on item hover */
+}
+
+gridview > child:active {
+  background-color: @accent_active_color;
+}
+
+gridview > child:selected {
+  background-color: @accent_active_color;
+  border-radius: 10px; 
+  outline-offset: -2px;
+  animation: selection_flash 180ms ease-out;
+}
+
+gridview > child box {
+  border-spacing: 2px;
+  margin: 3px;
+}
+
+.content-view .tile:selected {
+  background-color: transparent;
+}
+
+/* ── Sidebar selection ────────────────────────────────────────────────────── */
+
+placessidebar list.navigation-sidebar > row:selected,
+placessidebar > viewport > list > row:selected {
+  background-color: @sidebar_row_active_bg_color;
+  border-radius: 8px;
+  box-shadow: inset 3px 0 0 @accent_color;
+}
+
+placessidebar list.navigation-sidebar > row label,
+placessidebar list.navigation-sidebar > row image,
+placessidebar > viewport > list > row label,
+placessidebar > viewport > list > row image {
+  color: @sidebar_fg_color;
+}
+
+placessidebar list.navigation-sidebar > row:selected label,
+placessidebar list.navigation-sidebar > row:selected image,
+placessidebar > viewport > list > row:selected label,
+placessidebar > viewport > list > row:selected image {
+  color: @sidebar_row_active_fg_color;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+
+scrollbar {
+  transition: background-color 75ms ease-out;
+  background-color: transparent;
+  box-shadow: none;
+  outline: none;
+}
+
+scrollbar.top    { border-bottom: 1px solid transparent; }
+scrollbar.bottom { border-top:    1px solid transparent; }
+scrollbar.left   { border-right:  1px solid transparent; }
+scrollbar.right  { border-left:   1px solid transparent; }
+
+scrollbar > range > trough {
+  outline: none;
+  background: none;
+}
+
+scrollbar > range > trough > slider {
+  min-width: 4px;
+  min-height: 4px;
+  border: 4px solid transparent;
+  border-radius: 9999px;
+  background-clip: padding-box;
+  box-shadow: none;
+  outline: none;
+  background-color: @outline;
+  transition: background-color 80ms ease-out,
+              min-width        150ms ease-out,
+              min-height       150ms ease-out;
+}
+
+scrollbar > range > trough > slider:hover {
+  background-color: @accent_color;
+  min-width: 8px;
+  min-height: 8px;
+}
+
+scrollbar > range > trough > slider:active {
+  background-color: @accent_color;
+  min-width: 6px;
+  min-height: 6px;
+  transition: min-width 80ms ease-out, min-height 80ms ease-out;
+}
+
+scrollbar > range > trough > slider:disabled {
+  background-color: @outline;
+  opacity: 0.38;
+}
+
+scrollbar > range.fine-tune > trough > slider { min-width: 4px; min-height: 4px; }
+scrollbar > range.fine-tune.horizontal > trough > slider { margin: 2px 0; }
+scrollbar > range.fine-tune.vertical   > trough > slider { margin: 0 2px; }
+
+/* ── Entry ────────────────────────────────────────────────────────────────── */
+
+entry headerbar popover.background entry,
+headerbar popover.background entry entry,
+entry {
+  min-height: 36px;
+  padding: 0 12px;
+  border-spacing: 8px;
+  border-radius: 8px;
+  caret-color: @accent_color;
+  background-color: @surface_container_highest;
+  color: @window_fg_color;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+}
+
+entry:hover:not(:focus-within):not(:disabled) {
+  background-color: @thumbnail_bg_color;
+}
+
+entry:focus-within {
+  background-color: @surface_container_high;
+  color: @accent_color;
+  outline: 2px solid @accent_color;
+}
+
+entry:disabled {
+  background-color: @surface_container_highest;
+  opacity: 0.5;
+}
+
+entry.flat,
+entry.flat:focus-within,
+entry.flat:disabled,
+entry.flat:hover {
+  min-height: 0;
+  padding: 4px;
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  outline: none;
+}
+
+entry > image { color: @on_surface_variant; }
+entry > image:hover,
+entry > image:active { color: @accent_color; }
+entry > image:disabled { opacity: 0.38; }
+
+entry.error {
+  background-color: @destructive_bg_color;
+  color: @destructive_fg_color;
+}
+
+entry.error:focus-within {
+  outline: 2px solid @destructive_color;
+  color: @destructive_color;
+}
+
+entry.error > text > selection {
+  background-color: @destructive_color;
+  color: @destructive_fg_color;
+}
+
+/* ── Check & Radio ────────────────────────────────────────────────────────── */
+
+checkbutton,
+radiobutton {
+  outline: none;
+  border-spacing: 3px;
+}
+
+check,
+radio {
+  min-height: 18px;
+  min-width: 18px;
+  margin: 3px;
+  padding: 0;
+  border-radius: 6px;
+  border: none;
+  color: transparent;
+  background-color: @surface_container_highest;
+}
+
+radio { border-radius: 9999px; }
+
+check:hover,
+radio:hover {
+  outline: 6px solid @accent_hover_color;
+  outline-offset: -6px;
+}
+
+check:active,
+radio:active {
+  outline: 6px solid @accent_active_color;
+  outline-offset: -6px;
+  transform: scale(0.88);
+}
+
+check:disabled,
+radio:disabled {
+  background-color: @surface_container_low;
+  opacity: 0.38;
+}
+
+check:checked,
+check:indeterminate,
+radio:checked,
+radio:indeterminate {
+  color: @accent_fg_color;
+  background-color: @accent_bg_color;
+  animation: popover_reveal 100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+check:checked:hover,
+check:indeterminate:hover,
+radio:checked:hover,
+radio:indeterminate:hover {
+  outline: 6px solid @accent_vibrant_hover_color;
+  outline-offset: -6px;
+}
+
+/* ── List row resets ──────────────────────────────────────────────────────── */
+
+list > row button:active,
+list > row entry:focus,
+list > row checkbutton:active {
+  background-image: none;
+  background-color: transparent;
+  animation: none;
+}
+
+list > row switch:active {
+  background-image: none;
+  animation: none;
+}
+
+list > row button,
+list > row switch,
+list > row checkbutton {
+  box-shadow: none;
+}
+
+/* ── Arrow ────────────────────────────────────────────────────────────────── */
+
+arrow {
+  transition: color 80ms ease-out, transform 80ms ease-out;
+}
+
+arrow:hover {
+  color: @accent_color;
+}
+
+/* ── Popover ──────────────────────────────────────────────────────────────── */
+
+popover.background {
+  font: initial;
+}
+
+popover.background,
+popover.background:backdrop {
+  background-color: transparent;
+}
+
+popover > arrow,
+popover > contents {
+  padding: 2px;
+  background-color: @popover_bg_color;
+  border-radius: 8px;
+  color: @popover_fg_color;
+  border: 1px solid @outline;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  background-clip: padding-box;
+  animation: popover_reveal 140ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: top center;
+}
+
+popover > contents > list,
+popover > contents > .view,
+popover > contents > toolbar {
+  border-style: none;
+  box-shadow: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+popover > contents separator {
+  background-color: @outline_variant;
+  margin: 8px 12px;
+}
+
+popover > contents list separator {
+  margin: 0;
+}
+
+popover > contents list > row {
+  border-radius: 5px;
+  margin: 1px 0;
+  padding: 0;
+  min-height: 0;
+}
+
+popover > contents list > row:hover {
+  background-color: @accent_hover_color;
+}
+
+popover > contents list > row:active {
+  background-color: @accent_active_color;
+}
+
+popover > contents list > row:selected {
+  background-color: @accent_vibrant_hover_color;
+}
+
+/* ── Modelbutton (context menu items) ────────────────────────────────────── */
+
+popover modelbutton {
+  background-color: transparent;
+  color: @popover_fg_color;
+  border-radius: 5px;
+  padding: 4px 3px;
+  margin: 0;
+  min-height: 0;
+}
+
+popover modelbutton label {
+  padding: 0;
+  margin: 0;
+}
+
+popover modelbutton:focus:not(:hover):not(:active) {
+  color: @accent_color;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+}
+
+popover modelbutton:hover {
+  background-color: @accent_hover_color;
+  color: @accent_color;
+}
+
+popover modelbutton:selected,
+popover modelbutton:active {
+  background-color: @accent_active_color;
+  color: @accent_color;
+}
+
+popover modelbutton:disabled {
+  color: @on_surface_variant;
+  background-color: transparent;
+  opacity: 0.38;
+}
+
+/* ── Inline/circular menu buttons ────────────────────────────────────────── */
+
+popover.menu box.inline-buttons {
+  color: @on_surface_variant;
+  padding: 0 6px;
+}
+
+popover.menu box.inline-buttons button.image-button.model {
+  min-height: 28px;
+  min-width: 28px;
+  padding: 0;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+}
+
+popover.menu box.inline-buttons button.image-button.model:hover {
+  background-color: @accent_hover_color;
+}
+
+popover.menu box.inline-buttons button.image-button.model:active {
+  background-color: @accent_active_color;
+}
+
+popover.menu box.inline-buttons button.image-button.model:selected {
+  background-color: @accent_vibrant_hover_color;
+}
+
+popover.menu box.circular-buttons {
+  padding: 6px;
+}
+
+popover.menu box.circular-buttons button.circular.image-button.model {
+  padding: 6px;
+  border-radius: 8px;
+}
+
+popover.menu box.circular-buttons button.circular.image-button.model:hover {
+  background-color: @accent_hover_color;
+}
+
+popover.menu box.circular-buttons button.circular.image-button.model:active {
+  background-color: @accent_active_color;
+}
+
+popover.menu box.circular-buttons button.circular.image-button.model:focus {
+  background-color: @accent_hover_color;
+}
+
+/* ── Dropdown / combobox ──────────────────────────────────────────────────── */
+
+dropdown > popover.menu > contents modelbutton,
+combobox > popover.menu > contents modelbutton {
+  padding-left: 9px;
+  padding-right: 9px;
+}
+
+/* ── Labels ───────────────────────────────────────────────────────────────── */
+
+label.separator {
+  color: @outline;
+  opacity: 0.5;
+}
+
+label:disabled {
+  opacity: 1;
+  color: @on_surface_variant;
+}
+
+/* ── Misc ─────────────────────────────────────────────────────────────────── */
 
 .entry-completion.entry-completion.entry-completion contents {
-	padding: 0;
+  padding: 0;
 }
+
 .image-button.flat arrow {
   background: transparent;
+}
+
+.collapse-spacing.vertical {
+  padding-bottom: 0;
 }

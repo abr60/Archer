@@ -15,6 +15,7 @@ CURRENT_WP_LINK="$STATE_DIR/current-wallpaper"
 wallpaper_path="${1:-}"
 MODE="${2:-}"
 
+# Detect current mode dynamically if not passed as an argument
 [[ -z "$MODE" ]] && MODE="$(cat "$STATE_DIR/current-mode" 2>/dev/null || echo dark)"
 [[ -z "$wallpaper_path" ]] && wallpaper_path="$(readlink -f "$CURRENT_WP_LINK" 2>/dev/null || echo "")"
 
@@ -90,9 +91,22 @@ fi
 [[ "$MODE" == "dark" ]] && ICON_THEME="${YARU_COLOR}-dark" || ICON_THEME="$YARU_COLOR"
 gsettings set org.gnome.desktop.interface icon-theme "$ICON_THEME" 2>/dev/null
 
-# ─── Restart Nautilus to apply icon/theme changes (GTK4 apps need restart) ─────
-#if pgrep -x nautilus >/dev/null 2>&1; then
- #   nautilus -q
- #   sleep 0.3
- #   nohup nautilus --no-default-window >/dev/null 2>&1 & disown
-#fi
+# ─── Final D-Bus Kick-start for GTK4/Libadwaita apps (Nautilus) ──────────────
+# We invert the mode for 50ms to force a genuine GSettings state mutation.
+# This replicates the exact behavior that makes archer-set-mode work.
+
+if [[ "$MODE" == "dark" ]]; then
+    OPPOSITE="light"
+else
+    OPPOSITE="dark"
+fi
+
+# 1. Force state mutation to the opposite mode
+gsettings set org.gnome.desktop.interface color-scheme "prefer-${OPPOSITE}" 2>/dev/null
+gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-${OPPOSITE}" 2>/dev/null
+
+sleep 0.01  # Tiny window to ensure the D-Bus display server registers the shift
+
+# 2. Re-apply the target mode with the fresh Matugen colors
+gsettings set org.gnome.desktop.interface color-scheme "prefer-${MODE}" 2>/dev/null
+gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-${MODE}" 2>/dev/null
