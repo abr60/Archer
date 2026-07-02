@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(13140dff)",
+  background = "rgba(fff8f5ff)",
 
-  error = "rgba(ffb4abff)",
+  error = "rgba(ba1a1aff)",
 
-  error_container = "rgba(93000aff)",
+  error_container = "rgba(ffdad6ff)",
 
-  inverse_on_surface = "rgba(303129ff)",
+  inverse_on_surface = "rgba(ffeee2ff)",
 
-  inverse_primary = "rgba(566422ff)",
+  inverse_primary = "rgba(ffb878ff)",
 
-  inverse_surface = "rgba(e4e3d7ff)",
+  inverse_surface = "rgba(3c2e22ff)",
 
-  on_background = "rgba(e4e3d7ff)",
+  on_background = "rgba(25190fff)",
 
-  on_error = "rgba(690005ff)",
+  on_error = "rgba(ffffffff)",
 
-  on_error_container = "rgba(ffdad6ff)",
+  on_error_container = "rgba(410002ff)",
 
-  on_primary = "rgba(2a3500ff)",
+  on_primary = "rgba(ffffffff)",
 
-  on_primary_container = "rgba(d9eb99ff)",
+  on_primary_container = "rgba(2e1500ff)",
 
-  on_primary_fixed = "rgba(171e00ff)",
+  on_primary_fixed = "rgba(2e1500ff)",
 
-  on_primary_fixed_variant = "rgba(3f4c0bff)",
+  on_primary_fixed_variant = "rgba(6c3a00ff)",
 
-  on_secondary = "rgba(2e331bff)",
+  on_secondary = "rgba(ffffffff)",
 
-  on_secondary_container = "rgba(e0e6c3ff)",
+  on_secondary_container = "rgba(291800ff)",
 
-  on_secondary_fixed = "rgba(191e08ff)",
+  on_secondary_fixed = "rgba(291800ff)",
 
-  on_secondary_fixed_variant = "rgba(444930ff)",
+  on_secondary_fixed_variant = "rgba(5c421aff)",
 
-  on_surface = "rgba(e4e3d7ff)",
+  on_surface = "rgba(25190fff)",
 
-  on_surface_variant = "rgba(c7c8b8ff)",
+  on_surface_variant = "rgba(534437ff)",
 
-  on_tertiary = "rgba(033730ff)",
+  on_tertiary = "rgba(ffffffff)",
 
-  on_tertiary_container = "rgba(bdece1ff)",
+  on_tertiary_container = "rgba(241a00ff)",
 
-  on_tertiary_fixed = "rgba(00201bff)",
+  on_tertiary_fixed = "rgba(241a00ff)",
 
-  on_tertiary_fixed_variant = "rgba(214e46ff)",
+  on_tertiary_fixed_variant = "rgba(584401ff)",
 
-  outline = "rgba(909283ff)",
+  outline = "rgba(867465ff)",
 
-  outline_variant = "rgba(46483cff)",
+  outline_variant = "rgba(d9c2b2ff)",
 
-  primary = "rgba(bdce80ff)",
+  primary = "rgba(8e4e00ff)",
 
-  primary_container = "rgba(3f4c0bff)",
+  primary_container = "rgba(ffdcc1ff)",
 
-  primary_fixed = "rgba(d9eb99ff)",
+  primary_fixed = "rgba(ffdcc1ff)",
 
-  primary_fixed_dim = "rgba(bdce80ff)",
+  primary_fixed_dim = "rgba(ffb878ff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(c4caa9ff)",
+  secondary = "rgba(76592fff)",
 
-  secondary_container = "rgba(444930ff)",
+  secondary_container = "rgba(ffddb1ff)",
 
-  secondary_fixed = "rgba(e0e6c3ff)",
+  secondary_fixed = "rgba(ffddb1ff)",
 
-  secondary_fixed_dim = "rgba(c4caa9ff)",
+  secondary_fixed_dim = "rgba(e6c18dff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(374113ff)",
+  source_color = "rgba(fa931fff)",
 
-  surface = "rgba(13140dff)",
+  surface = "rgba(fff8f5ff)",
 
-  surface_bright = "rgba(393a31ff)",
+  surface_bright = "rgba(fff8f5ff)",
 
-  surface_container = "rgba(1f2019ff)",
+  surface_container = "rgba(ffeadbff)",
 
-  surface_container_high = "rgba(292b23ff)",
+  surface_container_high = "rgba(fce4d2ff)",
 
-  surface_container_highest = "rgba(34352dff)",
+  surface_container_highest = "rgba(f6decdff)",
 
-  surface_container_low = "rgba(1b1c15ff)",
+  surface_container_low = "rgba(fff1e8ff)",
 
-  surface_container_lowest = "rgba(0d0f08ff)",
+  surface_container_lowest = "rgba(ffffffff)",
 
-  surface_dim = "rgba(13140dff)",
+  surface_dim = "rgba(edd6c5ff)",
 
-  surface_tint = "rgba(bdce80ff)",
+  surface_tint = "rgba(8e4e00ff)",
 
-  surface_variant = "rgba(46483cff)",
+  surface_variant = "rgba(f6decdff)",
 
-  tertiary = "rgba(a1d0c5ff)",
+  tertiary = "rgba(725c1aff)",
 
-  tertiary_container = "rgba(214e46ff)",
+  tertiary_container = "rgba(ffe090ff)",
 
-  tertiary_fixed = "rgba(bdece1ff)",
+  tertiary_fixed = "rgba(ffe090ff)",
 
-  tertiary_fixed_dim = "rgba(a1d0c5ff)",
+  tertiary_fixed_dim = "rgba(e1c477ff)",
 
-  image = "/home/pseudo/Walls/Nature/wallhaven-xezpxv.jpg",
+  image = "/home/pseudo/Walls/RGB/wallhaven-d8kgz3.jpg",
 }

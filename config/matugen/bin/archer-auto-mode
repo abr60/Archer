@@ -8,7 +8,7 @@
 # =============================================================================
 
 # Updated path to the post-hook scripts directory
-SCRIPTS_DIR="$HOME/.config/matugen/post-hook-scripts"
+SCRIPTS_DIR="$HOME/.config/matugen/bin"
 
 # Force base-10 math (10#) to prevent octal errors at 08 and 09 minutes/hours
 HOUR=$(date +%H)

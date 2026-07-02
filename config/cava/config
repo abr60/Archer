@@ -17,9 +17,9 @@ channels = stereo
 
 [color]
 gradient = 1
-gradient_color_1 = '#3f4c0b'
-gradient_color_2 = '#bdce80'
-gradient_color_3 = '#d9eb99'
+gradient_color_1 = '#ffdcc1'
+gradient_color_2 = '#8e4e00'
+gradient_color_3 = '#2e1500'
 
 [smoothing]
 monstercat = 1
