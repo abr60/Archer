@@ -6,5 +6,5 @@ if pgrep -f "cava.py" > /dev/null; then
     echo '{"text": "", "class": "hidden"}'
 else
     # Start it in the background
-    python3 ~/.config/waybar/scripts/cava.py
+    python3 ~/.config/waybar/assets/scripts/cava.py
 fi

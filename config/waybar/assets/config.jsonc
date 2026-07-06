@@ -9,42 +9,72 @@
   "spacing": 0,
 
   "modules-left": [
-    "group/left-1",
-    "group/left-2"
+    "group/left-brand",
+    "group/left-system",
+    "group/left-media"
   ],
 
   "modules-center": [
-    "hyprland/workspaces"
+    "group/center-status",
+    "hyprland/workspaces",
+    "group/center-storage"
   ],
 
   "modules-right": [
-    "group/right-2",
-    "clock",
-    "group/right-1"
+    "group/right-time",
+    "group/right-power",
+    "group/tray-expander",
+    "group/right-hardware"
   ],
 
   // ────────────────────────────────────────────────
   // GROUPS
   // ────────────────────────────────────────────────
 
-  "group/left-1": {
-    "orientation": "inherit",
-    "modules": ["custom/resources", "custom/mpris", "temperature", "group/tray-expander"]
+  "group/left-brand": {
+    "orientation": "inherit"
+    // "modules": ["custom/archer"] //"custom/active_window"]
   },
 
-  "group/left-2": {
+  "group/left-system": {
     "orientation": "inherit",
-    "modules": ["custom/weather", "custom/updatespacman", "custom/timer", "custom/hdd", "custom/screenrecording-indicator", "custom/voxtype"]
+    "modules": ["custom/resources", "custom/mpris", "custom/weather",  "custom/updatespacman", "custom/timer"]
   },
 
-  "group/right-1": {
+  "group/left-media": {
     "orientation": "inherit",
-    "modules": ["custom/swaync", "bluetooth", "network", "pulseaudio#microphone", "pulseaudio"]
+    "modules": ["custom/screenrecording-indicator"]
   },
 
-  "group/right-2": {
+  "group/center-status": {
     "orientation": "inherit",
-    "modules": ["custom/lens","battery"]
+    "modules": ["custom/voxtype"]
+  },
+
+  "group/center-storage": {
+    "orientation": "inherit",
+    "modules": ["custom/hdd"]
+  },
+
+  "group/right-time": {
+    "orientation": "inherit",
+    "modules": ["battery", "custom/clock"]
+  },
+
+  "group/right-power": {
+    "orientation": "inherit",
+    "modules": []
+  },
+
+  "group/right-hardware": {
+    "orientation": "inherit",
+    "modules": [
+      "pulseaudio#microphone",
+      "pulseaudio",
+      "custom/swaync",
+      "network",
+      "bluetooth"
+    ]
   },
 
   "group/tray-expander": {
@@ -56,6 +86,7 @@
     "modules": [
       "custom/expand-icon",
       "backlight",
+      "temperature",
       "custom/menu"
     ]
   },
@@ -65,7 +96,7 @@
   // ────────────────────────────────────────────────
 
   "custom/archer": {
-    "format": "<span size='14500'></span>"
+    "format": "<span size='14500'></span>"
   },
 
   "custom/active_window": {
@@ -84,16 +115,16 @@
     "tooltip": true
   },
 
-  "custom/mpris": {
-    "exec": "~/.config/waybar/assets/scripts/mpris.sh",
-    "interval": 1,
-    "return-type": "json",
-    "on-click": "playerctl play-pause",
-    "on-click-right": "timeout 60s kitty --class kitty --title rmpc -e rmpc",
-    "on-scroll-up": "playerctl next",
-    "on-scroll-down": "playerctl previous",
-    "tooltip": false
-  },
+"custom/mpris": {
+  "exec": "~/.config/waybar/assets/scripts/mpris.sh",
+  "interval": 1,
+  "return-type": "json",
+  "on-click": "playerctl play-pause",
+  "on-click-right": "timeout 60s kitty --class kitty --title rmpc -e rmpc",
+  "on-scroll-up": "playerctl next",
+  "on-scroll-down": "playerctl previous",
+  "tooltip": false
+},
 
   "custom/screenrecording-indicator": {
     "exec": "$ARCHER_PATH/default/waybar/indicators/screen-recording.sh",
@@ -102,7 +133,7 @@
     "on-click": "capture-screenrecording"
   },
 
-  "custom/timer": {
+    "custom/timer": {
     "exec": "~/.config/waybar/assets/scripts/timer",
     "return-type": "json",
     "format": "{}",
@@ -114,6 +145,7 @@
     "tooltip": true,
     "escape": true
   },
+
 
   // ────────────────────────────────────────────────
   // CENTER MODULES
@@ -228,12 +260,12 @@
     "exec": "wttrbar --nerd --location chittagong",
     "return-type": "json",
     "interval": 60,
-    "tooltip": true
+    "tooltip": false
   },
 
   "custom/updatespacman": {
     "format": "{} {icon}",
-    "format-icons": { "has-updates": "", "updated": "" },
+    "format-icons": { "has-updates": "", "updated": "" },
     "return-type": "json",
     "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300",
     "on-click": "launch-floating-terminal-with-presentation update"
@@ -252,27 +284,26 @@
   // ────────────────────────────────────────────────
 
   "custom/expand-icon": {
-    "format": "|",
+    "format": "•",
     "tooltip": false
   },
 
   "backlight": {
     "device": "intel_backlight",
-    "format": "{icon} {percent}",
-    "format-icons": ["󰄰", "󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪥"],
-    "min-length": 6 ,
+    "format": "{percent} {icon}",
+    "format-icons": ["🌑", "🌒", "🌓", "🌔", "🌕"],
+    "min-length": 5,
     "tooltip": false
   },
 
-"temperature": {
+  "temperature": {
     "hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
-    "format": "{icon} {temperatureC}°",
-    "format-critical": "{icon} {temperatureC}°C",
+    "format": "{temperatureC}°C",
+    "format-critical": " {temperatureC}°C",
     "critical-threshold": 75,
     "interval": 5,
-    "tooltip": false,
-    "format-icons": ["", "", "", "", ""]
-},
+    "tooltip": false
+  },
 
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
@@ -320,48 +351,29 @@
     "tooltip": false
   },
 
-"clock": {
-    "format": "{:%I:%M %p}",
-    "format-alt": "{:%A, %d/%m}",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>",
-    "calendar": {
-        "mode": "month",
-        "on-scroll": 1,
-        "format": {
-            "months":   "<span color='#ffead3'><b>{}</b></span>",
-            "days":     "<span color='#ecc6d9'><b>{}</b></span>",
-            "weeks":    "<span color='#99ffdd'><b>W{}</b></span>",
-            "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
-            "today":    "<span color='#ff6699'><b><u>{}</u></b></span>"
-        }
+  "custom/clock": {
+    "exec": "~/.config/waybar/assets/scripts/clock.sh",
+    "interval": 1,
+    "return-type": "json",
+    "tooltip": false
+  },
+
+  "battery": {
+    "format": "{capacity}",
+    "format-charging": "{icon} {capacity}",
+    "format-icons": {
+      "charging": [""],
+      "format-full": "UNPLUG!"
     },
-    "actions": {
-        "on-click-right": "mode",
-        "on-scroll-up": "shift_up",
-        "on-scroll-down": "shift_down"
-    }
-},
-
-"battery": {
-  "format": "{capacity}",
-  "format-charging": "{icon} {capacity}",
-  "format-icons": { "charging": [""] },
-  "format-full": "UNPLUG!",
-  "states": { "warning": 20, "critical": 10 },
-  "interval": 5,
-  "on-click": "menu power"
-},
-
-"custom/lens": {
-  "format": "<span size='16000'>󰧶 </span>",
-  "on-click": "google-lens-capture",
-  "tooltip": false
-},
+    "states": { "warning": 20, "critical": 10 },
+    "interval": 5,
+    "on-click": "menu power"
+  },
 
   	"custom/swaync": {
-		"tooltip": false,
+		"tooltip": true,
 		"tooltip-format": "Left Click: Launch Notification Center\nRight Click: Do not Disturb",
-		"format": " {icon}",
+		"format": "{icon} ",
 		"format-icons": {
 			"notification": "<span foreground='red'><sup></sup></span>",
 			"none": "",
@@ -380,8 +392,9 @@
 		"escape": true
 	},
 
+
   "custom/menu": {
-    "format": "  󰮫 ",
+    "format": "   ",
     "menu": "on-click",
     "tooltip": false,
     "menu-file": "$HOME/.config/waybar/assets/menu/menu.xml",

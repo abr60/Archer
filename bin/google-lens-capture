@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# google-lens-capture: Capture screen region and search via a direct public URL
+# Requires: grim, slurp, curl, jq, launch-webapp (or xdg-open)
+
+set -e
+
+IMG_FILE="/tmp/lens-$(date +%s).png"
+
+# 1. Capture the region using grim/slurp
+grim -g "$(slurp)" "$IMG_FILE" || exit 1
+
+# 2. Upload to Catbox (returns a direct link ending in .png)
+PUBLIC_URL=$(curl -s -F "reqtype=fileupload" -F "fileToUpload=@${IMG_FILE}" https://catbox.moe/user/api.php)
+
+# 3. Double-check if the upload returned a valid URL
+if [[ ! "$PUBLIC_URL" =~ ^https:// ]]; then
+    echo "Upload failed. Trying fallback host..."
+    # Fallback to Uguu if Catbox is down (extracts raw url from json response)
+    PUBLIC_URL=$(curl -s -F "files[]=@${IMG_FILE}" https://uguu.se/upload.php | jq -r '.files[0].url')
+fi
+
+# 4. Construct Google's official native uploadbyurl link
+ENCODED_URL=$(echo -n "$PUBLIC_URL" | jq -sRr @uri)
+LENS_URL="https://lens.google.com/uploadbyurl?url=${ENCODED_URL}"
+
+# 5. Launch it
+launch-webapp "$LENS_URL"
+
+# 6. Clean up local copy
+rm "$IMG_FILE"

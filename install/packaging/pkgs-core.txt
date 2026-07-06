@@ -40,7 +40,7 @@ xdg-desktop-portal-gtk
 xdg-user-dirs
 xdg-user-dirs-gtk
 swaync
-waybar
+waybar-git
 swayosd
 rofi
 sddm
@@ -91,6 +91,7 @@ ttf-jetbrains-mono-nerd
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
+noto-fonts-bangla
 fontconfig
 
 # --- Theming ---
@@ -100,6 +101,8 @@ qt6ct
 kvantum
 kvantum-qt5
 gnome-themes-extra
+gnome-tweaks
+yaru-icon-theme
 
 # --- Applications ---
 kitty

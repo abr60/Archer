@@ -1,0 +1,404 @@
+/* =========================================================
+   intricate.css — Unified M3 Expressive (Refined)
+   GTK3 CSS — no :root, no var(), no Pango font shorthand
+   ========================================================= */
+
+@import "../waybar/matugen.css";
+
+/* ── Reset & M3 Base ────────────────────────────────────── */
+* {
+    color: @on_surface;
+    border: none;
+    border-radius: 0;
+    font-family: 'JetBrainsMono Nerd Font', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Waybar Container ────────────────────────────────────── */
+window#waybar {
+    background-color: @surface_container;
+    border: 1px solid alpha(@on_surface, 0.08);
+    border-radius: 15px;
+    margin: 6px 6px 0px 6px;
+    padding: 4px 10px;
+    box-shadow: none;
+}
+
+/* ── Tooltip ────────────────────────────────────────────── */
+tooltip {
+    background: @surface_container_low;
+    border: 1px solid alpha(@on_surface, 0.15);
+    border-radius: 6px;
+}
+
+tooltip label {
+    color: @on_surface;
+    padding: 6px;
+}
+
+/* ── Group Consolidation ────────────────────────────────── */
+#left-brand,
+#left-system,
+#left-media,
+#center-status,
+#center-storage,
+#right-time,
+#right-power,
+#tray-expander,
+#right-hardware {
+    background: transparent;
+    border: none;
+    margin: 0 4px;
+    padding: 0;
+}
+
+/* ── Inline Spacing (All Groups) ────────────────────────── */
+#left-brand > widget > *,
+#left-system > widget > *,
+#left-media > widget > *,
+#center-status > widget > *,
+#center-storage > widget > *,
+#right-time > widget > *,
+#right-power > widget > * {
+    padding: 0 12px;
+    border: none;
+}
+
+#right-hardware > widget > * {
+    padding: 0 10px;
+    border: none;
+    font-size: 16px;
+}
+
+#right-hardware > widget > #pulseaudio.microphone {
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+#right-hardware > widget > #bluetooth {
+    padding-right: 17px;
+    font-size: 21px;
+}
+
+#right-hardware > widget > #network {
+    padding-right: 18px;
+    font-size: 19px;
+}
+
+#right-hardware > widget > #custom-swaync {
+    padding-right: 6px;
+    font-size: 24px;
+}
+
+/* ── Unified Hover State (No Layout Shifts) ────────────── */
+#left-brand > widget > *:hover,
+#left-system > widget > *:hover,
+#left-media > widget > *:hover,
+#center-status > widget > *:hover,
+#center-storage > widget > *:hover,
+#right-time > widget > *:hover,
+#right-power > widget > *:hover,
+#right-hardware > widget > *:hover {
+    background-color: alpha(@primary, 0.12);
+    border-radius: 9999px;
+    color: @primary;
+    transition: background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#left-system > widget > #custom-resources {
+    padding-right: 15px;
+}
+
+#left-system > widget > #custom-mpris {
+    padding-left: 13px;
+}
+
+#left-system > widget > #custom-timer {
+    font-family: Doto;
+    font-size: 19px;
+}
+
+/* --- Workspaces --- */
+
+button {
+  box-shadow: inset 0 -3px transparent;
+  border: none;
+  border-radius: 0;
+  transition: 0.3s ease-in-out;
+}
+
+button:hover {
+  background: inherit;
+}
+
+
+#workspaces {
+  border-radius: 16px;
+  background-color: transparent;
+  margin: 4px 0px;
+  padding: 0px;
+}
+
+#workspaces button {
+  padding: 0px 6px;
+  margin: 0px 2px;
+  border-radius: 12px;
+  color: @on_surface_variant;
+  background-color: transparent;
+}
+
+#workspaces button.active {
+    background-color: @tertiary_container;
+    color: @on_tertiary_container;
+    min-width: 30px;
+    border-radius: 17px;
+}
+
+#workspaces button.empty {
+  color: @on_surface_variant;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+#workspaces button.empty.active {
+  background-color: @tertiary_container;
+  color: @on_tertiary_container;
+  border-radius: 17px;
+  box-shadow: none;
+  margin: 0px 2px;
+  padding: 0px 6px;
+  opacity: 1;
+}
+
+#workspaces button:hover.empty,
+#workspaces button:hover {
+    background-color: alpha(@tertiary_container, 0.6);
+    color: @on_tertiary_container;
+    border-radius: 17px;
+    opacity: 1;
+}
+
+/* ── Clock (Intentionally Restrained) ─────────────────── */
+#custom-clock {
+    font-size: 12px;
+    color: @on_secondary_container;
+    border-radius: 9999px;
+    margin: 2px 4px;
+    padding: 2px 10px;
+    font-weight: 700;
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --- Base MPRIS Styling --- */
+#custom-mpris {
+    font-size: 13px;
+    padding-left: 4px;
+    border-radius: 9999px;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --- Playing State --- */
+#custom-mpris.playing {
+    color: @primary;
+    font-weight: 700;
+}
+
+/* --- Paused State --- */
+#custom-mpris.paused {
+    color: alpha(@on_surface, 0.7);
+    font-weight: 500;
+}
+
+/* --- Hover State --- */
+#custom-mpris:hover {
+    background-color: alpha(@primary, 0.12);
+    color: @primary;
+}
+
+/* ── Resource Usage ────────────────────────────────────── */
+#custom-resources {
+    font-size: 12px;
+    font-style: italic;
+    color: alpha(@primary, 0.8);
+    padding-right: 4px;
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Custom Modules ────────────────────────────────────── */
+#custom-timer {
+    font-family: "Doto";
+    font-weight: 900;
+    font-size: 18px;
+}
+
+
+
+#custom-mode {
+    color: @primary;
+    font-size: 16px;
+    padding: 0 4px;
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#custom-weather {
+    color: @on_surface;
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#custom-wifi-qr,
+#bluetooth {
+    font-size: 20px;
+    color: @primary;
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#custom-wifi-qr:hover {
+    color: @tertiary;
+    background-color: alpha(@tertiary, 0.15);
+    border-radius: 9999px;
+}
+
+#custom-cava,
+#custom-arch {
+    opacity: 0;
+    font-size: 0;
+    padding: 0;
+    margin: 0;
+}
+
+/* ── Notification Bell (Bell Shake Animation) ────────── */
+#custom-swaync {
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#custom-swaync:hover {
+    animation-name: bell-shake;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+}
+
+@keyframes bell-shake {
+    0%   { margin-left:  0px;  margin-right:  0px; }
+    15%  { margin-left:  6px;  margin-right: -6px; }
+    30%  { margin-left: -5px;  margin-right:  5px; }
+    45%  { margin-left:  4px;  margin-right: -4px; }
+    60%  { margin-left: -3px;  margin-right:  3px; }
+    75%  { margin-left:  2px;  margin-right: -2px; }
+    90%  { margin-left: -1px;  margin-right:  1px; }
+    100% { margin-left:  0px;  margin-right:  0px; }
+}
+
+/* ── Tray (Drawer Support) ─────────────────────────────– */
+#group-tray-expander {
+    background: transparent;
+}
+
+#group-tray-expander > widget {
+    padding: 0 4px;
+    border: none;
+}
+
+#group-tray-expander > button {
+    padding: 0 12px;
+    font-weight: 700;
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#tray-group-item {
+    padding: 0 6px;
+    margin: 0 4px;
+}
+
+/* ── Battery (Inverted Pill with State Context) ─────── */
+#battery {
+    background-color: @on_surface;
+    color: @surface;
+    border-radius: 9999px;
+    padding: 2px 10px;
+    margin: 9px 4px;
+    margin-right: 25px; /* ◄── Add this line to push the clock away */
+    font-weight: 700;
+    transition: background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#battery.warning {
+    color: @on_tertiary_container;
+    background-color: @tertiary_container;
+    font-weight: 900;
+}
+
+#battery.critical:not(.charging) {
+    color: @on_error_container;
+    background-color: @error_container;
+    font-weight: 900;
+}
+
+/* ── Network & Timer (Error States) ────────────────────– */
+#network.disconnected {
+    color: @on_error_container;
+    background-color: @error_container;
+    border-radius: 9999px;
+    padding: 2px 10px;
+    font-weight: 700;
+}
+
+#custom-timer.reset {
+    color: @on_error_container;
+    background-color: @error_container;
+    border-radius: 9999px;
+    padding: 2px 10px;
+}
+
+/* ── Muted States (Reduced Emphasis) ────────────────── */
+#pulseaudio:not(.microphone).muted,
+#pulseaudio.microphone.source-muted {
+    color: alpha(@on_surface, 0.35);
+    opacity: 0.6;
+    transition: opacity 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Dropdown Menu (GTK Native) ────────────────────── */
+menu {
+    background-color: @surface_container_low;
+    border: 1px solid alpha(@on_surface, 0.12);
+    border-radius: 16px;
+    padding: 6px;
+    margin-top: 6px;
+    box-shadow: none;
+    min-width: 0px;
+}
+
+menu menu {
+    margin-left: 4px;
+    margin-top: -4px;
+}
+
+menu menuitem {
+    border: none;
+    margin-bottom: 2px;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+menu menuitem:hover {
+    background-color: @primary_container;
+    color: @on_primary_container;
+    font-weight: 700;
+}
+
+menu separator {
+    background-color: alpha(@on_surface, 0.08);
+    min-height: 1px;
+    margin: 6px 8px;
+}

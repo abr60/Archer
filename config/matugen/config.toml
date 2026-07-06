@@ -63,6 +63,24 @@ output_path = "~/.config/rofi/matugen.rasi"
 input_path  = "~/.config/matugen/templates/rmpc.ron"
 output_path = "~/.config/rmpc/themes/matugen.ron"
 
+[templates.btop]
+input_path = '~/.config/matugen/templates/btop.theme'
+output_path = '~/.config/btop/themes/matugen.theme'
+post_hook = 'pkill -USR2 btop || true'
+
+[templates.mako]
+input_path = '~/.config/matugen/templates/mako'
+output_path = '~/.config/mako/mako-colors'
+post_hook = 'makoctl reload'
+
+[templates.yazi]
+input_path = '~/.config/matugen/templates/yazi-theme.toml'
+output_path = '~/.config/yazi/theme.toml'
+
+[templates.obsidian]
+input_path = '~/.config/matugen/templates/obsidian.css'
+output_path = '~/Documents/Obsidian Vault/.obsidian/snippets/matugen.css'
+
 # ─── Disabled ─────────────────────────────────────────────────────────────────
 #[templates.walker]
 #[templates.ghostty]

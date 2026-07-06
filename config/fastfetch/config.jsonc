@@ -68,7 +68,7 @@
       "type": "command",
       "key": "\ue900 OS",
       "keyColor": "blue",
-      "text": "version=$(version); echo \"Omarchy $version\""
+      "text": "version=$(version); echo \"Arch $version\""
     },
     {
       "type": "command",

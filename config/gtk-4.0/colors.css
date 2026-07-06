@@ -5,13 +5,13 @@
 
 @media (prefers-color-scheme: light) {
     /* Accents */
-    @define-color accent_color #8e4e00;
-    @define-color accent_hover_color rgba(142, 78, 0, 0.08);
-    @define-color accent_vibrant_hover_color rgba(142, 78, 0, 0.18);
-    @define-color accent_active_color rgba(142, 78, 0, 0.1);
-    @define-color accent_vibrant_active_color rgba(142, 78, 0, 0.26);
+    @define-color accent_color #b12e00;
+    @define-color accent_hover_color rgba(177, 46, 0, 0.08);
+    @define-color accent_vibrant_hover_color rgba(177, 46, 0, 0.18);
+    @define-color accent_active_color rgba(177, 46, 0, 0.1);
+    @define-color accent_vibrant_active_color rgba(177, 46, 0, 0.26);
     @define-color accent_fg_color #ffffff;
-    @define-color accent_bg_color #8e4e00;
+    @define-color accent_bg_color #b12e00;
     @define-color destructive_bg_color #ffdad6;
     @define-color destructive_fg_color #410002;
     @define-color destructive_color #ba1a1a;
@@ -20,65 +20,65 @@
     @define-color success_color #374B3E;
 
     /* Base surfaces */
-    @define-color window_bg_color #fff8f5;
-    @define-color window_fg_color #25190f;
-    @define-color headerbar_bg_color #ffeadb;
-    @define-color headerbar_backdrop_color #ffeadb;
-    @define-color headerbar_fg_color #25190f;
-    @define-color card_bg_color #ffeadb;
-    @define-color card_fg_color #25190f;
-    @define-color sidebar_bg_color #fff8f5;
-    @define-color sidebar_fg_color #25190f;
-    @define-color sidebar_row_active_bg_color #ffddb1;
-    @define-color sidebar_row_active_fg_color #291800;
-    @define-color secondary_sidebar_bg_color #fff1e8;
-    @define-color secondary_sidebar_backdrop_color #fff1e8;
-    @define-color secondary_sidebar_fg_color #534437;
+    @define-color window_bg_color #fff8f6;
+    @define-color window_fg_color #271814;
+    @define-color headerbar_bg_color #ffe9e4;
+    @define-color headerbar_backdrop_color #ffe9e4;
+    @define-color headerbar_fg_color #271814;
+    @define-color card_bg_color #ffe9e4;
+    @define-color card_fg_color #271814;
+    @define-color sidebar_bg_color #fff8f6;
+    @define-color sidebar_fg_color #271814;
+    @define-color sidebar_row_active_bg_color #ffdbc7;
+    @define-color sidebar_row_active_fg_color #301401;
+    @define-color secondary_sidebar_bg_color #fff1ed;
+    @define-color secondary_sidebar_backdrop_color #fff1ed;
+    @define-color secondary_sidebar_fg_color #55423d;
     @define-color sidebar_border_color @sidebar_bg_color;
     @define-color sidebar_backdrop_color @sidebar_bg_color;
     @define-color view_bg_color #ffffff;
-    @define-color view_fg_color #25190f;
+    @define-color view_fg_color #271814;
     @define-color overview_bg_color #ffffff;
-    @define-color overview_fg_color #25190f;
+    @define-color overview_fg_color #271814;
 
     /* Popups */
-    @define-color popover_bg_color #f6decd;
-    @define-color popover_fg_color #25190f;
-    @define-color popover_fg_hover_color rgba(37, 25, 15, 0.08);
-    @define-color popover_fg_active_color rgba(37, 25, 15, 0.14);
-    @define-color dialog_bg_color #fce4d2;
-    @define-color dialog_fg_color #25190f;
-    @define-color thumbnail_bg_color #fce4d2;
-    @define-color thumbnail_fg_color #25190f;
+    @define-color popover_bg_color #f9dcd5;
+    @define-color popover_fg_color #271814;
+    @define-color popover_fg_hover_color rgba(39, 24, 20, 0.08);
+    @define-color popover_fg_active_color rgba(39, 24, 20, 0.14);
+    @define-color dialog_bg_color #ffe2db;
+    @define-color dialog_fg_color #271814;
+    @define-color thumbnail_bg_color #ffe2db;
+    @define-color thumbnail_fg_color #271814;
 
     /* Material tokens */
-    @define-color inverse_on_surface #ffeee2;
-    @define-color inverse_primary #ffb878;
-    @define-color inverse_surface #3c2e22;
-    @define-color surface_container_highest #f6decd;
-    @define-color surface_container_high #fce4d2;
-    @define-color surface_container_low #fff1e8;
-    @define-color on_surface_variant #534437;
-    @define-color surface_variant #f6decd;
-    @define-color outline #867465;
-    @define-color outline_variant #d9c2b2;
+    @define-color inverse_on_surface #ffede8;
+    @define-color inverse_primary #ffb5a0;
+    @define-color inverse_surface #3d2c28;
+    @define-color surface_container_highest #f9dcd5;
+    @define-color surface_container_high #ffe2db;
+    @define-color surface_container_low #fff1ed;
+    @define-color on_surface_variant #55423d;
+    @define-color surface_variant #f9dcd5;
+    @define-color outline #89726c;
+    @define-color outline_variant #dcc1ba;
 
     /* State layers */
-    @define-color inverse_on_surface_hover rgba(255, 238, 226, 0.08);
-    @define-color inverse_on_surface_active rgba(255, 238, 226, 0.18);
-    @define-color inverse_primary_hover rgba(255, 184, 120, 0.08);
-    @define-color inverse_primary_active rgba(255, 184, 120, 0.18);
+    @define-color inverse_on_surface_hover rgba(255, 237, 232, 0.08);
+    @define-color inverse_on_surface_active rgba(255, 237, 232, 0.18);
+    @define-color inverse_primary_hover rgba(255, 181, 160, 0.08);
+    @define-color inverse_primary_active rgba(255, 181, 160, 0.18);
 }
 
 @media (prefers-color-scheme: dark) {
     /* Accents */
-    @define-color accent_color #ffb878;
-    @define-color accent_hover_color rgba(255, 184, 120, 0.08);
-    @define-color accent_vibrant_hover_color rgba(255, 184, 120, 0.18);
-    @define-color accent_active_color rgba(255, 184, 120, 0.1);
-    @define-color accent_vibrant_active_color rgba(255, 184, 120, 0.2);
-    @define-color accent_fg_color #4c2700;
-    @define-color accent_bg_color #ffb878;
+    @define-color accent_color #ffb5a0;
+    @define-color accent_hover_color rgba(255, 181, 160, 0.08);
+    @define-color accent_vibrant_hover_color rgba(255, 181, 160, 0.18);
+    @define-color accent_active_color rgba(255, 181, 160, 0.1);
+    @define-color accent_vibrant_active_color rgba(255, 181, 160, 0.2);
+    @define-color accent_fg_color #601500;
+    @define-color accent_bg_color #ffb5a0;
     @define-color destructive_bg_color #93000a;
     @define-color destructive_fg_color #ffdad6;
     @define-color destructive_color #ffb4ab;
@@ -87,54 +87,54 @@
     @define-color success_color #B5CCBA;
 
     /* Base surfaces */
-    @define-color window_bg_color #1c1107;
-    @define-color window_fg_color #f6decd;
-    @define-color headerbar_bg_color #291d12;
-    @define-color headerbar_backdrop_color #291d12;
-    @define-color headerbar_fg_color #f6decd;
-    @define-color card_bg_color #291d12;
-    @define-color card_fg_color #f6decd;
-    @define-color sidebar_bg_color #1c1107;
-    @define-color sidebar_fg_color #f6decd;
-    @define-color sidebar_row_active_bg_color #5c421a;
-    @define-color sidebar_row_active_fg_color #ffddb1;
-    @define-color secondary_sidebar_bg_color #25190f;
-    @define-color secondary_sidebar_backdrop_color #25190f;
-    @define-color secondary_sidebar_fg_color #d9c2b2;
+    @define-color window_bg_color #1e100c;
+    @define-color window_fg_color #f9dcd5;
+    @define-color headerbar_bg_color #2b1c18;
+    @define-color headerbar_backdrop_color #2b1c18;
+    @define-color headerbar_fg_color #f9dcd5;
+    @define-color card_bg_color #2b1c18;
+    @define-color card_fg_color #f9dcd5;
+    @define-color sidebar_bg_color #1e100c;
+    @define-color sidebar_fg_color #f9dcd5;
+    @define-color sidebar_row_active_bg_color #643e24;
+    @define-color sidebar_row_active_fg_color #ffdbc7;
+    @define-color secondary_sidebar_bg_color #271814;
+    @define-color secondary_sidebar_backdrop_color #271814;
+    @define-color secondary_sidebar_fg_color #dcc1ba;
     @define-color sidebar_border_color @sidebar_bg_color;
     @define-color sidebar_backdrop_color @sidebar_bg_color;
-    @define-color view_bg_color #160c04;
-    @define-color view_fg_color #f6decd;
-    @define-color overview_bg_color #160c04;
-    @define-color overview_fg_color #f6decd;
+    @define-color view_bg_color #180b07;
+    @define-color view_fg_color #f9dcd5;
+    @define-color overview_bg_color #180b07;
+    @define-color overview_fg_color #f9dcd5;
 
     /* Popups */
-    @define-color popover_bg_color #403226;
-    @define-color popover_fg_color #f6decd;
-    @define-color popover_fg_hover_color rgba(246, 222, 205, 0.08);
-    @define-color popover_fg_active_color rgba(246, 222, 205, 0.14);
-    @define-color dialog_bg_color #35271c;
-    @define-color dialog_fg_color #f6decd;
-    @define-color thumbnail_bg_color #35271c;
-    @define-color thumbnail_fg_color #f6decd;
+    @define-color popover_bg_color #42312c;
+    @define-color popover_fg_color #f9dcd5;
+    @define-color popover_fg_hover_color rgba(249, 220, 213, 0.08);
+    @define-color popover_fg_active_color rgba(249, 220, 213, 0.14);
+    @define-color dialog_bg_color #372622;
+    @define-color dialog_fg_color #f9dcd5;
+    @define-color thumbnail_bg_color #372622;
+    @define-color thumbnail_fg_color #f9dcd5;
 
     /* Material tokens */
-    @define-color inverse_on_surface #3c2e22;
-    @define-color inverse_primary #8e4e00;
-    @define-color inverse_surface #f6decd;
-    @define-color surface_container_highest #403226;
-    @define-color surface_container_high #35271c;
-    @define-color surface_container_low #25190f;
-    @define-color on_surface_variant #d9c2b2;
-    @define-color surface_variant #534437;
-    @define-color outline #a18d7e;
-    @define-color outline_variant #534437;
+    @define-color inverse_on_surface #3d2c28;
+    @define-color inverse_primary #b12e00;
+    @define-color inverse_surface #f9dcd5;
+    @define-color surface_container_highest #42312c;
+    @define-color surface_container_high #372622;
+    @define-color surface_container_low #271814;
+    @define-color on_surface_variant #dcc1ba;
+    @define-color surface_variant #55423d;
+    @define-color outline #a38b85;
+    @define-color outline_variant #55423d;
 
     /* State layers */
-    @define-color inverse_on_surface_hover rgba(60, 46, 34, 0.08);
-    @define-color inverse_on_surface_active rgba(60, 46, 34, 0.18);
-    @define-color inverse_primary_hover rgba(142, 78, 0, 0.08);
-    @define-color inverse_primary_active rgba(142, 78, 0, 0.18);
+    @define-color inverse_on_surface_hover rgba(61, 44, 40, 0.08);
+    @define-color inverse_on_surface_active rgba(61, 44, 40, 0.18);
+    @define-color inverse_primary_hover rgba(177, 46, 0, 0.08);
+    @define-color inverse_primary_active rgba(177, 46, 0, 0.18);
 }
 
 /* ── Global ───────────────────────────────────────────────────────────────── */
