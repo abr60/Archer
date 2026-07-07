@@ -1,27 +1,31 @@
-/* Matugen Earth/Olive Theme for swayOSD */
-
 @import "../swayosd/matugen.css";
 
 window {
     border-radius: 12px;
-    opacity: 0.95;
-    /* Use outline for a subtle border that matches the theme */
-    border: 2px solid @outline_variant;
-    /* surface_container gives it a slightly distinct look from the wallpaper */
+    opacity: 0.90;
+    border: 1px solid @outline_variant;
     background-color: @surface_container;
 }
 
 label {
     font-family: 'JetBrainsMono Nerd Font';
     font-size: 11pt;
-    font-weight: bold;
-    /* Switched from @error to @on_surface for readability */
+    font-weight: 500;
     color: @on_surface;
 }
 
 image {
-    /* Primary (cacb77) looks great as an accent icon color */
     color: @primary;
+}
+
+
+#percentage-label, 
+label {
+    opacity: 0;
+    font-size: 0px;
+    min-width: 0px;
+    margin: 0px;
+    padding: 0px;
 }
 
 progressbar {
@@ -29,11 +33,10 @@ progressbar {
     padding-bottom: 8px;
     margin: 8px 0 0 0;
     min-height: 10px;
-    min-width: 180px;
+    min-width: 1px;
 }
 
 progressbar trough {
-    /* Using alpha on the container color for a subtle recessed look */
     background: @surface_container_highest;
     border-radius: 999px;
     border: 1px solid @outline_variant;
@@ -41,7 +44,7 @@ progressbar trough {
 }
 
 progress {
-    /* High visibility accent for the actual progress */
     background-color: @primary;
     border-radius: 999px;
 }
+

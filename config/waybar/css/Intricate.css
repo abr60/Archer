@@ -69,10 +69,10 @@ tooltip label {
 }
 
 /* ── Unified Hover State (No Layout Shifts) ────────────── */
-#left-1 > widget > *:hover,
+#left-1 > widget > *:not(#temperature):hover,
 #left-2 > widget > *:hover,
 #right-1 > widget > *:hover,
-#right-2 > widget > *:hover {
+#right-2 > widget > *:not(#battery):hover {
     background-color: alpha(@primary, 0.12);
     border-radius: 9999px;
     color: @primary;
@@ -99,7 +99,6 @@ button {
   box-shadow: inset 0 -3px transparent;
   border: none;
   border-radius: 0;
-  transition: 0.3s ease-in-out;
 }
 
 button:hover {
@@ -119,13 +118,17 @@ button:hover {
   border-radius: 12px;
   color: @on_surface_variant;
   background-color: transparent;
+  
+  min-width: 16px; 
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 #workspaces button.active {
-    background-color: @tertiary_container;
-    color: @on_tertiary_container;
-    min-width: 40px;
-    border-radius: 17px;
+  background-color: @tertiary_container;
+  color: @on_tertiary_container;
+  min-width: 40px;
+  border-radius: 17px;
+  padding: 0px 5px; /* Slight padding bump helps the slide feel fluid */
 }
 
 #workspaces button.empty {
@@ -140,16 +143,16 @@ button:hover {
   border-radius: 17px;
   box-shadow: none;
   margin: 0px 2px;
-  padding: 0px 6px;
+  min-width: 40px;
   opacity: 1;
 }
 
 #workspaces button:hover.empty,
 #workspaces button:hover {
-    background-color: alpha(@tertiary_container, 0.6);
-    color: @on_tertiary_container;
-    border-radius: 17px;
-    opacity: 1;
+  background-color: alpha(@tertiary_container, 0.6);
+  color: @on_tertiary_container;
+  border-radius: 17px;
+  opacity: 1;
 }
 
 /* ── Clock (Intentionally Restrained) ─────────────────── */
@@ -303,6 +306,13 @@ button:hover {
     font-weight: 900;
 }
 
+/* -- power-profiles-daemon */
+#power-profiles-daemon {
+    color: @primary;
+    padding: 0px 4px;
+    font-size: 16;
+}
+
 /* ── Network State ──────────────────────────────– */
 #network {
     color: @on_surface;
@@ -381,4 +391,8 @@ menu separator {
     color: alpha(@primary, 0.85);
     font-size: 19px;
     padding: 0 10px;
+}
+
+#backlight {
+    font-size: 16px;
 }

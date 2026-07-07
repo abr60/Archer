@@ -42,10 +42,14 @@
     "modules": ["custom/swaync", "bluetooth", "network", "pulseaudio#microphone", "pulseaudio"]
   },
 
-  "group/right-2": {
+"group/right-2": {
     "orientation": "inherit",
-    "modules": ["custom/lens","battery"]
-  },
+    "modules": [
+        "custom/lens",
+        "power-profiles-daemon",
+        "battery"
+    ]
+},
 
   "group/tray-expander": {
     "orientation": "inherit",
@@ -158,10 +162,8 @@
 		"title<.*messenger.*>": "",
 		"title<.*facebook.*>": " ",
 		"title<.*reddit.*>": "",
-		"title<.*ChatGPT.*>": "󰚩",
-    "class<.*ChatGPT.*>": "󰚩",
-		"title<.*deepseek.*>": "󰚩",
-		"title<.*qwen.*>": "󰚩",
+    "title<.*(ChatGPT|[Cc]laude|[Dd]eep[Ss]eek|[Qq]wen).*>": "󱚡",
+    "class<.*(ChatGPT|[Cc]laude|[Dd]eep[Ss]eek|[Qq]wen).*>": "󱚡",
 		"class<subl>": "󰅳",
 		"class<slack>": "",
 		"class<mpv>": "",
@@ -228,7 +230,7 @@
     "exec": "wttrbar --nerd --location chittagong",
     "return-type": "json",
     "interval": 60,
-    "tooltip": true
+    "tooltip": false
   },
 
   "custom/updatespacman": {
@@ -259,8 +261,10 @@
   "backlight": {
     "device": "intel_backlight",
     "format": "{icon} {percent}",
-    "format-icons": ["󰄰", "󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪥"],
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
     "min-length": 6 ,
+    "on-scroll-up": "swayosd-client --brightness raise",
+    "on-scroll-down": "swayosd-client --brightness lower",
     "tooltip": false
   },
 
@@ -301,7 +305,7 @@
   "pulseaudio#microphone": {
     "format": "{format_source}",
     "format-source": " {volume}",
-    "format-source-muted": " Muted",
+    "format-source-muted": " {volume}",
     "on-click": "pamixer --default-source -t",
     "on-scroll-up": "pamixer --default-source --increase 5",
     "on-scroll-down": "pamixer --default-source --decrease 5",
@@ -311,10 +315,12 @@
 
   "pulseaudio": {
     "format": "{icon} {volume}",
-    "format-muted": "🔇 Muted",
+    "format-muted": " {volume}",
     "format-icons": ["", "", ""],
     "max-volume": 130,
     "reverse-scrolling": 1,
+    "on-scroll-up": "swayosd-client --output-volume raise",
+    "on-scroll-down": "swayosd-client --output-volume lower",
     "on-click": "pamixer -t",
     "on-click-right": "timeout 15s launch-audio",
     "tooltip": false
@@ -342,6 +348,18 @@
     }
 },
 
+"power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power Profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+        "default": " ",
+        "performance": " ",
+        "balanced": " ",
+        "power-saver": "󰌪 "
+    }
+},
+
 "battery": {
   "format": "{capacity}",
   "format-charging": "{icon} {capacity}",
@@ -361,7 +379,7 @@
   	"custom/swaync": {
 		"tooltip": false,
 		"tooltip-format": "Left Click: Launch Notification Center\nRight Click: Do not Disturb",
-		"format": " {icon}",
+		"format": " {icon} ",
 		"format-icons": {
 			"notification": "<span foreground='red'><sup></sup></span>",
 			"none": "",

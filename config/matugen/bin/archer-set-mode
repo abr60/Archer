@@ -13,9 +13,9 @@ else
 fi
 
 if [[ "$MODE" == "light" ]]; then
-    echo "scheme-vibrant" > "$SCHEME_FILE"
+    echo "scheme-fidelity" > "$SCHEME_FILE"
 else
-    echo "scheme-vibrant" > "$SCHEME_FILE"
+    echo "scheme-fidelity" > "$SCHEME_FILE"
 fi
 
 CURRENT_WP="$(readlink -f "$STATE_DIR/current-wallpaper")"

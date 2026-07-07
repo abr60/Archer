@@ -14,7 +14,7 @@ hl.layer_rule({ ignore_alpha = 0.1, match = { namespace = "^(notifications|swayn
 hl.layer_rule({ blur = true,        match = { namespace = "vicinae" } })
 hl.layer_rule({ ignore_alpha = 0.1, match = { namespace = "vicinae" } })
 
-hl.layer_rule({ blur = true,        match = { namespace = "swayosd" } })
+--hl.layer_rule({ blur = true,        match = { namespace = "swayosd" } })
 
 -- === Window Rules ===
 

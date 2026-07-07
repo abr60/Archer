@@ -1,5 +1,15 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "display": {
+    "separator": "  ",
+    "color": {
+      "keys": "magenta"
+    },
+    "size": {
+      "ndigits": 0,
+      "maxPrefix": "MB"
+    }
+  },
   "logo": {
     "type": "auto",
     "source": "$(ls ~/.config/fastfetch/ascii_logos/*.{txt,png} | shuf -n 1)",
@@ -16,142 +26,118 @@
     "break",
     {
       "type": "custom",
-      "format": "\u001b[90m┌──────────────────────Hardware──────────────────────┐"
+      "format": "\u001b[90m╭───────────────────── \u001b[1;32mHardware\u001b[0;90m ─────────────────────╮"
     },
     {
       "type": "host",
-      "key": " PC",
+      "key": "│  ",
       "keyColor": "green"
     },
     {
       "type": "cpu",
-      "key": "│ ├",
+      "key": "│ ├ ",
       "showPeCoreCount": true,
       "keyColor": "green"
     },
     {
       "type": "gpu",
-      "key": "│ ├",
+      "key": "│ ├ ",
       "detectionMethod": "pci",
       "keyColor": "green"
     },
     {
       "type": "display",
-      "key": "│ ├󱄄",
+      "key": "│ ├󱄄 ",
       "keyColor": "green"
     },
     {
       "type": "disk",
-      "key": "│ ├󰋊",
+      "key": "│ ├󰋊 ",
       "keyColor": "green"
     },
     {
       "type": "memory",
-      "key": "│ ├",
+      "key": "│ ├ ",
       "keyColor": "green"
     },
     {
       "type": "swap",
-      "key": "└ └󰓡 ",
+      "key": "│ ╰󰓡 ",
       "keyColor": "green"
     },
     {
       "type": "custom",
-      "format": "\u001b[90m└────────────────────────────────────────────────────┘"
+      "format": "\u001b[90m╰────────────────────────────────────────────────────╯"
     },
     "break",
     {
       "type": "custom",
-      "format": "\u001b[90m┌──────────────────────Software──────────────────────┐"
+      "format": "\u001b[90m╭───────────────────── \u001b[1;34mSoftware\u001b[0;90m ─────────────────────╮"
     },
     {
-      "type": "command",
-      "key": "\ue900 OS",
-      "keyColor": "blue",
-      "text": "version=$(version); echo \"Arch $version\""
-    },
-    {
-      "type": "command",
-      "key": "│ ├󰘬",
-      "keyColor": "blue",
-      "text": "branch=$(version-branch); echo \"$branch\""
-    },
-    {
-      "type": "command",
-      "key": "│ ├󰔫",
-      "keyColor": "blue",
-      "text": "channel=$(version-channel); echo \"$channel\""
+      "type": "os",
+      "key": "│ \ue900 ",
+      "keyColor": "blue"
     },
     {
       "type": "kernel",
-      "key": "│ ├",
+      "key": "│ ├ ",
       "keyColor": "blue"
     },
     {
       "type": "wm",
-      "key": "│ ├",
-      "keyColor": "blue"
-    },
-    {
-      "type": "de",
-      "key": " DE",
+      "key": "│ ├ ",
       "keyColor": "blue"
     },
     {
       "type": "terminal",
-      "key": "│ ├",
+      "key": "│ ├ ",
       "keyColor": "blue"
     },
     {
       "type": "packages",
-      "key": "│ ├󰏖",
-      "keyColor": "blue"
-    },
-    {
-      "type": "wmtheme",
-      "key": "│ ├󰉼",
+      "key": "│ ├󰏖 ",
       "keyColor": "blue"
     },
     {
       "type": "command",
-      "key": "│ ├󰸌",
+      "key": "│ ├󰸌 ",
       "keyColor": "blue",
-      "text": "theme=$(theme-current); echo -e \"$theme \\e[38m●\\e[37m●\\e[36m●\\e[35m●\\e[34m●\\e[33m●\\e[32m●\\e[31m●\""
+      "text": "echo -e \"$(cat ~/.local/state/Archer/current-theme) \\e[38m●\\e[37m●\\e[36m●\\e[35m●\\e[34m●\\e[33m●\\e[32m●\\e[31m●\""
     },
     {
       "type": "terminalfont",
-      "key": "└ └",
+      "key": "│ ╰ ",
       "keyColor": "blue"
     },
     {
       "type": "custom",
-      "format": "\u001b[90m└────────────────────────────────────────────────────┘"
+      "format": "\u001b[90m╰────────────────────────────────────────────────────╯"
     },
     "break",
     {
       "type": "custom",
-      "format": "\u001b[90m┌────────────────Age / Uptime / Update───────────────┐"
+      "format": "\u001b[90m╭───────────────── \u001b[1;35mStatus & Uptime\u001b[0;90m ──────────────────╮"
     },
     {
       "type": "command",
-      "key": "󱦟 OS Age",
+      "key": "│ 󱦟 ",
       "keyColor": "magenta",
-      "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
+      "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo \"$days_difference days\""
     },
     {
       "type": "uptime",
-      "key": "󱫐 Uptime",
+      "key": "│ ├󱫐 ",
       "keyColor": "magenta"
     },
     {
-      "type": "command",
-      "key": " Update",
-      "keyColor": "magenta",
-      "text": "updated=$(version-pkgs); echo \"$updated\""
+      "type": "battery",
+      "key": "│ ╰ ",
+      "keyColor": "magenta"
     },
     {
       "type": "custom",
-      "format": "\u001b[90m└────────────────────────────────────────────────────┘"
+      "format": "\u001b[90m╰────────────────────────────────────────────────────╯"
     },
     "break"
   ]

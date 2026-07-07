@@ -81,6 +81,12 @@ output_path = '~/.config/yazi/theme.toml'
 input_path = '~/.config/matugen/templates/obsidian.css'
 output_path = '~/Documents/Obsidian Vault/.obsidian/snippets/matugen.css'
 
+# Spicetify
+#[templates.spicetify]
+#input_path = '~/.config/matugen/templates/spotify-colors.ini'
+#output_path = '~/.config/spicetify/Themes/Comfy/color.ini'
+#post_hook = 'spicetify apply'
+
 # ─── Disabled ─────────────────────────────────────────────────────────────────
 #[templates.walker]
 #[templates.ghostty]
