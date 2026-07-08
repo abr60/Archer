@@ -318,7 +318,7 @@
     "format-muted": " {volume}",
     "format-icons": ["", "", ""],
     "max-volume": 130,
-    "reverse-scrolling": 1,
+    "scrolling": 10,
     "on-scroll-up": "swayosd-client --output-volume raise",
     "on-scroll-down": "swayosd-client --output-volume lower",
     "on-click": "pamixer -t",
