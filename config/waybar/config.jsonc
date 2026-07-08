@@ -299,7 +299,8 @@
     "tooltip-format-connected": "{device_enumerate}",
     "tooltip-format-enumerate-connected-battery": "{device_alias} {device_battery_percentage}%",
     "tooltip-format-enumerate-connected": "{device_alias}",
-    "on-click": "timeout 40s kitty --class kitty --title dropdown -e bluetui"
+    "on-click": "timeout 40s kitty --class kitty --title dropdown -e bluetui",
+    "on-click-right": "rfkill toggle bluetooth"
   },
 
   "pulseaudio#microphone": {

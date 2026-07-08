@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# omarchy:summary=Lock the computer and turn off the display
-# omarchy:group=system
-# omarchy:name=lock
-# omarchy:examples=omarchy system lock
+# archer:summary=Lock the computer and turn off the display
+# archer:group=system
+# archer:name=lock
+# archer:examples=archer system lock
 
 if ! pidof hyprlock >/dev/null; then
   (
@@ -21,9 +21,9 @@ if pgrep -x "1password" >/dev/null; then
 fi
 
 # Avoid running screensaver when locked
-pkill -f org.omarchy.screensaver
+pkill -f org.archer.screensaver
 
-if [[ ${OMARCHY_LOCK_ONLY:-false} != "true" ]]; then
+if [[ ${ARCHER_LOCK_ONLY:-false} != "true" ]]; then
   (
     sleep 3
     pidof hyprlock >/dev/null || exit 0
