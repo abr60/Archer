@@ -60,6 +60,7 @@ mpd-mpris
 mpv-mpris
 sof-firmware
 cliamp
+voxtype-bin
 
 # --- Multimedia Codecs ---
 gst-libav
