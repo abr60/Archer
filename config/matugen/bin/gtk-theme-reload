@@ -30,7 +30,7 @@ if [[ -z "${1:-}" ]]; then
 fi
 
 # ─── Yaru icon theme from dominant wallpaper color ─────────────────────────────
-YARU_COLOR="Yaru-blue"  # fallback if detection fails
+YARU_COLOR="Yaru-sage"  # fallback if detection fails
 
 IM_CMD=$(command -v magick || command -v convert || true)
 
