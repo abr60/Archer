@@ -14,7 +14,7 @@ a.exec_on_start("hyprsunset")
 a.exec_on_start("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
 
 -- Plugin reload
-a.exec_on_start("hyprpm reload")
+--a.exec_on_start("hyprpm reload")
 
 -- Clipboard history
 a.exec_on_start("wl-paste --type text --watch cliphist store")
