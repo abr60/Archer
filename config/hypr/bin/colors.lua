@@ -73,7 +73,7 @@ return {
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(d2d6b5ff)",
+  source_color = "rgba(35363fff)",
 
   surface = "rgba(131313ff)",
 
@@ -103,5 +103,5 @@ return {
 
   tertiary_fixed_dim = "rgba(474747ff)",
 
-  image = "/home/abr/Walls/Inkstone/BG1.png",
+  image = "/home/abr/Walls/Dark/wallpaper.jpg",
 }

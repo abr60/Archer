@@ -40,7 +40,7 @@ install_windows() {
 
   check_prerequisites
 
-  archer-pkg-add freerdp openbsd-netcat gum
+  pkg-add freerdp openbsd-netcat gum
 
   mkdir -p "$HOME/.windows"
   mkdir -p "$HOME/.config/windows"
@@ -55,7 +55,7 @@ install_windows() {
 [Desktop Entry]
 Name=Windows
 Comment=Start Windows VM via Docker and connect with RDP
-Exec=uwsm app -- archer-windows-vm launch
+Exec=uwsm app -- windows-vm launch
 Icon=$HOME/.local/share/applications/icons/windows.png
 Terminal=false
 Type=Application
@@ -241,7 +241,7 @@ EOF
   echo ""
   echo "Once finished, launch 'Windows' via Super + Space"
   echo ""
-  echo "To stop the VM: archer-windows-vm stop"
+  echo "To stop the VM: windows-vm stop"
   echo "To change resources: ~/.config/windows/docker-compose.yml"
   echo ""
 }
@@ -297,7 +297,7 @@ launch_windows() {
 
     if ! docker-compose -f "$COMPOSE_FILE" up -d 2>&1; then
       echo "❌ Failed to start Windows VM!"
-      echo "   Try checking: archer-windows-vm status"
+      echo "   Try checking: windows-vm status"
       echo "   View logs: docker logs archer-windows"
       notify-send -u critical "Windows VM" "Failed to start Windows VM"
       exit 1
@@ -320,7 +320,7 @@ launch_windows() {
   # Build the connection info
   if [[ $KEEP_ALIVE = "true" ]]; then
     LIFECYCLE="VM will keep running after RDP closes
-To stop: archer-windows-vm stop"
+To stop: windows-vm stop"
   else
     LIFECYCLE="VM will auto-stop when RDP closes"
   fi
@@ -358,7 +358,7 @@ To stop: archer-windows-vm stop"
   else
     echo ""
     echo "RDP session closed. Windows VM is still running."
-    echo "To stop it: archer-windows-vm stop"
+    echo "To stop it: windows-vm stop"
   fi
 }
 
@@ -376,7 +376,7 @@ stop_windows() {
 status_windows() {
   if [[ ! -f $COMPOSE_FILE ]]; then
     echo "Windows VM not configured."
-    echo "To set up: archer-windows-vm install"
+    echo "To set up: windows-vm install"
     exit 1
   fi
 
@@ -384,7 +384,7 @@ status_windows() {
 
   if [[ -z $CONTAINER_STATUS ]]; then
     echo "Windows VM container not found."
-    echo "To start: archer-windows-vm launch"
+    echo "To start: windows-vm launch"
   elif [[ $CONTAINER_STATUS = "running" ]]; then
     gum style \
       --border normal \
@@ -396,16 +396,16 @@ status_windows() {
       "Web interface: http://127.0.0.1:8006" \
       "RDP available: port 3389" \
       "" \
-      "To connect: archer-windows-vm launch" \
-      "To stop:    archer-windows-vm stop"
+      "To connect: windows-vm launch" \
+      "To stop:    windows-vm stop"
   else
     echo "Windows VM is stopped (status: $CONTAINER_STATUS)"
-    echo "To start: archer-windows-vm launch"
+    echo "To start: windows-vm launch"
   fi
 }
 
 show_usage() {
-  echo "Usage: archer-windows-vm [command] [options]"
+  echo "Usage: windows-vm [command] [options]"
   echo ""
   echo "Commands:"
   echo "  install              Install and configure Windows VM"
@@ -418,10 +418,10 @@ show_usage() {
   echo "  help                 Show this help message"
   echo ""
   echo "Examples:"
-  echo "  archer-windows-vm install           # Set up Windows VM for first time"
-  echo "  archer-windows-vm launch            # Connect to VM (auto-stop on exit)"
-  echo "  archer-windows-vm launch -k         # Connect to VM (keep running)"
-  echo "  archer-windows-vm stop              # Shut down the VM"
+  echo "  windows-vm install           # Set up Windows VM for first time"
+  echo "  windows-vm launch            # Connect to VM (auto-stop on exit)"
+  echo "  windows-vm launch -k         # Connect to VM (keep running)"
+  echo "  windows-vm stop              # Shut down the VM"
 }
 
 # Main command dispatcher
