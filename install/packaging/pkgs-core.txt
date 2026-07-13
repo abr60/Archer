@@ -4,7 +4,6 @@
 # =============================================================================
 
 # --- Core System ---
-nano
 fastfetch
 starship
 tmux
@@ -60,6 +59,7 @@ mpd
 mpd-mpris
 mpv-mpris
 sof-firmware
+cliamp
 
 # --- Multimedia Codecs ---
 gst-libav
