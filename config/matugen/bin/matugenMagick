@@ -16,7 +16,7 @@ mkdir -p "$HOME/.local/share"
 ln -sf "$wallpaper_path" "$HOME/.local/share/bg"
 
 # ─── Completion notification ──────────────────────────────────────────────────
-notify-send \
+#notify-send \
     -h string:x-canonical-private-synchronous:archer_matugen \
     "Archer" "Wallpaper & colors applied" \
     -i "$HOME/.local/share/bg"

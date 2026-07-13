@@ -22,12 +22,13 @@ configuration {
 
 window {
     background-color: @surface;
-    border:           2px;
-    border-color:     @outline-variant;
-    border-radius:    1px;
-    width:            520px;
-    padding:          8px;
+    border: 2px;
+    border-color: @outline-variant;
+    border-radius: 1px;
+    width: 520px;          /* Changed from 520px to 400px */
+    padding: 8px;
 }
+
 
 mainbox {
     children: [ inputbar, listview ];

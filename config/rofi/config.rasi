@@ -13,6 +13,8 @@ configuration {
     case-sensitive: false;
     kb-cancel: "Escape,MousePrimary";
     hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
 }
 
 * {

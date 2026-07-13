@@ -57,6 +57,7 @@ cava
 mpd
 mpd-mpris
 mpv-mpris
+sof-firmware
 
 # --- Multimedia Codecs ---
 gst-libav
@@ -74,6 +75,7 @@ eza
 ripgrep
 jq
 go-yq
+nano
 
 # --- Hardware & Power ---
 power-profiles-daemon
@@ -87,12 +89,18 @@ wiremix
 lazygit
 
 # --- Fonts ---
-ttf-jetbrains-mono-nerd
+fontconfig
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
-noto-fonts-bangla
-fontconfig
+ttf-ia-writer
+ttf-jetbrains-mono-nerd
+woff2-font-awesome
+
+# --- Input Methods (IME) ---
+fcitx5
+fcitx5-gtk
+fcitx5-qt
 
 # --- Theming ---
 nwg-look

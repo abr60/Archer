@@ -61,7 +61,7 @@ MODE=$(cat "$MODE_FILE" 2>/dev/null || echo "dark")
 mkdir -p "$STATE_DIR"
 echo "$SELECTED_THEME" > "$THEME_FILE"
 
-notify-send "Archer" "Theme set to '$SELECTED_THEME' ($MODE mode)" \
+#notify-send "Archer" "Theme set to '$SELECTED_THEME' ($MODE mode)" \
     --icon=preferences-desktop-wallpaper
 
 # ─── Pick random wallpaper from selected theme ────────────────────────────────

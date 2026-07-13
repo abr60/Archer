@@ -6,7 +6,7 @@
 
 configuration {
     location: 0;
-    font:     "Maple Mono NF 28";
+    font:     "JetBrains Mono 12";
 }
 
 * {
@@ -41,7 +41,7 @@ textbox-uptime {
     horizontal-align: 0.0;
     vertical-align:   0.5;
     text-color:       @on-surface;
-    font:             "Maple Mono NF 11";
+    font:             "JetBrains Mono 12";
     expand:           false;
     str:              "";
 }
@@ -63,7 +63,7 @@ element {
 element-text {
     background-color: inherit;
     text-color:       inherit;
-    font:             "Maple Mono NF 30";
+    font:             "JetBrains Mono 12";
     expand:           false;
     horizontal-align: 0.5;
     vertical-align:   0.5;

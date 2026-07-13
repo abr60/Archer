@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(fff9ecff)",
+  background = "rgba(141313ff)",
 
-  error = "rgba(ba1a1aff)",
+  error = "rgba(ffb4abff)",
 
-  error_container = "rgba(ffdad6ff)",
+  error_container = "rgba(93000aff)",
 
-  inverse_on_surface = "rgba(f7f0dfff)",
+  inverse_on_surface = "rgba(31302fff)",
 
-  inverse_primary = "rgba(e1c712ff)",
+  inverse_primary = "rgba(5e5f58ff)",
 
-  inverse_surface = "rgba(333025ff)",
+  inverse_surface = "rgba(e5e2e0ff)",
 
-  on_background = "rgba(1e1c11ff)",
+  on_background = "rgba(e5e2e0ff)",
 
-  on_error = "rgba(ffffffff)",
+  on_error = "rgba(690005ff)",
 
-  on_error_container = "rgba(410002ff)",
+  on_error_container = "rgba(ffdad6ff)",
 
-  on_primary = "rgba(ffffffff)",
+  on_primary = "rgba(2f312bff)",
 
-  on_primary_container = "rgba(3c3400ff)",
+  on_primary_container = "rgba(474942ff)",
 
-  on_primary_fixed = "rgba(211c00ff)",
+  on_primary_fixed = "rgba(1a1c16ff)",
 
-  on_primary_fixed_variant = "rgba(514700ff)",
+  on_primary_fixed_variant = "rgba(464740ff)",
 
-  on_secondary = "rgba(ffffffff)",
+  on_secondary = "rgba(30312dff)",
 
-  on_secondary_container = "rgba(50460aff)",
+  on_secondary_container = "rgba(e2e0dbff)",
 
-  on_secondary_fixed = "rgba(211c00ff)",
+  on_secondary_fixed = "rgba(1b1c19ff)",
 
-  on_secondary_fixed_variant = "rgba(51470aff)",
+  on_secondary_fixed_variant = "rgba(474743ff)",
 
-  on_surface = "rgba(1e1c11ff)",
+  on_surface = "rgba(e5e2e0ff)",
 
-  on_surface_variant = "rgba(4b4733ff)",
+  on_surface_variant = "rgba(c7c7bfff)",
 
-  on_tertiary = "rgba(ffffffff)",
+  on_tertiary = "rgba(352f32ff)",
 
-  on_tertiary_container = "rgba(003659ff)",
+  on_tertiary_container = "rgba(4d464aff)",
 
-  on_tertiary_fixed = "rgba(001d33ff)",
+  on_tertiary_fixed = "rgba(1f1a1eff)",
 
-  on_tertiary_fixed_variant = "rgba(004a77ff)",
+  on_tertiary_fixed_variant = "rgba(4c4549ff)",
 
-  outline = "rgba(7d7760ff)",
+  outline = "rgba(91918aff)",
 
-  outline_variant = "rgba(cec6acff)",
+  outline_variant = "rgba(464741ff)",
 
-  primary = "rgba(6c5e00ff)",
+  primary = "rgba(ffffffff)",
 
-  primary_container = "rgba(ddc30aff)",
+  primary_container = "rgba(e3e3d9ff)",
 
-  primary_fixed = "rgba(ffe338ff)",
+  primary_fixed = "rgba(e3e3d9ff)",
 
-  primary_fixed_dim = "rgba(e1c712ff)",
+  primary_fixed_dim = "rgba(c7c7beff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(695f21ff)",
+  secondary = "rgba(c8c6c2ff)",
 
-  secondary_container = "rgba(f0e095ff)",
+  secondary_container = "rgba(474743ff)",
 
-  secondary_fixed = "rgba(f3e398ff)",
+  secondary_fixed = "rgba(e4e2ddff)",
 
-  secondary_fixed_dim = "rgba(d6c77fff)",
+  secondary_fixed_dim = "rgba(c8c6c2ff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(ddc30aff)",
+  source_color = "rgba(f6f6ecff)",
 
-  surface = "rgba(fff9ecff)",
+  surface = "rgba(141313ff)",
 
-  surface_bright = "rgba(fff9ecff)",
+  surface_bright = "rgba(3a3938ff)",
 
-  surface_container = "rgba(f4eddcff)",
+  surface_container = "rgba(201f1fff)",
 
-  surface_container_high = "rgba(eee8d6ff)",
+  surface_container_high = "rgba(2a2a29ff)",
 
-  surface_container_highest = "rgba(e9e2d1ff)",
+  surface_container_highest = "rgba(353534ff)",
 
-  surface_container_low = "rgba(faf3e1ff)",
+  surface_container_low = "rgba(1c1b1bff)",
 
-  surface_container_lowest = "rgba(ffffffff)",
+  surface_container_lowest = "rgba(0e0e0dff)",
 
-  surface_dim = "rgba(e0dac9ff)",
+  surface_dim = "rgba(141313ff)",
 
-  surface_tint = "rgba(6c5e00ff)",
+  surface_tint = "rgba(c7c7beff)",
 
-  surface_variant = "rgba(eae2c7ff)",
+  surface_variant = "rgba(464741ff)",
 
-  tertiary = "rgba(246293ff)",
+  tertiary = "rgba(ffffffff)",
 
-  tertiary_container = "rgba(91c8ffff)",
+  tertiary_container = "rgba(ebdfe4ff)",
 
-  tertiary_fixed = "rgba(cfe5ffff)",
+  tertiary_fixed = "rgba(ebdfe4ff)",
 
-  tertiary_fixed_dim = "rgba(98cbffff)",
+  tertiary_fixed_dim = "rgba(cec4c8ff)",
 
-  image = "/home/pseudo/Walls/Nature/wallhaven-3q5ex3.jpg",
+  image = "/home/abr/Walls/Dark/wallhaven-qrr6wl.png",
 }
