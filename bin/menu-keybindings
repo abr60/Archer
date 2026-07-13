@@ -240,12 +240,13 @@ output_keybindings() {
     prioritize_entries
 }
 
-if [[ $1 == "--print" || $1 == "-p" ]]; then
+if [[ $1 == "--print" || $1 == "-p" ]];
+then
   output_keybindings
 else
   monitor_height=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .height')
   menu_height=$((monitor_height * 40 / 100))
 
   output_keybindings |
-    walker --dmenu -p 'Keybindings' --width 800 --height "$menu_height"
+  rofi -dmenu -p 'Keybindings' -theme-str "window { width: 800px; height: ${menu_height}px; }"
 fi

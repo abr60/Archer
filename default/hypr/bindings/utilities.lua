@@ -31,8 +31,8 @@ a.bind("SUPER + CTRL + N",        "Toggle nightlight",                "toggle-ni
 a.bind("SUPER + CTRL + Delete",   "Toggle laptop display",            "hyprland-monitor-internal toggle")
 a.bind("SUPER + CTRL + ALT + Delete","Toggle laptop display mirroring","hyprland-monitor-internal-mirror toggle")
 
-hl.bind("switch:on:Lid Switch",  hl.dsp.exec_cmd("hw-external-monitors && hyprland-monitor-internal off"), { flags = { "l" } })
-hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd("hyprland-monitor-internal on"),                         { flags = { "l" } })
+a.bind("switch:on:Lid Switch", nil, "hw-external-monitors && hyprland-monitor-internal off", { locked = true })
+a.bind("switch:off:Lid Switch", nil, "hyprland-monitor-internal on", { locked = true })
 
 -- Captures
 a.bind("PRINT",           "Screenshot",                       "capture-screenshot")
@@ -62,9 +62,6 @@ a.bind("SUPER + CTRL + B", "Bluetooth controls", "launch-bluetooth")
 a.bind("SUPER + CTRL + W", "Wifi controls",      "launch-wifi")
 a.bind("SUPER + CTRL + T", "Activity",           "launch-tui btop")
 
--- Dictation (push-to-talk)
-hl.bind("F9",        hl.dsp.exec_cmd("voxtype record start"), { description = "Start dictation (push-to-talk)" })
-hl.bind("F9",        hl.dsp.exec_cmd("voxtype record stop"),  { description = "Stop dictation (push-to-talk)", flags = { "r" } })
 
 -- Zoom
 a.bind("SUPER + CTRL + Z",       "Zoom in",    "hyprctl keyword cursor:zoom_factor $(hyprctl getoption cursor:zoom_factor -j | jq '.float + 1')")

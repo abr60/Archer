@@ -11,7 +11,10 @@ a.launch_on_start("hypridle")
 a.exec_on_start("hyprsunset")
 
 -- Auth agent (hyprpolkitagent handles this via systemd, fallback below if needed)
-a.exec_on_start("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
+--a.exec_on_start("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
+-- Auth agent
+a.exec_on_start("uwsm app -- hyprpolkitagent")
+
 
 -- Plugin reload
 --a.exec_on_start("hyprpm reload")

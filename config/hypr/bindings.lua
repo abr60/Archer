@@ -36,3 +36,11 @@ a.bind("ALT + X", "Study",        "[float; size 700 200; center] kitty --class=Y
 a.bind("SUPER + Q", "Wifi QR", "[float; size 316 416; move 955 45; pin] kitty --class=wifi-qr --title=wifi-qr -e archer-wifi-qr")
 
 -- === Plugin Bindings ===
+
+-- === pickup ====
+
+-- Answer WhatsApp Call (Focuses the specific window class, then sends Return)
+--a.bind("XF86PickupPhone", "Answer WhatsApp Call", "hyprctl dispatch focuswindow class:^chrome-web\\.whatsapp\\.com__-Default$ && wtype -k Return")
+
+-- Hang Up / Reject WhatsApp Call (Focuses the window class, then sends Escape)
+--a.bind("XF86HangupPhone", "Hang Up WhatsApp Call", "hyprctl dispatch focuswindow class:^chrome-web\\.whatsapp\\.com__-Default$ && wtype -k Escape")

@@ -598,7 +598,7 @@ show_install_ai_menu() {
   )
 
   case $(menu "Install" "  Dictation\n󱚤  LM Studio\n󱚤  Ollama\n󱚤  Crush") in
-  *Dictation*) present_terminal voxtype-install ;;
+  *Dictation*) present_terminal archer-voxtype-install ;;
   *Studio*) install "LM Studio" "lmstudio-bin" ;;
   *Ollama*) install "Ollama" $ollama_pkg ;;
   *Crush*) install "Crush" "crush-bin" ;;
@@ -697,7 +697,7 @@ show_remove_menu() {
   *Development*) show_remove_development_menu ;;
   *Theme*) present_terminal theme-remove ;;
   *Browser*) show_remove_browser_menu ;;
-  *Dictation*) present_terminal voxtype-remove ;;
+  *Dictation*) present_terminal archer-voxtype-remove ;;
   *Gaming*) show_remove_gaming_menu ;;
   *Windows*) present_terminal "windows-vm remove" ;;
   *Preinstalls*) present_terminal remove-preinstalls ;;

@@ -98,6 +98,7 @@ noto-fonts-emoji
 ttf-ia-writer
 ttf-jetbrains-mono-nerd
 woff2-font-awesome
+ttf-ubuntu-font-family
 
 # --- Input Methods (IME) ---
 fcitx5
