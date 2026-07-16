@@ -68,4 +68,7 @@ a.bind("SUPER + CTRL + Z",       "Zoom in",    "hyprctl keyword cursor:zoom_fact
 a.bind("SUPER + CTRL + ALT + Z", "Reset zoom", "hyprctl keyword cursor:zoom_factor 1")
 
 -- Lock system
+--a.bind("SUPER + CTRL + L", "Lock system", "system-lock")
+-- Swap "system-lock" with the exact path to the script
+-- Lock system
 a.bind("SUPER + CTRL + L", "Lock system", "system-lock")

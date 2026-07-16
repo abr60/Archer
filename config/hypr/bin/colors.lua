@@ -73,7 +73,7 @@ return {
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(5e8394ff)",
+  source_color = "rgba(205236ff)",
 
   surface = "rgba(131313ff)",
 
@@ -103,5 +103,5 @@ return {
 
   tertiary_fixed_dim = "rgba(474747ff)",
 
-  image = "/home/abr/Walls/Lively/8351321.gif",
+  image = "/home/abr/Walls/Lively/8351228.gif",
 }

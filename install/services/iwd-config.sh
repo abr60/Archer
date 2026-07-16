@@ -11,15 +11,18 @@ sudo tee /etc/iwd/main.conf > /dev/null <<EOF
 [General]
 AddressRandomization=network
 AddressRandomizationOnScan=true
+EnableNetworkConfiguration=true
+
+[Network]
+NameResolvingServices=systemd
+EnableIPv6=true
 EOF
 
 # 3. Apply changes (Restarts if running live, Enables if running inside arch-chroot)
 if systemctl is-system-running &>/dev/null; then
     sudo systemctl restart iwd
-    sudo systemctl restart NetworkManager
-    echo "Services restarted. MAC randomized."
+    echo "iwd restarted. MAC randomized."
 else
     sudo systemctl enable iwd
-    sudo systemctl enable NetworkManager
-    echo "Services enabled for first boot."
+    echo "iwd enabled for first boot."
 fi

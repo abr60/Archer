@@ -29,7 +29,7 @@
 
   "group/left-1": {
     "orientation": "inherit",
-    "modules": ["custom/resources", "custom/mpris", "temperature", "group/tray-expander"]
+    "modules": ["custom/resources", "mpris", "temperature", "group/tray-expander"]
   },
 
   "group/left-2": {
@@ -88,16 +88,30 @@
     "tooltip": true
   },
 
-  "custom/mpris": {
-    "exec": "~/.config/waybar/assets/scripts/mpris.sh",
+"mpris": {
+    "format": "{player_icon} ",
+    "format-paused": "{player_icon} ",
     "interval": 1,
-    "return-type": "json",
+    "max-length": 35,
+    "player-icons": {
+      "default": "󰎆",
+      "mpd": "󰎆",
+      "chromium": "",
+      "spotify": "",
+      "firefox": "",
+      "mpv": "",
+      "vlc": "󰕼"
+    },
+
     "on-click": "playerctl play-pause",
     "on-click-right": "timeout 60s kitty --class kitty --title rmpc -e rmpc",
     "on-scroll-up": "playerctl next",
     "on-scroll-down": "playerctl previous",
-    "tooltip": false
-  },
+
+    "tooltip": true,
+    "tooltip-format": "App Target: {player}\nArtist: {artist}\nTitle: {title}\nAlbum: {album}\nStatus: {status}"
+},
+
 
   "custom/screenrecording-indicator": {
     "exec": "$ARCHER_PATH/default/waybar/indicators/screen-recording.sh",

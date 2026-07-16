@@ -24,7 +24,7 @@ xorg-xhost
 # --- Security & Authentication ---
 fprintd
 gnome-keyring
-hyprpolkitagent
+#hyprpolkitagent
 libsecret
 libinput
 
@@ -42,6 +42,7 @@ xdg-user-dirs
 xdg-user-dirs-gtk
 swaync
 waybar-git
+wttrbar-bin
 swayosd
 rofi
 sddm
@@ -56,6 +57,9 @@ pamixer
 playerctl
 cava
 mpd
+mpc
+spotify
+spotifydl
 mpd-mpris
 mpv-mpris
 sof-firmware
