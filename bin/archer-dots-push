@@ -53,8 +53,8 @@ sync_repo() {
 
 # Define options based on your aliases
 choice=$(gum choose --header "Select a repository to sync" \
-    " Dotfiles" \
     "󰣇 Archer" \
+    " Dotfiles" \
     "󰸉 Walls" \
     " Waybar Config" \
     "󰔎 Assets" \
