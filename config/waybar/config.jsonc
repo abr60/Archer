@@ -139,7 +139,7 @@
 
   "hyprland/workspaces": {
 	"on-click": "activate",
-	"format": "{icon} {windows}",
+	"format": "{windows}", //{icon} 
   "enable-bar-scroll": true,
   "tooltip": false,
 	"format-window-separator": " ",

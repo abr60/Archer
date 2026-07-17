@@ -70,3 +70,5 @@ hl.window_rule({ pin = true,        match = { class = "^(cava-desktop)$" } })
 hl.window_rule({ move = "0 640",    match = { class = "^(cava-desktop)$" } })
 hl.window_rule({ size = "1280 80",  match = { class = "^(cava-desktop)$" } })
 hl.window_rule({ opacity = "1.0",   match = { class = "^(cava-desktop)$" } })
+
+
