@@ -11,4 +11,14 @@ a.exec_on_start("easyeffects --gapplication-service") -- EasyEffects DSP
 -- a.exec_on_start("qs -c ii")
 -- a.exec_on_start("archer-battery-monitor")
 -- a.exec_on_start("archer-inject.sh")
--- a.exec_on_start("sleep 1 && paplay ~/.config/hypr/assets/sounds/TempleOS-Hymn-Risen.wav")
+
+a.exec_on_start("sleep 1 && paplay ~/.config/hypr/assets/sounds/TempleOS-Hymn-Risen.wav")
+
+-- --- Hyprexpo -- ---
+--a.exec_on_start("hyprpm reload")  -- Reload plugins on every boot
+
+
+-- --- Quickshell-overview -- ---
+hl.on("hyprland.start", function () 
+    hl.exec_cmd("qs -c overview")
+end)

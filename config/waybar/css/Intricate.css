@@ -94,6 +94,10 @@ tooltip label {
     font-size: 19px;
 }
 
+#right-1 > widget > #backlight {
+    padding: 0;
+}
+
 /* --- Workspaces --- */ 
 button { 
   box-shadow: none; 
@@ -370,5 +374,6 @@ menu separator {
 }
 
 #backlight {
-    font-size: 16px;
+    font-size: 21px;
+    font-weight: 700;
 }

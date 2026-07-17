@@ -21,7 +21,8 @@ require("hypr.bindings")
 require("hypr.rules")
 require("hypr.autostart")
 require("hypr.gestures")
-
+require("hypr.plugins")
+require("hypr.hyprland-gui")
 -- --- 3. Toggle config flags dynamically ---
 require("default.hypr.toggles")
 
@@ -34,3 +35,6 @@ require("default.hypr.toggles")
 --     require("archer.current.theme.hyprland")
 --   end
 -- end
+
+-- HyprMod managed settings
+require("hyprland-gui")

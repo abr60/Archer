@@ -1,93 +1,94 @@
 #!/usr/bin/env bash
 # =============================================================================
-# extras/plugins.sh — Install Hyprland plugins via hyprpm
+# extras/plugins.sh — Install hyprexpo plugin via hyprpm
 # =============================================================================
 
 set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/../lib/helpers.sh"
 
-HYPR_LUA="$HOME/.config/hypr/hyprland.lua"
-BINDINGS="$HOME/.config/hypr/bindings.lua"
+PLUGINS_LUA="$HOME/.config/hypr/plugins.lua"
+AUTOSTART_LUA="$HOME/.config/hypr/autostart.lua"
 
 if [[ "${1:-}" != "--clean" ]]; then
-    if [[ ! -f "$HYPR_LUA" ]]; then
-        die "hyprland.lua not found at $HYPR_LUA"
-    fi
-    if [[ ! -f "$BINDINGS" ]]; then
-        die "bindings.lua not found at $BINDINGS"
-    fi
+    [[ ! -f "$PLUGINS_LUA" ]]   && die "plugins.lua not found at $PLUGINS_LUA"
+    [[ ! -f "$AUTOSTART_LUA" ]] && die "autostart.lua not found at $AUTOSTART_LUA"
 fi
 
-# ─── Clean Mode (Triggered by --clean) ────────────────────────────────────────
+# ─── Clean Mode ───────────────────────────────────────────────────────────────
 if [[ "${1:-}" == "--clean" ]]; then
-    section "Cleaning Hyprland Plugin Configs"
-    
-    # Remove the require line from hyprland.lua
-    if grep -q 'require("hypr.plugins")' "$HYPR_LUA"; then
-        sed -i '/require("hypr.plugins")/d' "$HYPR_LUA"
-        ok "Removed require(\"hypr.plugins\") from hyprland.lua"
+    section "Cleaning Hyprexpo Plugin"
+    CLEAN_TOTAL=3; CLEAN_STEP=0
+    step() { (( CLEAN_STEP++ )) || true; msg "[$CLEAN_STEP/$CLEAN_TOTAL] $*"; }
+
+    step "Disabling and removing hyprexpo..."
+    hyprpm disable hyprexpo 2>/dev/null && ok "hyprexpo disabled" || true
+    hyprpm remove  hyprexpo 2>/dev/null && ok "hyprexpo removed"  || true
+
+    step "Re-commenting hyprexpo in plugins.lua..."
+    if grep -q '^require("hypr.plugins.hyprexpo")' "$PLUGINS_LUA"; then
+        sed -i 's|^require("hypr.plugins.hyprexpo")|--require("hypr.plugins.hyprexpo")|' "$PLUGINS_LUA"
+        ok "Done"
+    else
+        ok "Already commented — skipping"
     fi
 
-    # Remove the bindings block from bindings.lua
-    if grep -q 'scrolloverview' "$BINDINGS"; then
-        # Deletes the specific comment and the bind line
-        sed -i '/-- === Plugin Bindings ===/d' "$BINDINGS"
-        sed -i '/scrolloverview:overview toggle/d' "$BINDINGS"
-        # Clean up any trailing blank lines left behind
-        sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$BINDINGS"
-        ok "Removed plugin bindings from bindings.lua"
+    step "Removing hyprpm reload from autostart.lua..."
+    if grep -q 'hyprpm reload' "$AUTOSTART_LUA"; then
+        sed -i '/hyprpm reload/d' "$AUTOSTART_LUA"
+        ok "Done"
+    else
+        ok "Not present — skipping"
     fi
-    
+
     exit 0
 fi
 
 # ─── Normal Install Mode ──────────────────────────────────────────────────────
-section "Hyprland Plugins"
+section "Hyprexpo Plugin"
+sudo-keepalive &
+TOTAL=6; STEP=0
+step() { (( STEP++ )) || true; msg "[$STEP/$TOTAL] $*"; }
 
-# -----------------------------------------------------------------------------
-# Install Hyprpm development dependencies via the tagged package list
-# -----------------------------------------------------------------------------
+step "Checking hyprpm build dependencies..."
 if ! is_installed cmake; then
-    msg "Installing hyprpm build dependencies via tags..."
     bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag Hyprpm
+    ok "Dependencies installed"
+else
+    ok "Already installed — skipping"
 fi
 
 if ! command -v hyprpm &>/dev/null; then
-    warn "hyprpm not found — skipping plugin setup"
+    warn "hyprpm not found — aborting"
     exit 0
 fi
 
-spinner "Updating hyprpm..." hyprpm update || warn "hyprpm update failed — continuing"
+step "Updating hyprpm..."
+hyprpm update && ok "Done" || warn "hyprpm update failed — continuing"
 
-# ─── hyprland-plugins (official) ──────────────────────────────────────────────
-msg "Adding hyprland-plugins repo..."
-hyprpm add "https://github.com/hyprwm/hyprland-plugins" 2>/dev/null || true
+step "Adding hyprexpo repo..."
+hyprpm add "https://github.com/sandwichfarm/hyprexpo" 2>/dev/null || true
+ok "Done"
 
-# ─── scrolloverview ───────────────────────────────────────────────────────────
-msg "Adding scrolloverview..."
-hyprpm add "https://github.com/yayuuu/hyprland-scroll-overview" 2>/dev/null || true
+step "Enabling hyprexpo..."
+hyprpm enable hyprexpo && ok "Done" || warn "Failed to enable hyprexpo"
+hyprpm reload          && ok "Plugins reloaded" || warn "hyprpm reload failed"
 
-# ─── Enable plugins ───────────────────────────────────────────────────────────
-hyprpm enable scrolloverview && ok "scrolloverview enabled" || warn "Failed to enable scrolloverview"
-
-# ─── Reload ───────────────────────────────────────────────────────────────────
-hyprpm reload && ok "Plugins reloaded" || warn "hyprpm reload failed"
-
-# ─── Inject into hyprland.lua ─────────────────────────────────────────────────
-if ! grep -q 'require("hypr.plugins")' "$HYPR_LUA"; then
-    sed -i '/require("hypr.gestures")/i require("hypr.plugins")' "$HYPR_LUA"
-    ok "Injected require(\"hypr.plugins\") into hyprland.lua"
+step "Updating plugins.lua..."
+if grep -q '^--require("hypr.plugins.hyprexpo")' "$PLUGINS_LUA"; then
+    sed -i 's|^--require("hypr.plugins.hyprexpo")|require("hypr.plugins.hyprexpo")|' "$PLUGINS_LUA"
+    ok "Uncommented hyprexpo"
+elif grep -q '^require("hypr.plugins.hyprexpo")' "$PLUGINS_LUA"; then
+    ok "Already active — skipping"
+else
+    warn "hyprexpo line not found in plugins.lua — add it manually"
 fi
 
-# ─── Inject plugin bindings into bindings.lua ─────────────────────────────────
-if ! grep -q 'scrolloverview' "$BINDINGS"; then
-    cat >> "$BINDINGS" << 'EOF'
-
--- === Plugin Bindings ===
-hl.bind("HOME", hl.dsp.exec_cmd("scrolloverview:overview toggle"))
-EOF
-    ok "Injected plugin bindings into bindings.lua"
+step "Updating autostart.lua..."
+if ! grep -q 'hyprpm reload' "$AUTOSTART_LUA"; then
+    echo 'a.exec_on_start("hyprpm reload")  -- Reload plugins on every boot' >> "$AUTOSTART_LUA"
+    ok "Injected hyprpm reload"
+else
+    ok "Already present — skipping"
 fi
 
-# ─── Reload Hyprland ──────────────────────────────────────────────────────────
 hyprctl reload && ok "Hyprland reloaded" || warn "hyprctl reload failed"

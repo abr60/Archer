@@ -30,7 +30,7 @@ a.bind("SUPER + N", "Comic (Asian)", "archer-comic-translate cjk")
 
 -- === Floating TUI launchers ===
 a.bind("ALT + C", "RMPC Music", "[float; center] kitty --title=rmpc-full -e rmpc")
-a.bind("ALT + X", "Study",        "[float; size 700 200; center] kitty --class=Yazi --title=Yazi -e timeout 30s yazi \"~/Videos/Anime\"")
+a.bind("ALT + X", "Study",        "[float; size 700 200; center] kitty --class=Yazi --title=Yazi -e timeout 30s yazi \"~/Videos//Cowboy Bebop\"")
 
 -- === Wifi QR popup ===
 a.bind("SUPER + Q", "Wifi QR", "[float; size 316 416; move 955 45; pin] kitty --class=wifi-qr --title=wifi-qr -e archer-wifi-qr")
@@ -44,3 +44,4 @@ a.bind("SUPER + Q", "Wifi QR", "[float; size 316 416; move 955 45; pin] kitty --
 
 -- Hang Up / Reject WhatsApp Call (Focuses the window class, then sends Escape)
 --a.bind("XF86HangupPhone", "Hang Up WhatsApp Call", "hyprctl dispatch focuswindow class:^chrome-web\\.whatsapp\\.com__-Default$ && wtype -k Escape")
+-- Bind SUPER + G to toggle HyprExpo using the raw legacy engine

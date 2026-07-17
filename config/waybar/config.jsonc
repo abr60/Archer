@@ -3,8 +3,8 @@
   "reload_style_on_change": true,
   "layer": "top",
   "position": "top",
-  "height": 32,
-  "width": 1280,
+  "height": 30,
+  "width": 1436,
   "margin": "0px 6px 0px 6px",
   "spacing": 0,
 
@@ -39,7 +39,7 @@
 
   "group/right-1": {
     "orientation": "inherit",
-    "modules": ["custom/swaync", "bluetooth", "network", "pulseaudio#microphone", "pulseaudio"]
+    "modules": ["custom/swaync", "bluetooth", "network", "backlight", "pulseaudio"]
   },
 
 "group/right-2": {
@@ -59,7 +59,7 @@
     },
     "modules": [
       "custom/expand-icon",
-      "backlight",
+      "pulseaudio#microphone",
       "custom/menu"
     ]
   },
@@ -176,8 +176,16 @@
 		"title<.*messenger.*>": "",
 		"title<.*facebook.*>": " ",
 		"title<.*reddit.*>": "",
-    "title<.*(ChatGPT|[Cc]laude|[Dd]eep[Ss]eek|[Qq]wen).*>": "󱚡",
-    "class<.*(ChatGPT|[Cc]laude|[Dd]eep[Ss]eek|[Qq]wen).*>": "󱚡",
+    "title<.*ChatGPT.*>": "",
+    "class<.*ChatGPT.*>": "",
+    "title<.*[Cc]laude.*>": "",
+    "class<.*[Cc]laude.*>": "",
+    "title<.*[Dd]eep[Ss]eek.*>": "󱢺",
+    "class<.*[Dd]eep[Ss]eek.*>": "󱢺",
+    "title<.*[Qq]wen.*>": "󰭆",
+    "class<.*[Qq]wen.*>": "󰭆",
+    "title<.*[Gg]emini.*>": "",
+    "class<.*[Gg]emini.*>": "",
 		"class<subl>": "󰅳",
 		"class<slack>": "",
 		"class<mpv>": "",
@@ -274,9 +282,9 @@
 
   "backlight": {
     "device": "intel_backlight",
-    "format": "{icon} {percent}",
+    "format": "{icon}",
     "format-icons": ["", "", "", "", "", "", "", "", ""],
-    "min-length": 6 ,
+    "min-length": 4,
     "on-scroll-up": "swayosd-client --brightness raise",
     "on-scroll-down": "swayosd-client --brightness lower",
     "tooltip": false
