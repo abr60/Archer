@@ -15,7 +15,7 @@ fi
 if [[ "$MODE" == "light" ]]; then
     echo "scheme-tonal-spot" > "$SCHEME_FILE"
 else
-    echo "scheme-monochrome" > "$SCHEME_FILE"
+    echo "scheme-tonal-spot" > "$SCHEME_FILE"
 fi
 
 CURRENT_WP="$(readlink -f "$STATE_DIR/current-wallpaper")"

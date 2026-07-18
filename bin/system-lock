@@ -5,11 +5,9 @@
 # archer:name=lock
 # archer:examples=archer system lock
 
-# Check if quickshell is already locking the screen
-if ! pidof quickshell >/dev/null; then
+if ! pidof hyprlock >/dev/null; then
   (
-    # Call the quickshell lock script synchronously so it blocks until unlocked
-    /home/abr/.local/share/quickshell-lockscreen/lock.sh
+    hyprlock
     system-wake
   ) &
 fi
@@ -28,8 +26,7 @@ pkill -f org.archer.screensaver
 if [[ ${ARCHER_LOCK_ONLY:-false} != "true" ]]; then
   (
     sleep 3
-    # Double check quickshell is still active before shutting down backlights
-    pidof quickshell >/dev/null || exit 0
+    pidof hyprlock >/dev/null || exit 0
     brightness-keyboard off
     brightness-display off
   ) &

@@ -153,12 +153,19 @@ declare -A wp_map
 entries=""
 current_wall=$(basename "$(readlink -f "$CURRENT_WP_LINK" 2>/dev/null)" 2>/dev/null || echo "")
 
+# Pre-extract the current wallpaper's clean name for the automatic selection focus
+current_display_name="${current_wall%.*}"
+
 for wp in "${WALLPAPERS[@]}"; do
     base=$(basename "$wp")
+    display_name="${base%.*}" # Strips the extension dynamically (e.g., "Astral.jpg" -> "Astral")
+    
     thumb="$CACHE_DIR/$THEME/${base}.sqre.png"
     [[ -f "$thumb" ]] || continue
-    wp_map["$base"]="$wp"
-    entries+="${base}\0icon\x1f${thumb}\n"
+    
+    # Map the clean display name back to its actual full filepath
+    wp_map["$display_name"]="$wp"
+    entries+="${display_name}\0icon\x1f${thumb}\n"
 done
 
 r_override="window { border-color: ${C_BORDER_LIGHT}; }"
@@ -166,7 +173,7 @@ r_override="window { border-color: ${C_BORDER_LIGHT}; }"
 selected=$(echo -en "$entries" | rofi -dmenu -i -show-icons -no-custom \
     -theme "$ROFI_THEME" \
     -theme-str "$r_override" \
-    -select "$current_wall")
+    -select "$current_display_name") # Matches the pre-selected clean name
 
 [[ -z "$selected" ]] && exit 0
 

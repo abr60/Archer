@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bash/bin
 source "$HOME/.config/hypr/assets/lib/helpers.sh"
 
 # 1. Clear the screen first
@@ -11,10 +11,10 @@ cat "$HOME/.config/hypr/assets/ANSI LOGO/dots-logo.txt"
 gum style --border rounded --border-foreground 2 --padding "1 2" \
   "Ready to sync your configs?" \
   "" \
-  "• This will push local changes to GitHub" \
+  "• This will FORCE PUSH local changes to GitHub" \
   "• Ensure you have an active internet connection" \
   "" \
-  "$(gum style --foreground 8 "Repo: https://github.com/drunk-particles/dots.git")"
+  "$(gum style --foreground 8 "Repo: https://github.com/drunk-particles/Walls.git")"
 
 echo
 
@@ -23,7 +23,7 @@ if ! gum confirm "Continue with sync?"; then
   exit 0
 fi
 
-# --- HELPER: commit + push to main ---
+# --- HELPER: commit + force push to main ---
 sync_repo() {
   local label="$1"
   local path="$2"
@@ -33,20 +33,17 @@ sync_repo() {
 
   cd "$path" || { log_error "Could not cd into $path — aborting."; exit 1; }
 
-  # Pull latest first
-  git pull --rebase --autostash origin main || { log_error "Pull failed for $label."; exit 1; }
-
   # Only commit if there are changes
   if git diff --quiet && git diff --cached --quiet; then
-    log_info "Nothing to commit in $label. Skipping commit."
+    log_info "Nothing to commit in $label. Skipping commit, proceeding to push."
   else
     local msg
     msg=$(gum input --prompt "Commit message: " --placeholder "$default_msg")
     git add . && git commit -m "${msg:-$default_msg}" || { log_error "Commit failed for $label."; exit 1; }
   fi
 
-  # Push
-  git push origin main || { log_error "Push failed for $label. Check your connection or branch config."; exit 1; }
+  # Force Push (Overwrites remote with local)
+  git push --force origin main || { log_error "Force push failed for $label. Check your connection or branch config."; exit 1; }
 
   cd - > /dev/null
 }
@@ -74,7 +71,7 @@ case "$choice" in
     " Waybar Config")
         sync_repo "Waybar Config" "$HOME/waybar" "sync: $(date +%Y-%m-%d)"
         ;;
-    "󰔎  Assets")
+    "󰔎 Assets")
         sync_repo "Assets" "$HOME/Assets" "theme update: $(date +%Y-%m-%d)"
         ;;
     " Open Lazygit")

@@ -1,13 +1,11 @@
 /* ==========================================================================
-   Rofi Wallpaper Picker — matugen M3 tokens, aligned with clipboard/emoji
-   Layout and dimensions unchanged from original
+   Rofi Wallpaper Picker — Text Active, Scrollbar Disabled
    ========================================================================== */
 
 @import "matugen.rasi"
 
 configuration {
     show-icons:        true;
-    icon-theme:        "Papirus";
     hover-select:      true;
     me-select-entry:   "";
     me-accept-entry:   "MousePrimary";
@@ -16,11 +14,11 @@ configuration {
 * {
     background-color: transparent;
     text-color:       @on-surface-variant;
-    font:             "Maple Mono NF 12";
+    font:             "Maple Mono NF 10";
 }
 
 window {
-    width:            810px;
+    width:            810px; /* Restored to original compact width */
     background-color: @surface;
     border:           2px;
     border-color:     @outline-variant;
@@ -37,7 +35,7 @@ mainbox {
 }
 
 inputbar  { enabled: false; }
-scrollbar { enabled: false; }
+scrollbar { enabled: false; } /* Explicitly disabled globally */
 
 listview {
     columns:       5;
@@ -48,24 +46,14 @@ listview {
     fixed-height:  true;
     dynamic:       true;
     cycle:         true;
-    scrollbar:     false;
 }
 
 element {
     orientation:      vertical;
     cursor:           pointer;
-    padding:          4px;
-    margin:           0px;
+    padding:          6px;
+    spacing:          4px; /* Tight spacer between image and text layout */
     border-radius:    4px;
-    background-color: transparent;
-    border:           0px;
-    border-color:     transparent;
-}
-
-element normal.normal,
-element alternate.normal {
-    background-color: transparent;
-    border-color:     transparent;
 }
 
 element selected,
@@ -86,5 +74,7 @@ element-icon {
 }
 
 element-text {
-    enabled: false;
+    enabled:          true;
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
 }
