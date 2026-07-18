@@ -14,11 +14,11 @@ configuration {
 * {
     background-color: transparent;
     text-color:       @on-surface-variant;
-    font:             "Maple Mono NF 10";
+    font:             "Maple Mono NF 12";
 }
 
 window {
-    width:            810px; /* Restored to original compact width */
+    width:            950px; /* Compact width layout */
     background-color: @surface;
     border:           2px;
     border-color:     @outline-variant;
@@ -35,7 +35,7 @@ mainbox {
 }
 
 inputbar  { enabled: false; }
-scrollbar { enabled: false; } /* Explicitly disabled globally */
+scrollbar { enabled: false; } 
 
 listview {
     columns:       5;
@@ -51,30 +51,50 @@ listview {
 element {
     orientation:      vertical;
     cursor:           pointer;
-    padding:          6px;
-    spacing:          4px; /* Tight spacer between image and text layout */
+    padding:          4px 2px;
+    spacing:          2px; /* Tight spacer between image and text layout */
     border-radius:    4px;
 }
 
-element selected,
+/* ─── State Modifiers (Direct Selection Fixes) ───────────────────────────── */
+
+/* Reset default selection overlay backgrounds completely */
+element normal.normal,
+element normal.active,
 element selected.normal,
-element selected.urgent,
 element selected.active {
-    background-color: @surface;
-    border:           20px;
-    border-radius:    40 3 40 3;
-    border-color:     transparent;
+    background-color: transparent;
+    border:           0px;
 }
 
+/* Hover / Selected State for Regular Items — Force Text to Blue */
+element selected.normal {
+    text-color: #268bd2;
+}
+
+/* Active Theme State when NOT hovered — Force Text to Green */
+element normal.active {
+    text-color: #859900;
+}
+
+/* Active Theme State when SIMULTANEOUSLY selected/focused on launch — Force Text to Green */
+element selected.active {
+    text-color: #859900;
+}
+
+/* ─── Element Components ─────────────────────────────────────────────────── */
+
 element-icon {
-    size:             170px;
+    size:             185px;
     horizontal-align: 0.5;
     vertical-align:   0.5;
     border-radius:    4px;
+    text-color:       inherit; /* Keep images unaffected by parent text color shifts */
 }
 
 element-text {
     enabled:          true;
     horizontal-align: 0.5;
     vertical-align:   0.5;
+    text-color:       inherit;
 }

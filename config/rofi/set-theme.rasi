@@ -1,86 +1,101 @@
 /* ==========================================================================
-   Rofi Theme Picker - Compact Consolidated Row Design (No Icons)
+   Rofi Theme Picker — Compact 4x2 Vertical Grid
    ========================================================================== */
 
 @import "matugen.rasi"
 
+configuration {
+    show-icons:        true;
+    hover-select:      true;
+    me-select-entry:   "";
+    me-accept-entry:   "MousePrimary";
+}
+
 * {
     background-color: transparent;
     text-color:       @on-surface-variant;
-    font:             "JetBrains Mono 12";
+    font:             "Maple Mono NF 12";
 }
 
 window {
+    width:            760px;
     background-color: @surface;
     border:           2px;
     border-color:     @outline-variant;
-    border-radius:    1px;
-    width:            520px;
-    padding:          14px;
+    border-radius:    4px;
+    location:         center;
+    anchor:           center;
+    padding:          2px;
 }
 
 mainbox {
-    children: [ inputbar, listview ];
-    spacing:  12px;
+    children: [ listview ];
+    padding:  0;
+    spacing:  0;
 }
 
-inputbar {
-    background-color: @surface-container-low;
-    border:           1px;
-    border-color:     @outline-variant;
-    border-radius:    1px;
-    padding:          4px 12px;
-    children:         [ prompt, entry ];
-}
-
-prompt {
-    text-color: @outline;
-    margin:     0px 6px 0px 0px;
-}
-
-entry {
-    placeholder-color: @outline-variant;
-    text-color:        @on-surface-variant;
-}
+inputbar  { enabled: false; }
+scrollbar { enabled: false; }
 
 listview {
-    border:        1px;
-    border-radius: 1px;
-    border-color:  @outline-variant;
-    lines:         7;
-    columns:       1;
-    spacing:       0px;
-    fixed-height:  false;
+    columns:       4;
+    lines:         2;
+    spacing:       2px;
+    padding:       2px;
+    fixed-columns: true;
+    fixed-height:  true;
+    dynamic:       true;
+    cycle:         true;
 }
 
 element {
-    background-color: @surface-container-low;
-    border:           0px 0px 1px 0px;
-    border-color:     @outline-variant;
-    border-radius:    1px;
-    padding:          10px 14px;
-    orientation:      horizontal;
-    children:         [ element-text ];
+    orientation:      vertical;
+    cursor:           pointer;
+    padding:          4px 2px;
+    spacing:          2px;
+    border-radius:    4px;
 }
 
-element normal normal,
-element alternate normal {
-    background-color: @surface-container-low;
-    text-color:       @on-surface-variant;
+/* ─── State Modifiers (Direct Selection Fixes) ───────────────────────────── */
+
+/* Reset default selection overlay backgrounds completely */
+element normal.normal,
+element normal.active,
+element selected.normal,
+element selected.active {
+    background-color: transparent;
+    border:           0px;
 }
 
-element selected normal {
-    background-color: @surface-container-high;
-    text-color:       @on-surface;
+/* Hover / Selected State for Regular Items — Force Text to Blue */
+element selected.normal {
+    text-color: #268bd2;
 }
+
+/* Active Theme State when NOT hovered — Force Text to Green */
+element normal.active {
+    text-color: #859900;
+}
+
+/* Active Theme State when SIMULTANEOUSLY selected/focused on launch — Force Text to Green */
+element selected.active {
+    text-color: #859900;
+}
+
+/* ─── Element Components ─────────────────────────────────────────────────── */
 
 element-icon {
-    enabled: false;
+    size:             185px;
+    horizontal-align: 0.5;
+    vertical-align:   0.5;
+    border-radius:    4px;
+    /* Force icons to retain their natural colors rather than inheriting text-color overrides */
+    text-color:       inherit; 
 }
 
 element-text {
-    background-color: transparent;
-    text-color:       inherit;
+    enabled:          true;
+    horizontal-align: 0.5;
     vertical-align:   0.5;
-    expand:           true;
+    text-color:       inherit;
 }

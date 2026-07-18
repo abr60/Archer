@@ -165,7 +165,14 @@ for wp in "${WALLPAPERS[@]}"; do
     
     # Map the clean display name back to its actual full filepath
     wp_map["$display_name"]="$wp"
-    entries+="${display_name}\0icon\x1f${thumb}\n"
+    
+    # ─── STATE CHECK INJECTION ───────────────────────────────────────────────
+    # Flags the row as active if it matches the current active display name
+    if [[ "$display_name" == "$current_display_name" ]]; then
+        entries+="${display_name}\0icon\x1f${thumb}\x1factive\x1ftrue\n"
+    else
+        entries+="${display_name}\0icon\x1f${thumb}\n"
+    fi
 done
 
 r_override="window { border-color: ${C_BORDER_LIGHT}; }"

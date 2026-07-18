@@ -2,11 +2,6 @@
 # =============================================================================
 # rofi-set-theme — Pick a theme, automatically detect the current system mode,
 #                  apply a random wallpaper, and trigger the color pipeline.
-#
-# State files:
-#   ~/.local/state/Archer/current-theme       ← active theme name
-#   ~/.local/state/Archer/current-wallpaper   ← symlink to active wallpaper
-#   ~/.local/state/Archer/current-mode        ← "light" or "dark"
 # =============================================================================
 
 set -uo pipefail
@@ -21,6 +16,10 @@ STATE_DIR="$HOME/.local/state/Archer"
 THEME_FILE="$STATE_DIR/current-theme"
 MODE_FILE="$STATE_DIR/current-mode"
 SCRIPTS_DIR="$HOME/.config/matugen/bin"
+
+# Cache Configuration matching the wallpaper picker pipeline
+CACHE_DIR="$HOME/.cache/archer/theme-thumbs"
+THUMB_SIZE="500"
 
 if [[ ! -d "$THEMES_DIR" ]]; then
     notify-send "Archer" "Themes directory not found at $THEMES_DIR"
@@ -41,8 +40,68 @@ fi
 
 CURRENT=$(cat "$THEME_FILE" 2>/dev/null || echo "")
 
+# ─── Theme Thumbnail Generation Function ──────────────────────────────────────
+# Caches a square crop using integrity hashes to check for modifications
+build_theme_thumb() {
+    local theme_name="$1"
+    local raw_img="$2"
+    local thumb="$CACHE_DIR/${theme_name}.sqre.png"
+    local hash_file="$CACHE_DIR/.${theme_name}.xxh"
+    local lock_file="$CACHE_DIR/.lock_${theme_name}"
+    local current_hash
+
+    if command -v xxh64sum &>/dev/null; then
+        current_hash=$(xxh64sum "$raw_img" | cut -d' ' -f1)
+    else
+        current_hash=$(md5sum "$raw_img" | cut -d' ' -f1)
+    fi
+
+    (
+        flock -x 200
+        if [[ ! -f "$thumb" ]] || \
+           [[ ! -f "$hash_file" ]] || \
+           [[ "$current_hash" != "$(cat "$hash_file" 2>/dev/null)" ]]; then 
+            ffmpeg -y -i "$raw_img" \
+                -vf "select=eq(n\,0),scale=${THUMB_SIZE}:${THUMB_SIZE}:force_original_aspect_ratio=increase,crop=${THUMB_SIZE}:${THUMB_SIZE}" \
+                -vframes 1 "$thumb" >/dev/null 2>&1 && \
+            echo "$current_hash" > "$hash_file"
+        fi
+        rm -f "$lock_file"
+    ) 200>"$lock_file"
+}
+
+# ─── Process Theme Previews and Build Rofi Entries ────────────────────────────
+mkdir -p "$CACHE_DIR"
+rm -f "$CACHE_DIR"/.lock_* 2>/dev/null || true
+
+entries=""
+for theme_name in "${THEMES[@]}"; do
+    # Find the source image inside the theme directory
+    showcase_img=$(find -L "$THEMES_DIR/$theme_name" -maxdepth 1 -type f \
+        \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \) \
+        | sort | head -n 1)
+    
+    if [[ -n "$showcase_img" && -f "$showcase_img" ]]; then
+        # Generate or check cached thumbnail
+        build_theme_thumb "$theme_name" "$showcase_img"
+        final_icon="$CACHE_DIR/${theme_name}.sqre.png"
+    else
+        final_icon="preferences-desktop-theme"
+    fi
+    
+    # ─── State Check Added Here ──────────────────────────────────────────────
+    # Appends the active meta property if the row matches your current theme file state
+    if [[ "$theme_name" == "$CURRENT" ]]; then
+        entries+="${theme_name}\0icon\x1f${final_icon}\x1factive\x1ftrue\n"
+    else
+        entries+="${theme_name}\0icon\x1f${final_icon}\n"
+    fi
+done
+
+rm -f "$CACHE_DIR"/.lock_* 2>/dev/null || true
+
 # ─── Pick theme via rofi ──────────────────────────────────────────────────────
-SELECTED_THEME=$(printf '%s\n' "${THEMES[@]}" | rofi -dmenu \
+SELECTED_THEME=$(echo -en "$entries" | rofi -dmenu -i -show-icons -no-custom \
     -p "Select Theme" \
     -theme "$HOME/.config/rofi/set-theme.rasi" \
     -select "$CURRENT")
@@ -60,9 +119,6 @@ MODE=$(cat "$MODE_FILE" 2>/dev/null || echo "dark")
 # ─── Save theme state ─────────────────────────────────────────────────────────
 mkdir -p "$STATE_DIR"
 echo "$SELECTED_THEME" > "$THEME_FILE"
-
-#notify-send "Archer" "Theme set to '$SELECTED_THEME' ($MODE mode)" \
-    --icon=preferences-desktop-wallpaper
 
 # ─── Pick random wallpaper from selected theme ────────────────────────────────
 BG_DIR="$THEMES_DIR/$SELECTED_THEME/Walls"
