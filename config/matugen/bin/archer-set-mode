@@ -13,13 +13,13 @@ else
 fi
 
 if [[ "$MODE" == "light" ]]; then
-    echo "scheme-tonal-spot" > "$SCHEME_FILE"
+    echo "scheme-content" > "$SCHEME_FILE"
 else
-    echo "scheme-tonal-spot" > "$SCHEME_FILE"
+    echo "scheme-content" > "$SCHEME_FILE"
 fi
 
 CURRENT_WP="$(readlink -f "$STATE_DIR/current-wallpaper")"
-SCHEME=$(cat "$SCHEME_FILE" 2>/dev/null || echo "scheme-tonal-spot")
+SCHEME=$(cat "$SCHEME_FILE" 2>/dev/null || echo "scheme-content")
 SCRIPTS_DIR="$HOME/.config/matugen/bin"
 
 # in archer-set-mode, after writing $MODE to state file:

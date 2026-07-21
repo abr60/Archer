@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# omarchy:summary=Start or stop screen recording
-# omarchy:group=capture
-# omarchy:args=[--with-desktop-audio] [--with-microphone-audio] [--with-webcam] [--webcam-device=<device>] [--resolution=<size>] [--stop-recording]
-# omarchy:examples=omarchy screenrecord | omarchy capture screenrecord --with-desktop-audio
-# omarchy:aliases=omarchy screenrecord
+# ARCHER:summary=Start or stop screen recording
+# ARCHER:group=capture
+# ARCHER:args=[--with-desktop-audio] [--with-microphone-audio] [--with-webcam] [--webcam-device=<device>] [--resolution=<size>] [--stop-recording]
+# ARCHER:examples=ARCHER screenrecord | ARCHER capture screenrecord --with-desktop-audio
+# ARCHER:aliases=ARCHER screenrecord
 #
-# Env: OMARCHY_SCREENRECORD_USE_PORTAL=true skips the built-in slurp picker and
+# Env: ARCHER_SCREENRECORD_USE_PORTAL=true skips the built-in slurp picker and
 # uses gpu-screen-recorder's xdg-desktop-portal capture backend instead. The
 # portal backend was originally added (PR #3401) for HDR-aware capture, support
 # for monitors driven by external GPUs, and window capture — enable it if any
@@ -14,12 +14,12 @@
 # DMA-BUF modifier import on some configurations, leaving recording unable to
 # start.
 #
-# Env: OMARCHY_SCREENRECORD_DEBUG=true appends gpu-screen-recorder's stderr (and
+# Env: ARCHER_SCREENRECORD_DEBUG=true appends gpu-screen-recorder's stderr (and
 # the picker target it was launched with) to /tmp/screenrecord.log so
 # users can attach a log when reporting capture failures.
 
 [[ -f ~/.config/user-dirs.dirs ]] && source ~/.config/user-dirs.dirs
-OUTPUT_DIR="${OMARCHY_SCREENRECORD_DIR:-$HOME/Videos/Screen Recordings}"
+OUTPUT_DIR="${ARCHER_SCREENRECORD_DIR:-$HOME/Videos/Screen Recordings}"
 
 if [[ ! -d $OUTPUT_DIR ]]; then
   mkdir -p "$OUTPUT_DIR"
@@ -33,7 +33,7 @@ WEBCAM_DEVICE=""
 RESOLUTION=""
 STOP_RECORDING="false"
 RECORDING_FILE="/tmp/screenrecord-filename"
-LOG_FILE=$([[ ${OMARCHY_SCREENRECORD_DEBUG:-false} == "true" ]] && echo "/tmp/screenrecord.log" || echo "/dev/null")
+LOG_FILE=$([[ ${ARCHER_SCREENRECORD_DEBUG:-false} == "true" ]] && echo "/tmp/screenrecord.log" || echo "/dev/null")
 
 for arg in "$@"; do
   case "$arg" in
@@ -167,7 +167,7 @@ start_screenrecording() {
   # the portal backend supports and the kms backend doesn't). Default flow uses
   # slurp + the kms backend, which avoids the EGL DMA-BUF modifier import
   # failures the portal path can hit on some configurations.
-  if [[ ${OMARCHY_SCREENRECORD_USE_PORTAL:-false} == "true" ]]; then
+  if [[ ${ARCHER_SCREENRECORD_USE_PORTAL:-false} == "true" ]]; then
     target="portal"
     capture_args=(-w portal -s "${RESOLUTION:-$(default_resolution)}")
   else

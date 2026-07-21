@@ -15,7 +15,7 @@ a.bind("SUPER + SHIFT + W", "Typora",     a.launch("typora --enable-wayland-ime"
 a.bind("SUPER + SHIFT + SLASH", "Passwords", a.launch("1password"))
 
 -- === Tools ===
-a.bind("ALT + M", "Toolbox", "[float; size 800 600] archer-hub")
+a.bind("ALT + M", "Toolbox", "[float; size 845 600] archer-hub")
 a.bind("ALT + B",     "Set wallpaper",   "rofi-set-bg")
 a.bind("ALT + SPACE", "Select theme",    "rofi-set-theme")
 a.bind("ALT + comma", "Unmount",         "archer-hdd-unmount")
@@ -33,7 +33,7 @@ a.bind("ALT + C", "RMPC Music", "[float; center] kitty --title=rmpc-full -e rmpc
 a.bind("ALT + X", "Study",        "[float; size 700 200; center] kitty --class=Yazi --title=Yazi -e timeout 30s yazi \"~/Videos//Cowboy Bebop\"")
 
 -- === Wifi QR popup ===
-a.bind("SUPER + Q", "Wifi QR", "[float; size 316 416; move 955 45; pin] kitty --class=wifi-qr --title=wifi-qr -e archer-wifi-qr")
+a.bind("SUPER + Q", "Wifi QR", "[float; size 336 416; move 940 45; pin] kitty --class=wifi-qr --title=wifi-qr -e archer-wifi-qr")
 
 -- === Plugin Bindings ===
 

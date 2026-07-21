@@ -39,8 +39,8 @@ hl.window_rule({ pin = true,        match = { class = "^(kitty)$", title = "^(rm
 
 -- Wifi QR popup
 hl.window_rule({ float = true,      match = { class = "^(kitty)$", title = "^(wifi-qr)$" } })
-hl.window_rule({ size = "302 416",  match = { class = "^(kitty)$", title = "^(wifi-qr)$" } })
-hl.window_rule({ move = "967 40",   match = { class = "^(kitty)$", title = "^(wifi-qr)$" } })
+hl.window_rule({ size = "336 416",  match = { class = "^(kitty)$", title = "^(wifi-qr)$" } })
+hl.window_rule({ move = "940 45",   match = { class = "^(kitty)$", title = "^(wifi-qr)$" } })
 hl.window_rule({ pin = true,        match = { class = "^(kitty)$", title = "^(wifi-qr)$" } })
 
 -- Bluetui + Impala dropdown

@@ -1,63 +1,38 @@
 /*
-* GTK Colors
-* Generated with Matugen
+* GTK colors generated with Matugen
+* The source template is here: ~/.config/matugen/templates/gtk-3.0/gtk.css
 */
 
-@define-color primary #695f12;
-@define-color on_primary #ffffff;
-@define-color primary_container #f2e48a;
-@define-color on_primary_container #201c00;
-@define-color inverse_primary #d5c871;
-@define-color primary_fixed #f2e48a;
-@define-color primary_fixed_dim #d5c871;
-@define-color on_primary_fixed #201c00;
-@define-color on_primary_fixed_variant #4f4700;
-
-@define-color secondary #645f41;
-@define-color on_secondary #ffffff;
-@define-color secondary_container #ebe3bd;
-@define-color on_secondary_container #1f1c05;
-@define-color secondary_fixed #ebe3bd;
-@define-color secondary_fixed_dim #cec7a2;
-@define-color on_secondary_fixed #1f1c05;
-@define-color on_secondary_fixed_variant #4c472b;
-
-@define-color tertiary #416652;
-@define-color on_tertiary #ffffff;
-@define-color tertiary_container #c2ecd2;
-@define-color on_tertiary_container #002113;
-@define-color tertiary_fixed #c2ecd2;
-@define-color tertiary_fixed_dim #a7d0b7;
-@define-color on_tertiary_fixed #002113;
-@define-color on_tertiary_fixed_variant #294e3b;
-
-@define-color error #ba1a1a;
-@define-color on_error #ffffff;
-@define-color error_container #ffdad6;
-@define-color on_error_container #410002;
-
-@define-color surface_dim #dfdacc;
-@define-color surface #fff9eb;
-@define-color surface_tint #695f12;
-@define-color surface_bright #fff9eb;
-@define-color surface_container_lowest #ffffff;
-@define-color surface_container_low #f9f3e5;
-@define-color surface_container #f3eee0;
-@define-color surface_container_high #ede8da;
-@define-color surface_container_highest #e7e2d5;
-@define-color surface_variant #e8e2d0;
-@define-color on_surface #1d1c13;
-@define-color on_surface_variant #4a473a;
-
-@define-color outline #7b7768;
-@define-color outline_variant #ccc6b5;
-
-@define-color inverse_surface #323027;
-@define-color inverse_on_surface #f6f0e3;
-
-@define-color background #fff9eb;
-@define-color on_background #1d1c13;
-
-@define-color shadow #000000;
-@define-color scrim #000000;
-@define-color source_color #695f12;
+/* Accents */
+@define-color accent_color #ffb59d;
+@define-color accent_fg_color #5a1b04;
+@define-color accent_bg_color #ffb59d;
+@define-color destructive_bg_color #93000a;
+@define-color destructive_fg_color #ffdad6;
+@define-color destructive_color #ffb4ab;
+@define-color success_bg_color #374B3E;
+@define-color success_fg_color #D1E9D6;
+@define-color success_color #B5CCBA;
+/* Base surfaces */
+@define-color window_bg_color #19120f;
+@define-color window_fg_color #efdfda;
+@define-color headerbar_bg_color #261e1b;
+@define-color headerbar_backdrop_color #261e1b;
+@define-color headerbar_fg_color #efdfda;
+@define-color card_bg_color #261e1b;
+@define-color card_fg_color #efdfda;
+@define-color sidebar_bg_color #261e1b;
+@define-color sidebar_fg_color #efdfda;
+@define-color secondary_sidebar_bg_color #221a17;
+@define-color secondary_sidebar_fg_color #efdfda;
+@define-color sidebar_border_color @sidebar_bg_color;
+@define-color sidebar_backdrop_color @sidebar_bg_color;
+@define-color view_bg_color #140c0a;
+@define-color view_fg_color #efdfda;
+@define-color overview_bg_color #140c0a;
+@define-color overview_fg_color #efdfda;
+/* Popups */
+@define-color popover_bg_color #3c3330;
+@define-color popover_fg_color #efdfda;
+@define-color dialog_bg_color #312825;
+@define-color dialog_fg_color #efdfda;
