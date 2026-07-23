@@ -3,105 +3,105 @@
 
 return {
 
-  background = "rgba(15130fff)",
+  background = "rgba(fff8f4ff)",
 
-  error = "rgba(ffb4abff)",
+  error = "rgba(ba1a1aff)",
 
-  error_container = "rgba(93000aff)",
+  error_container = "rgba(ffdad6ff)",
 
-  inverse_on_surface = "rgba(32302bff)",
+  inverse_on_surface = "rgba(fbefe5ff)",
 
-  inverse_primary = "rgba(6a5e24ff)",
+  inverse_primary = "rgba(fbba6aff)",
 
-  inverse_surface = "rgba(e7e2daff)",
+  inverse_surface = "rgba(352f29ff)",
 
-  on_background = "rgba(e7e2daff)",
+  on_background = "rgba(201b15ff)",
 
-  on_error = "rgba(690005ff)",
+  on_error = "rgba(ffffffff)",
 
-  on_error_container = "rgba(ffdad6ff)",
+  on_error_container = "rgba(410002ff)",
 
-  on_primary = "rgba(393000ff)",
+  on_primary = "rgba(ffffffff)",
 
-  on_primary_container = "rgba(000000ff)",
+  on_primary_container = "rgba(ffffffff)",
 
-  on_primary_fixed = "rgba(211b00ff)",
+  on_primary_fixed = "rgba(2a1700ff)",
 
-  on_primary_fixed_variant = "rgba(51470dff)",
+  on_primary_fixed_variant = "rgba(653e00ff)",
 
-  on_secondary = "rgba(353019ff)",
+  on_secondary = "rgba(ffffffff)",
 
-  on_secondary_container = "rgba(eae0beff)",
+  on_secondary_container = "rgba(5a4225ff)",
 
-  on_secondary_fixed = "rgba(201c06ff)",
+  on_secondary_fixed = "rgba(2a1801ff)",
 
-  on_secondary_fixed_variant = "rgba(4d472dff)",
+  on_secondary_fixed_variant = "rgba(5a4225ff)",
 
-  on_surface = "rgba(e7e2daff)",
+  on_surface = "rgba(201b15ff)",
 
-  on_surface_variant = "rgba(ccc6b5ff)",
+  on_surface_variant = "rgba(514538ff)",
 
-  on_tertiary = "rgba(1f3610ff)",
+  on_tertiary = "rgba(ffffffff)",
 
-  on_tertiary_container = "rgba(000000ff)",
+  on_tertiary_container = "rgba(ffffffff)",
 
-  on_tertiary_fixed = "rgba(0a2100ff)",
+  on_tertiary_fixed = "rgba(1a1e00ff)",
 
-  on_tertiary_fixed_variant = "rgba(344d24ff)",
+  on_tertiary_fixed_variant = "rgba(434b00ff)",
 
-  outline = "rgba(969081ff)",
+  outline = "rgba(837566ff)",
 
-  outline_variant = "rgba(4a473aff)",
+  outline_variant = "rgba(d5c4b3ff)",
 
-  primary = "rgba(d6c781ff)",
+  primary = "rgba(815206ff)",
 
-  primary_container = "rgba(9e9151ff)",
+  primary_container = "rgba(9e6a21ff)",
 
-  primary_fixed = "rgba(f3e39bff)",
+  primary_fixed = "rgba(ffddb8ff)",
 
-  primary_fixed_dim = "rgba(d6c781ff)",
+  primary_fixed_dim = "rgba(fbba6aff)",
 
   scrim = "rgba(000000ff)",
 
-  secondary = "rgba(d0c6a5ff)",
+  secondary = "rgba(745a3aff)",
 
-  secondary_container = "rgba(4d472dff)",
+  secondary_container = "rgba(fedab2ff)",
 
-  secondary_fixed = "rgba(ece2c0ff)",
+  secondary_fixed = "rgba(ffddb8ff)",
 
-  secondary_fixed_dim = "rgba(d0c6a5ff)",
+  secondary_fixed_dim = "rgba(e3c19aff)",
 
   shadow = "rgba(000000ff)",
 
-  source_color = "rgba(958849ff)",
+  source_color = "rgba(b98137ff)",
 
-  surface = "rgba(15130fff)",
+  surface = "rgba(fff8f4ff)",
 
-  surface_bright = "rgba(3b3933ff)",
+  surface_bright = "rgba(fff8f4ff)",
 
-  surface_container = "rgba(21201bff)",
+  surface_container = "rgba(f8ece2ff)",
 
-  surface_container_high = "rgba(2c2a25ff)",
+  surface_container_high = "rgba(f2e6ddff)",
 
-  surface_container_highest = "rgba(37352fff)",
+  surface_container_highest = "rgba(ece0d7ff)",
 
-  surface_container_low = "rgba(1d1b17ff)",
+  surface_container_low = "rgba(fdf2e8ff)",
 
-  surface_container_lowest = "rgba(0f0e0aff)",
+  surface_container_lowest = "rgba(ffffffff)",
 
-  surface_dim = "rgba(15130fff)",
+  surface_dim = "rgba(e3d8cfff)",
 
-  surface_tint = "rgba(d6c781ff)",
+  surface_tint = "rgba(845409ff)",
 
-  surface_variant = "rgba(4a473aff)",
+  surface_variant = "rgba(f2dfceff)",
 
-  tertiary = "rgba(b1d09aff)",
+  tertiary = "rgba(586115ff)",
 
-  tertiary_container = "rgba(7d9968ff)",
+  tertiary_container = "rgba(707a2dff)",
 
-  tertiary_fixed = "rgba(cdecb5ff)",
+  tertiary_fixed = "rgba(dfea8fff)",
 
-  tertiary_fixed_dim = "rgba(b1d09aff)",
+  tertiary_fixed_dim = "rgba(c3cd76ff)",
 
-  image = "/home/abr/Walls/Canvas/Lakehouse.jpg",
+  image = "/home/abr/Walls/Canvas/Countryside.jpg",
 }
