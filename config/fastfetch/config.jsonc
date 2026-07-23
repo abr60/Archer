@@ -7,7 +7,7 @@
     },
     "size": {
       "ndigits": 0,
-      "maxPrefix": "MB"
+      "maxPrefix": "GB"
     }
   },
   "logo": {
