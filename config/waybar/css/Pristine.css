@@ -1,11 +1,11 @@
 /* =========================================================
-   cherry.css — Material You · Waybar Theme
+   pristine.css — Material You · Waybar Theme (Refined)
    ========================================================= */
 
 @import "../waybar/matugen.css";
 
 
-/* ── Reset ─────────────────────────────────────────────── */
+/* ── Global Reset ──────────────────────────────────────── */
 
 * {
     color:       @on_surface;
@@ -28,6 +28,7 @@ tooltip {
     background:    @surface_container_low;
     border:        1px solid alpha(@on_surface, 0.15);
     border-radius: 4px;
+    padding:       4px 8px;
 }
 
 tooltip label {
@@ -35,7 +36,7 @@ tooltip label {
 }
 
 
-/* ── Islands ────────────────────────────────────────────── */
+/* ── Island Containers ─────────────────────────────────── */
 
 .modules-left,
 .modules-center,
@@ -44,130 +45,303 @@ tooltip label {
     border:           1px solid alpha(@on_surface, 0.12);
     border-radius:    6px;
     margin:           3px 4px 0px 4px;
-    padding:          1px 2px;
+    padding:          2px 1px;
     box-shadow:       0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 #modules-center {
-    padding: 1px 10px;
+    padding: 2px 8px;
 }
 
 
-/* ── Inline Separators ──────────────────────────────────── */
+/* ── Base Module Styling ────────────────────────────────── */
 
-.modules-left > widget > *,
-.modules-right > widget > *,
-.modules-center > widget > label,
-.modules-center > widget > box {
+.modules-left widget,
+.modules-right widget,
+.modules-center widget {
     padding:      0 6px;
     border-right: 1px solid alpha(@on_surface, 0.12);
 }
 
-.modules-left > widget:last-child > *,
-.modules-center > widget:last-child > label,
-.modules-center > widget:last-child > box,
-.modules-right > widget:last-child > * {
+/* Remove separator from last child in each section */
+.modules-left widget:last-child,
+.modules-right widget:last-child,
+.modules-center widget:last-child {
     border-right:  none;
     padding-right: 4px;
 }
 
 
-/* ── Module Hover ───────────────────────────────────────── */
+/* ── Per-Module Hover States (Isolated) ──────────────────── */
 
-.modules-left > widget > *:hover,
-.modules-center > widget > *:hover,
-.modules-right > widget > *:hover {
+/* Left side modules */
+#custom-resources:hover,
+#mpris:hover,
+#temperature:hover,
+#custom-weather:hover,
+#custom-updatespacman:hover,
+#custom-timer:hover,
+#custom-hdd:hover,
+#custom-screenrecording-indicator:hover,
+#custom-voxtype:hover {
     background-color: alpha(@primary, 0.28);
     border-radius:    4px;
     color:            @on_surface;
+    padding:          0 6px;
+}
+
+/* Center workspaces */
+#workspaces button:hover {
+    background-color: alpha(@on_surface, 0.12);
+    border-radius:    4px;
+    color:            @tertiary;
+}
+
+/* Right side modules */
+#custom-lens:hover,
+#power-profiles-daemon:hover,
+#battery:hover,
+#custom-swaync:hover,
+#bluetooth:hover,
+#network:hover,
+#backlight:hover,
+#pulseaudio:hover {
+    background-color: alpha(@primary, 0.28);
+    border-radius:    4px;
+    color:            @on_surface;
+    padding:          0 6px;
+}
+
+/* Right-side module spacing */
+#custom-lens,
+#power-profiles-daemon,
+#battery {
+    margin-right: 3px;
+}
+
+#custom-swaync,
+#bluetooth,
+#network,
+#backlight {
+    margin-right: 2px;
+}
+
+/* Clock (far right, special handling) */
+#clock:hover {
+    background-color: alpha(@primary, 0.28);
+    border-radius:    4px;
+    color:            @on_surface;
+    padding:          0 8px;
 }
 
 
-/* ── Workspaces ─────────────────────────────────────────── */
+/* ── Workspace Styling ───────────────────────────────────── */
+
+#workspaces {
+    padding: 0 4px;
+}
 
 #workspaces button {
     color:   alpha(@on_surface, 0.4);
     padding: 0 4px;
+    min-width: 24px;
 }
 
 #workspaces button.active {
     color:            @on_surface;
     background-color: alpha(@primary, 0.15);
     border-radius:    4px;
-}
-
-#workspaces button:hover {
-    background-color: alpha(@primary, 0.25);
-    border-radius:    4px;
-    color:            @primary;
+    padding:          0 6px;
 }
 
 
-/* ── Clock ──────────────────────────────────────────────── */
+/* ── Clock Module (Far Right) ──────────────────────────── */
 
 #clock {
     font-size:   12px;
     font-weight: 800;
     color:       @on_surface;
+    padding:     0 8px;
+    min-width:   60px;
 }
 
 
-/* ── MPRIS ──────────────────────────────────────────────── */
+/* ── MPRIS Module (Icon-Only, Larger) ────────────────────── */
 
 #mpris {
-    font-style: italic;
-    color:      alpha(@on_surface, 0.7);
+    font-size:   23px;
+    font-weight: bold;
+    color:       @on_surface;
+    padding:     0 0 0 10px;
+    min-width:   20px;
 }
 
 #mpris.playing {
     font-style:  normal;
     font-weight: bold;
-    color:       @on_surface;
+    color:       @primary;
 }
 
 
-/* ── Custom Modules ─────────────────────────────────────── */
+/* ── Timer Module (State-Dependent) ──────────────────────── */
 
 #custom-timer {
-    font: 900 13px "Doto";
+    font:        900 13px "Doto";
+    padding:     0 6px;
+    min-width:   40px;
 }
 
-#custom-mode {
-    color:   @primary;
-    font-size: 16px;
-    padding: 0 7px;
+#custom-timer.reset {
+    color: @error;
+}
+
+
+/* ── Resource & System Modules ────────────────────────────── */
+
+#custom-resources {
+    font-style: italic;
+    color:      alpha(@on_surface, 0.7);
+    padding:    0 10px;
 }
 
 #custom-weather {
-    color: @on_surface;
+    padding: 0 6px;
 }
 
-#custom-wifi-qr,
+#custom-updatespacman {
+    padding: 0 6px;
+}
+
+#custom-hdd {
+    padding: 0 6px;
+}
+
+#custom-screenrecording-indicator {
+    padding: 0 6px;
+}
+
+#custom-voxtype {
+    padding: 0 6px;
+}
+
+#temperature {
+    padding: 0 6px;
+}
+
+#temperature.critical {
+    color: @tertiary;
+}
+
+
+/* ── Tray Expander Integration ───────────────────────────── */
+
+#custom-expand-icon {
+    color:    alpha(@on_surface, 0.5);
+    padding:  0 3px;
+    font-size: 11px;
+    min-width: 8px;
+}
+
+#tray {
+    padding: 0 4px;
+}
+
+#group-tray-expander widget,
+.tray-group-item {
+    padding: 0 2px;
+    border:  none;
+}
+
+
+/* ── Bluetooth Module ──────────────────────────────────────── */
+
 #bluetooth {
-    font-size: 18px;
+    font-size: 16px;
     color:     @primary;
-}
-
-#custom-wifi-qr:hover {
-    color:            @tertiary;
-    font-size:        19px;
-    background-color: @surface_container;
-    border-radius:    1px;
-}
-
-#custom-cava,
-#custom-arch {
-    opacity:   0;
-    font-size: 0;
-    padding:   0;
-    margin:    0;
+    padding:   0 6px;
 }
 
 
-/* ── swaync Bell ────────────────────────────────────────── */
+/* ── Network Module ────────────────────────────────────────── */
+
+#network {
+    padding: 0 6px;
+}
+
+#network.disconnected {
+    color: @error;
+}
+
+
+/* ── Backlight Module ──────────────────────────────────────── */
+
+#backlight {
+    padding: 0 6px;
+}
+
+
+/* ── Audio/Pulseaudio Modules ──────────────────────────────── */
+
+#pulseaudio {
+    padding: 0 6px;
+}
+
+#pulseaudio:not(.microphone).muted,
+#pulseaudio.microphone.source-muted {
+    color: alpha(@on_surface, 0.4);
+}
+
+#pulseaudio#microphone {
+    font-size: 12px;
+    padding:   0 5px;
+}
+
+
+/* ── Power Profiles Daemon ─────────────────────────────────── */
+
+#power-profiles-daemon {
+    padding: 0 6px;
+    font-size: 14px;
+}
+
+
+/* ── Battery Module (State-Dependent) ──────────────────────── */
+
+#battery {
+    padding:   0 6px;
+    min-width: 35px;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: @secondary;
+}
+
+#battery.warning {
+    color: @tertiary;
+}
+
+#battery.critical:not(.charging) {
+    color: @error;
+}
+
+
+/* ── Custom Lens Module ────────────────────────────────────── */
+
+#custom-lens {
+    font-size: 16px;
+    padding:   0 6px;
+    min-width: 20px;
+}
+
+
+/* ── Swaync Bell (Notification) ────────────────────────────── */
+
+#custom-swaync {
+    padding: 0 6px;
+}
 
 #custom-swaync:hover {
-    font-size:               13px;
     animation-name:          bell-shake;
     animation-duration:      0.5s;
     animation-timing-function: ease-in-out;
@@ -186,75 +360,59 @@ tooltip label {
 }
 
 
-/* ── Tray ───────────────────────────────────────────────── */
-
-#group-tray-expander widget {
-    padding: 0 2px;
-    border:  none;
-}
-
-
-/* ── State Colors ───────────────────────────────────────── */
-
-#pulseaudio:not(.microphone).muted,
-#pulseaudio.microphone.source-muted {
-    color: alpha(@on_surface, 0.4);
-}
-
-#battery.charging,
-#battery.plugged {
-    color: @secondary;
-}
-
-#cpu.warning,
-#memory.warning,
-#battery.warning {
-    color: @tertiary;
-}
-
-#battery.critical:not(.charging),
-#network.disconnected,
-#custom-timer.reset {
-    color: @error;
-}
-
-
 /* ── Dropdown Menu ──────────────────────────────────────── */
+
+#custom-menu {
+    color:   @primary;
+    padding: 0 6px;
+}
 
 menu {
     background-color: @surface_container_low;
     border:           1px solid alpha(@on_surface, 0.12);
     border-radius:    8px;
-    padding:          2px;
+    padding:          4px;
     margin-top:       6px;
-    box-shadow:       none;
+    box-shadow:       0 2px 6px rgba(0, 0, 0, 0.15);
     min-width:        0px;
 }
 
 menu menu {
-    margin-left: 2px;
-    margin-top: -4px;
+    margin-left:  2px;
+    margin-top:  -4px;
 }
 
 menu menuitem {
     border-bottom: none;
     margin-bottom: 2px;
-    padding-bottom: 3px;
+    padding:       4px 8px;
+    border-radius: 3px;
 }
 
 menu menu menuitem:not(:last-child) {
     border-bottom:  1px solid alpha(@on_surface, 0.08);
     margin-bottom:  2px;
-    padding-bottom: 4px;
 }
 
 menu menuitem:hover {
     background-color: alpha(@primary, 0.44);
     color:            @primary;
+    border-radius:    3px;
 }
 
 menu separator {
     background-color: alpha(@on_surface, 0.12);
     min-height:       1px;
     margin:           4px 8px;
+}
+
+
+/* ── Hidden/Unused Modules ────────────────────────────────── */
+
+#custom-archer {
+    opacity:   0;
+    font-size: 0;
+    padding:   0;
+    margin:    0;
+    min-width: 0;
 }

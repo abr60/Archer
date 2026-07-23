@@ -4,9 +4,9 @@
 */
 
 /* Accents */
-@define-color accent_color #ffb59d;
-@define-color accent_fg_color #5a1b04;
-@define-color accent_bg_color #ffb59d;
+@define-color accent_color #d6c781;
+@define-color accent_fg_color #393000;
+@define-color accent_bg_color #d6c781;
 @define-color destructive_bg_color #93000a;
 @define-color destructive_fg_color #ffdad6;
 @define-color destructive_color #ffb4ab;
@@ -14,25 +14,25 @@
 @define-color success_fg_color #D1E9D6;
 @define-color success_color #B5CCBA;
 /* Base surfaces */
-@define-color window_bg_color #19120f;
-@define-color window_fg_color #efdfda;
-@define-color headerbar_bg_color #261e1b;
-@define-color headerbar_backdrop_color #261e1b;
-@define-color headerbar_fg_color #efdfda;
-@define-color card_bg_color #261e1b;
-@define-color card_fg_color #efdfda;
-@define-color sidebar_bg_color #261e1b;
-@define-color sidebar_fg_color #efdfda;
-@define-color secondary_sidebar_bg_color #221a17;
-@define-color secondary_sidebar_fg_color #efdfda;
+@define-color window_bg_color #15130f;
+@define-color window_fg_color #e7e2da;
+@define-color headerbar_bg_color #21201b;
+@define-color headerbar_backdrop_color #21201b;
+@define-color headerbar_fg_color #e7e2da;
+@define-color card_bg_color #21201b;
+@define-color card_fg_color #e7e2da;
+@define-color sidebar_bg_color #21201b;
+@define-color sidebar_fg_color #e7e2da;
+@define-color secondary_sidebar_bg_color #1d1b17;
+@define-color secondary_sidebar_fg_color #e7e2da;
 @define-color sidebar_border_color @sidebar_bg_color;
 @define-color sidebar_backdrop_color @sidebar_bg_color;
-@define-color view_bg_color #140c0a;
-@define-color view_fg_color #efdfda;
-@define-color overview_bg_color #140c0a;
-@define-color overview_fg_color #efdfda;
+@define-color view_bg_color #0f0e0a;
+@define-color view_fg_color #e7e2da;
+@define-color overview_bg_color #0f0e0a;
+@define-color overview_fg_color #e7e2da;
 /* Popups */
-@define-color popover_bg_color #3c3330;
-@define-color popover_fg_color #efdfda;
-@define-color dialog_bg_color #312825;
-@define-color dialog_fg_color #efdfda;
+@define-color popover_bg_color #37352f;
+@define-color popover_fg_color #e7e2da;
+@define-color dialog_bg_color #2c2a25;
+@define-color dialog_fg_color #e7e2da;

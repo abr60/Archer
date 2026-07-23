@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# archer:summary=Lock the computer and turn off the display
-# archer:group=system
-# archer:name=lock
-# archer:examples=archer system lock
+# summary=Lock the computer and turn off the display
 
 if ! pidof hyprlock >/dev/null; then
   (
@@ -12,18 +9,15 @@ if ! pidof hyprlock >/dev/null; then
   ) &
 fi
 
-# Set keyboard layout to default (first layout)
 hyprctl switchxkblayout all 0 > /dev/null 2>&1
 
-# Ensure 1password is locked
 if pgrep -x "1password" >/dev/null; then
   1password --lock &
 fi
 
-# Avoid running screensaver when locked
-pkill -f org.archer.screensaver
+pkill -f org.omarchy.screensaver
 
-if [[ ${ARCHER_LOCK_ONLY:-false} != "true" ]]; then
+if [[ ${LOCK_ONLY:-false} != "true" ]]; then
   (
     sleep 3
     pidof hyprlock >/dev/null || exit 0

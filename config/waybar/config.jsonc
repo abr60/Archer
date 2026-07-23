@@ -2,9 +2,9 @@
   "exclusive": true,
   "reload_style_on_change": true,
   "layer": "top",
-  "position": "top",
-  "height": 30,
-  "width": 1436,
+  "position": "bottom",
+  "height": 22,
+  "width": 1437,
   "margin": "0px 6px 0px 6px",
   "spacing": 0,
 
@@ -19,7 +19,6 @@
 
   "modules-right": [
     "group/right-2",
-    "clock",
     "group/right-1"
   ],
 
@@ -29,17 +28,17 @@
 
   "group/left-1": {
     "orientation": "inherit",
-    "modules": ["custom/resources", "mpris", "temperature", "group/tray-expander"]
+    "modules": ["cpu", "memory", "mpris", "temperature", "group/tray-expander"]
   },
 
   "group/left-2": {
     "orientation": "inherit",
-    "modules": ["custom/weather", "custom/updatespacman", "custom/timer", "custom/hdd", "custom/screenrecording-indicator", "custom/voxtype"]
+    "modules": ["custom/weather", "custom/updatespacman", "custom/timer", "custom/hdd", "custom/screenrecording-indicator", "custom/voxtype", "tray"]
   },
 
   "group/right-1": {
     "orientation": "inherit",
-    "modules": ["custom/swaync", "bluetooth", "network", "backlight", "pulseaudio"]
+    "modules": ["custom/swaync", "bluetooth", "network", "backlight", "pulseaudio", "clock"]
   },
 
 "group/right-2": {
@@ -72,6 +71,12 @@
     "format": "<span size='14500'></span>"
   },
 
+    "tray": {
+    "icon-size": 12,
+    "spacing": 4,
+    "show-passive-items": true
+  },
+
   "custom/active_window": {
     "exec": "~/.config/waybar/assets/scripts/window.sh",
     "return-type": "json",
@@ -79,14 +84,21 @@
     "tooltip": false
   },
 
-  "custom/resources": {
-    "exec": "~/.config/waybar/assets/scripts/resources.sh",
-    "interval": 4,
-    "return-type": "json",
-    "format": "{}",
+  "cpu": {
+    "interval": 5,
+    "format": " {usage}",
     "on-click": "timeout 20s launch-floating-terminal-with-presentation btop",
-    "tooltip": true
+    "states": { "warning": 70, "critical": 90 },
+    "tooltip": false
   },
+
+"memory": {
+  "interval": 2,
+  "format": " {used:0.1f}",
+  "on-click": "timeout 20s launch-floating-terminal-with-presentation btop",
+  "states": { "warning": 70, "critical": 90 },
+  "tooltip": false
+}, 
 
 "mpris": {
     "format": "{player_icon} ",
@@ -123,7 +135,7 @@
   "custom/timer": {
     "exec": "~/.config/waybar/assets/scripts/timer",
     "return-type": "json",
-    "format": "{}",
+    "format": " {} ",
     "on-click": "~/.config/waybar/assets/scripts/timer click",
     "on-click-right": "~/.config/waybar/assets/scripts/timer right",
     "on-click-middle": "~/.config/waybar/assets/scripts/timer middle",
@@ -138,6 +150,7 @@
   // ────────────────────────────────────────────────
 
   "hyprland/workspaces": {
+  //"persistent-workspaces": {"*": [ 1,2,3,4,5,6 ]},
 	"on-click": "activate",
 	"format": "{windows}", //{icon} 
   "enable-bar-scroll": true,
@@ -248,7 +261,7 @@
   },
 
   "custom/weather": {
-    "format": "{}°",
+    "format": " {}° ",
     "exec": "wttrbar --nerd --location chittagong",
     "return-type": "json",
     "interval": 60,
@@ -257,7 +270,7 @@
 
   "custom/updatespacman": {
     "format": "{} {icon}",
-    "format-icons": { "has-updates": "", "updated": "" },
+    "format-icons": { "has-updates": "󰏗 ", "updated": " " },
     "return-type": "json",
     "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300",
     "on-click": "launch-floating-terminal-with-presentation update"
@@ -282,12 +295,10 @@
 
   "backlight": {
     "device": "intel_backlight",
-    "format": "{icon}",
-    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "format": "",
     "min-length": 4,
-    "on-scroll-up": "swayosd-client --brightness raise",
-    "on-scroll-down": "swayosd-client --brightness lower",
-    "tooltip": false
+    "tooltip": false,
+    "on-click": "l1p0-menus --toggle brightness"
   },
 
 "temperature": {
@@ -312,6 +323,7 @@
     "interval": 3,
     "spacing": 1,
     "on-click": "timeout 40s kitty --class kitty --title dropdown -e impala"
+
   },
 
   "bluetooth": {
@@ -327,8 +339,8 @@
 
   "pulseaudio#microphone": {
     "format": "{format_source}",
-    "format-source": " {volume}",
-    "format-source-muted": " {volume}",
+    "format-source": "  {volume}",
+    "format-source-muted": " 🚫 {volume}",
     "on-click": "pamixer --default-source -t",
     "on-scroll-up": "pamixer --default-source --increase 5",
     "on-scroll-down": "pamixer --default-source --decrease 5",
@@ -338,12 +350,10 @@
 
   "pulseaudio": {
     "format": "{icon} {volume}",
-    "format-muted": " {volume}",
-    "format-icons": ["", "", ""],
-    "max-volume": 130,
+    "format-muted": "🔇 {volume}",
+    "format-icons": [""],
+    "max-volume": 125,
     "scrolling": 10,
-    "on-scroll-up": "swayosd-client --output-volume raise",
-    "on-scroll-down": "swayosd-client --output-volume lower",
     "on-click": "pamixer -t",
     "on-click-right": "timeout 15s launch-audio",
     "tooltip": false

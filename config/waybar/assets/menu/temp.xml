@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkMenu" id="menu">
+    <child>
+      <object class="GtkMenuItem">
+        <property name="label">   Fan Control</property>
+        <property name="sensitive">false</property>
+      </object>
+    </child>
+    <child><object class="GtkSeparatorMenuItem" /></child>
+    <child>
+      <object class="GtkMenuItem" id="fan_full">
+        <property name="label">   Full Speed</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="fan_auto">
+        <property name="label">   Auto Mode</property>
+      </object>
+    </child>
+  </object>
+</interface>

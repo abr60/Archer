@@ -7,16 +7,21 @@ version_check = false
 
 # ─── Templates ────────────────────────────────────────────────────────────────
 
-[templates.waybar]
-input_path  = "~/.config/matugen/templates/waybar.css"
-output_path = "~/.config/waybar/matugen.css"
-post_hook   = "refresh-waybar"
 
 # 1. Compositor (CRITICAL: Must run first)
 [templates.hyprland_lua]
 input_path  = "~/.config/matugen/templates/hyprland.lua"
 output_path = "~/.config/hypr/bin/colors.lua"
 post_hook   = "hyprctl reload"
+
+[templates.waybar]
+input_path  = "~/.config/matugen/templates/waybar.css"
+output_path = "~/.config/waybar/matugen.css"
+post_hook   = ""
+
+[templates.quickshell_overview]
+input_path = '~/.config/matugen/templates/quickshell-overview.qml'
+output_path = '~/.config/quickshell/overview/common/Appearance.colors.qml'
 
 [templates.hyprlock]
 input_path  = "~/.config/matugen/templates/hyprlock.conf"

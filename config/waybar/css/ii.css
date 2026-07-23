@@ -1,0 +1,379 @@
+/* =========================================================
+   intricate.css — Unified M3 Expressive (Refined)
+   GTK3 CSS — no :root, no var(), no Pango font shorthand
+   ========================================================= */
+
+@import "../waybar/matugen.css";
+
+/* ── Reset & M3 Base ────────────────────────────────────── */
+* {
+    color: @on_surface;
+    border: none;
+    border-radius: 0;
+    font-family: 'JetBrainsMono Nerd Font', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Waybar Container ────────────────────────────────────── */
+window#waybar {
+    background-color: alpha (@surface_container, 1);
+    border: 1px solid alpha(@on_surface, 0.08);
+    border-radius: 15px;
+    margin: 6px 6px 0px 6px;
+    padding: 4px 10px;
+    box-shadow: none;
+}
+
+/* ── Tooltip ────────────────────────────────────────────── */
+tooltip {
+    background: @surface_container_low;
+    border: 1px solid alpha(@on_surface, 0.15);
+    border-radius: 6px;
+}
+
+tooltip label {
+    color: @on_surface;
+    padding: 6px;
+    margin: 1px 1px;
+}
+
+/* ── Group Consolidation ────────────────────────────────── */
+#left-1,
+#left-2,
+#right-1,
+#right-2,
+#tray-expander {
+    background-color: @surface_container_high;
+    border: none;
+    border-radius: 9999px;
+    margin: 1px 4px;
+    padding: 0px 0px;
+}
+
+/* ── Push Left-2 into the middle of the empty gap ── */
+#left-2 {
+    margin-left: 15px;
+}
+
+
+/* ── Inline Spacing (All Groups) ────────────────────────── */
+#left-1 > widget > *,
+#left-2 > widget > *,
+#right-1 > widget > *,
+#right-2 > widget > * {
+    padding: 2 12px;
+    border: none;
+}
+
+/* ── Unified Hover State (No Layout Shifts) ────────────── */
+#left-1 > widget > *:not(#temperature):hover,
+#left-2 > widget > *:hover,
+#right-1 > widget > *:hover,
+#right-2 > widget > *:not(#battery):hover {
+    background-color: alpha(@primary, 0.12);
+    border-radius: 9999px;
+    color: @primary;
+    transition: background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#left-1 > widget > #custom-resources {
+    padding-right: 15px;
+}
+
+#left-1 > widget > #mpris {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+#left-2 > widget > #custom-timer {
+    font-family: Doto;
+    font-size: 19px;
+}
+
+#right-1 > widget > #backlight {
+    padding: 0;
+}
+
+/* --- Workspaces --- */ 
+button { 
+  box-shadow: none; 
+  border: none; 
+  border-radius: 0; 
+} 
+
+button:hover { 
+  background: transparent; 
+} 
+
+#workspaces { 
+  border-radius: 16px; 
+  background-color: @surface_container; /* Matches the subtle shading of your bar boxes */
+  margin: 4px 0px; 
+  padding: 0px 4px; 
+} 
+
+#workspaces button { 
+  padding: 0px 10px; 
+  margin: 3px 2px; 
+  border-radius: 12px; 
+  color: @on_surface_variant; /* Muted brown-gray for inactive numbers */
+  background-color: transparent; 
+  min-width: 18px; 
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
+} 
+
+/* Active Workspace - Warm Forest Accent */
+#workspaces button.active { 
+  background-color: @secondary_container; /* Elegant moss/olive green that pulls from your wallpaper */
+  color: @on_secondary; /* Crisp, readable white text */
+  min-width: 32px; 
+  border-radius: 12px; 
+} 
+
+/* Empty Workspace */
+#workspaces button.empty { 
+  color: @outline_variant; /* Faded color for unused slots */
+  background-color: transparent; 
+} 
+
+/* Empty but Active Workspace */
+#workspaces button.empty.active { 
+  background-color: @surface_variant; /* Softer green/yellow tint if empty but selected */
+  color: @on_secondary_container; 
+  min-width: 32px; 
+  border-radius: 12px; 
+} 
+
+/* Hover States */
+#workspaces button:hover,
+#workspaces button:hover.empty { 
+  background-color: @surface_variant; 
+  color: @on_surface; 
+  border-radius: 12px; 
+}
+
+
+/* ── Clock (Intentionally Restrained) ─────────────────── */
+#clock {
+    font-size: 14px;
+    color: @on_secondary_container;
+    border-radius: 9999px;
+    margin: 2px 4px;
+    padding: 2px 10px;
+    font-weight: 700;
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --- Base MPRIS Styling --- */
+#mpris {
+    font-size: 22px;
+    padding-left: 4px;
+    border-radius: 9999px;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#mpris.playing {
+    color: @primary;
+    font-weight: 500;
+}
+
+#mpris.paused {
+    color: alpha(@on_surface, 0.7);
+    font-weight: 500;
+}
+
+#mpris:hover {
+    background-color: alpha(@primary, 0.12);
+    color: @primary;
+}
+
+/* ── Resource Usage ────────────────────────────────────── */
+#custom-resources {
+    font-size: 12px;
+    font-style: italic;
+    color: alpha(@primary, 0.8);
+    padding-right: 4px;
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Custom Modules ────────────────────────────────────── */
+
+#custom-weather {
+    color: @on_surface;
+    font-size: 14px;
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#bluetooth {
+    font-size: 20px;
+    color: @primary;
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Notification Bell ─────────────────────────────── */
+#custom-swaync {
+    font-size: 16px;
+    transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#custom-swaync:hover {
+    animation-name: bell-shake;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+}
+
+@keyframes bell-shake {
+    0%   { margin-left:  0px;  margin-right:  0px; }
+    15%  { margin-left:  6px;  margin-right: -6px; }
+    30%  { margin-left: -5px;  margin-right:  5px; }
+    45%  { margin-left:  4px;  margin-right: -4px; }
+    60%  { margin-left: -3px;  margin-right:  3px; }
+    75%  { margin-left:  2px;  margin-right: -2px; }
+    90%  { margin-left: -1px;  margin-right:  1px; }
+    100% { margin-left:  0px;  margin-right:  0px; }
+}
+
+/* ── Tray (Drawer Support) ─────────────────────────────– */
+#tray-expander > widget {
+    padding: 0 4px;
+    border: none;
+}
+
+#tray-group-item {
+    padding: 0 6px;
+    margin: 0 4px;
+}
+
+#temperature {
+    background-color: alpha (@on_surface, 0.6);
+    color: @surface;
+    border-radius: 9999px;
+    padding: 2px 10px;
+    margin: 8px 1px;
+    font-weight: 500;
+    transition: background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+}
+
+/* ── Battery (Inverted Pill) ─────────────────────────── */
+#battery {
+    background-color: alpha (@on_surface, 0.8);
+    color: @surface;
+    border-radius: 9999px;
+    padding: 2px 10px;
+    margin: 9px 4px;
+    font-weight: 700;
+    transition: background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#battery.warning {
+    color: @surface;
+    background-color: alpha (@error, 0.8);
+    font-weight: 900;
+}
+
+#battery.critical:not(.charging) {
+    color: @on_error_container;
+    background-color: alpha (@error, 0.8);
+    font-weight: 900;
+}
+
+/* -- power-profiles-daemon */
+#power-profiles-daemon {
+    color: @primary;
+    padding: 0px 4px;
+    font-size: 16;
+}
+
+/* ── Network State ──────────────────────────────– */
+#network {
+    color: @on_surface;
+    font-size: 16;
+}
+
+#pulseaudio {
+   font-size: 15px; 
+}
+
+#network.disconnected {
+    color: @error;
+    border-radius: 9999px;
+    padding: 2px 12px;
+    margin: 2px 2px;
+    font-weight: 500;
+}
+
+#custom-timer.reset {
+    color: @on_error_container;
+    background-color: @error_container;
+    border-radius: 9999px;
+    padding: 2px 10px;
+}
+
+/* ── Muted States ────────────────────────────────────── */
+#pulseaudio:not(.microphone).muted,
+#pulseaudio.microphone.source-muted {
+    color: alpha(@on_surface, 0.35);
+    opacity: 0.6;
+    transition: opacity 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Dropdown Menu ────────────────────────────────── */
+menu {
+    background-color: @surface_container_low;
+    border: 1px solid alpha(@on_surface, 0.12);
+    border-radius: 16px;
+    padding: 6px;
+    margin-top: 6px;
+    box-shadow: none;
+    min-width: 0px;
+}
+
+menu menu {
+    margin-left: 4px;
+    margin-top: -4px;
+}
+
+menu menuitem {
+    border: none;
+    margin-bottom: 2px;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-weight: 500;
+    transition: background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+menu menuitem:hover {
+    background-color: @primary_container;
+    color: @on_primary_container;
+    font-weight: 700;
+}
+
+menu separator {
+    background-color: alpha(@on_surface, 0.08);
+    min-height: 1px;
+    margin: 6px 8px;
+}
+
+
+/* ── Google Lens Module (M3 Alignment) ─────────────────── */
+#custom-lens {
+    color: alpha(@primary, 0.85);
+    font-size: 19px;
+    padding: 0 10px;
+}
+
+#backlight {
+    font-size: 21px;
+    font-weight: 700;
+}
