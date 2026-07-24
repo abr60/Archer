@@ -9,11 +9,17 @@
 # Requires: howdy-next-git, linux-enable-ir-emitter-git, v4l-utils
 # PAM configuration is handled separately by config/pam.sh
 #
+# IR emitter activation strategy (linux-enable-ir-emitter v6.x):
+#   - Systemd service is deprecated upstream; not relied upon here.
+#   - Two complementary triggers ensure the emitter is always on:
+#       1. udev rule  → fires `leire run` on every camera device-add event
+#                       (covers boot, resume, lid-open, USB reconnect)
+#       2. pam_exec   → fires `leire run` immediately before each Howdy auth
+#                       (belt-and-suspenders: catches anything udev missed)
+#
 # Notes:
-#   - linux-enable-ir-emitter 6.x systemd service is deprecated upstream.
-#     For Howdy integration, the recommended approach is to run
-#     `linux-enable-ir-emitter run` before camera access — handled via PAM/udev.
 #   - configure UI is TUI (ncurses), no display/xhost needed.
+#   - ONNX model check uses glob, not hardcoded filenames (upstream changes them).
 # =============================================================================
 
 set -euo pipefail
@@ -21,15 +27,22 @@ source "$(dirname "${BASH_SOURCE[0]}")/../lib/helpers.sh"
 
 section "Howdy Face Recognition Setup"
 
-# -----------------------------------------------------------------------------
-# Install Howdy and IR emitter packages via the tagged package list
-# -----------------------------------------------------------------------------
+# ─── Install packages ─────────────────────────────────────────────────────────
 if ! is_installed howdy-next-git || ! is_installed linux-enable-ir-emitter-git; then
     bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag howdy
 fi
 
-# Ensure v4l-utils is present for camera detection
 ensure_installed v4l-utils
+
+# ─── Resolve IR emitter binary path ───────────────────────────────────────────
+# Arch AUR installs to /usr/bin; upstream tarball uses /usr/local/bin.
+# Resolve at runtime so pam_exec and udev get the correct absolute path.
+LEIRE_BIN=$(command -v linux-enable-ir-emitter 2>/dev/null || echo "")
+if [[ -z "$LEIRE_BIN" ]]; then
+    err "linux-enable-ir-emitter binary not found in PATH after install"
+    exit 1
+fi
+ok "IR emitter binary: $LEIRE_BIN"
 
 # ─── Detect IR camera ─────────────────────────────────────────────────────────
 section "IR Camera Detection"
@@ -60,17 +73,16 @@ fi
 
 if [[ -z "$IR_DEVICE" ]]; then
     err "No IR camera detected — cannot configure Howdy"
-    err "Make sure linux-enable-ir-emitter-git is configured first"
     exit 1
 fi
 
-# ─── linux-enable-ir-emitter ──────────────────────────────────────────────────
+# ─── IR Emitter Configuration ─────────────────────────────────────────────────
 section "IR Emitter Configuration"
 
-# Check if already configured (config file exists and is non-empty)
-LEIRE_CONFIG=$(linux-enable-ir-emitter --config 2>/dev/null || echo "")
-
-if [[ -n "$LEIRE_CONFIG" ]] && sudo ls "$LEIRE_CONFIG"/*.yaml &>/dev/null 2>&1; then
+# Config lives in /root/.config/ because configure is run as root.
+# Check for any .toml file there as the "already configured" signal.
+LEIRE_CONF_DIR="/root/.config"
+if sudo ls "$LEIRE_CONF_DIR"/linux-enable-ir-emitter*.toml &>/dev/null 2>&1; then
     ok "IR emitter already configured — skipping"
 else
     msg "The IR emitter needs to be configured once for your camera."
@@ -78,30 +90,68 @@ else
     echo ""
 
     if ask_yes_no "Configure IR emitter now?"; then
-        sudo linux-enable-ir-emitter configure
+        sudo "$LEIRE_BIN" configure
         leire_exit=$?
         if [[ $leire_exit -lt 3 ]]; then
-            ok "IR emitter configured (or already working)"
+            ok "IR emitter configured"
         else
-            warn "Configuration failed — continuing anyway"
-            warn "Run manually: sudo linux-enable-ir-emitter configure"
+            warn "Configuration reported issues — continuing"
+            warn "Run manually: sudo $LEIRE_BIN configure"
         fi
     else
-        warn "Skipping IR emitter configuration — Howdy may not work"
-        warn "Run manually: sudo linux-enable-ir-emitter configure"
+        warn "Skipping IR emitter configuration — Howdy will not work"
+        warn "Run manually: sudo $LEIRE_BIN configure"
     fi
 fi
 
-# Enable the systemd service if it exists (deprecated in 6.x but still shipped)
+# Try to enable the deprecated systemd service if it still ships in this version.
+# This is a soft attempt only — failure is not fatal.
 LEIRE_SERVICE="linux-enable-ir-emitter.service"
-if systemctl list-unit-files "$LEIRE_SERVICE" &>/dev/null; then
-    sudo systemctl enable --now "$LEIRE_SERVICE" && \
-        ok "linux-enable-ir-emitter.service enabled" || \
-        warn "Failed to enable service — IR emitter will still work via 'run' command"
+if systemctl list-unit-files "$LEIRE_SERVICE" &>/dev/null 2>&1; then
+    sudo systemctl enable --now "$LEIRE_SERVICE" \
+        && ok "linux-enable-ir-emitter.service enabled (legacy)" \
+        || warn "Service enable failed — udev+pam_exec will cover it"
 else
-    warn "linux-enable-ir-emitter.service not found (expected in v6.x — deprecated upstream)"
-    warn "IR emitter activation is handled by: sudo linux-enable-ir-emitter run"
+    warn "linux-enable-ir-emitter.service not found — expected in v6.x (deprecated upstream)"
 fi
+
+# ─── udev Rule ────────────────────────────────────────────────────────────────
+# Fires `linux-enable-ir-emitter run` every time the IR camera device node
+# appears: boot, resume from suspend, lid-open, USB reconnect.
+# Uses the USB vendor/product from the ThinkPad T14 Gen 2i IR camera.
+# If the by-path resolves to a different USB ID on your machine, update below.
+section "udev Rule for IR Emitter"
+
+UDEV_RULE_FILE="/etc/udev/rules.d/99-howdy-ir-emitter.rules"
+
+# Resolve the USB vendor/product IDs for the detected IR camera device.
+# Fall back to matching on the stable by-path kernel name if lookup fails.
+IR_REAL=$(readlink -f "$IR_DEVICE" 2>/dev/null || echo "$IR_DEVICE")
+IR_KERNEL=$(basename "$IR_REAL")   # e.g. video2
+
+VENDOR=$(udevadm info --query=property --name="$IR_REAL" 2>/dev/null \
+    | grep "ID_VENDOR_ID" | cut -d= -f2 || echo "")
+PRODUCT=$(udevadm info --query=property --name="$IR_REAL" 2>/dev/null \
+    | grep "ID_MODEL_ID" | cut -d= -f2 || echo "")
+
+if [[ -n "$VENDOR" && -n "$PRODUCT" ]]; then
+    ok "IR camera USB IDs: vendor=$VENDOR product=$PRODUCT"
+    UDEV_MATCH="SUBSYSTEM==\"video4linux\", ATTRS{idVendor}==\"$VENDOR\", ATTRS{idProduct}==\"$PRODUCT\""
+else
+    warn "Could not resolve USB IDs — falling back to kernel name match ($IR_KERNEL)"
+    UDEV_MATCH="SUBSYSTEM==\"video4linux\", KERNEL==\"$IR_KERNEL\""
+fi
+
+sudo tee "$UDEV_RULE_FILE" > /dev/null << UDEVRULE
+# Automatically re-apply IR emitter configuration whenever the IR camera
+# device is added (boot, resume, lid-open, USB reconnect).
+# Generated by Archer howdy.sh — do not edit manually.
+ACTION=="add", ${UDEV_MATCH}, RUN+="$LEIRE_BIN run"
+UDEVRULE
+
+sudo udevadm control --reload-rules
+sudo udevadm trigger --subsystem-match=video4linux --action=add
+ok "udev rule installed: $UDEV_RULE_FILE"
 
 # ─── Download ONNX models ─────────────────────────────────────────────────────
 section "Howdy ONNX Models"
@@ -113,18 +163,17 @@ if sudo ls "$MODELS_DIR"/*.onnx &>/dev/null 2>&1; then
 else
     msg "Downloading Howdy face models..."
     sudo howdy download-models && ok "Models downloaded" || {
-        err "Failed to download models"
-        err "Run manually: sudo howdy download-models"
+        err "Failed to download models — run manually: sudo howdy download-models"
         exit 1
     }
 fi
 
-# ─── Write Howdy config ───────────────────────────────────────────────────────
+# ─── Howdy config ─────────────────────────────────────────────────────────────
 section "Howdy Configuration"
 
 [[ -f /etc/howdy/config.ini ]] && \
     sudo cp /etc/howdy/config.ini /etc/howdy/config.ini.bak && \
-    ok "Existing config backed up to /etc/howdy/config.ini.bak"
+    ok "Existing config backed up"
 
 sudo tee /etc/howdy/config.ini > /dev/null << HOWDYCONF
 [core]
@@ -133,7 +182,7 @@ timeout_notice = true
 no_confirmation = true
 suppress_unknown = true
 abort_if_ssh = true
-abort_if_lid_closed = true
+abort_if_lid_closed = false
 disabled = false
 
 [video]
@@ -168,36 +217,36 @@ HOWDYCONF
 
 ok "Howdy config written to /etc/howdy/config.ini"
 
-# ─── Face Model Enrollment ────────────────────────────────────────────────────
+# ─── Face Enrollment ──────────────────────────────────────────────────────────
 section "Face Model Enrollment"
 
 HOWDY_MODELS="/etc/howdy/models"
 sudo mkdir -p "$HOWDY_MODELS"
 
 if [[ -n "$(sudo ls -A "$HOWDY_MODELS" 2>/dev/null)" ]]; then
-    msg "Removing existing face models for fresh enrollment..."
+    msg "Clearing existing face models for fresh enrollment..."
     sudo howdy clear -y 2>/dev/null || sudo rm -f "$HOWDY_MODELS"/*.dat 2>/dev/null || true
     ok "Old models cleared"
 fi
 
-msg "Ready to enroll your face."
-msg "Look directly at the IR camera when prompted."
+msg "Ready to enroll your face — look directly at the IR camera when prompted."
 echo ""
 
 if ask_yes_no "Enroll your face now?"; then
     sudo howdy add && ok "Face enrolled successfully" || {
-        err "Enrollment failed"
-        warn "Run manually: sudo howdy add"
+        err "Enrollment failed — run manually: sudo howdy add"
     }
     msg "Testing face recognition..."
     sudo howdy test && ok "Face recognition working" || \
         warn "Test failed — check camera position and lighting"
 else
-    warn "Face enrollment skipped"
-    warn "Run manually: sudo howdy add"
+    warn "Face enrollment skipped — run manually: sudo howdy add"
 fi
 
 # ─── PAM Configuration ────────────────────────────────────────────────────────
+# pam.sh handles the main Howdy PAM wiring (hyprlock, sddm, sudo, etc.).
+# Here we inject pam_exec BEFORE each howdy line so linux-enable-ir-emitter
+# run fires at auth time — belt-and-suspenders alongside the udev rule.
 section "PAM Configuration"
 
 PAM_SCRIPT="$(dirname "${BASH_SOURCE[0]}")/../config/pam.sh"
@@ -208,13 +257,38 @@ else
     warn "pam.sh not found at $PAM_SCRIPT — configure manually"
 fi
 
+# Inject pam_exec line before every howdy auth line in /etc/pam.d/*
+# This ensures the IR emitter is triggered at auth time even if udev missed it.
+PAM_EXEC_LINE="auth optional pam_exec.so $LEIRE_BIN run"
+HOWDY_PAM_FILES=$(grep -rl "howdy" /etc/pam.d/ 2>/dev/null || true)
+
+if [[ -n "$HOWDY_PAM_FILES" ]]; then
+    for pam_file in $HOWDY_PAM_FILES; do
+        # Skip if pam_exec line already present
+        if grep -qF "$LEIRE_BIN run" "$pam_file" 2>/dev/null; then
+            ok "pam_exec already in $pam_file — skipping"
+            continue
+        fi
+        # Insert pam_exec line before the first howdy auth line
+        sudo sed -i "/auth.*howdy/i $PAM_EXEC_LINE" "$pam_file" \
+            && ok "pam_exec injected into $pam_file" \
+            || warn "Failed to inject pam_exec into $pam_file"
+    done
+else
+    warn "No PAM files mention howdy yet — pam_exec injection skipped"
+    warn "Re-run this script after pam.sh has configured Howdy PAM files"
+fi
+
 # ─── Summary ──────────────────────────────────────────────────────────────────
 section "Howdy Setup Complete"
-ok "IR camera  : $IR_DEVICE"
-ok "Models     : $MODELS_DIR"
-ok "Config     : /etc/howdy/config.ini"
-ok "PAM        : configured separately via config/pam.sh"
+ok "IR camera    : $IR_DEVICE"
+ok "IR binary    : $LEIRE_BIN"
+ok "udev rule    : $UDEV_RULE_FILE"
+ok "Models       : $MODELS_DIR"
+ok "Config       : /etc/howdy/config.ini"
+ok "PAM          : configured via config/pam.sh + pam_exec injection"
 echo ""
-warn "If face recognition fails: sudo howdy test"
-warn "To re-enroll: sudo howdy clear -y && sudo howdy add"
-warn "If IR emitter not lighting up: sudo linux-enable-ir-emitter run"
+warn "If face recognition fails   : sudo howdy test"
+warn "To re-enroll                : sudo howdy clear -y && sudo howdy add"
+warn "If IR emitter not flashing  : sudo $LEIRE_BIN run"
+warn "To reconfigure IR emitter   : sudo $LEIRE_BIN configure"

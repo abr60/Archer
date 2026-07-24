@@ -18,7 +18,7 @@ channels = stereo
 [color]
 gradient = 1
 gradient_color_1 = '#438351'
-gradient_color_2 = '#93d69c'
+gradient_color_2 = '#29693a'
 gradient_color_3 = '#ffffff'
 
 [smoothing]
