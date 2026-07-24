@@ -28,7 +28,7 @@ calf              # [tag:easyeffects]
 
 # --- Facial recognition ---
 howdy-next-git    # [tag:howdy]
-linux-enable-ir-emitter # [tag:howdy]
+linux-enable-ir-emitter-git # [tag:howdy]
 
 # --- Hyprpm Plugins ---
 cmake             # [tag:Hyprpm]

@@ -6,14 +6,8 @@
 #   Graphical (hyprlock/sddm): howdy → fingerprint → password
 #   Terminal (sudo):           howdy → password → fingerprint
 #
-# Requires: howdy-next-git, linux-enable-ir-emitter-git, v4l-utils
+# Requires: howdy-next-git, linux-enable-ir-emitter, xorg-xhost, v4l-utils
 # PAM configuration is handled separately by config/pam.sh
-#
-# Notes:
-#   - linux-enable-ir-emitter 6.x systemd service is deprecated upstream.
-#     For Howdy integration, the recommended approach is to run
-#     `linux-enable-ir-emitter run` before camera access — handled via PAM/udev.
-#   - configure UI is TUI (ncurses), no display/xhost needed.
 # =============================================================================
 
 set -euo pipefail
@@ -24,11 +18,12 @@ section "Howdy Face Recognition Setup"
 # -----------------------------------------------------------------------------
 # Install Howdy and IR emitter packages via the tagged package list
 # -----------------------------------------------------------------------------
-if ! is_installed howdy-next-git || ! is_installed linux-enable-ir-emitter-git; then
+if ! is_installed howdy-next-git || ! is_installed linux-enable-ir-emitter; then
     bash "$(dirname "${BASH_SOURCE[0]}")/../packaging/packages" extra --tag howdy
 fi
 
-# Ensure v4l-utils is present for camera detection
+# Ensure basic core utilities are present
+ensure_installed xorg-xhost
 ensure_installed v4l-utils
 
 # ─── Detect IR camera ─────────────────────────────────────────────────────────
@@ -60,56 +55,52 @@ fi
 
 if [[ -z "$IR_DEVICE" ]]; then
     err "No IR camera detected — cannot configure Howdy"
-    err "Make sure linux-enable-ir-emitter-git is configured first"
+    err "Make sure linux-enable-ir-emitter is configured first"
     exit 1
 fi
 
 # ─── linux-enable-ir-emitter ──────────────────────────────────────────────────
 section "IR Emitter Configuration"
 
-# Check if already configured (config file exists and is non-empty)
-LEIRE_CONFIG=$(linux-enable-ir-emitter --config 2>/dev/null || echo "")
+LEIRE_SERVICE="linux-enable-ir-emitter.service"
 
-if [[ -n "$LEIRE_CONFIG" ]] && sudo ls "$LEIRE_CONFIG"/*.yaml &>/dev/null 2>&1; then
-    ok "IR emitter already configured — skipping"
+if systemctl is-active "$LEIRE_SERVICE" &>/dev/null; then
+    ok "linux-enable-ir-emitter already active — skipping configuration"
 else
     msg "The IR emitter needs to be configured once for your camera."
-    msg "A TUI will open — follow the prompts and look at the camera when asked."
+    msg "This opens an interactive GTK window — needs display access."
+    msg "Follow the prompts and look at the camera when asked."
     echo ""
 
     if ask_yes_no "Configure IR emitter now?"; then
+        xhost +si:localuser:root 2>/dev/null || true
         sudo linux-enable-ir-emitter configure
         leire_exit=$?
         if [[ $leire_exit -lt 3 ]]; then
             ok "IR emitter configured (or already working)"
         else
             warn "Configuration failed — continuing anyway"
-            warn "Run manually: sudo linux-enable-ir-emitter configure"
         fi
+        xhost -si:localuser:root 2>/dev/null || true
     else
         warn "Skipping IR emitter configuration — Howdy may not work"
-        warn "Run manually: sudo linux-enable-ir-emitter configure"
+        warn "Run manually: xhost +si:localuser:root && sudo linux-enable-ir-emitter configure"
     fi
 fi
 
-# Enable the systemd service if it exists (deprecated in 6.x but still shipped)
-LEIRE_SERVICE="linux-enable-ir-emitter.service"
-if systemctl list-unit-files "$LEIRE_SERVICE" &>/dev/null; then
-    sudo systemctl enable --now "$LEIRE_SERVICE" && \
-        ok "linux-enable-ir-emitter.service enabled" || \
-        warn "Failed to enable service — IR emitter will still work via 'run' command"
-else
-    warn "linux-enable-ir-emitter.service not found (expected in v6.x — deprecated upstream)"
-    warn "IR emitter activation is handled by: sudo linux-enable-ir-emitter run"
-fi
+sudo systemctl enable --now "$LEIRE_SERVICE" && \
+    ok "linux-enable-ir-emitter.service enabled and started" || \
+    warn "Failed to enable linux-enable-ir-emitter.service"
 
 # ─── Download ONNX models ─────────────────────────────────────────────────────
 section "Howdy ONNX Models"
 
 MODELS_DIR="/usr/share/howdy/models"
+YUNET="$MODELS_DIR/face_detection_yunet_2023mar_int8bq.onnx"
+SFACE="$MODELS_DIR/face_recognition_sface_2021dec_int8bq.onnx"
 
-if sudo ls "$MODELS_DIR"/*.onnx &>/dev/null 2>&1; then
-    ok "ONNX models already present in $MODELS_DIR"
+if [[ -f "$YUNET" && -f "$SFACE" ]]; then
+    ok "ONNX models already present"
 else
     msg "Downloading Howdy face models..."
     sudo howdy download-models && ok "Models downloaded" || {
@@ -217,4 +208,3 @@ ok "PAM        : configured separately via config/pam.sh"
 echo ""
 warn "If face recognition fails: sudo howdy test"
 warn "To re-enroll: sudo howdy clear -y && sudo howdy add"
-warn "If IR emitter not lighting up: sudo linux-enable-ir-emitter run"
