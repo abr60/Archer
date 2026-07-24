@@ -45,8 +45,8 @@ hl.window_rule({ pin = true,        match = { class = "^(kitty)$", title = "^(wi
 
 -- Bluetui + Impala dropdown
 hl.window_rule({ float = true,      match = { class = "^(kitty)$", title = "^(dropdown)$" } })
-hl.window_rule({ size = "501 400",  match = { class = "^(kitty)$", title = "^(dropdown)$" } })
-hl.window_rule({ move = "776 46",   match = { class = "^(kitty)$", title = "^(dropdown)$" } })
+hl.window_rule({ size = "620 400",  match = { class = "^(kitty)$", title = "^(dropdown)$" } })
+hl.window_rule({ move = "818 368",   match = { class = "^(kitty)$", title = "^(dropdown)$" } })
 hl.window_rule({ pin = true,        match = { class = "^(kitty)$", title = "^(dropdown)$" } })
 
 -- Archer floating terminal (update, post-install etc.)
