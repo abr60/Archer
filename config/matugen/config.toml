@@ -83,24 +83,29 @@ output_path = '~/.config/yazi/theme.toml'
 input_path  = '~/.config/matugen/templates/obsidian.css'
 output_path = '~/Documents/Obsidian Vault/.obsidian/snippets/matugen.css'
 
-# 2. Bar & notifications — depend on compositor being up
-
+[templates.swayosd]
+input_path  = "~/.config/matugen/templates/swayosd.css"
+output_path = "~/.config/swayosd/matugen.css"
+post_hook   = "restart-swayosd"
 
 [templates.mako]
 input_path = '~/.config/matugen/templates/mako'
 output_path = '~/.config/mako/mako-colors'
 post_hook = 'makoctl reload'
 
-
+[templates.spicetify]
+input_path = '~/.config/matugen/templates/spicetify.ini'
+output_path = '~/.config/spicetify/Themes/caelestia/color.ini'
+post_hook = 'spicetify apply'
 
 
 # ─── Disabled ─────────────────────────────────────────────────────────────────
-#[templates.waybar]
+
 #[templates.swaync]
-#[templates.swayosd]
+
 #[templates.mako]
 #[templates.walker]
 #[templates.ghostty]
-#[templates.spicetify]
+
 #[templates.wlogout]
 #[templates.mode-flag]

@@ -2,9 +2,10 @@
 # =============================================================================
 # Archer - Post-Install Wizard
 # Runs automatically on first login via autostart.lua.
-# Phase 1: Interview — one question at a time, logo always visible
-# Phase 2: Confirm  — summary table, loop back if rejected
-# Phase 3: Execute  — run in order
+# Phase 1: Select  — one multi-select screen, space to toggle
+# Phase 2: Input   — collect extra details for selected steps
+# Phase 3: Confirm — summary table, loop back if rejected
+# Phase 4: Execute — run in order
 # =============================================================================
 
 set -uo pipefail
@@ -35,25 +36,7 @@ is_thinkpad() {
     return 1
 }
 
-# Clear + reprint logo before each screen (logo always on top)
-show_screen() {
-    print_logo
-}
-
-# Logo + titled question screen
-# Usage: question_screen "Title" "Subtitle (muted, optional)"
-question_screen() {
-    show_screen
-    gum style \
-        --foreground "$C_PRIMARY" --border-foreground "$C_BORDER" --border normal \
-        --width "$TERM_WIDTH" --padding "0 1" \
-        "  $1"
-    [[ -n "${2:-}" ]] && echo "" && gum style \
-        --foreground "$C_MUTED" \
-        --padding "0 0 0 $PADDING_LEFT" \
-        "  $2"
-    echo ""
-}
+show_screen() { print_logo; }
 
 # =============================================================================
 # INTRO SCREEN
@@ -61,30 +44,68 @@ question_screen() {
 show_screen
 
 gum style \
-    --foreground "$C_PRIMARY" --border-foreground "$C_BORDER" --border rounded \
-    --align center --width "$TERM_WIDTH" --padding "1 2" \
-    "Archer Post-Install Wizard" \
-    "Answer a few questions, then sit back."
-
-echo ""
-gum style \
-    --foreground "$C_MUTED" \
+    --foreground "$C_PRIMARY" \
     --padding "0 0 0 $PADDING_LEFT" \
-    "  Each step is optional. Completed steps won't repeat." \
-    "  You'll get a summary before anything runs."
+    "  Archer Post-Install" \
+    "  Select what you want to set up. Space to toggle, enter to confirm." \
+    "  Completed steps are hidden. Nothing runs until you confirm."
 
 echo ""
 gum confirm "Ready?" || { msg "Aborted. Run ~/Archer/post-install.sh anytime."; exit 0; }
 
 # =============================================================================
-# PHASE 1 — INTERVIEW (one question at a time, logo always on top)
+# PHASE 1 — MULTI-SELECT
 # =============================================================================
 
-run_interview() {
+# Build list of pending steps (skip already-done ones)
+build_options() {
+    OPTIONS=()
+    ! is_done "extra-packages"    && OPTIONS+=("Extra Packages")
+    ! is_done "git"               && OPTIONS+=("Git Identity")
+    ! is_done "gpu-drivers"       && OPTIONS+=("GPU Drivers")
+    ! is_done "hyprland-plugins"  && OPTIONS+=("Hyprland Plugins")
+    is_laptop && ! is_done "fingerprint" && OPTIONS+=("Fingerprint")
+    ! is_done "howdy"             && OPTIONS+=("Howdy")
+    is_thinkpad && ! is_done "thinkfan"     && OPTIONS+=("Thinkfan")
+    is_thinkpad && ! is_done "easyeffects"  && OPTIONS+=("EasyEffects")
+    ! is_done "waydroid"          && OPTIONS+=("Waydroid")
+    ! is_done "wallpapers"        && OPTIONS+=("Wallpapers")
+    ! is_done "spicetify"         && OPTIONS+=("Spicetify")
+    ! is_done "ssh"               && OPTIONS+=("SSH Key")
+}
+
+run_selection() {
+    build_options
+
+    if [[ ${#OPTIONS[@]} -eq 0 ]]; then
+        gum style --foreground "$C_MUTED" --padding "0 0 0 $PADDING_LEFT" \
+            "  Nothing left to do — all steps are marked done."
+        exit 0
+    fi
+
+    show_screen
+
+    SELECTED=$(printf '%s\n' "${OPTIONS[@]}" | gum choose \
+        --no-limit \
+        --cursor "▶ " \
+        --cursor-prefix "● " \
+        --selected-prefix "● " \
+        --unselected-prefix "○ " \
+        --header "  Select steps to run  (space to toggle, enter to confirm)" \
+        --header.foreground "$C_PRIMARY" \
+        --cursor.foreground "$C_ACCENT" \
+        --selected.foreground "$C_ACCENT")
+
+    echo ""
+}
+
+# =============================================================================
+# PHASE 2 — COLLECT EXTRA INPUT FOR SELECTED STEPS
+# =============================================================================
+
+collect_inputs() {
     DO_EXTRA=false
-    DO_GIT=false;       GIT_NAME="";  GIT_EMAIL=""
-    DO_TIMEZONE=false;  TZ_CHOICE=""
-    DO_BROWSER=false;   BROWSER_CHOICE=""
+    DO_GIT=false;  GIT_NAME=""; GIT_EMAIL=""
     DO_GPU=false
     DO_PLUGINS=false
     DO_FINGERPRINT=false
@@ -94,156 +115,67 @@ run_interview() {
     DO_WAYDROID=false
     DO_WALLPAPERS=false
     DO_SPICETIFY=false
-    DO_SSH=false;       SSH_EMAIL=""
-    DO_LOCALE=false;    LOCALE_CHOICE=""
+    DO_SSH=false;  SSH_EMAIL=""
 
-    # --- Extra Packages ---
-    if ! is_done "extra-packages"; then
-        question_screen "Extra Packages" "VSCode, Obsidian, Telegram, yazi, kdenlive..."
-        gum confirm "Install extras?" && DO_EXTRA=true || true
+    grep -q "Extra Packages"    <<< "$SELECTED" && DO_EXTRA=true
+    grep -q "GPU Drivers"       <<< "$SELECTED" && DO_GPU=true
+    grep -q "Hyprland Plugins"  <<< "$SELECTED" && DO_PLUGINS=true
+    grep -q "Fingerprint"       <<< "$SELECTED" && DO_FINGERPRINT=true
+    grep -q "Howdy"             <<< "$SELECTED" && DO_HOWDY=true
+    grep -q "Thinkfan"          <<< "$SELECTED" && DO_THINKFAN=true
+    grep -q "EasyEffects"       <<< "$SELECTED" && DO_EASYEFFECTS=true
+    grep -q "Waydroid"          <<< "$SELECTED" && DO_WAYDROID=true
+    grep -q "Wallpapers"        <<< "$SELECTED" && DO_WALLPAPERS=true
+    grep -q "Spicetify"         <<< "$SELECTED" && DO_SPICETIFY=true
+
+    if grep -q "Git Identity" <<< "$SELECTED"; then
+        DO_GIT=true
+        show_screen
+        gum style --foreground "$C_PRIMARY" --padding "0 0 0 $PADDING_LEFT" \
+            "  Git Identity"
+        echo ""
+        GIT_NAME=$(gum input --placeholder "Your Name")
+        GIT_EMAIL=$(gum input --placeholder "your@email.com")
+        echo ""
     fi
 
-    # --- Git ---
-    if ! is_done "git"; then
-        question_screen "Git Identity" "Set global username and email."
-        if gum confirm "Set up Git?"; then
-            DO_GIT=true
-            echo ""
-            GIT_NAME=$(gum input --placeholder "Your Name")
-            GIT_EMAIL=$(gum input --placeholder "your@email.com")
-        fi
-    fi
-
-    # --- Timezone ---
-    if ! is_done "timezone"; then
-        question_screen "Timezone"
-        if gum confirm "Set timezone?"; then
-            DO_TIMEZONE=true
-            echo ""
-            TZ_CHOICE=$(timedatectl list-timezones | gum filter --placeholder "Search timezone...")
-        fi
-    fi
-
-    # --- Default Browser ---
-    if ! is_done "browser"; then
-        question_screen "Default Browser"
-        if gum confirm "Set default browser?"; then
-            DO_BROWSER=true
-            echo ""
-            BROWSER_CHOICE=$(gum choose --cursor "▶ " "google-chrome" "brave-browser" "firefox" "chromium")
-        fi
-    fi
-
-    # --- GPU Drivers ---
-    if ! is_done "gpu-drivers"; then
-        question_screen "GPU Drivers" "Install drivers for your hardware."
-        gum confirm "Install GPU drivers?" && DO_GPU=true || true
-    fi
-
-    # --- Hyprland Plugins ---
-    if ! is_done "hyprland-plugins"; then
-        question_screen "Hyprland Plugins" "Installed via hyprpm."
-        gum confirm "Install plugins?" && DO_PLUGINS=true || true
-    fi
-
-    # --- Fingerprint ---
-    if is_laptop && ! is_done "fingerprint"; then
-        question_screen "Fingerprint" "Enroll for sudo and login authentication."
-        gum confirm "Enroll fingerprint?" && DO_FINGERPRINT=true || true
-    fi
-
-    # --- Howdy ---
-    if ! is_done "howdy"; then
-        question_screen "Howdy Face Recognition" "Enroll face for sudo authentication."
-        gum confirm "Set up Howdy?" && DO_HOWDY=true || true
-    fi
-
-    # --- ThinkPad specific ---
-    if is_thinkpad; then
-        if ! is_done "thinkfan"; then
-            question_screen "Thinkfan  ·  ThinkPad detected" "Configure fan control."
-            gum confirm "Set up Thinkfan?" && DO_THINKFAN=true || true
-        fi
-
-        if ! is_done "easyeffects"; then
-            question_screen "EasyEffects  ·  ThinkPad T14 G2" "Dolby-tuned audio presets."
-            gum confirm "Set up EasyEffects?" && DO_EASYEFFECTS=true || true
-        fi
-    fi
-
-    # --- Waydroid ---
-    if ! is_done "waydroid"; then
-        question_screen "Waydroid" "Android container."
-        gum confirm "Set up Waydroid?" && DO_WAYDROID=true || true
-    fi
-
-    # --- Wallpapers ---
-    if ! is_done "wallpapers"; then
-        question_screen "Wallpapers" "Clone Archer wallpapers repo to ~/Wallpapers."
-        gum confirm "Clone wallpapers?" && DO_WALLPAPERS=true || true
-    fi
-
-    # --- Spicetify ---
-    if ! is_done "spicetify"; then
-        question_screen "Spicetify" "Apply theme to Spotify."
-        gum confirm "Set up Spicetify?" && DO_SPICETIFY=true || true
-    fi
-
-    # --- SSH Key ---
-    if ! is_done "ssh"; then
-        question_screen "SSH Key" "ED25519 key — public key shown after generation."
-        if gum confirm "Generate SSH key?"; then
-            DO_SSH=true
-            echo ""
-            SSH_EMAIL=$(gum input --placeholder "your@email.com")
-        fi
-    fi
-
-    # --- Locale ---
-    if ! is_done "locale"; then
-        question_screen "Locale" "Set system locale."
-        if gum confirm "Set locale?"; then
-            DO_LOCALE=true
-            echo ""
-            LOCALE_CHOICE=$(gum input --placeholder "en_US.UTF-8")
-        fi
+    if grep -q "SSH Key" <<< "$SELECTED"; then
+        DO_SSH=true
+        show_screen
+        gum style --foreground "$C_PRIMARY" --padding "0 0 0 $PADDING_LEFT" \
+            "  SSH Key  —  ED25519"
+        echo ""
+        SSH_EMAIL=$(gum input --placeholder "your@email.com")
+        echo ""
     fi
 }
 
 # =============================================================================
-# PHASE 2 — SUMMARY TABLE + CONFIRM LOOP
+# PHASE 3 — SUMMARY TABLE + CONFIRM LOOP
 # =============================================================================
 
 show_summary() {
     show_screen
-    gum style \
-        --foreground "$C_ACCENT" --border-foreground "$C_ACCENT" --border rounded \
-        --align center --width "$TERM_WIDTH" --padding "0 1" \
-        "Does this look right?"
-
+    gum style --foreground "$C_ACCENT" --padding "0 0 0 $PADDING_LEFT" \
+        "  Review — does this look right?"
     echo ""
 
-    local rows="Step,Value"
-    [[ "$DO_EXTRA"       == true ]] && rows+=$'\n'"Extra packages,Install"
-    [[ "$DO_GIT"         == true ]] && rows+=$'\n'"Git identity,$GIT_NAME <$GIT_EMAIL>"
-    [[ "$DO_TIMEZONE"    == true ]] && rows+=$'\n'"Timezone,$TZ_CHOICE"
-    [[ "$DO_BROWSER"     == true ]] && rows+=$'\n'"Browser,$BROWSER_CHOICE"
-    [[ "$DO_GPU"         == true ]] && rows+=$'\n'"GPU drivers,Install"
-    [[ "$DO_PLUGINS"     == true ]] && rows+=$'\n'"Hyprland plugins,Install"
+    local rows="Step,Action"
+    [[ "$DO_EXTRA"       == true ]] && rows+=$'\n'"Extra Packages,Install"
+    [[ "$DO_GIT"         == true ]] && rows+=$'\n'"Git Identity,$GIT_NAME <$GIT_EMAIL>"
+    [[ "$DO_GPU"         == true ]] && rows+=$'\n'"GPU Drivers,Install"
+    [[ "$DO_PLUGINS"     == true ]] && rows+=$'\n'"Hyprland Plugins,Install"
     [[ "$DO_FINGERPRINT" == true ]] && rows+=$'\n'"Fingerprint,Enroll"
     [[ "$DO_HOWDY"       == true ]] && rows+=$'\n'"Howdy,Enroll"
     [[ "$DO_THINKFAN"    == true ]] && rows+=$'\n'"Thinkfan,Configure"
-    [[ "$DO_EASYEFFECTS" == true ]] && rows+=$'\n'"EasyEffects,Install presets"
+    [[ "$DO_EASYEFFECTS" == true ]] && rows+=$'\n'"EasyEffects,Install"
     [[ "$DO_WAYDROID"    == true ]] && rows+=$'\n'"Waydroid,Install"
     [[ "$DO_WALLPAPERS"  == true ]] && rows+=$'\n'"Wallpapers,Clone"
     [[ "$DO_SPICETIFY"   == true ]] && rows+=$'\n'"Spicetify,Apply"
-    [[ "$DO_SSH"         == true ]] && rows+=$'\n'"SSH key,$SSH_EMAIL"
-    [[ "$DO_LOCALE"      == true ]] && rows+=$'\n'"Locale,$LOCALE_CHOICE"
+    [[ "$DO_SSH"         == true ]] && rows+=$'\n'"SSH Key,$SSH_EMAIL"
 
-    if [[ "$rows" == "Step,Value" ]]; then
-        gum style \
-            --foreground "$C_MUTED" \
-            --padding "0 0 0 $PADDING_LEFT" \
+    if [[ "$rows" == "Step,Action" ]]; then
+        gum style --foreground "$C_MUTED" --padding "0 0 0 $PADDING_LEFT" \
             "  Nothing selected — nothing will run."
     else
         echo "$rows" | gum table \
@@ -257,32 +189,28 @@ show_summary() {
     echo ""
 }
 
-# Interview + confirm loop
 while true; do
-    run_interview
+    run_selection
+    collect_inputs
     show_summary
 
-    if gum confirm "Yes, run it" --affirmative="Yes" --negative="No, change it"; then
+    if gum confirm "Run it" --affirmative="Yes" --negative="Change it"; then
         break
     else
-        gum style \
-            --foreground "$C_MUTED" \
-            --padding "0 0 0 $PADDING_LEFT" \
+        gum style --foreground "$C_MUTED" --padding "0 0 0 $PADDING_LEFT" \
             "  Starting over..."
         sleep 1
     fi
 done
 
 # =============================================================================
-# PHASE 3 — EXECUTE
+# PHASE 4 — EXECUTE
 # =============================================================================
 show_screen
-gum style \
-    --foreground "$C_ACCENT" --border-foreground "$C_ACCENT" --border rounded \
-    --align center --width "$TERM_WIDTH" --padding "0 1" \
-    "Phase 3 — Executing"
-
+gum style --foreground "$C_ACCENT" --padding "0 0 0 $PADDING_LEFT" \
+    "  Executing..."
 echo ""
+
 START_TIME=$SECONDS
 
 [[ "$DO_EXTRA" == true ]] && {
@@ -296,20 +224,6 @@ START_TIME=$SECONDS
     git config --global user.email "$GIT_EMAIL"
     mark_done "git"
     ok "Git identity set"
-}
-
-[[ "$DO_TIMEZONE" == true ]] && {
-    section "Timezone"
-    sudo timedatectl set-timezone "$TZ_CHOICE"
-    mark_done "timezone"
-    ok "Timezone → $TZ_CHOICE"
-}
-
-[[ "$DO_BROWSER" == true ]] && {
-    section "Default Browser"
-    xdg-settings set default-web-browser "${BROWSER_CHOICE}.desktop"
-    mark_done "browser"
-    ok "Browser → $BROWSER_CHOICE"
 }
 
 [[ "$DO_GPU" == true ]] && {
@@ -360,7 +274,8 @@ START_TIME=$SECONDS
 
 [[ "$DO_SPICETIFY" == true ]] && {
     section "Spicetify"
-    spicetify apply >> "$LOG_FILE" 2>&1 && mark_done "spicetify" && ok "Spicetify done" || warn "Spicetify had errors"
+    run_step "extras/spicetify.sh" "Spicetify" false "$LOG_FILE"
+    mark_done "spicetify"
 }
 
 [[ "$DO_SSH" == true ]] && {
@@ -368,23 +283,12 @@ START_TIME=$SECONDS
     ssh-keygen -t ed25519 -C "$SSH_EMAIL" -f "$HOME/.ssh/id_ed25519" -N ""
     mark_done "ssh"
     echo ""
-    gum style \
-        --foreground "$C_TEAL" \
-        --padding "0 0 0 $PADDING_LEFT" \
+    gum style --foreground "$C_TEAL" --padding "0 0 0 $PADDING_LEFT" \
         "  Public key (add to GitHub/GitLab):"
     echo ""
-    gum style \
-        --foreground "$C_MUTED" \
-        --padding "0 0 0 $PADDING_LEFT" \
+    gum style --foreground "$C_MUTED" --padding "0 0 0 $PADDING_LEFT" \
         "$(cat "$HOME/.ssh/id_ed25519.pub")"
     ok "SSH key generated"
-}
-
-[[ "$DO_LOCALE" == true ]] && {
-    section "Locale"
-    sudo localectl set-locale LANG="$LOCALE_CHOICE"
-    mark_done "locale"
-    ok "Locale → $LOCALE_CHOICE"
 }
 
 # =============================================================================
@@ -392,24 +296,16 @@ START_TIME=$SECONDS
 # =============================================================================
 DURATION=$(( SECONDS - START_TIME ))
 echo ""
-gum style \
-    --foreground "$C_SUCCESS" --border-foreground "$C_SUCCESS" --border rounded \
-    --align center --width "$TERM_WIDTH" --padding "1 2" \
-    "✓ Post-install complete!" \
-    "Finished in ${DURATION}s"
+gum style --foreground "$C_SUCCESS" --padding "0 0 0 $PADDING_LEFT" \
+    "  ✓ Done in ${DURATION}s"
 
 echo ""
-gum style \
-    --foreground "$C_ERROR" \
-    --padding "0 0 0 $PADDING_LEFT" \
+gum style --foreground "$C_ERROR" --padding "0 0 0 $PADDING_LEFT" \
     "  Remove the autostart entry when done:" \
-    "  ~/.config/hypr/autostart.lua" \
-    "  → comment out the post-install.sh line"
+    "  ~/.config/hypr/autostart.lua  →  comment out post-install.sh"
 
 echo ""
-gum style \
-    --foreground "$C_MUTED" \
-    --padding "0 0 0 $PADDING_LEFT" \
+gum style --foreground "$C_MUTED" --padding "0 0 0 $PADDING_LEFT" \
     "  Re-run anytime:  bash ~/Archer/post-install.sh" \
     "  Force redo:      rm $STATE_DIR/<step>.done"
 
