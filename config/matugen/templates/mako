@@ -1,7 +1,8 @@
 background-color={{colors.surface_container.default.hex}}ff
 text-color={{colors.on_surface.default.hex}}ff
-border-color={{colors.primary.default.hex}}00
-progress-color=over {{colors.primary.default.hex}}00
+# Changed from 00 to cc for a subtle, visible outline
+border-color={{colors.outline.default.hex}}cc
+progress-color=over {{colors.primary.default.hex}}cc
 
 [urgency=high]
 background-color={{colors.surface_container.default.hex}}ff

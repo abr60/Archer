@@ -1,0 +1,9 @@
+background-color=#ba0030ff
+text-color=#291617ff
+# Changed from 00 to cc for a subtle, visible outline
+border-color=#926e6ecc
+progress-color=over #ba0030cc
+
+[urgency=high]
+background-color=#ffe9e8ff
+border-color=#ba1a1aff
