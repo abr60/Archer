@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=GitHub
+Comment=GitHub
+Exec=launch-webapp https://github.com/drunk-particles/Archer
+Terminal=false
+Type=Application
+Icon=~/.local/share/applications/icons/GitHub.png
+StartupNotify=true

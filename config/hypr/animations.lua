@@ -1,1 +1,1 @@
-/home/abr/.config/hypr/animations/fluid.lua
+/home/abr/.config/hypr/animations/fast.lua

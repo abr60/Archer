@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# =============================================================================
+# archer-wallpaper-cycle — Cycle wallpapers within the current theme
+# Usage: archer-wallpaper-cycle [next|prev|random]
+# =============================================================================
+
+ACTION="${1:-next}"
+THEMES_DIR="$HOME/.local/share/Archer/Themes"
+STATE_DIR="$HOME/.local/state/Archer"
+THEME=$(cat "$STATE_DIR/current-theme" 2>/dev/null || echo "")
+SCRIPTS_DIR="$HOME/.config/matugen/bin"
+
+[[ -z "$THEME" ]] && { notify-send "Archer" "No theme selected"; exit 1; }
+
+BG_DIR="$THEMES_DIR/$THEME/Walls"
+CURRENT_WP_LINK="$STATE_DIR/current-wallpaper"
+CURRENT_WP=$(readlink -f "$CURRENT_WP_LINK" 2>/dev/null || echo "")
+
+mapfile -t WALLS < <(
+    find -L "$BG_DIR" -maxdepth 1 -type f \
+    \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \
+       -o -iname "*.webp" -o -iname "*.gif" \) | sort
+)
+
+COUNT=${#WALLS[@]}
+[[ $COUNT -eq 0 ]] && { notify-send "Archer" "No wallpapers found"; exit 1; }
+
+# Find current index
+CURRENT_IDX=0
+for i in "${!WALLS[@]}"; do
+    [[ "${WALLS[$i]}" == "$CURRENT_WP" ]] && { CURRENT_IDX=$i; break; }
+done
+
+case "$ACTION" in
+    next)   NEW_IDX=$(( (CURRENT_IDX + 1) % COUNT )) ;;
+    prev)   NEW_IDX=$(( (CURRENT_IDX - 1 + COUNT) % COUNT )) ;;
+    random) NEW_IDX=$(( RANDOM % COUNT )) ;;
+    *)      NEW_IDX=$(( (CURRENT_IDX + 1) % COUNT )) ;;
+esac
+
+NEW_WP="${WALLS[$NEW_IDX]}"
+ln -nsf "$NEW_WP" "$CURRENT_WP_LINK"
+
+# Apply via awww
+if ! pgrep -x awww-daemon >/dev/null 2>&1; then
+    uwsm-app -- awww-daemon &
+    sleep 0.3
+fi
+
+setsid uwsm-app -- awww img "$CURRENT_WP_LINK" \
+    --transition-type grow \
+    --transition-pos "$(hyprctl cursorpos | grep -E '^[0-9]' || echo '0,0')" \
+    --transition-fps 60 \
+    --transition-duration 0.8 \
+    --resize crop &
+disown
+
+MATUGEN_MODE=$(cat "$STATE_DIR/current-mode" 2>/dev/null || echo "dark")
+"$SCRIPTS_DIR/archer-set-mode" "$MATUGEN_MODE"

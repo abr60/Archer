@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# =============================================================================
+# generate-vpn-menu — Scan /etc/wireguard/*.conf and build vpn_menu.xml
+# Output: ~/.config/waybar/assets/menu/vpn_menu.xml
+# =============================================================================
+
+WG_DIR="/etc/wireguard"
+OUTPUT="$HOME/.config/waybar/assets/menu/vpn_menu.xml"
+STATE_FILE="/tmp/.archer-vpn-active"
+ACTIVE=$(cat "$STATE_FILE" 2>/dev/null || echo "")
+
+# Scan configs (needs sudo read access — covered by sudoers rule)
+mapfile -t CONFS < <(sudo bash -c "ls $WG_DIR/*.conf 2>/dev/null" | sort | xargs -I{} basename {} .conf)
+
+# ─── Begin XML ────────────────────────────────────────────────────────────────
+cat > "$OUTPUT" << 'XMLHEAD'
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkMenu" id="menu">
+
+    <!-- ── VPN SERVERS ─────────────────────────────────────────────────────── -->
+XMLHEAD
+
+for conf in "${CONFS[@]}"; do
+    label="$conf"
+    checkmark=""
+    [[ "$conf" == "$ACTIVE" ]] && checkmark=" ✓"
+    id="vpn_$(echo "$conf" | tr '[:upper:] .-' '[:lower:]___' | tr -cd '[:alnum:]_')"
+    echo "    <child><object class=\"GtkMenuItem\" id=\"${id}\"><property name=\"label\">󰖂  ${label}${checkmark}</property></object></child>" >> "$OUTPUT"
+done
+
+cat >> "$OUTPUT" << 'EOF'
+
+    <child><object class="GtkSeparatorMenuItem"/></child>
+
+    <!-- ── CONTROLS ────────────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="vpn_disconnect_all">
+        <property name="label">󰅛  Disconnect All</property>
+      </object>
+    </child>
+
+    <child><object class="GtkSeparatorMenuItem"/></child>
+
+    <!-- ── UTILS ───────────────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="vpn_ip_check">
+        <property name="label">󰩟  Check Public IP</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="vpn_sync_configs">
+        <property name="label">󰑓  Sync New Configs</property>
+      </object>
+    </child>
+
+  </object>
+</interface>
+EOF
+
+echo "VPN menu generated → $OUTPUT"

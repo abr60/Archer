@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# =============================================================================
+# archer-vpn-status — Waybar custom/vpn module output (JSON)
+# Signals: RTMIN+12 triggers a refresh
+# =============================================================================
+
+STATE_FILE="/tmp/.archer-vpn-active"
+ACTIVE=$(cat "$STATE_FILE" 2>/dev/null || echo "")
+
+if [[ -n "$ACTIVE" ]]; then
+    # Verify the interface actually exists (in case of crash/reboot)
+    if ip link show "$ACTIVE" &>/dev/null 2>&1; then
+        echo "{\"text\": \"󰖂\", \"tooltip\": \"VPN: $ACTIVE\", \"class\": \"connected\"}"
+    else
+        # State file is stale, clean it
+        rm -f "$STATE_FILE"
+        echo "{\"text\": \"󰤮\", \"tooltip\": \"VPN: Off\", \"class\": \"disconnected\"}"
+    fi
+else
+    echo "{\"text\": \"󰤮\", \"tooltip\": \"VPN: Off\", \"class\": \"disconnected\"}"
+fi

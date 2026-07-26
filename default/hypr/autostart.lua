@@ -17,7 +17,7 @@ a.exec_on_start("hyprsunset")
 -- 4. Core UI Components
 a.exec_on_start("uwsm app -- hyprland-monitor-watch")
 a.exec_on_start("uwsm app -- quickshell -p ~/.config/quickshell")
---a.exec_on_start("! toggle-enabled waybar-off && " .. a.launch("waybar"))
+a.exec_on_start("! toggle-enabled waybar-off && " .. a.launch("waybar"))
 --a.exec_on_start("uwsm app -- swaync")
 
 -- 5. Background Services & Idling

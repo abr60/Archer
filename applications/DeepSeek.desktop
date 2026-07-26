@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=DeepSeek
+Comment=DeepSeek
+Exec=launch-webapp https://chat.deepseek.com/
+Terminal=false
+Type=Application
+Icon=/home/abr/.local/share/applications/icons/DeepSeek.png
+StartupNotify=true

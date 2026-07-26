@@ -1,0 +1,196 @@
+#!/usr/bin/env bash
+# =============================================================================
+# generate-menu.sh — Scan dirs and regenerate the waybar GTK popup menu XML
+# Output: ~/.config/waybar/assets/menu/menu.xml
+# =============================================================================
+
+THEMES_DIR="$HOME/.local/share/Archer/Themes"
+ANIM_DIR="$HOME/.config/hypr/animations"
+WAYBAR_CSS_DIR="$HOME/.config/waybar/css"
+STATE_DIR="$HOME/.local/state/Archer"
+SCRIPTS_DIR="$HOME/.config/matugen/bin"
+OUTPUT="$HOME/.config/waybar/assets/menu/menu.xml"
+
+# ─── Helpers ──────────────────────────────────────────────────────────────────
+xml_escape() { sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g' <<< "$1"; }
+
+# ─── Scan themes ──────────────────────────────────────────────────────────────
+CURRENT_THEME=$(cat "$STATE_DIR/current-theme" 2>/dev/null || echo "")
+mapfile -t THEMES < <(find "$THEMES_DIR" -mindepth 1 -maxdepth 1 -type d | sort | xargs -I{} basename {})
+
+# ─── Scan wallpaper actions (static, managed by existing scripts) ─────────────
+# wallpaper submenu uses rofi-set-bg for select; next/prev/random need scripts
+
+# ─── Scan animations ──────────────────────────────────────────────────────────
+mapfile -t ANIMS < <(find "$ANIM_DIR" -maxdepth 1 -type f -name "*.lua" | sort | xargs -I{} basename {} .lua)
+
+# ─── Scan waybar CSS styles ───────────────────────────────────────────────────
+mapfile -t STYLES < <(find "$WAYBAR_CSS_DIR" -maxdepth 1 -name "*.css" | sort | xargs -I{} basename {} .css)
+
+# ─── Current mode ─────────────────────────────────────────────────────────────
+CURRENT_MODE=$(cat "$STATE_DIR/current-mode" 2>/dev/null || echo "dark")
+CURRENT_SCHEME=$(cat "$STATE_DIR/matugen-scheme" 2>/dev/null || echo "scheme-content")
+
+# ─── Begin XML ────────────────────────────────────────────────────────────────
+cat > "$OUTPUT" << 'XMLHEAD'
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkMenu" id="menu">
+XMLHEAD
+
+# ─── 1. APPEARANCE (light/dark) ───────────────────────────────────────────────
+cat >> "$OUTPUT" << 'EOF'
+
+    <!-- ── APPEARANCE ─────────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="appearance_menu">
+        <property name="label">  Appearance</property>
+        <child type="submenu">
+          <object class="GtkMenu">
+            <child>
+              <object class="GtkMenuItem" id="mode_dark">
+                <property name="label">󰖔  Dark Mode</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="mode_light">
+                <property name="label">󰖙  Light Mode</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+EOF
+
+# ─── 2. COLOR PALETTE (matugen schemes) ───────────────────────────────────────
+cat >> "$OUTPUT" << 'EOF'
+    <!-- ── COLOR PALETTE ──────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="palette_menu">
+        <property name="label">󰌁  Color Palette</property>
+        <child type="submenu">
+          <object class="GtkMenu">
+            <child><object class="GtkMenuItem" id="scheme_tonal_spot"><property name="label">󰁨  Tonal Spot</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_content"><property name="label">  Content</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_expressive"><property name="label">󱜙  Expressive</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_fidelity"><property name="label">  Fidelity</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_fruit_salad"><property name="label">  Fruit Salad</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_monochrome"><property name="label">  Monochrome</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_neutral"><property name="label">󰱴  Neutral</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_rainbow"><property name="label">   Rainbow</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_vibrant"><property name="label">󰌁  Vibrant</property></object></child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+EOF
+
+# ─── 3. THEME (scanned) ───────────────────────────────────────────────────────
+echo "    <!-- ── THEME ──────────────────────────────────────────────────────────── -->" >> "$OUTPUT"
+echo "    <child>" >> "$OUTPUT"
+echo "      <object class=\"GtkMenuItem\" id=\"theme_menu\">" >> "$OUTPUT"
+echo "        <property name=\"label\">  Theme</property>" >> "$OUTPUT"
+echo "        <child type=\"submenu\">" >> "$OUTPUT"
+echo "          <object class=\"GtkMenu\">" >> "$OUTPUT"
+
+for theme in "${THEMES[@]}"; do
+    label=$(xml_escape "$theme")
+    active_marker=""
+    [[ "$theme" == "$CURRENT_THEME" ]] && active_marker="  ✓"
+    id="theme_$(echo "$theme" | tr '[:upper:] ' '[:lower:]_' | tr -cd '[:alnum:]_')"
+    echo "            <child><object class=\"GtkMenuItem\" id=\"${id}\"><property name=\"label\">  ${label}${active_marker}</property></object></child>" >> "$OUTPUT"
+done
+
+cat >> "$OUTPUT" << 'EOF'
+          </object>
+        </child>
+      </object>
+    </child>
+
+EOF
+
+# ─── 4. WALLPAPER ─────────────────────────────────────────────────────────────
+cat >> "$OUTPUT" << 'EOF'
+    <!-- ── WALLPAPER ─────────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="wallpaper_menu">
+        <property name="label">󰸉  Wallpaper</property>
+        <child type="submenu">
+          <object class="GtkMenu">
+            <child><object class="GtkMenuItem" id="wallpaper_select"><property name="label">  Select Wallpaper</property></object></child>
+            <child><object class="GtkMenuItem" id="wallpaper_next"><property name="label">  Next Wallpaper</property></object></child>
+            <child><object class="GtkMenuItem" id="wallpaper_prev"><property name="label">  Previous Wallpaper</property></object></child>
+            <child><object class="GtkMenuItem" id="wallpaper_random"><property name="label">  Random Wallpaper</property></object></child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+EOF
+
+# ─── 5. ANIMATIONS (scanned) ──────────────────────────────────────────────────
+echo "    <!-- ── ANIMATIONS ──────────────────────────────────────────────────────── -->" >> "$OUTPUT"
+echo "    <child>" >> "$OUTPUT"
+echo "      <object class=\"GtkMenuItem\" id=\"anim_menu\">" >> "$OUTPUT"
+echo "        <property name=\"label\">󰗘  Animations</property>" >> "$OUTPUT"
+echo "        <child type=\"submenu\">" >> "$OUTPUT"
+echo "          <object class=\"GtkMenu\">" >> "$OUTPUT"
+
+for anim in "${ANIMS[@]}"; do
+    label=$(xml_escape "$anim")
+    id="anim_$(echo "$anim" | tr '[:upper:] ' '[:lower:]_' | tr -cd '[:alnum:]_')"
+    echo "            <child><object class=\"GtkMenuItem\" id=\"${id}\"><property name=\"label\">󱐋  ${label}</property></object></child>" >> "$OUTPUT"
+done
+
+cat >> "$OUTPUT" << 'EOF'
+          </object>
+        </child>
+      </object>
+    </child>
+
+EOF
+
+# ─── 6. WAYBAR STYLE (scanned) ────────────────────────────────────────────────
+echo "    <!-- ── WAYBAR STYLE ──────────────────────────────────────────────────────── -->" >> "$OUTPUT"
+echo "    <child>" >> "$OUTPUT"
+echo "      <object class=\"GtkMenuItem\" id=\"waybar_menu\">" >> "$OUTPUT"
+echo "        <property name=\"label\">󰫇  Waybar Style</property>" >> "$OUTPUT"
+echo "        <child type=\"submenu\">" >> "$OUTPUT"
+echo "          <object class=\"GtkMenu\">" >> "$OUTPUT"
+
+for style in "${STYLES[@]}"; do
+    label=$(xml_escape "$style")
+    id="waybar_style_$(echo "$style" | tr '[:upper:] ' '[:lower:]_' | tr -cd '[:alnum:]_')"
+    echo "            <child><object class=\"GtkMenuItem\" id=\"${id}\"><property name=\"label\">  ${label}</property></object></child>" >> "$OUTPUT"
+done
+
+cat >> "$OUTPUT" << 'EOF'
+          </object>
+        </child>
+      </object>
+    </child>
+
+EOF
+
+# ─── 7. RESCAN ────────────────────────────────────────────────────────────────
+cat >> "$OUTPUT" << 'EOF'
+    <child><object class="GtkSeparatorMenuItem"/></child>
+    <!-- ── RESCAN ─────────────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="rescan_menu">
+        <property name="label">󰑓  Rescan Menu</property>
+      </object>
+    </child>
+
+EOF
+
+# ─── Close XML ────────────────────────────────────────────────────────────────
+cat >> "$OUTPUT" << 'EOF'
+  </object>
+</interface>
+EOF
+
+echo "Menu generated → $OUTPUT"

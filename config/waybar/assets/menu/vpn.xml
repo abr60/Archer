@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkMenu" id="menu">
+
+    <!-- ── VPN CONTROLS ────────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="vpn_connect">
+        <property name="label">󰖂  Connect VPN (wg0)</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="GtkMenuItem" id="vpn_disconnect">
+        <property name="label">󰅛  Disconnect VPN</property>
+      </object>
+    </child>
+
+    <child><object class="GtkSeparatorMenuItem"/></child>
+
+    <!-- ── SYSTEM STATUS / CHECKS ─────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="vpn_status">
+        <property name="label">󰄬  Check Status (wg)</property>
+      </object>
+    </child>
+
+    <child>
+      <object class="GtkMenuItem" id="vpn_ip_check">
+        <property name="label">󰩟  Check Public IP</property>
+      </object>
+    </child>
+
+  </object>
+</interface>

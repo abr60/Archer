@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Wallhaven
+Comment=Wallhaven
+Exec=launch-webapp https://wallhaven.cc/
+Terminal=false
+Type=Application
+Icon=~/.local/share/applications/icons/Wallhaven.png
+StartupNotify=true

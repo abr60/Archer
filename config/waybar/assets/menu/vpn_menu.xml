@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkMenu" id="menu">
+
+    <!-- ── VPN SERVERS ─────────────────────────────────────────────────────── -->
+    <child><object class="GtkMenuItem" id="vpn_ca"><property name="label">󰖂  ca</property></object></child>
+    <child><object class="GtkMenuItem" id="vpn_ch"><property name="label">󰖂  ch</property></object></child>
+    <child><object class="GtkMenuItem" id="vpn_jp"><property name="label">󰖂  jp</property></object></child>
+    <child><object class="GtkMenuItem" id="vpn_nl"><property name="label">󰖂  nl</property></object></child>
+    <child><object class="GtkMenuItem" id="vpn_no"><property name="label">󰖂  no</property></object></child>
+    <child><object class="GtkMenuItem" id="vpn_pl"><property name="label">󰖂  pl</property></object></child>
+    <child><object class="GtkMenuItem" id="vpn_ro"><property name="label">󰖂  ro</property></object></child>
+    <child><object class="GtkMenuItem" id="vpn_sg"><property name="label">󰖂  sg</property></object></child>
+    <child><object class="GtkMenuItem" id="vpn_us"><property name="label">󰖂  us</property></object></child>
+
+    <child><object class="GtkSeparatorMenuItem"/></child>
+
+    <!-- ── CONTROLS ────────────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="vpn_disconnect_all">
+        <property name="label">󰅛  Disconnect All</property>
+      </object>
+    </child>
+
+    <child><object class="GtkSeparatorMenuItem"/></child>
+
+    <!-- ── UTILS ───────────────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="vpn_ip_check">
+        <property name="label">󰩟  Check Public IP</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="vpn_sync_configs">
+        <property name="label">󰑓  Sync New Configs</property>
+      </object>
+    </child>
+
+  </object>
+</interface>

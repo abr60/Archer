@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 # =============================================================================
 # Archer - Post-Install Wizard
-# Runs automatically on first login via autostart.lua.
-# Phase 1: Select  — one multi-select screen, space to toggle
-# Phase 2: Input   — collect extra details for selected steps
+# Phase 1: Select  — multi-select, space to toggle
+# Phase 2: Input   — collect details for steps that need them
 # Phase 3: Confirm — summary table, loop back if rejected
-# Phase 4: Execute — run in order
+# Phase 4: Execute — run in order with step counter
 # =============================================================================
 
 set -uo pipefail
@@ -39,45 +38,47 @@ is_thinkpad() {
 show_screen() { print_logo; }
 
 # =============================================================================
-# INTRO SCREEN
+# INTRO
 # =============================================================================
 show_screen
 
 gum style \
     --foreground "$C_PRIMARY" \
     --padding "0 0 0 $PADDING_LEFT" \
-    "  Archer Post-Install" \
-    "  Select what you want to set up. Space to toggle, enter to confirm." \
+    "  Post-Install Setup"
+
+echo ""
+
+gum style \
+    --foreground "$C_MUTED" \
+    --padding "0 0 0 $PADDING_LEFT" \
+    "  Select what you want to set up." \
     "  Completed steps are hidden. Nothing runs until you confirm."
 
 echo ""
-gum confirm "Ready?" || { msg "Aborted. Run ~/Archer/post-install.sh anytime."; exit 0; }
 
 # =============================================================================
 # PHASE 1 — MULTI-SELECT
 # =============================================================================
 
-# Build list of pending steps (skip already-done ones)
-build_options() {
-    OPTIONS=()
-    ! is_done "extra-packages"    && OPTIONS+=("Extra Packages")
-    ! is_done "git"               && OPTIONS+=("Git Identity")
-    ! is_done "gpu-drivers"       && OPTIONS+=("GPU Drivers")
-    ! is_done "hyprland-plugins"  && OPTIONS+=("Hyprland Plugins")
-    is_laptop && ! is_done "fingerprint" && OPTIONS+=("Fingerprint")
-    ! is_done "howdy"             && OPTIONS+=("Howdy")
-    is_thinkpad && ! is_done "thinkfan"     && OPTIONS+=("Thinkfan")
-    is_thinkpad && ! is_done "easyeffects"  && OPTIONS+=("EasyEffects")
-    ! is_done "waydroid"          && OPTIONS+=("Waydroid")
-    ! is_done "wallpapers"        && OPTIONS+=("Wallpapers")
-    ! is_done "spicetify"         && OPTIONS+=("Spicetify")
-    ! is_done "ssh"               && OPTIONS+=("SSH Key")
-}
-
 run_selection() {
-    build_options
+    # Build pending options with tab-separated descriptions
+    local items=()
 
-    if [[ ${#OPTIONS[@]} -eq 0 ]]; then
+    ! is_done "extra-packages"   && items+=("Extra Packages	VSCode, Obsidian, Telegram, yazi, kdenlive...")
+    ! is_done "git"              && items+=("Git Identity	Set global name and email")
+    ! is_done "gpu-drivers"      && items+=("GPU Drivers	Install drivers for your hardware")
+    ! is_done "hyprland-plugins" && items+=("Hyprland Plugins	Installed via hyprpm")
+    is_laptop && ! is_done "fingerprint" && items+=("Fingerprint	Enroll for sudo and login")
+    ! is_done "howdy"            && items+=("Howdy	Face recognition for sudo")
+    is_thinkpad && ! is_done "thinkfan"    && items+=("Thinkfan	Fan curve control (ThinkPad)")
+    is_thinkpad && ! is_done "easyeffects" && items+=("EasyEffects	Dolby-tuned audio presets (ThinkPad)")
+    ! is_done "waydroid"         && items+=("Waydroid	Android container")
+    ! is_done "wallpapers"       && items+=("Wallpapers	Clone Archer wallpapers to ~/Wallpapers")
+    ! is_done "spicetify"        && items+=("Spicetify	Apply theme to Spotify")
+    ! is_done "ssh"              && items+=("SSH Key	Generate ED25519 key")
+
+    if [[ ${#items[@]} -eq 0 ]]; then
         gum style --foreground "$C_MUTED" --padding "0 0 0 $PADDING_LEFT" \
             "  Nothing left to do — all steps are marked done."
         exit 0
@@ -85,22 +86,23 @@ run_selection() {
 
     show_screen
 
-    SELECTED=$(printf '%s\n' "${OPTIONS[@]}" | gum choose \
+    gum style \
+        --foreground "$C_PRIMARY" \
+        --padding "0 0 0 $PADDING_LEFT" \
+        "  Post-Install Setup"
+
+    echo ""
+
+    SELECTED=$(printf '%s\n' "${items[@]}" | gum choose \
         --no-limit \
-        --cursor "▶ " \
-        --cursor-prefix "● " \
-        --selected-prefix "● " \
-        --unselected-prefix "○ " \
-        --header "  Select steps to run  (space to toggle, enter to confirm)" \
-        --header.foreground "$C_PRIMARY" \
-        --cursor.foreground "$C_ACCENT" \
-        --selected.foreground "$C_ACCENT")
+        --header "  space to toggle  ·  enter to confirm" \
+        --height 20)
 
     echo ""
 }
 
 # =============================================================================
-# PHASE 2 — COLLECT EXTRA INPUT FOR SELECTED STEPS
+# PHASE 2 — COLLECT EXTRA INPUT
 # =============================================================================
 
 collect_inputs() {
@@ -117,18 +119,18 @@ collect_inputs() {
     DO_SPICETIFY=false
     DO_SSH=false;  SSH_EMAIL=""
 
-    grep -q "Extra Packages"    <<< "$SELECTED" && DO_EXTRA=true
-    grep -q "GPU Drivers"       <<< "$SELECTED" && DO_GPU=true
-    grep -q "Hyprland Plugins"  <<< "$SELECTED" && DO_PLUGINS=true
-    grep -q "Fingerprint"       <<< "$SELECTED" && DO_FINGERPRINT=true
-    grep -q "Howdy"             <<< "$SELECTED" && DO_HOWDY=true
-    grep -q "Thinkfan"          <<< "$SELECTED" && DO_THINKFAN=true
-    grep -q "EasyEffects"       <<< "$SELECTED" && DO_EASYEFFECTS=true
-    grep -q "Waydroid"          <<< "$SELECTED" && DO_WAYDROID=true
-    grep -q "Wallpapers"        <<< "$SELECTED" && DO_WALLPAPERS=true
-    grep -q "Spicetify"         <<< "$SELECTED" && DO_SPICETIFY=true
+    grep -q "^Extra Packages"    <<< "$SELECTED" && DO_EXTRA=true
+    grep -q "^GPU Drivers"       <<< "$SELECTED" && DO_GPU=true
+    grep -q "^Hyprland Plugins"  <<< "$SELECTED" && DO_PLUGINS=true
+    grep -q "^Fingerprint"       <<< "$SELECTED" && DO_FINGERPRINT=true
+    grep -q "^Howdy"             <<< "$SELECTED" && DO_HOWDY=true
+    grep -q "^Thinkfan"          <<< "$SELECTED" && DO_THINKFAN=true
+    grep -q "^EasyEffects"       <<< "$SELECTED" && DO_EASYEFFECTS=true
+    grep -q "^Waydroid"          <<< "$SELECTED" && DO_WAYDROID=true
+    grep -q "^Wallpapers"        <<< "$SELECTED" && DO_WALLPAPERS=true
+    grep -q "^Spicetify"         <<< "$SELECTED" && DO_SPICETIFY=true
 
-    if grep -q "Git Identity" <<< "$SELECTED"; then
+    if grep -q "^Git Identity" <<< "$SELECTED"; then
         DO_GIT=true
         show_screen
         gum style --foreground "$C_PRIMARY" --padding "0 0 0 $PADDING_LEFT" \
@@ -139,7 +141,7 @@ collect_inputs() {
         echo ""
     fi
 
-    if grep -q "SSH Key" <<< "$SELECTED"; then
+    if grep -q "^SSH Key" <<< "$SELECTED"; then
         DO_SSH=true
         show_screen
         gum style --foreground "$C_PRIMARY" --padding "0 0 0 $PADDING_LEFT" \
@@ -151,13 +153,14 @@ collect_inputs() {
 }
 
 # =============================================================================
-# PHASE 3 — SUMMARY TABLE + CONFIRM LOOP
+# PHASE 3 — SUMMARY + CONFIRM LOOP
 # =============================================================================
 
 show_summary() {
     show_screen
+
     gum style --foreground "$C_ACCENT" --padding "0 0 0 $PADDING_LEFT" \
-        "  Review — does this look right?"
+        "  Review"
     echo ""
 
     local rows="Step,Action"
@@ -206,20 +209,46 @@ done
 # =============================================================================
 # PHASE 4 — EXECUTE
 # =============================================================================
+
+# Count total steps
+TOTAL=0
+[[ "$DO_EXTRA"       == true ]] && (( TOTAL++ ))
+[[ "$DO_GIT"         == true ]] && (( TOTAL++ ))
+[[ "$DO_GPU"         == true ]] && (( TOTAL++ ))
+[[ "$DO_PLUGINS"     == true ]] && (( TOTAL++ ))
+[[ "$DO_FINGERPRINT" == true ]] && (( TOTAL++ ))
+[[ "$DO_HOWDY"       == true ]] && (( TOTAL++ ))
+[[ "$DO_THINKFAN"    == true ]] && (( TOTAL++ ))
+[[ "$DO_EASYEFFECTS" == true ]] && (( TOTAL++ ))
+[[ "$DO_WAYDROID"    == true ]] && (( TOTAL++ ))
+[[ "$DO_WALLPAPERS"  == true ]] && (( TOTAL++ ))
+[[ "$DO_SPICETIFY"   == true ]] && (( TOTAL++ ))
+[[ "$DO_SSH"         == true ]] && (( TOTAL++ ))
+
+STEP=0
+NEEDS_REBOOT=false
+
+step_header() {
+    (( STEP++ ))
+    echo ""
+    gum style --foreground "$C_MUTED" --padding "0 0 0 $PADDING_LEFT" \
+        "  [$STEP/$TOTAL] $1"
+}
+
 show_screen
-gum style --foreground "$C_ACCENT" --padding "0 0 0 $PADDING_LEFT" \
+gum style --foreground "$C_PRIMARY" --padding "0 0 0 $PADDING_LEFT" \
     "  Executing..."
 echo ""
 
 START_TIME=$SECONDS
 
 [[ "$DO_EXTRA" == true ]] && {
-    section "Extra Packages"
+    step_header "Extra Packages"
     bash "$INSTALL_DIR/packaging/packages" extra && mark_done "extra-packages" || warn "Extra packages had errors"
 }
 
 [[ "$DO_GIT" == true ]] && {
-    section "Git Identity"
+    step_header "Git Identity"
     git config --global user.name "$GIT_NAME"
     git config --global user.email "$GIT_EMAIL"
     mark_done "git"
@@ -227,59 +256,63 @@ START_TIME=$SECONDS
 }
 
 [[ "$DO_GPU" == true ]] && {
-    section "GPU Drivers"
-    run_step "extras/gpu-driver.sh" "GPU drivers" false "$LOG_FILE"
+    step_header "GPU Drivers"
+    run_step "extras/gpu-driver.sh" "GPU Drivers" false "$LOG_FILE"
     mark_done "gpu-drivers"
+    NEEDS_REBOOT=true
 }
 
 [[ "$DO_PLUGINS" == true ]] && {
-    section "Hyprland Plugins"
-    run_step "extras/plugins.sh" "Hyprland plugins" false "$LOG_FILE"
+    step_header "Hyprland Plugins"
+    run_step "extras/plugins.sh" "Hyprland Plugins" false "$LOG_FILE"
     mark_done "hyprland-plugins"
+    NEEDS_REBOOT=true
 }
 
 [[ "$DO_FINGERPRINT" == true ]] && {
-    section "Fingerprint"
+    step_header "Fingerprint"
     fprintd-enroll && mark_done "fingerprint" && ok "Fingerprint enrolled" || warn "Fingerprint had errors"
 }
 
 [[ "$DO_HOWDY" == true ]] && {
-    section "Howdy"
-    sudo howdy add && mark_done "howdy" && ok "Howdy enrolled" || warn "Howdy had errors"
+    step_header "Howdy"
+    run_step "extras/howdy.sh" "Howdy" false "$LOG_FILE"
+    mark_done "howdy"
 }
 
 [[ "$DO_THINKFAN" == true ]] && {
-    section "Thinkfan"
+    step_header "Thinkfan"
     run_step "extras/thinkfan.sh" "Thinkfan" false "$LOG_FILE"
     mark_done "thinkfan"
 }
 
 [[ "$DO_EASYEFFECTS" == true ]] && {
-    section "EasyEffects"
+    step_header "EasyEffects"
     run_step "extras/easyeffects.sh" "EasyEffects" false "$LOG_FILE"
     mark_done "easyeffects"
 }
 
 [[ "$DO_WAYDROID" == true ]] && {
-    section "Waydroid"
+    step_header "Waydroid"
     run_step "extras/waydroid.sh" "Waydroid" false "$LOG_FILE"
     mark_done "waydroid"
+    NEEDS_REBOOT=true
 }
 
 [[ "$DO_WALLPAPERS" == true ]] && {
-    section "Wallpapers"
+    step_header "Wallpapers"
     run_step "extras/wallpapers.sh" "Wallpapers" false "$LOG_FILE"
     mark_done "wallpapers"
 }
 
 [[ "$DO_SPICETIFY" == true ]] && {
-    section "Spicetify"
+    step_header "Spicetify"
     run_step "extras/spicetify.sh" "Spicetify" false "$LOG_FILE"
     mark_done "spicetify"
 }
 
 [[ "$DO_SSH" == true ]] && {
-    section "SSH Key"
+    step_header "SSH Key"
     ssh-keygen -t ed25519 -C "$SSH_EMAIL" -f "$HOME/.ssh/id_ed25519" -N ""
     mark_done "ssh"
     echo ""
@@ -300,14 +333,17 @@ gum style --foreground "$C_SUCCESS" --padding "0 0 0 $PADDING_LEFT" \
     "  ✓ Done in ${DURATION}s"
 
 echo ""
-gum style --foreground "$C_ERROR" --padding "0 0 0 $PADDING_LEFT" \
-    "  Remove the autostart entry when done:" \
-    "  ~/.config/hypr/autostart.lua  →  comment out post-install.sh"
-
-echo ""
 gum style --foreground "$C_MUTED" --padding "0 0 0 $PADDING_LEFT" \
+    "  Remove the autostart entry when done:" \
+    "  ~/.config/hypr/autostart.lua  →  comment out post-install.sh" \
+    "" \
     "  Re-run anytime:  bash ~/Archer/post-install.sh" \
     "  Force redo:      rm $STATE_DIR/<step>.done"
 
+if [[ "$NEEDS_REBOOT" == true ]]; then
+    echo ""
+    gum style --foreground "$C_ACCENT" --padding "0 0 0 $PADDING_LEFT" \
+        "  ↻  A reboot is recommended to apply the changes from this session."
+fi
+
 echo ""
-gum confirm "Reboot now?" && sudo reboot || msg "Reboot skipped."

@@ -1,0 +1,2 @@
+include=~/.config/mako/core.ini
+include=~/.config/mako/colors

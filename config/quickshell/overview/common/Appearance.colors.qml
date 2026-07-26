@@ -4,38 +4,38 @@ import QtQuick
 QtObject {
     id: m3
 
-    property color m3primary: "#becf6c"
-    property color m3onPrimary: "#2c3400"
+    property color m3primary: "#a7d388"
+    property color m3onPrimary: "#153800"
 
-    property color m3primaryContainer: "#89983c"
-    property color m3onPrimaryContainer: "#000000"
+    property color m3primaryContainer: "#86b069"
+    property color m3onPrimaryContainer: "#081e00"
 
-    property color m3secondary: "#c4cb9c"
-    property color m3onSecondary: "#2d3311"
+    property color m3secondary: "#bacca9"
+    property color m3onSecondary: "#26351b"
 
-    property color m3secondaryContainer: "#464c28"
-    property color m3onSecondaryContainer: "#e1e8b7"
+    property color m3secondaryContainer: "#3e4e32"
+    property color m3onSecondaryContainer: "#d7eac5"
 
-    property color m3background: "#13140d"
-    property color m3onBackground: "#e4e3d7"
+    property color m3background: "#12140f"
+    property color m3onBackground: "#e2e3da"
 
-    property color m3surface: "#13140d"
+    property color m3surface: "#12140f"
 
-    property color m3surfaceContainerLow: "#1b1c15"
-    property color m3surfaceContainer: "#1f2019"
-    property color m3surfaceContainerHigh: "#2a2b23"
-    property color m3surfaceContainerHighest: "#35352e"
+    property color m3surfaceContainerLow: "#1a1c17"
+    property color m3surfaceContainer: "#1e201b"
+    property color m3surfaceContainerHigh: "#282b25"
+    property color m3surfaceContainerHighest: "#333630"
 
-    property color m3onSurface: "#e4e3d7"
+    property color m3onSurface: "#e2e3da"
 
-    property color m3surfaceVariant: "#464839"
-    property color m3onSurfaceVariant: "#c7c8b4"
+    property color m3surfaceVariant: "#43493d"
+    property color m3onSurfaceVariant: "#c3c9b9"
 
-    property color m3inverseSurface: "#e4e3d7"
-    property color m3inverseOnSurface: "#303129"
+    property color m3inverseSurface: "#e2e3da"
+    property color m3inverseOnSurface: "#2f312b"
 
-    property color m3outline: "#919280"
-    property color m3outlineVariant: "#464839"
+    property color m3outline: "#8d9385"
+    property color m3outlineVariant: "#43493d"
 
     property color m3shadow: "#000000"
 }

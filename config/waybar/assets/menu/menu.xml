@@ -2,79 +2,114 @@
 <interface>
   <object class="GtkMenu" id="menu">
 
-    <!-- ── SECTION 1: MATUGEN COLOR SCHEMES ───────────────────────────── -->
+    <!-- ── APPEARANCE ─────────────────────────────────────────────────────── -->
     <child>
-      <object class="GtkMenuItem">
-        <property name="label">  Matugen Color Schemes</property>
-        <property name="sensitive">false</property> <!-- Makes it an unclickable header -->
-      </object>
-    </child>
-    <child><object class="GtkSeparatorMenuItem"/></child>
-    <child>
-      <object class="GtkMenuItem" id="scheme_tonal_spot">
-        <property name="label">󰁨  Tonal Spot (default)</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="scheme_content">
-        <property name="label">  Content</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="scheme_expressive">
-        <property name="label">󱜙  Expressive</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="scheme_fidelity">
-        <property name="label">  Fidelity</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="scheme_fruit_salad">
-        <property name="label">  Fruit Salad</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="scheme_monochrome">
-        <property name="label">  Monochrome</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="scheme_neutral">
-        <property name="label">󰱴  Neutral</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="scheme_rainbow">
-        <property name="label">  Rainbow</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="scheme_vibrant">
-        <property name="label">󰌁  Vibrant</property>
+      <object class="GtkMenuItem" id="appearance_menu">
+        <property name="label">  Appearance</property>
+        <child type="submenu">
+          <object class="GtkMenu">
+            <child>
+              <object class="GtkMenuItem" id="mode_dark">
+                <property name="label">󰖔  Dark Mode</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="mode_light">
+                <property name="label">󰖙  Light Mode</property>
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
     </child>
 
-    <!-- Large gap separator between categories -->
-    <child><object class="GtkSeparatorMenuItem"/></child>
+    <!-- ── COLOR PALETTE ──────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="palette_menu">
+        <property name="label">󰌁  Color Palette</property>
+        <child type="submenu">
+          <object class="GtkMenu">
+            <child><object class="GtkMenuItem" id="scheme_tonal_spot"><property name="label">󰁨  Tonal Spot</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_content"><property name="label">  Content</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_expressive"><property name="label">󱜙  Expressive</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_fidelity"><property name="label">  Fidelity</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_fruit_salad"><property name="label">  Fruit Salad</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_monochrome"><property name="label">  Monochrome</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_neutral"><property name="label">󰱴  Neutral</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_rainbow"><property name="label">   Rainbow</property></object></child>
+            <child><object class="GtkMenuItem" id="scheme_vibrant"><property name="label">󰌁  Vibrant</property></object></child>
+          </object>
+        </child>
+      </object>
+    </child>
 
-    <!-- ── SECTION 2: HYPRLAND ANIMATIONS ─────────────────────────────── -->
+    <!-- ── THEME ──────────────────────────────────────────────────────────── -->
     <child>
-      <object class="GtkMenuItem">
-        <property name="label">  Hyprland Animations</property>
-        <property name="sensitive">false</property> <!-- Unclickable header -->
+      <object class="GtkMenuItem" id="theme_menu">
+        <property name="label">  Theme</property>
+        <child type="submenu">
+          <object class="GtkMenu">
+            <child><object class="GtkMenuItem" id="theme_canvas"><property name="label">  Canvas</property></object></child>
+            <child><object class="GtkMenuItem" id="theme_emerald"><property name="label">  Emerald</property></object></child>
+            <child><object class="GtkMenuItem" id="theme_graffiti"><property name="label">  Graffiti</property></object></child>
+            <child><object class="GtkMenuItem" id="theme_landscape"><property name="label">  Landscape</property></object></child>
+            <child><object class="GtkMenuItem" id="theme_monochrome"><property name="label">  Monochrome</property></object></child>
+            <child><object class="GtkMenuItem" id="theme_pixelpulse"><property name="label">  Pixelpulse</property></object></child>
+            <child><object class="GtkMenuItem" id="theme_spectrum"><property name="label">  Spectrum  ✓</property></object></child>
+            <child><object class="GtkMenuItem" id="theme_sumie"><property name="label">  Sumi-e</property></object></child>
+          </object>
+        </child>
       </object>
     </child>
+
+    <!-- ── WALLPAPER ─────────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="wallpaper_menu">
+        <property name="label">󰸉  Wallpaper</property>
+        <child type="submenu">
+          <object class="GtkMenu">
+            <child><object class="GtkMenuItem" id="wallpaper_select"><property name="label">  Select Wallpaper</property></object></child>
+            <child><object class="GtkMenuItem" id="wallpaper_next"><property name="label">  Next Wallpaper</property></object></child>
+            <child><object class="GtkMenuItem" id="wallpaper_prev"><property name="label">  Previous Wallpaper</property></object></child>
+            <child><object class="GtkMenuItem" id="wallpaper_random"><property name="label">  Random Wallpaper</property></object></child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- ── ANIMATIONS ──────────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="anim_menu">
+        <property name="label">󰗘  Animations</property>
+        <child type="submenu">
+          <object class="GtkMenu">
+            <child><object class="GtkMenuItem" id="anim_fast"><property name="label">󱐋  fast</property></object></child>
+            <child><object class="GtkMenuItem" id="anim_fluid"><property name="label">󱐋  fluid</property></object></child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- ── WAYBAR STYLE ──────────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="waybar_menu">
+        <property name="label">󰫇  Waybar Style</property>
+        <child type="submenu">
+          <object class="GtkMenu">
+            <child><object class="GtkMenuItem" id="waybar_style_ii"><property name="label">  ii</property></object></child>
+            <child><object class="GtkMenuItem" id="waybar_style_intricate"><property name="label">  Intricate</property></object></child>
+            <child><object class="GtkMenuItem" id="waybar_style_omarchy"><property name="label">  omarchy</property></object></child>
+            <child><object class="GtkMenuItem" id="waybar_style_pristine"><property name="label">  Pristine</property></object></child>
+          </object>
+        </child>
+      </object>
+    </child>
+
     <child><object class="GtkSeparatorMenuItem"/></child>
+    <!-- ── RESCAN ─────────────────────────────────────────────────────────── -->
     <child>
-      <object class="GtkMenuItem" id="anim_fast">
-        <property name="label">󱐋  Snappy &amp; Fast</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="anim_smooth">
-        <property name="label">󱤉  Smooth &amp; Fluid</property>
+      <object class="GtkMenuItem" id="rescan_menu">
+        <property name="label">󰑓  Rescan Menu</property>
       </object>
     </child>
 

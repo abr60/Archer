@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+TARGET="${1:-}"
+STATE_FILE="/tmp/.archer-vpn-active"
+WG_DIR="/etc/wireguard"
+
+[[ -z "$TARGET" ]] && { notify-send "Archer VPN" "No server specified"; exit 1; }
+
+ACTIVE=$(cat "$STATE_FILE" 2>/dev/null || echo "")
+
+if [[ "$ACTIVE" == "$TARGET" ]]; then
+    sudo wg-quick down "$TARGET" 2>/dev/null
+    rm -f "$STATE_FILE"
+    sleep 1
+    NATIVE_IP=$(curl -s --max-time 5 https://ipinfo.io/ip 2>/dev/null || echo "unknown")
+    notify-send "VPN Disconnected" "Server: $TARGET\nYour IP is now: $NATIVE_IP (native)"
+    pkill -RTMIN+12 waybar
+    exit 0
+fi
+
+if [[ -n "$ACTIVE" ]]; then
+    sudo wg-quick down "$ACTIVE" 2>/dev/null
+    rm -f "$STATE_FILE"
+    sleep 0.5
+fi
+
+if ! sudo test -f "$WG_DIR/$TARGET.conf"; then
+    notify-send "Archer VPN" "Config not found: $TARGET.conf"
+    exit 1
+fi
+
+sudo wg-quick up "$TARGET"
+[[ $? -ne 0 ]] && { notify-send -u critical "Archer VPN" "Failed to connect to $TARGET"; exit 1; }
+
+echo "$TARGET" > "$STATE_FILE"
+sleep 1
+
+VPN_IP=$(curl -s --max-time 5 https://ipinfo.io/ip 2>/dev/null || echo "unknown")
+VPN_CITY=$(curl -s --max-time 5 https://ipinfo.io/city 2>/dev/null || echo "")
+VPN_COUNTRY=$(curl -s --max-time 5 https://ipinfo.io/country 2>/dev/null || echo "")
+
+notify-send "VPN Connected — $TARGET" "IP: $VPN_IP\nLocation: $VPN_CITY, $VPN_COUNTRY"
+pkill -RTMIN+12 waybar

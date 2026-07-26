@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# =============================================================================
+# archer-vpn-sync — Move any .conf dropped in the staging folder into
+# /etc/wireguard/ with correct permissions, then regenerate the VPN menu.
+#
+# Staging folder: ~/.config/waybar/assets/vpn-servers/
+# =============================================================================
+
+STAGING_DIR="$HOME/.config/waybar/assets/vpn-servers"
+WG_DIR="/etc/wireguard"
+
+mkdir -p "$STAGING_DIR"
+
+shopt -s nullglob
+CONFS=("$STAGING_DIR"/*.conf)
+shopt -u nullglob
+
+if [[ ${#CONFS[@]} -eq 0 ]]; then
+    notify-send "Archer VPN" "No new configs found in staging folder"
+else
+    for conf in "${CONFS[@]}"; do
+        base=$(basename "$conf")
+        sudo /usr/bin/install -m 600 -o root -g root "$conf" "$WG_DIR/$base"
+    done
+    notify-send "Archer VPN" "Synced ${#CONFS[@]} config(s) to /etc/wireguard (originals kept)"
+fi
+
+# Regenerate the menu after syncing
+"$HOME/.config/matugen/bin/generate-vpn-menu"

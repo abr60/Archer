@@ -21,6 +21,7 @@ avahi
 nss-mdns
 wireguard-tools
 xorg-xhost
+systemd-resolvconf
 
 # --- Security & Authentication ---
 fprintd
@@ -120,7 +121,8 @@ kvantum
 kvantum-qt5
 gnome-themes-extra
 gnome-tweaks
-yaru-icon-theme
+#yaru-icon-theme
+papirus-folders-git
 
 # --- Applications ---
 kitty

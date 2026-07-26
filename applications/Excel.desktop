@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Excel
+Comment=Excel
+Exec=launch-webapp https://excel.cloud.microsoft/
+Terminal=false
+Type=Application
+Icon=/home/abr/.local/share/applications/icons/Excel.png
+StartupNotify=true

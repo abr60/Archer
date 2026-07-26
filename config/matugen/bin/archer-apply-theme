@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# =============================================================================
+# archer-apply-theme — Apply a named theme directly (no rofi picker)
+# Usage: archer-apply-theme <ThemeName>
+# =============================================================================
+
+SELECTED_THEME="$1"
+THEMES_DIR="$HOME/.local/share/Archer/Themes"
+STATE_DIR="$HOME/.local/state/Archer"
+SCRIPTS_DIR="$HOME/.config/matugen/bin"
+
+[[ -z "$SELECTED_THEME" ]] && { echo "Usage: archer-apply-theme <ThemeName>"; exit 1; }
+[[ ! -d "$THEMES_DIR/$SELECTED_THEME" ]] && { notify-send "Archer" "Theme '$SELECTED_THEME' not found"; exit 1; }
+
+MODE=$(cat "$STATE_DIR/current-mode" 2>/dev/null || echo "dark")
+
+# Save theme state
+mkdir -p "$STATE_DIR"
+echo "$SELECTED_THEME" > "$STATE_DIR/current-theme"
+
+# Pick random wallpaper from selected theme
+BG_DIR="$THEMES_DIR/$SELECTED_THEME/Walls"
+mapfile -t WALLS < <(
+    find -L "$BG_DIR" -maxdepth 1 -type f \
+    \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \
+       -o -iname "*.webp" -o -iname "*.gif" \) | sort
+)
+
+[[ ${#WALLS[@]} -eq 0 ]] && { notify-send "Archer" "No wallpapers in '$SELECTED_THEME'"; exit 1; }
+
+RANDOM_WALL="${WALLS[$RANDOM % ${#WALLS[@]}]}"
+ln -nsf "$RANDOM_WALL" "$STATE_DIR/current-wallpaper"
+
+# Apply via awww
+if ! pgrep -x awww-daemon >/dev/null 2>&1; then
+    uwsm-app -- awww-daemon &
+    sleep 0.3
+fi
+
+setsid uwsm-app -- awww img "$STATE_DIR/current-wallpaper" \
+    --transition-type grow \
+    --transition-pos "$(hyprctl cursorpos | grep -E '^[0-9]' || echo '0,0')" \
+    --transition-fps 60 \
+    --transition-duration 0.8 \
+    --resize crop &
+disown
+
+"$SCRIPTS_DIR/archer-set-mode" "$MODE"

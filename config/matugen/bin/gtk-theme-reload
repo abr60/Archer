@@ -29,8 +29,8 @@ if [[ -z "${1:-}" ]]; then
     exit 0
 fi
 
-# ─── Yaru icon theme from dominant wallpaper color ─────────────────────────────
-YARU_COLOR="Yaru-sage"  # fallback if detection fails
+# ─── Papirus folder color from dominant wallpaper color ────────────────────────
+PAPIRUS_FOLDER_COLOR="blue"  # fallback
 
 IM_CMD=$(command -v magick || command -v convert || true)
 
@@ -75,38 +75,38 @@ if [[ -n "$IM_CMD" && -f "$wallpaper_path" ]]; then
             hue=$(( 60 * (r - g) / chroma + 240 ))
         fi
 
-        if   (( hue >= 345 || hue < 15  )); then YARU_COLOR="Yaru-red"
-        elif (( hue >= 15  && hue < 45  )); then YARU_COLOR="Yaru-wartybrown"
-        elif (( hue >= 45  && hue < 75  )); then YARU_COLOR="Yaru-yellow"
-        elif (( hue >= 75  && hue < 105 )); then YARU_COLOR="Yaru-olive"
-        elif (( hue >= 105 && hue < 150 )); then YARU_COLOR="Yaru-sage"
-        elif (( hue >= 150 && hue < 195 )); then YARU_COLOR="Yaru-prussiangreen"
-        elif (( hue >= 195 && hue < 255 )); then YARU_COLOR="Yaru-blue"
-        elif (( hue >= 255 && hue < 300 )); then YARU_COLOR="Yaru-purple"
-        elif (( hue >= 300 && hue < 345 )); then YARU_COLOR="Yaru-magenta"
+        if   (( hue >= 345 || hue < 15  )); then PAPIRUS_FOLDER_COLOR="red"
+        elif (( hue >= 15  && hue < 45  )); then PAPIRUS_FOLDER_COLOR="orange"
+        elif (( hue >= 45  && hue < 75  )); then PAPIRUS_FOLDER_COLOR="yellow"
+        elif (( hue >= 75  && hue < 105 )); then PAPIRUS_FOLDER_COLOR="green"
+        elif (( hue >= 105 && hue < 150 )); then PAPIRUS_FOLDER_COLOR="teal"
+        elif (( hue >= 150 && hue < 195 )); then PAPIRUS_FOLDER_COLOR="cyan"
+        elif (( hue >= 195 && hue < 255 )); then PAPIRUS_FOLDER_COLOR="blue"
+        elif (( hue >= 255 && hue < 285 )); then PAPIRUS_FOLDER_COLOR="indigo"
+        elif (( hue >= 285 && hue < 300 )); then PAPIRUS_FOLDER_COLOR="violet"
+        elif (( hue >= 300 && hue < 345 )); then PAPIRUS_FOLDER_COLOR="magenta"
         fi
     fi
 fi
 
-[[ "$MODE" == "dark" ]] && ICON_THEME="${YARU_COLOR}-dark" || ICON_THEME="$YARU_COLOR"
+# ─── Apply Papirus folder color ───────────────────────────────────────────────
+papirus-folders -C "$PAPIRUS_FOLDER_COLOR" --theme Papirus 2>/dev/null
+
+# ─── Set Papirus icon theme ───────────────────────────────────────────────────
+[[ "$MODE" == "dark" ]] && ICON_THEME="Papirus-Dark" || ICON_THEME="Papirus"
 gsettings set org.gnome.desktop.interface icon-theme "$ICON_THEME" 2>/dev/null
 
 # ─── Final D-Bus Kick-start for GTK4/Libadwaita apps (Nautilus) ──────────────
-# We invert the mode for 50ms to force a genuine GSettings state mutation.
-# This replicates the exact behavior that makes archer-set-mode work.
-
 if [[ "$MODE" == "dark" ]]; then
     OPPOSITE="light"
 else
     OPPOSITE="dark"
 fi
 
-# 1. Force state mutation to the opposite mode
 gsettings set org.gnome.desktop.interface color-scheme "prefer-${OPPOSITE}" 2>/dev/null
 gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-${OPPOSITE}" 2>/dev/null
 
-sleep 0.01  # Tiny window to ensure the D-Bus display server registers the shift
+sleep 0.01
 
-# 2. Re-apply the target mode with the fresh Matugen colors
 gsettings set org.gnome.desktop.interface color-scheme "prefer-${MODE}" 2>/dev/null
 gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-${MODE}" 2>/dev/null

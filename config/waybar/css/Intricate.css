@@ -42,23 +42,38 @@ tooltip label {
 
 /* ── Group Consolidation ────────────────────────────────── */
 #left-1,
-#left-2,
 #tray-expander {
     background-color: @surface_container_high;
     border: 1px solid alpha(@on_surface, 0.1);
-    border-radius: 1px 16px 1px 16px; 
+    border-radius: 1px 1px 1px 16px; 
     margin: 1px 4px;
     padding: 0px 0px;
 }
 
-#right-1,
-#right-2 {
+#left-2 {
     background-color: @surface_container_high;
     border: 1px solid alpha(@on_surface, 0.1);
-    border-radius: 16px 1px 16px 1px; 
+    border-radius: 1px 16px 1px 1px; 
     margin: 1px 4px;
     padding: 0px 0px;
 }
+
+#right-1 {
+    background-color: @surface_container_high;
+    border: 1px solid alpha(@on_surface, 0.1);
+    border-radius: 1px 1px 16px 1px; 
+    margin: 1px 3px;
+    padding: 0px 0px;
+}
+
+#right-2 {
+    background-color: @surface_container_high;
+    border: 1px solid alpha(@on_surface, 0.1);
+    border-radius: 16px 1px 1px 1px; 
+    margin: 1px 2px;
+    padding: 0px 0px;
+}
+
 
 /* ── Push Left-2 into middle space ──────────────────────── */
 #left-2 {
@@ -353,4 +368,19 @@ menu separator {
     background-color: alpha(@on_surface, 0.12);
     min-height:       1px;
     margin:           4px 8px;
+}
+
+
+#custom-vpn {
+    font-size: 18px;
+    padding: 0 6px;
+    color: @on_surface;
+}
+
+#custom-vpn.connected {
+    color: @primary;
+}
+
+#custom-vpn.disconnected {
+    color: alpha(@on_surface, 0.4);
 }

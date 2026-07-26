@@ -90,13 +90,13 @@ post_hook   = "restart-swayosd"
 
 [templates.mako]
 input_path = '~/.config/matugen/templates/mako'
-output_path = '~/.config/mako/mako-colors'
+output_path = '~/.config/mako/colors'
 post_hook = 'makoctl reload'
 
 [templates.spicetify]
 input_path = '~/.config/matugen/templates/spicetify.ini'
 output_path = '~/.config/spicetify/Themes/caelestia/color.ini'
-post_hook = 'spicetify apply'
+post_hook = 'pgrep -x spotify >/dev/null && spicetify watch -s & sleep 0.5 && pkill -f "spicetify watch"'
 
 
 # ─── Disabled ─────────────────────────────────────────────────────────────────
