@@ -1,4 +1,4 @@
-visualizer = "Bars"
+visualizer = "Wave"
 theme = "miasma"
 
 show_equalizer = false

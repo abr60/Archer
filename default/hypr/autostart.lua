@@ -9,6 +9,10 @@ a.exec_on_start("dbus-update-activation-environment --systemd --all")
 -- 2. Authentication Agent
 a.exec_on_start("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
 
+a.launch_on_start("mako")
+a.launch_on_start("fcitx5 --disable notificationitem")
+a.launch_on_start("archer-battery-monitor")
+
 -- 3. Visual Baseline & Wallpaper
 a.exec_on_start("uwsm app -- awww-daemon")
 --a.launch_on_start("swaybg -i ~/.local/state/Archer/current-wallpaper -m fill")

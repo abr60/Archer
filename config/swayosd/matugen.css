@@ -10,102 +10,102 @@
 
 /*-----All Colors--------*/
 
-@define-color background #f8f9fd;
+@define-color background #161214;
 
-@define-color error #ba1a1a;
+@define-color error #ffb4ab;
 
-@define-color error_container #ffdad6;
+@define-color error_container #93000a;
 
-@define-color inverse_on_surface #eff1f4;
+@define-color inverse_on_surface #332f30;
 
-@define-color inverse_primary #89cefd;
+@define-color inverse_primary #785464;
 
-@define-color inverse_surface #2d3134;
+@define-color inverse_surface #e9e0e2;
 
-@define-color on_background #191c1f;
+@define-color on_background #e9e0e2;
 
-@define-color on_error #ffffff;
+@define-color on_error #690005;
 
-@define-color on_error_container #410002;
+@define-color on_error_container #ffdad6;
 
-@define-color on_primary #ffffff;
+@define-color on_primary #452736;
 
-@define-color on_primary_container #00344c;
+@define-color on_primary_container #381c2a;
 
-@define-color on_primary_fixed #001e2e;
+@define-color on_primary_fixed #2d1320;
 
-@define-color on_primary_fixed_variant #004c6d;
+@define-color on_primary_fixed_variant #5e3d4c;
 
-@define-color on_secondary #ffffff;
+@define-color on_secondary #3b2c33;
 
-@define-color on_secondary_container #334b5b;
+@define-color on_secondary_container #f2dae2;
 
-@define-color on_secondary_fixed #021e2d;
+@define-color on_secondary_fixed #25181e;
 
-@define-color on_secondary_fixed_variant #314a5a;
+@define-color on_secondary_fixed_variant #534249;
 
-@define-color on_surface #191c1f;
+@define-color on_surface #e9e0e2;
 
-@define-color on_surface_variant #40484e;
+@define-color on_surface_variant #d2c3c7;
 
-@define-color on_tertiary #ffffff;
+@define-color on_tertiary #49281b;
 
-@define-color on_tertiary_container #471e58;
+@define-color on_tertiary_container #3b1c10;
 
-@define-color on_tertiary_fixed #300542;
+@define-color on_tertiary_fixed #301308;
 
-@define-color on_tertiary_fixed_variant #5f3670;
+@define-color on_tertiary_fixed_variant #633d30;
 
-@define-color outline #70787f;
+@define-color outline #9b8d92;
 
-@define-color outline_variant #c0c7cf;
+@define-color outline_variant #4f4448;
 
-@define-color primary #07658e;
+@define-color primary #ecbfd2;
 
-@define-color primary_container #81c6f4;
+@define-color primary_container #cfa4b6;
 
-@define-color primary_fixed #c7e7ff;
+@define-color primary_fixed #ffd8e7;
 
-@define-color primary_fixed_dim #89cefd;
+@define-color primary_fixed_dim #e7bacd;
 
 @define-color scrim #000000;
 
-@define-color secondary #496173;
+@define-color secondary #d8c1c9;
 
-@define-color secondary_container #cce6fb;
+@define-color secondary_container #534249;
 
-@define-color secondary_fixed #cce6fb;
+@define-color secondary_fixed #f5dce5;
 
-@define-color secondary_fixed_dim #b0cade;
+@define-color secondary_fixed_dim #d8c1c9;
 
 @define-color shadow #000000;
 
-@define-color source_color #81c6f4;
+@define-color source_color #cfa4b6;
 
-@define-color surface #f8f9fd;
+@define-color surface #161214;
 
-@define-color surface_bright #f8f9fd;
+@define-color surface_bright #3c3839;
 
-@define-color surface_container #eceef2;
+@define-color surface_container #221f20;
 
-@define-color surface_container_high #e6e8ec;
+@define-color surface_container_high #2d292a;
 
-@define-color surface_container_highest #e0e2e6;
+@define-color surface_container_highest #383435;
 
-@define-color surface_container_low #f2f4f7;
+@define-color surface_container_low #1e1b1c;
 
-@define-color surface_container_lowest #ffffff;
+@define-color surface_container_lowest #100d0e;
 
-@define-color surface_dim #d8dade;
+@define-color surface_dim #161214;
 
-@define-color surface_tint #07658e;
+@define-color surface_tint #e7bacd;
 
-@define-color surface_variant #dce3eb;
+@define-color surface_variant #4f4448;
 
-@define-color tertiary #794d8a;
+@define-color tertiary #f5bfac;
 
-@define-color tertiary_container #dfacf0;
+@define-color tertiary_container #d7a492;
 
-@define-color tertiary_fixed #f8d8ff;
+@define-color tertiary_fixed #ffdbcf;
 
-@define-color tertiary_fixed_dim #e8b4f9;
+@define-color tertiary_fixed_dim #f0bba8;
