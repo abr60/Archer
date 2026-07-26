@@ -72,3 +72,6 @@ hl.window_rule({ size = "1280 80",  match = { class = "^(cava-desktop)$" } })
 hl.window_rule({ opacity = "1.0",   match = { class = "^(cava-desktop)$" } })
 
 
+hl.window_rule({ float = true, match = { class = "^(audacious)$" } })
+hl.window_rule({ move = "16 450", match = { class = "^(audacious)$" } })
+hl.window_rule({ size = "500 300", match = { class = "^(audacious)$" } })
