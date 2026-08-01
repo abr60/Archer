@@ -14,8 +14,8 @@ if [[ -n "$ACTIVE" ]]; then
     else
         # State file is stale, clean it
         rm -f "$STATE_FILE"
-        echo "{\"text\": \"󰤮\", \"tooltip\": \"VPN: Off\", \"class\": \"disconnected\"}"
+        echo "{\"text\": \"󰖂\", \"tooltip\": \"VPN: Off\", \"class\": \"disconnected\"}"
     fi
 else
-    echo "{\"text\": \"󰤮\", \"tooltip\": \"VPN: Off\", \"class\": \"disconnected\"}"
+    echo "{\"text\": \"󰖂\", \"tooltip\": \"VPN: Off\", \"class\": \"disconnected\"}"
 fi
