@@ -76,7 +76,7 @@ tooltip label {
 
 /* Left side modules */
 #custom-resources:hover, #custom-resources:hover label,
-#mpris:hover, #mpris:hover label,
+
 #temperature:hover, #temperature:hover label,
 #custom-weather:hover, #custom-weather:hover label,
 #custom-updatespacman:hover, #custom-updatespacman:hover label,
@@ -100,7 +100,6 @@ tooltip label {
 #backlight:hover, #backlight:hover label,
 #pulseaudio:hover, #pulseaudio:hover label,
 #custom-vpn:hover, #custom-vpn:hover label,
-#custom-mako:hover, #custom-mako:hover label,
 #custom-power:hover, #custom-power:hover label {
     background-color: alpha(@primary, 0.28);
     border-radius:    4px;
@@ -150,8 +149,9 @@ tooltip label {
 
 #clock,
 #clock label {
-    font-size:   12px;
-    font-weight: 800;
+    font-size:   17px;
+    font-family: Doto;
+    font-weight: 600;
     color:       @on_surface;
     padding:     0 8px;
     min-width:   60px;
@@ -163,10 +163,8 @@ tooltip label {
 #mpris,
 #mpris label {
     font-size:   23px;
-    font-weight: bold;
     color:       @on_surface;
     padding:     0 0 0 10px;
-    min-width:   20px;
 }
 
 #mpris.playing,
@@ -182,10 +180,10 @@ tooltip label {
 #custom-timer,
 #custom-timer label {
     font-family: 'Doto', sans-serif;
-    font-size:   13px;
-    font-weight: 900;
-    padding:     0 6px;
-    min-width:   40px;
+    font-size:   17px;
+    font-weight: 600;
+    padding:     0px 6px;
+
 }
 
 #custom-timer.reset,
@@ -245,9 +243,9 @@ tooltip label {
 
 #bluetooth,
 #bluetooth label {
-    font-size: 16px;
+    font-size: 17px;
     color:     @primary;
-    padding:   0 6px;
+    padding:   0 9 0 8px;
 }
 
 
@@ -255,7 +253,7 @@ tooltip label {
 
 #network,
 #network label {
-    padding: 0 6px;
+    padding: 0 12 0 8px;
 }
 
 #network.disconnected,
@@ -268,7 +266,7 @@ tooltip label {
 
 #backlight,
 #backlight label {
-    padding: 0 6px;
+    padding: 0 2 0 0px;
 }
 
 
@@ -330,8 +328,7 @@ tooltip label {
 #custom-lens,
 #custom-lens label {
     font-size: 16px;
-    padding:   0 6px;
-    min-width: 20px;
+    padding:   0 4 0 5px;
 }
 
 
@@ -340,7 +337,7 @@ tooltip label {
 #custom-vpn,
 #custom-vpn label {
     font-size: 16px;
-    padding:   0 6px;
+    padding:   0 4 0 4px;
 }
 
 #custom-vpn.connected,
@@ -355,7 +352,7 @@ tooltip label {
 
 #custom-mako,
 #custom-mako label {
-    padding:   0 6px;
+    padding:   0 2 0 5;
     font-size: 14px;
 }
 
@@ -412,6 +409,7 @@ tooltip label {
 #custom-menu label {
     color:   @primary;
     padding: 0 6px;
+    font-size: 17px;
 }
 
 menu,
