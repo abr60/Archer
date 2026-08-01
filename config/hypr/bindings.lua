@@ -30,7 +30,7 @@ a.bind("SUPER + N", "Comic (Asian)", "archer-comic-translate cjk")
 
 -- === Floating TUI launchers ===
 a.bind("ALT + C", "RMPC Music", "[float; center] kitty --title=rmpc-full -e rmpc")
-a.bind("ALT + X", "Study",        "[float; size 700 200; center] kitty --class=Yazi --title=Yazi -e timeout 30s yazi \"~/Videos//Cowboy Bebop\"")
+a.bind("ALT + X", "Study",        "[float; size 700 200; center] kitty --class=Yazi --title=Yazi -e timeout 30s yazi \"~/Videos//Cowboy-Bebop\"")
 
 -- === Wifi QR popup ===
 a.bind("SUPER + Q", "Wifi QR", "[float; size 336 416; move 940 45; pin] kitty --class=wifi-qr --title=wifi-qr -e archer-wifi-qr")

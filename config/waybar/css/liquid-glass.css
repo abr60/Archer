@@ -1,0 +1,306 @@
+@import "../waybar/matugen.css";
+
+/* ── Reset & Base Typography ───────────────────────────── */
+* {
+    color: @on_surface;
+    border: none;
+    border-radius: 0px;
+    font-family: 'JetBrainsMono Nerd Font', 'CaskaydiaMono Nerd Font', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0px;
+    padding: 0px;
+    min-height: 0px;
+}
+
+/* ── Full-Width Transparent Bar Base ───────────────────── */
+window#waybar {
+    background-color: transparent;
+    border: none;
+    margin: 0px;
+    padding: 4px 8px;
+    box-shadow: none;
+}
+
+/* ── Tooltips ───────────────────────────────────────────── */
+tooltip {
+    background: alpha(#121413, 0.9);
+    border: 1px solid alpha(#8e938c, 0.3);
+    border-radius: 12px;
+}
+
+tooltip label {
+    color: @on_surface;
+    padding: 6px;
+    margin: 1px;
+}
+
+/* ── Pill Containers & Group Enclosures ─────────────────── */
+#left-1,
+#left-2,
+#right-1,
+#right-2,
+#tray-expander,
+#workspaces,
+#custom-menu {
+    background-color: alpha(#121413, 0.65);
+    border: 1px solid alpha(#8e938c, 0.25);
+    border-radius: 9999px;
+    margin: 2px 4px;
+    padding: 2px 8px;
+}
+
+/* ── Inner Spacing for Modules inside Groups ────────────── */
+#left-1 > widget > *,
+#left-2 > widget > *,
+#right-1 > widget > *,
+#right-2 > widget > * {
+    padding: 0px 6px;
+    border: none;
+}
+
+/* Vertical Separator lines inside consolidated groups */
+#left-1 > widget:not(:last-child) > *,
+#left-2 > widget:not(:last-child) > *,
+#right-1 > widget:not(:last-child) > *,
+#right-2 > widget:not(:last-child) > * {
+    border-right: 1px solid alpha(#8e938c, 0.2);
+}
+
+/* ── Module Hover States ────────────────────────────────── */
+#left-1 > widget > *:hover,
+#left-2 > widget > *:hover,
+#right-1 > widget > *:hover,
+#right-2 > widget > *:hover {
+    background-color: alpha(@primary, 0.2);
+    border-radius: 9999px;
+    color: @primary;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ── Workspaces ─────────────────────────────────────────── */
+button { 
+    box-shadow: none; 
+    border: none; 
+    border-radius: 0px; 
+} 
+
+button:hover { 
+    background: transparent; 
+} 
+
+#workspaces button { 
+    padding: 0px 8px; 
+    margin: 1px 2px; 
+    border-radius: 9999px; 
+    color: alpha(@on_surface, 0.45);
+    background-color: transparent; 
+    min-width: 14px; 
+    transition: all 0.2s ease; 
+} 
+
+#workspaces button.active { 
+    background-color: alpha(@primary, 0.35); 
+    color: @primary; 
+    border: 1px solid alpha(@primary, 0.4);
+    border-radius: 9999px; 
+} 
+
+#workspaces button.empty { 
+    color: alpha(@on_surface, 0.25); 
+    background-color: transparent;
+} 
+
+#workspaces button:hover { 
+    color: @on_surface; 
+    background-color: alpha(@on_surface, 0.12);
+}
+
+/* ── Menu Launcher ──────────────────────────────────────── */
+#custom-menu,
+#custom-menu label {
+    margin: 0px 2px;
+    padding: 1px 6px;
+    font-size: 14px;
+    font-weight: 700;
+    color: @primary;
+}
+
+/* ── Clock Module ───────────────────────────────────────── */
+#clock,
+#clock label {
+    background-color: alpha(#121413, 0.65);
+    color: @on_surface;
+    border: 1px solid alpha(#8e938c, 0.25);
+    border-radius: 9999px;
+    padding: 2px 12px;
+    margin: 2px 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ── MPRIS & Media ──────────────────────────────────────── */
+#mpris,
+#mpris label {
+    font-size: 13px;
+    padding: 0px 4px;
+}
+
+#mpris.playing,
+#mpris.playing label {
+    color: @primary;
+    font-weight: 700;
+}
+
+#mpris.paused,
+#mpris.paused label {
+    color: alpha(@on_surface, 0.5);
+}
+
+/* ── Hardware Indicators (CPU / Memory / Temp) ──────────── */
+#cpu, #cpu label,
+#memory, #memory label,
+#temperature, #temperature label {
+    background-color: transparent;
+    color: @on_surface;
+    border-radius: 0px;
+    padding: 0px 6px;
+    margin: 0px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ── Custom Modules ────────────────────────────────────── */
+#custom-weather, #custom-weather label,
+#custom-timer, #custom-timer label,
+#custom-updatespacman, #custom-updatespacman label,
+#custom-swaync, #custom-swaync label,
+#custom-voxtype, #custom-voxtype label,
+#custom-resources, #custom-resources label,
+#custom-lens, #custom-lens label,
+#custom-vpn, #custom-vpn label,
+#custom-mako, #custom-mako label {
+    color: @on_surface;
+    font-size: 12px;
+    padding: 0px 6px;
+}
+
+#custom-voxtype.recording,
+#custom-voxtype.recording label,
+#custom-mako.dnd,
+#custom-mako.dnd label {
+    color: @error;
+}
+
+#custom-vpn.connected,
+#custom-vpn.connected label {
+    color: @primary;
+}
+
+/* ── Network & Audio Indicators ───────────────────────── */
+#bluetooth, #bluetooth label,
+#network, #network label,
+#pulseaudio, #pulseaudio label,
+#backlight, #backlight label {
+    font-size: 13px;
+    color: @on_surface;
+    padding: 0px 6px;
+}
+
+#network.disconnected,
+#network.disconnected label {
+    color: @error;
+}
+
+#pulseaudio:not(.microphone).muted,
+#pulseaudio:not(.microphone).muted label {
+    color: alpha(@on_surface, 0.35);
+}
+
+/* ── Power & Battery ───────────────────────────────────── */
+#power-profiles-daemon,
+#power-profiles-daemon label {
+    color: @primary;
+    padding: 0px 6px;
+    font-size: 12px;
+}
+
+#battery,
+#battery label {
+    background-color: transparent;
+    color: @on_surface;
+    border-radius: 0px;
+    padding: 0px 6px;
+    margin: 0px;
+    font-weight: 600;
+}
+
+#battery.warning, #battery.warning label,
+#battery.critical:not(.charging), #battery.critical:not(.charging) label {
+    color: @error;
+}
+
+#custom-power,
+#custom-power label {
+    color: @error;
+    font-size: 13px;
+    padding: 0px 6px;
+}
+
+/* ── System Tray ───────────────────────────────────────── */
+#tray-expander > widget {
+    padding: 0px 4px;
+    border: none;
+}
+
+#tray-group-item {
+    padding: 0px 3px;
+    margin: 0px 1px;
+}
+
+#tray {
+    background-color: transparent;
+}
+
+/* ── GTK Menu Styling ──────────────────────────────────── */
+menu, menu * {
+    transition: none;
+}
+
+menu {
+    background-color: alpha(#121413, 0.95);
+    border: 1px solid alpha(#8e938c, 0.25);
+    border-radius: 12px;
+    padding: 6px;
+    margin-top: 4px;
+    box-shadow: none;
+}
+
+menu menuitem {
+    background-color: transparent;
+    color: @on_surface;
+    padding: 4px 10px;
+    margin-bottom: 2px;
+    border-radius: 6px;
+}
+
+menu menuitem label {
+    color: inherit;
+}
+
+menu menuitem:hover,
+menu menuitem:selected {
+    background-color: alpha(@primary, 0.25);
+    color: @primary;
+}
+
+menu menuitem:hover label,
+menu menuitem:selected label {
+    color: @primary;
+}
+
+menu separator {
+    background-color: alpha(#8e938c, 0.2);
+    min-height: 1px;
+    margin: 4px 6px;
+}

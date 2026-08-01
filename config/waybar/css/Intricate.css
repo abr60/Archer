@@ -8,18 +8,18 @@
 * {
     color: @on_surface;
     border: none;
-    border-radius: 0;
+    border-radius: 0px;
     font-family: 'JetBrainsMono Nerd Font', sans-serif;
     font-size: 13px;
     font-weight: 500;
-    margin: 0;
-    padding: 0;
-    min-height: 0;
+    margin: 0px;
+    padding: 0px;
+    min-height: 0px;
 }
 
 /* ── Waybar Container (Slimmed Down) ─────────────────────── */
 window#waybar {
-    background-color: alpha (@surface_container, 1);
+    background-color: alpha(@surface_container, 1);
     border: 1px solid alpha(@on_surface, 0.08);
     border-radius: 1px 1px 16px 16px; 
     margin: 3px 6px 0px 6px;
@@ -54,7 +54,7 @@ tooltip label {
     background-color: @surface_container_high;
     border: 1px solid alpha(@on_surface, 0.1);
     border-radius: 1px 16px 1px 1px; 
-    margin: 1px 4px;
+    margin: 1px 4px 1px 1px;
     padding: 0px 0px;
 }
 
@@ -72,12 +72,6 @@ tooltip label {
     border-radius: 16px 1px 1px 1px; 
     margin: 1px 2px;
     padding: 0px 0px;
-}
-
-
-/* ── Push Left-2 into middle space ──────────────────────── */
-#left-2 {
-    margin-left: 1px;
 }
 
 /* ── Inline Spacing (All Groups) ────────────────────────── */
@@ -108,163 +102,202 @@ tooltip label {
                 color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-#left-1 > widget > #mpris {
-    padding-left: 9px;
-    padding-right: 9px;
-    font-size: 24px;
-}
-
-#left-2 > widget > #custom-timer {
-    font-family: Doto;
-    font-size: 16px;
-}
-
-#custom-updatespacman {
-    font-size: 16px;
-}
-
-#right-1 > widget > #backlight {
-    padding: 0;
-}
-
-/* --- Workspaces --- */ 
+/* ── Workspaces ─────────────────────────────────────────── */
 button { 
-  box-shadow: none; 
-  border: none; 
-  border-radius: 0; 
+    box-shadow: none; 
+    border: none; 
+    border-radius: 0px; 
 } 
 
 button:hover { 
-  background: transparent; 
+    background: transparent; 
 } 
 
 #workspaces { 
-    margin: 5px 4px;
+    margin: 3px 4px;
     padding: 0px 0px; 
 } 
 
 #workspaces button { 
-  padding: 0px 8px; 
-  margin: 1px 1px; 
-  border-radius: 16px 1px 16px 1px; 
-  color: @on_surface_variant;
-  background-color: transparent; 
-  min-width: 16px; 
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
+    padding: 0px 8px; 
+    margin: 1px 1px; 
+    border-radius: 16px 1px 16px 1px; 
+    color: @on_surface_variant;
+    background-color: transparent; 
+    min-width: 16px; 
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
 } 
 
 #workspaces button.active { 
-  background-color: @secondary_container; 
-  color: @on_secondary; 
-  border-radius: 16px 1px 16px 1px; 
+    background-color: @secondary_container; 
+    color: @on_secondary; 
+    border-radius: 16px 1px 16px 1px; 
 } 
 
 #workspaces button.empty { 
-  color: @outline_variant; 
-  background-color: @surface_variant;
-  border-radius: 16px 1px 16px 1px; 
+    color: @outline_variant; 
+    background-color: @surface_variant;
+    border-radius: 16px 1px 16px 1px; 
 } 
 
 #workspaces button.empty.active { 
-  background-color: alpha(@tertiary, 0.12);
-  color: @on_secondary_container; 
-  border-radius: 1px 16px 1px 16px; 
+    background-color: alpha(@tertiary, 0.12);
+    color: @on_secondary_container; 
+    border-radius: 1px 16px 1px 16px; 
 } 
 
 #workspaces button:hover,
 #workspaces button:hover.empty { 
-  color: @on_surface; 
-  border-radius: 1px 16px 1px 16px;  
+    color: @on_surface; 
+    border-radius: 1px 16px 1px 16px;  
 }
 
 /* ── Clock ────────────────────────────────────────────── */
 #clock {
     background-color: alpha(@surface, 0.7);
     color: @primary;
-    
-    /* Clean rounded shape */
     border-radius: 1px 1px 16px 1px;
-    
-    /* Breathing room and spacing */
     padding: 2px 8px;
-    margin: 1px 1px 1 8;
-    
-    /* Typography */
-    font-family: Doto;
+    margin: 1px 4px;
+    font-family: Doto, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 900;
 }
 
-/* --- Base MPRIS Styling --- */
-#mpris {
+/* ── Base MPRIS Styling ───────────────────────────────── */
+#mpris,
+#mpris label {
     font-size: 18px;
-    padding-left: 4px;
-    border-radius: 9999px;
+    padding: 0px 6px;
 }
 
-#mpris.playing {
+#mpris.playing,
+#mpris.playing label {
     color: alpha(@primary, 0.8);
     font-weight: 500;
 }
 
-#mpris.paused {
+#mpris.paused,
+#mpris.paused label {
     color: alpha(@on_surface, 0.7);
     font-weight: 500;
 }
 
-/* ── CPU & Memory Modules ──────────────────────── */
+/* ── CPU & Memory Modules ─────────────────────────────── */
 #cpu, #memory {
     background-color: alpha(@primary, 0.5);
     color: @surface;
-    
-    /* Clean rounded shape */
     border-radius: 1px;
-    
-    /* Breathing room and spacing */
     padding: 2px 8px;
-    margin: 8px 1px 6 8;
-    
-    /* Typography */
-    font-size: 14px;
-    font-style: normal;
+    margin: 3px 2px;
+    font-size: 13px;
     font-weight: 500;
 }
 
 #cpu {
-    border-radius: 1 1 1 10;
+    border-radius: 1px 1px 1px 10px;
 }
 
-
-/* ── Custom Modules ────────────────────────────────────── */
-#custom-weather {
+/* ── Custom Modules (GtkBox / GtkLabel Compatible) ────── */
+#custom-weather,
+#custom-weather label {
     color: @on_surface;
     font-size: 13px;
+    padding: 0px 4px;
 }
 
-#bluetooth {
-    font-size: 20px;
+#custom-timer,
+#custom-timer label {
+    font-family: Doto, sans-serif;
+    font-size: 16px;
+    padding: 0px 4px;
+}
+
+#custom-updatespacman,
+#custom-updatespacman label {
+    font-size: 15px;
+    padding: 0px 4px;
+}
+
+#custom-swaync,
+#custom-swaync label {
+    font-size: 15px;
+    padding: 0px 4px;
+}
+
+#custom-voxtype,
+#custom-voxtype label {
+    font-size: 15px;
+    padding: 0px 4px;
+    color: @on_surface;
+}
+
+#custom-voxtype.recording,
+#custom-voxtype.recording label {
+    color: @error;
+}
+
+#custom-lens,
+#custom-lens label {
+    color: alpha(@primary, 0.85);
+    font-size: 16px;
+    padding: 0px 4px;
+}
+
+#custom-vpn,
+#custom-vpn label {
+    font-size: 16px;
+    padding: 0px 4px;
+    color: @on_surface;
+}
+
+#custom-vpn.connected,
+#custom-vpn.connected label {
     color: @primary;
 }
 
-#custom-swaync {
-    font-size: 15px;
+#custom-vpn.disconnected,
+#custom-vpn.disconnected label {
+    color: alpha(@on_surface, 0.4);
 }
 
-/* ── Tray ─────────────────────────────────────────────── */
+#custom-mako,
+#custom-mako label {
+    margin: 0px 2px;
+    padding: 0px 4px;
+    font-size: 14px;
+}
+
+#custom-mako.normal,
+#custom-mako.normal label {
+    color: @primary;
+}
+
+#custom-mako.dnd,
+#custom-mako.dnd label {
+    color: @error;
+}
+
+/* ── System Tray & Indicators ─────────────────────────── */
+#bluetooth {
+    font-size: 18px;
+    color: @primary;
+    padding: 0px 4px;
+}
+
 #tray-expander > widget {
-    padding: 0 4px;
+    padding: 0px 4px;
     border: none;
 }
 
 #tray-group-item {
-    padding: 0 4px;
-    margin: 0 2px;
+    padding: 0px 4px;
+    margin: 0px 2px;
 }
 
-/*--- Tray --- */
 #tray {
-    background-color: @transparent;
+    background-color: transparent;
 }
 
 #tray > .passive {
@@ -273,16 +306,16 @@ button:hover {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: @transparent;
+    background-color: transparent;
 }
 
-/* ── Inverted Pills (Vertical Margins Trimmed) ────────── */
+/* ── Hardware Pills & Status Indicators ───────────────── */
 #temperature {
     background-color: alpha(@secondary, 0.6);
     color: @surface;
     border-radius: 9999px;
     padding: 1px 8px;
-    margin: 8px 0px;
+    margin: 3px 2px;
     font-weight: 500;
 }
 
@@ -291,96 +324,106 @@ button:hover {
     color: @surface;
     border-radius: 9999px;
     padding: 1px 8px;
-    margin: 8px 4px;
+    margin: 3px 4px;
     font-weight: 700;
 }
 
-#battery.warning, #battery.critical:not(.charging) {
+#battery.warning, 
+#battery.critical:not(.charging) {
     color: @surface;
     background-color: alpha(@error, 0.8);
     font-weight: 900;
 }
 
-/* ── Misc Modules ─────────────────────────────────────── */
+/* ── Misc Hardware Indicators ─────────────────────────── */
 #power-profiles-daemon {
     color: @primary;
     padding: 0px 4px;
     font-size: 16px;
-    margin: 1 8 1 1;
 }
 
 #network {
     color: @on_surface;
     font-size: 16px;
-    margin: 1px 1px 1px 7px;
+    padding: 0px 4px;
 }
 
 #pulseaudio {
     font-size: 16px; 
-}
-
-#custom-lens {
-    color: alpha(@primary, 0.85);
-    font-size: 16px;
-    padding: 0 6px;
+    padding: 0px 4px;
 }
 
 #backlight {
     font-size: 16px; 
-    margin: 1px 5px 1px 8px;
+    padding: 0px 4px;
 }
 
-/* ── Dropdown Menu ──────────────────────────────────────── */
+#custom-menu,
+#custom-menu label {
+  margin: 0px 2px;
+  padding: 2px 1px;
+  font-size: 19px;
+  color: @primary;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* =========================================================
+   GTK Dropdown Menu (Instant Hover & Responsive Response)
+   ========================================================= */
 
 menu {
-    background-color: @surface_container_low;
-    border:           1px solid alpha(@on_surface, 0.12);
-    border-radius:    8px;
-    padding:          2px;
-    margin-top:       6px;
-    box-shadow:       none;
-    min-width:        0px;
+  background-color: @surface_container_low;
+  border: 1px solid alpha(@on_surface, 0.12);
+  border-radius: 8px;
+  padding: 2px;
+  margin-top: 6px;
+  box-shadow: none;
+  min-width: 0px;
 }
 
 menu menu {
-    margin-left: 2px;
-    margin-top: -4px;
+  margin-left: 2px;
+  margin-top: -4px;
 }
 
 menu menuitem {
-    border-bottom: none;
-    margin-bottom: 2px;
-    padding-bottom: 3px;
+  background-color: transparent;
+  color: @on_surface;
+  padding: 2px 8px;
+  margin-bottom: 2px;
+  padding-bottom: 3px;
+  border-bottom: none;
+}
+
+menu menuitem label {
+  color: inherit;
 }
 
 menu menu menuitem:not(:last-child) {
-    border-bottom:  1px solid alpha(@on_surface, 0.08);
-    margin-bottom:  2px;
-    padding-bottom: 4px;
+  border-bottom: 1px solid alpha(@on_surface, 0.08);
+  margin-bottom: 2px;
+  padding-bottom: 4px;
 }
 
-menu menuitem:hover {
-    background-color: alpha(@primary, 0.44);
-    color:            @primary;
+menu menuitem:hover,
+menu menuitem:selected {
+  background-color: alpha(@primary, 0.44);
+  color: @primary;
+}
+
+menu menuitem:hover label,
+menu menuitem:selected label {
+  color: @primary;
+}
+
+menu menuitem:disabled,
+menu menuitem:disabled label {
+  color: alpha(@on_surface, 0.38);
 }
 
 menu separator {
-    background-color: alpha(@on_surface, 0.12);
-    min-height:       1px;
-    margin:           4px 8px;
-}
-
-
-#custom-vpn {
-    font-size: 18px;
-    padding: 0 6px;
-    color: @on_surface;
-}
-
-#custom-vpn.connected {
-    color: @primary;
-}
-
-#custom-vpn.disconnected {
-    color: alpha(@on_surface, 0.4);
+  background-color: alpha(@on_surface, 0.12);
+  min-height: 1px;
+  margin: 4px 8px;
 }

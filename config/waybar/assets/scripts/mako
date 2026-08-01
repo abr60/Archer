@@ -1,0 +1,14 @@
+#!/bin/bash
+# Loop continuously to update waybar whenever mako mode changes
+while true; do
+    if makoctl mode | grep -q "dnd"; then
+        # DND is active: show the slashed bell icon
+        echo '{"text": " ", "alt": "dnd", "class": "dnd", "tooltip": "Do Not Disturb: Active\n\nScroll Down: Restore last\nScroll Up: Dismiss last\nLeft-click: Disable DND\nRight-click: Dismiss all active"}'
+    else
+        # Normal mode: show the active bell icon
+        echo '{"text": " ", "alt": "normal", "class": "normal", "tooltip": "Do Not Disturb: Off\n\nScroll Down: Restore last\nScroll Up: Dismiss last\nLeft-click: Enable DND\nRight-click: Dismiss all active"}'
+    fi
+
+    # Wait for mako configuration/mode changes before updating again
+    sleep 1
+done

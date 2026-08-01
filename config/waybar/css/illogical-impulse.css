@@ -1,5 +1,5 @@
 /* =========================================================
-   intricate.css — Unified M3 Expressive (Refined)
+   intricate.css — Unified M3 Expressive (Waybar-git Refined)
    GTK3 CSS — no :root, no var(), no Pango font shorthand
    ========================================================= */
 
@@ -9,17 +9,17 @@
 * {
     color: @on_surface;
     border: none;
-    border-radius: 0;
+    border-radius: 0px;
     font-family: 'JetBrainsMono Nerd Font', sans-serif;
     font-size: 13px;
     font-weight: 500;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
 }
 
 /* ── Waybar Container ────────────────────────────────────── */
 window#waybar {
-    background-color: alpha (@surface_container, 1);
+    background-color: alpha(@surface_container, 1);
     border: 1px solid alpha(@on_surface, 0.08);
     border-radius: 15px;
     margin: 6px 6px 0px 6px;
@@ -37,7 +37,7 @@ tooltip {
 tooltip label {
     color: @on_surface;
     padding: 6px;
-    margin: 1px 1px;
+    margin: 1px;
 }
 
 /* ── Group Consolidation ────────────────────────────────── */
@@ -50,7 +50,7 @@ tooltip label {
     border: none;
     border-radius: 9999px;
     margin: 1px 4px;
-    padding: 0px 0px;
+    padding: 0px;
 }
 
 /* ── Push Left-2 into the middle of the empty gap ── */
@@ -58,13 +58,12 @@ tooltip label {
     margin-left: 15px;
 }
 
-
 /* ── Inline Spacing (All Groups) ────────────────────────── */
 #left-1 > widget > *,
 #left-2 > widget > *,
 #right-1 > widget > *,
 #right-2 > widget > * {
-    padding: 2 12px;
+    padding: 2px 12px;
     border: none;
 }
 
@@ -89,20 +88,21 @@ tooltip label {
     padding-right: 7px;
 }
 
-#left-2 > widget > #custom-timer {
-    font-family: Doto;
+#left-2 > widget > #custom-timer,
+#left-2 > widget > #custom-timer label {
+    font-family: Doto, sans-serif;
     font-size: 19px;
 }
 
 #right-1 > widget > #backlight {
-    padding: 0;
+    padding: 0px;
 }
 
 /* --- Workspaces --- */ 
 button { 
   box-shadow: none; 
   border: none; 
-  border-radius: 0; 
+  border-radius: 0px; 
 } 
 
 button:hover { 
@@ -111,7 +111,7 @@ button:hover {
 
 #workspaces { 
   border-radius: 16px; 
-  background-color: @surface_container; /* Matches the subtle shading of your bar boxes */
+  background-color: @surface_container;
   margin: 4px 0px; 
   padding: 0px 4px; 
 } 
@@ -120,7 +120,7 @@ button:hover {
   padding: 0px 10px; 
   margin: 3px 2px; 
   border-radius: 12px; 
-  color: @on_surface_variant; /* Muted brown-gray for inactive numbers */
+  color: @on_surface_variant;
   background-color: transparent; 
   min-width: 18px; 
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
@@ -128,21 +128,21 @@ button:hover {
 
 /* Active Workspace - Warm Forest Accent */
 #workspaces button.active { 
-  background-color: @secondary_container; /* Elegant moss/olive green that pulls from your wallpaper */
-  color: @on_secondary; /* Crisp, readable white text */
+  background-color: @secondary_container; 
+  color: @on_secondary; 
   min-width: 32px; 
   border-radius: 12px; 
 } 
 
 /* Empty Workspace */
 #workspaces button.empty { 
-  color: @outline_variant; /* Faded color for unused slots */
+  color: @outline_variant; 
   background-color: transparent; 
 } 
 
 /* Empty but Active Workspace */
 #workspaces button.empty.active { 
-  background-color: @surface_variant; /* Softer green/yellow tint if empty but selected */
+  background-color: @surface_variant; 
   color: @on_secondary_container; 
   min-width: 32px; 
   border-radius: 12px; 
@@ -156,9 +156,9 @@ button:hover {
   border-radius: 12px; 
 }
 
-
-/* ── Clock (Intentionally Restrained) ─────────────────── */
-#clock {
+/* ── Clock ─────────────────── */
+#clock,
+#clock label {
     font-size: 14px;
     color: @on_secondary_container;
     border-radius: 9999px;
@@ -169,30 +169,35 @@ button:hover {
 }
 
 /* --- Base MPRIS Styling --- */
-#mpris {
+#mpris,
+#mpris label {
     font-size: 22px;
     padding-left: 4px;
     border-radius: 9999px;
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-#mpris.playing {
+#mpris.playing,
+#mpris.playing label {
     color: @primary;
     font-weight: 500;
 }
 
-#mpris.paused {
+#mpris.paused,
+#mpris.paused label {
     color: alpha(@on_surface, 0.7);
     font-weight: 500;
 }
 
-#mpris:hover {
+#mpris:hover,
+#mpris:hover label {
     background-color: alpha(@primary, 0.12);
     color: @primary;
 }
 
 /* ── Resource Usage ────────────────────────────────────── */
-#custom-resources {
+#custom-resources,
+#custom-resources label {
     font-size: 12px;
     font-style: italic;
     color: alpha(@primary, 0.8);
@@ -201,14 +206,15 @@ button:hover {
 }
 
 /* ── Custom Modules ────────────────────────────────────── */
-
-#custom-weather {
+#custom-weather,
+#custom-weather label {
     color: @on_surface;
     font-size: 14px;
     transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-#bluetooth {
+#bluetooth,
+#bluetooth label {
     font-size: 20px;
     color: @primary;
     transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -216,7 +222,8 @@ button:hover {
 }
 
 /* ── Notification Bell ─────────────────────────────── */
-#custom-swaync {
+#custom-swaync,
+#custom-swaync label {
     font-size: 16px;
     transition: color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -241,17 +248,18 @@ button:hover {
 
 /* ── Tray (Drawer Support) ─────────────────────────────– */
 #tray-expander > widget {
-    padding: 0 4px;
+    padding: 0px 4px;
     border: none;
 }
 
 #tray-group-item {
-    padding: 0 6px;
-    margin: 0 4px;
+    padding: 0px 6px;
+    margin: 0px 4px;
 }
 
-#temperature {
-    background-color: alpha (@on_surface, 0.6);
+#temperature,
+#temperature label {
+    background-color: alpha(@on_surface, 0.6);
     color: @surface;
     border-radius: 9999px;
     padding: 2px 10px;
@@ -259,12 +267,12 @@ button:hover {
     font-weight: 500;
     transition: background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
                 color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-
 }
 
 /* ── Battery (Inverted Pill) ─────────────────────────── */
-#battery {
-    background-color: alpha (@on_surface, 0.8);
+#battery,
+#battery label {
+    background-color: alpha(@on_surface, 0.8);
     color: @surface;
     border-radius: 9999px;
     padding: 2px 10px;
@@ -274,36 +282,42 @@ button:hover {
                 color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-#battery.warning {
+#battery.warning,
+#battery.warning label {
     color: @surface;
-    background-color: alpha (@error, 0.8);
+    background-color: alpha(@error, 0.8);
     font-weight: 900;
 }
 
-#battery.critical:not(.charging) {
+#battery.critical:not(.charging),
+#battery.critical:not(.charging) label {
     color: @on_error_container;
-    background-color: alpha (@error, 0.8);
+    background-color: alpha(@error, 0.8);
     font-weight: 900;
 }
 
 /* -- power-profiles-daemon */
-#power-profiles-daemon {
+#power-profiles-daemon,
+#power-profiles-daemon label {
     color: @primary;
     padding: 0px 4px;
-    font-size: 16;
+    font-size: 16px;
 }
 
 /* ── Network State ──────────────────────────────– */
-#network {
+#network,
+#network label {
     color: @on_surface;
-    font-size: 16;
+    font-size: 16px;
 }
 
-#pulseaudio {
+#pulseaudio,
+#pulseaudio label {
    font-size: 15px; 
 }
 
-#network.disconnected {
+#network.disconnected,
+#network.disconnected label {
     color: @error;
     border-radius: 9999px;
     padding: 2px 12px;
@@ -311,7 +325,8 @@ button:hover {
     font-weight: 500;
 }
 
-#custom-timer.reset {
+#custom-timer.reset,
+#custom-timer.reset label {
     color: @on_error_container;
     background-color: @error_container;
     border-radius: 9999px;
@@ -320,7 +335,9 @@ button:hover {
 
 /* ── Muted States ────────────────────────────────────── */
 #pulseaudio:not(.microphone).muted,
-#pulseaudio.microphone.source-muted {
+#pulseaudio:not(.microphone).muted label,
+#pulseaudio.microphone.source-muted,
+#pulseaudio.microphone.source-muted label {
     color: alpha(@on_surface, 0.35);
     opacity: 0.6;
     transition: opacity 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -328,6 +345,11 @@ button:hover {
 }
 
 /* ── Dropdown Menu ────────────────────────────────── */
+menu,
+menu * {
+    transition: none;
+}
+
 menu {
     background-color: @surface_container_low;
     border: 1px solid alpha(@on_surface, 0.12);
@@ -349,8 +371,10 @@ menu menuitem {
     padding: 4px 12px;
     border-radius: 9999px;
     font-weight: 500;
-    transition: background-color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-                color 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+menu menuitem label {
+    color: inherit;
 }
 
 menu menuitem:hover {
@@ -359,21 +383,26 @@ menu menuitem:hover {
     font-weight: 700;
 }
 
+menu menuitem:hover label {
+    color: @on_primary_container;
+}
+
 menu separator {
     background-color: alpha(@on_surface, 0.08);
     min-height: 1px;
     margin: 6px 8px;
 }
 
-
 /* ── Google Lens Module (M3 Alignment) ─────────────────── */
-#custom-lens {
+#custom-lens,
+#custom-lens label {
     color: alpha(@primary, 0.85);
     font-size: 19px;
-    padding: 0 10px;
+    padding: 0px 10px;
 }
 
-#backlight {
+#backlight,
+#backlight label {
     font-size: 21px;
     font-weight: 700;
 }

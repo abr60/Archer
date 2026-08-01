@@ -1,2 +1,8 @@
 include=~/.config/mako/core.ini
 include=~/.config/mako/colors
+
+max-history=50
+
+
+[mode=dnd]
+invisible=1

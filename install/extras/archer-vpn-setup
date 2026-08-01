@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+# =============================================================================
+# archer-vpn-setup — One-shot VPN setup script for Archer dotfiles
+# Run once on a fresh machine after dotfiles are cloned.
+# =============================================================================
+
+set -euo pipefail
+
+SCRIPTS_DIR="$HOME/.config/matugen/bin"
+STAGING_DIR="$HOME/.config/waybar/assets/vpn-servers"
+MENU_DIR="$HOME/.config/waybar/assets/menu"
+WG_DIR="/etc/wireguard"
+USERNAME=$(whoami)
+
+log()  { echo -e "\e[32m[✓]\e[0m $*"; }
+warn() { echo -e "\e[33m[!]\e[0m $*"; }
+die()  { echo -e "\e[31m[✗]\e[0m $*"; exit 1; }
+
+echo ""
+echo "  ╔══════════════════════════════════════╗"
+echo "  ║      Archer VPN Setup Script         ║"
+echo "  ╚══════════════════════════════════════╝"
+echo ""
+
+# ─── 1. Check dependencies ────────────────────────────────────────────────────
+log "Checking dependencies..."
+for pkg in wireguard-tools systemd-resolvconf curl; do
+    if ! pacman -Q "$pkg" &>/dev/null; then
+        warn "$pkg not found — installing..."
+        sudo pacman -S --noconfirm "$pkg"
+    else
+        log "$pkg present"
+    fi
+done
+
+# ─── 2. Create directories ────────────────────────────────────────────────────
+log "Creating directories..."
+mkdir -p "$STAGING_DIR"
+mkdir -p "$MENU_DIR"
+mkdir -p "$SCRIPTS_DIR"
+
+# ─── 3. Install sudoers rule ──────────────────────────────────────────────────
+log "Installing passwordless sudoers rule..."
+SUDOERS_FILE="/etc/sudoers.d/wireguard-nopasswd"
+
+sudo tee "$SUDOERS_FILE" > /dev/null << EOF
+# Archer VPN — passwordless wireguard control for $USERNAME
+$USERNAME ALL=(root) NOPASSWD: /usr/bin/wg-quick up *
+$USERNAME ALL=(root) NOPASSWD: /usr/bin/wg-quick down *
+$USERNAME ALL=(root) NOPASSWD: /usr/bin/wg show *
+$USERNAME ALL=(root) NOPASSWD: /usr/bin/install -m 600 -o root -g root * /etc/wireguard/*
+$USERNAME ALL=(root) NOPASSWD: /usr/bin/test *
+EOF
+
+sudo chmod 440 "$SUDOERS_FILE"
+log "Sudoers rule installed for $USERNAME"
+
+# ─── 4. Ensure scripts are executable ────────────────────────────────────────
+log "Setting script permissions..."
+SCRIPTS=(
+    "archer-vpn-toggle"
+    "archer-vpn-status"
+    "archer-vpn-sync"
+    "generate-vpn-menu"
+    "generate-menu"
+    "archer-wallpaper-cycle"
+    "archer-apply-theme"
+)
+
+for script in "${SCRIPTS[@]}"; do
+    if [[ -f "$SCRIPTS_DIR/$script" ]]; then
+        chmod +x "$SCRIPTS_DIR/$script"
+        log "$script — executable"
+    else
+        warn "$script not found in $SCRIPTS_DIR — skipping"
+    fi
+done
+
+# ─── 5. Sync VPN configs from staging to /etc/wireguard ──────────────────────
+log "Syncing VPN configs from staging folder..."
+shopt -s nullglob
+CONFS=("$STAGING_DIR"/*.conf)
+shopt -u nullglob
+
+if [[ ${#CONFS[@]} -eq 0 ]]; then
+    warn "No .conf files found in $STAGING_DIR"
+    warn "Drop your Proton .conf files there and run: archer-vpn-sync"
+else
+    for conf in "${CONFS[@]}"; do
+        base=$(basename "$conf")
+        sudo /usr/bin/install -m 600 -o root -g root "$conf" "$WG_DIR/$base"
+        log "Installed $base → $WG_DIR/$base"
+    done
+fi
+
+# ─── 6. Generate menus ────────────────────────────────────────────────────────
+log "Generating VPN menu XML..."
+if command -v generate-vpn-menu &>/dev/null; then
+    generate-vpn-menu
+    log "VPN menu generated"
+else
+    warn "generate-vpn-menu not in PATH — run it manually after setup"
+fi
+
+log "Generating main waybar menu XML..."
+if command -v generate-menu &>/dev/null; then
+    generate-menu
+    log "Main menu generated"
+else
+    warn "generate-menu not in PATH — run it manually after setup"
+fi
+
+# ─── 7. Verify /etc/wireguard permissions ─────────────────────────────────────
+log "Verifying /etc/wireguard permissions..."
+sudo chmod 700 "$WG_DIR"
+sudo chmod 600 "$WG_DIR"/*.conf 2>/dev/null || true
+sudo ls -la "$WG_DIR" | tail -n +3 | while read -r line; do
+    log "$line"
+done
+
+# ─── 8. Done ──────────────────────────────────────────────────────────────────
+echo ""
+echo "  ╔══════════════════════════════════════════════╗"
+echo "  ║   Setup complete. Restart waybar to apply.   ║"
+echo "  ╚══════════════════════════════════════════════╝"
+echo ""
+echo "  Next steps:"
+echo "  1. Add custom/vpn menu-actions to config.jsonc for each server"
+echo "  2. Run: pkill waybar && uwsm-app -- waybar &"
+echo "  3. Test: archer-vpn-toggle sg"
+echo ""

@@ -65,7 +65,7 @@ process_event() {
                 rm -f "$FLAG_FILE"
                 CRITICAL_TRIGGERED=false
                 LAST_NAG_CAPACITY=100
-                play_alert "$SOUND_DIR/charging.wav" "$(quiet_vol)"
+                play_alert "$SOUND_DIR/charger-connected.wav" "$(quiet_vol)"
                 ;;
             discharging)
                 notify-send -u normal "On Battery | Power Saver" "Power-saver profile active" \

@@ -1,0 +1,513 @@
+/* =========================================================
+   Ancient Runes - Waybar Style (Minimal Clean)
+   ========================================================= */
+@import "../waybar/matugen.css";
+
+/* 1. GLOBAL & BASE STYLES */
+* {
+  background-color: transparent;
+  color: @on_surface;
+  border: none;
+  border-radius: 0px;
+  font-family: 'JetBrainsMono Nerd Font Propo';
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+
+window#waybar {
+  background-color: transparent;
+}
+
+#waybar > box {
+  margin: 0;
+  padding: 0 8px;
+  background-color: alpha(@surface, 0.7);
+  border-bottom: 1px solid alpha(@primary, 0.1);
+}
+
+/* 2. CORE MODULES */
+#cpu, #cpu label,
+#memory, #memory label,
+#tray,
+#custom-weather, #custom-weather label,
+#custom-swaync, #custom-swaync label,
+#custom-voxtype, #custom-voxtype label,
+#custom-updatespacman, #custom-updatespacman label,
+#custom-lens, #custom-lens label,
+#custom-vpn, #custom-vpn label,
+#custom-mako, #custom-mako label {
+  margin: 1px 2px;
+  padding: 0 4px;
+  color: alpha(@on_surface, 0.85);
+}
+
+/* 3. INDEPENDENT MUTE STATES */
+#pulseaudio:not(.microphone).muted {
+  color: @speaker-muted;
+}
+
+#pulseaudio.microphone.source-muted {
+  color: @mic-muted;
+}
+
+
+#pulseaudio, #pulseaudio label {
+    font-size: 15px;
+    margin: 0px 4px;
+    padding: 0px 2px;
+}
+
+/* 4. MODULE SPECIFICS */
+#bluetooth {
+  font-size: 20px;
+  color: @primary;
+  padding: 0px 6px;
+  margin: 0px 5px;
+}
+
+#network, #network label {
+    color: @on_surface;
+    font-size: 16px;
+    margin: 0px 3px;
+    padding: 0px 4px;
+}
+
+#backlight, #backlight label {
+    color: @on_surface;
+    font-size: 16px;
+    margin: 0px 0px;
+    padding: 0px 4px;
+}
+
+#temperature, #temperature label {
+    font-size: 14px;
+    background-color: alpha(@secondary, 0.6);
+    color: @surface;
+    border-radius: 9999px;
+    padding: 0px 7px;
+    margin: 6px 0px;
+    font-weight: 500;
+}
+
+#custom-voxtype,
+#custom-voxtype label {
+  font-size: 15px;
+  padding: 0 4px;
+  color: @on_surface;
+}
+
+#custom-voxtype.recording,
+#custom-voxtype.recording label {
+  color: @error;
+}
+
+#custom-swaync,
+#custom-swaync label {
+  font-size: 15px;
+  padding: 0 4px;
+}
+
+#battery, #battery label {
+    font-size: 15px;
+    background-color: alpha(@secondary, 0.8);
+    color: @surface;
+    border-radius: 9999px;
+    padding: 0px 9px;
+    margin: 6px 7px;
+}
+
+#tray-expander {
+    background-color: alpha(@tranparent, 0.8);
+    border: 1px solid alpha(@primary, 0.1);
+    border-radius: 4px; 
+    margin: 1px 7px;
+    padding: 0px 0px;
+}
+
+#power-profiles-daemon, #power-profiles-daemon label {
+    font-size: 19px;
+    color: alpha(@on_surface, 0.85);
+    padding: 0px 3px;
+    margin: 0px 3px; /* Fixed missing px units */
+}
+
+
+#custom-power,
+#custom-power label {
+  color: @error;
+  font-size: 16px;
+  margin: 1px 2px;
+  padding: 1px 4px;
+  background-color: transparent;
+  transition: color 0.2s ease-in-out;
+}
+
+#custom-power:hover,
+#custom-power:hover label {
+  color: alpha(@error, 0.8);
+}
+
+#custom-weather,
+#custom-weather label {
+  color: @on_surface;
+  font-size: 13px;
+  padding: 0 4px;
+}
+
+#custom-updatespacman,
+#custom-updatespacman label {
+  font-size: 14px;
+  padding: 0 4px;
+}
+
+#custom-lens,
+#custom-lens label {
+  color: alpha(@primary, 0.85);
+  font-size: 21px;
+  padding: 0 5px;
+  margin: 0px 5px;
+}
+
+#custom-vpn,
+#custom-vpn label {
+  font-size: 20px;
+  padding: 0 4px;
+  color: @on_surface;
+}
+
+#custom-vpn.connected,
+#custom-vpn.connected label {
+  color: @primary;
+}
+
+#custom-vpn.disconnected,
+#custom-vpn.disconnected label {
+  color: alpha(@on_surface, 0.4);
+}
+
+#custom-mako,
+#custom-mako label {
+  margin: 0 2px;
+  padding: 0 4px;
+  font-size: 14px;
+}
+
+#custom-mako.normal,
+#custom-mako.normal label {
+  color: @primary;
+}
+
+#custom-mako.dnd,
+#custom-mako.dnd label {
+  color: @error;
+}
+
+/* --- Workspaces --- */ 
+button { 
+  box-shadow: none; 
+  border: none; 
+  border-radius: 0; 
+} 
+
+button:hover { 
+  background: transparent; 
+} 
+
+#workspaces { 
+  border-radius: 4px; 
+  background-color: @surface_container; /* Matches the subtle shading of your bar boxes */
+  margin: 5px 0px; 
+  padding: 0px 0px; 
+} 
+
+#workspaces button { 
+  padding: 0px 10px; 
+  margin: 0px 3px; 
+  border-radius: 4px; 
+  color: @on_surface_variant; /* Muted brown-gray for inactive numbers */
+  background-color: transparent; 
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
+} 
+
+/* Active Workspace - Warm Forest Accent */
+#workspaces button.active { 
+  background-color: @secondary_container; /* Elegant moss/olive green that pulls from your wallpaper */
+  color: @on_secondary; /* Crisp, readable white text */
+  border-radius: 4px; 
+} 
+
+/* Empty Workspace */
+#workspaces button.empty { 
+  color: @outline_variant; /* Faded color for unused slots */
+  background-color: transparent; 
+} 
+
+/* Empty but Active Workspace */
+#workspaces button.empty.active { 
+  background-color: @surface_variant; /* Softer green/yellow tint if empty but selected */
+  color: @on_secondary_container;  
+  border-radius: 4px; 
+} 
+
+/* Hover States */
+#workspaces button:hover,
+#workspaces button:hover.empty { 
+  background-color: @surface_variant; 
+  color: @on_surface; 
+  border-radius: 4px; 
+}
+
+/* 6. WAYBAR TIMER (Clean Minimal Pill) */
+#custom-timer {
+  background-color: alpha(@secondary, 0.65);
+  color: @surface;
+  border-radius: 9999px;
+  margin: 6px 2px;
+  padding: 0px 6px;
+}
+
+#custom-timer label {
+  background-color: transparent;
+  color: inherit;
+  font-family: 'Doto', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  padding: 0;
+  margin: 0;
+}
+
+/* State modifiers - preserve pill container while updating text/accents */
+#custom-timer.disabled, 
+#custom-timer.idle { 
+  background-color: alpha(@surface_container_high, 0.4);
+  color: alpha(@on_surface, 0.4); 
+  opacity: 0.6; 
+  font-weight: 400; 
+}
+
+#custom-timer.select { 
+  background-color: @surface_container_high; 
+  color: @primary; 
+}
+
+#custom-timer.running { 
+  background-color: alpha(@primary, 0.5);
+  color: @surface; 
+  font-weight: 800;
+}
+
+#custom-timer.pomo_break { 
+  background-color: alpha(@tertiary, 0.65);
+  color: @surface; 
+}
+
+#custom-timer.pomo_msg { 
+  background-color: alpha(@secondary, 0.85);
+  color: @surface; 
+}
+
+#custom-timer.paused { 
+  background-color: alpha(@surface_variant, 0.8); 
+  color: @tertiary; 
+}
+
+#custom-timer.done { 
+  background-color: @primary_container; 
+  color: @on_primary_container; 
+}
+
+#custom-timer.reset { 
+  background-color: alpha(@error, 0.3);
+  color: @error; 
+}
+
+#custom-timer.warning { 
+  background-color: alpha(@error, 0.75);
+  color: @surface;
+  animation: red-alert 1s ease-in-out infinite alternate; 
+}
+
+/* 7. CLOCK & MPRIS */
+#clock {
+  color: @primary;
+  font-family: Doto, sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  padding: 0 4px;
+  margin: 1px 4px;
+}
+
+#mpris,
+#mpris label { 
+  font-size: 22px;
+  padding: 0 2px;
+}
+
+#mpris.playing,
+#mpris.playing label { 
+  color: alpha(@primary, 0.8); 
+  font-weight: 500; 
+}
+
+#mpris.paused,
+#mpris.paused label { 
+  color: alpha(@on_surface, 0.7); 
+  font-weight: 500; 
+}
+
+/* 8. TOOLTIPS & ANIMATIONS */
+tooltip { background: @surface_container_low; border: 1px solid alpha(@on_surface, 0.15); border-radius: 6px; }
+tooltip label { color: @on_surface; padding: 4px; }
+
+@keyframes red-alert {
+  from { color: #ff4d4d; opacity: 1; }
+  to   { color: #ff4d4d; opacity: 0.7; }
+}
+
+/* 9. ULTRA-SLIM SCREENRECORDING */
+#custom-screenrecording-indicator {
+  margin: 1px 2px;
+  padding: 0 2px;
+  font-size: 14px;
+  color: alpha(@primary, 0.4);
+  transition: all 0.4s ease-in-out;
+}
+
+#custom-screenrecording-indicator.active {
+  color: #ff4d4d;
+  background-color: transparent;
+  border-radius: 0; 
+  border: none;
+  animation: rune-pulse 2s infinite ease-in-out;
+  text-shadow: 0 0 6px alpha(#ff4d4d, 0.9); 
+}
+
+@keyframes rune-pulse {
+  0% {
+    color: alpha(#ff4d4d, 0.5);
+    text-shadow: 0 0 2px alpha(#ff4d4d, 0.3);
+  }
+  50% {
+    color: #ff4d4d;
+    text-shadow: 0 0 10px alpha(#ff4d4d, 1);
+  }
+  100% {
+    color: alpha(#ff4d4d, 0.5);
+    text-shadow: 0 0 2px alpha(#ff4d4d, 0.3);
+  }
+}
+
+#custom-swaync:hover {
+  font-size: 15px;
+  color: @error;
+  animation-name: bell-shake;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+}
+
+@keyframes bell-shake {
+  0%   { margin-left: 0px;  margin-right: 0px;  }
+  15%  { margin-left: 4px;  margin-right: -4px; } 
+  30%  { margin-left: -3px; margin-right: 3px;  } 
+  45%  { margin-left: 2px;  margin-right: -2px; } 
+  60%  { margin-left: -1px; margin-right: 1px;  } 
+  75%  { margin-left: 1px;  margin-right: -1px; } 
+  100% { margin-left: 0px;  margin-right: 0px;  } 
+}
+
+/* ── Menu Bar Button ─────────────────────────────────────── */
+#custom-menu,
+#custom-menu label {
+  margin: 0px 2px;
+  padding: 2px 1px;
+  font-size: 19px;
+  color: @primary;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#custom-menu:hover {
+  background-color: alpha(@on_surface, 0.08);
+  color: @primary_container;
+}
+
+/* =========================================================
+   GTK Dropdown Menu (Strict GTK3 Compliant)
+   ========================================================= */
+
+/* Zero out transitions for menus to avoid lag */
+menu,
+menu *,
+menuitem,
+menuitem * {
+  transition: none;
+}
+
+/* Primary Top-Level Menu Box */
+menu {
+  background-color: @surface_container_low;
+  border: 1px solid alpha(@on_surface, 0.12);
+  border-radius: 8px;
+  padding: 2px;
+  margin-top: 6px;
+  box-shadow: none;
+  min-width: 0px;
+}
+
+/* Nested Submenu Offset */
+menu menu {
+  margin-left: 2px;
+  margin-top: -4px;
+}
+
+/* Standard Menu Items */
+menu menuitem {
+  background-color: transparent;
+  color: @on_surface;
+  padding: 2px 8px;
+  margin-bottom: 2px;
+  padding-bottom: 3px;
+  border-bottom: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+menu menuitem label {
+  color: inherit;
+  font-size: 13px;
+}
+
+/* Nested Submenu Dividers */
+menu menu menuitem:not(:last-child) {
+  border-bottom: 1px solid alpha(@on_surface, 0.08);
+  margin-bottom: 2px;
+  padding-bottom: 4px;
+}
+
+/* Instant Hover States */
+menu menuitem:hover,
+menu menuitem:selected {
+  background-color: alpha(@primary, 0.44);
+  color: @primary;
+}
+
+menu menuitem:hover label,
+menu menuitem:selected label {
+  color: @primary;
+}
+
+/* Disabled Menu Items */
+menu menuitem:disabled,
+menu menuitem:disabled label {
+  color: alpha(@on_surface, 0.38);
+}
+
+/* Menu Separator Dividers */
+menu separator {
+  background-color: alpha(@on_surface, 0.12);
+  min-height: 1px;
+  margin: 4px 8px;
+}

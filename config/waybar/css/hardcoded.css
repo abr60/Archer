@@ -1,0 +1,136 @@
+/* =============================================================================
+   Waybar Style Configuration - Floating Minimal Glass (Fixed)
+   ============================================================================= */
+@import "../waybar/matugen.css";
+
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: transparent;
+    color: #cdd6f4;
+}
+
+/* Base style for all module blocks */
+#custom-menu,
+#mpris,
+#temperature,
+#custom-weather,
+#custom-updatespacman,
+#custom-timer,
+#custom-mako,
+#custom-hdd,
+#custom-screenrecording-indicator,
+#custom-voxtype,
+#tray,
+#workspaces,
+#custom-notification-silencing-indicator,
+#bluetooth,
+#network,
+#backlight,
+#pulseaudio,
+#custom-power,
+#clock,
+#custom-vpn,
+#custom-idle-indicator,
+#custom-lens,
+#power-profiles-daemon,
+#battery,
+#cpu,
+#memory {
+    background: rgba(17, 17, 27, 0.75);
+    padding: 2px 8px;
+    margin: 2px 2px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Individual Module Color Adjustments */
+#custom-menu { color: #89b4fa; }
+#temperature { color: #f9e2af; }
+#custom-weather { color: #89b4fa; }
+#custom-updatespacman { color: #fab387; }
+#clock { color: #cdd6f4; }
+#battery { color: #a6e3a1; }
+#network { color: #a6e3a1; }
+#pulseaudio { color: #89dceb; }
+#bluetooth { color: #89b4fa; }
+#backlight { color: #f9e2af; }
+#custom-power { color: #f38ba8; }
+
+/* Hyprland Workspaces Active State */
+#workspaces button {
+    padding: 0 4px;
+    color: #6c7086;
+}
+
+#workspaces button.active {
+    color: #89b4fa;
+}
+
+#workspaces button.urgent {
+    color: #f38ba8;
+}
+
+
+menu {
+  background-color: @surface_container_low;
+  border: 1px solid alpha(@on_surface, 0.12);
+  border-radius: 8px;
+  padding: 2px;
+  margin-top: 6px;
+  box-shadow: none;
+  min-width: 0px;
+}
+
+menu menu {
+  margin-left: 2px;
+  margin-top: -4px;
+}
+
+menu menuitem {
+  background-color: transparent;
+  color: @on_surface;
+  padding: 2px 8px;
+  margin-bottom: 2px;
+  padding-bottom: 3px;
+  border-bottom: none;
+}
+
+menu menuitem label {
+  color: inherit;
+}
+
+menu menu menuitem:not(:last-child) {
+  border-bottom: 1px solid alpha(@on_surface, 0.08);
+  margin-bottom: 2px;
+  padding-bottom: 4px;
+}
+
+menu menuitem:hover,
+menu menuitem:selected {
+  background-color: alpha(@primary, 0.44);
+  color: @primary;
+}
+
+menu menuitem:hover label,
+menu menuitem:selected label {
+  color: @primary;
+}
+
+menu menuitem:disabled,
+menu menuitem:disabled label {
+  color: alpha(@on_surface, 0.38);
+}
+
+menu separator {
+  background-color: alpha(@on_surface, 0.12);
+  min-height: 1px;
+  margin: 4px 8px;
+}

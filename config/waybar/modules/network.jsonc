@@ -1,0 +1,59 @@
+{
+"network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} | {frequency}GHz | {signalStrength}%",
+    "tooltip-format-ethernet": "Connected",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "timeout 40s kitty --class kitty --title dropdown -e impala",
+    "on-click-right": "mode",
+    "menu": "on-click-right",
+    "menu-file": "$HOME/.config/waybar/assets/menu/vpn.xml",
+    "menu-actions": {
+      "vpn_connect": "pkexec wg-quick up wg0",
+      "vpn_disconnect": "pkexec wg-quick down wg0",
+      "vpn_status": "kitty --class kitty --title dropdown -e sh -c 'sudo wg; read -p \"Press enter to exit...\"'",
+      "vpn_ip_check": "kitty --class kitty --title dropdown -e sh -c 'curl https://ipinfo.io; read -p \"\nPress enter to exit...\"'"
+    }
+  },
+
+  "bluetooth": {
+    "format": "󰂯",
+    "format-connected": "󰂱",
+    "format-disabled": "󰂲",
+    "tooltip-format-connected": "{device_enumerate}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias} {device_battery_percentage}%",
+    "tooltip-format-enumerate-connected": "{device_alias}",
+    "on-click": "timeout 40s kitty --class kitty --title dropdown -e bluetui",
+    "on-click-right": "rfkill toggle bluetooth"
+  },
+
+"custom/vpn": {
+    "exec": "archer-vpn-status",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 12,
+    "menu": "on-click",
+    "menu-file": "$HOME/.config/waybar/assets/menu/vpn_menu.xml",
+    "tooltip": true,
+    "menu-actions": {
+      "vpn_ca": "archer-vpn-toggle ca",
+      "vpn_ch": "archer-vpn-toggle ch",
+      "vpn_jp": "archer-vpn-toggle jp",
+      "vpn_nl": "archer-vpn-toggle nl",
+      "vpn_no": "archer-vpn-toggle no",
+      "vpn_pl": "archer-vpn-toggle pl",
+      "vpn_ro": "archer-vpn-toggle ro",
+      "vpn_sg": "archer-vpn-toggle sg",
+      "vpn_us": "archer-vpn-toggle us",
+      "vpn_disconnect_all": "bash -c 'ACTIVE=$(cat /tmp/.archer-vpn-active 2>/dev/null); [[ -n $ACTIVE ]] && sudo wg-quick down $ACTIVE && rm -f /tmp/.archer-vpn-active && pkill -RTMIN+12 waybar && notify-send \"VPN\" \"Disconnected\"'",
+      "vpn_ip_check":     "bash -c 'IP=$(curl -s --max-time 5 https://ipinfo.io); notify-send \"Public IP Info\" \"$IP\"'",
+      "vpn_sync_configs": "archer-vpn-sync"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 -- Trackpad Gesture: Swipe up with 3 fingers
 hl.gesture({
-  fingers = 3,
+  fingers = 4,
   direction = "up", -- explicit direction is cleaner than generic "vertical"
   action = function()
     hl.exec_cmd("qs ipc -c overview call overview toggle")

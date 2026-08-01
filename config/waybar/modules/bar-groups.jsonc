@@ -1,0 +1,41 @@
+{
+  "group/left-1": {
+    "orientation": "inherit",
+    "modules": ["custom/menu", "mpris", "temperature", "group/tray-expander"]
+  },
+
+  "group/left-2": {
+    "orientation": "inherit",
+    "modules": ["custom/weather", "custom/updatespacman", "custom/timer","custom/mako", "custom/hdd", "custom/screenrecording-indicator", "custom/voxtype", "tray"]
+  },
+
+  "group/right-1": {
+    "orientation": "inherit",
+    "modules": ["custom/notification-silencing-indicator", "bluetooth", "network", "backlight", "pulseaudio", "custom/power"]
+  },
+
+  "group/right-2": {
+    "orientation": "inherit",
+    "modules": [
+         "clock",
+        "custom/vpn",
+        "custom/idle-indicator",
+        "custom/lens",
+        "power-profiles-daemon",
+        "battery"
+    ]
+  },
+
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": [
+      "custom/expand-icon",
+      "pulseaudio#microphone",
+      "cpu", "memory"
+    ]
+  }
+}

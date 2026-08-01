@@ -1,0 +1,61 @@
+{
+"mpris": {
+    "format": "{player_icon} ",
+    "format-paused": "{player_icon} ",
+    "interval": 1,
+    "max-length": 35,
+    "player-icons": {
+      "default": "󰎆",
+      "mpd": "󰎆",
+      "chromium": "",
+      "spotify": "",
+      "firefox": "",
+      "mpv": "",
+      "vlc": "󰕼"
+    },
+
+    "on-click": "playerctl play-pause",
+    "on-click-right": "timeout 60s kitty --class kitty --title rmpc -e rmpc",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous",
+
+    "tooltip": true,
+    "tooltip-format": "App Target: {player}\nArtist: {artist}\nTitle: {title}\nAlbum: {album}\nStatus: {status}"
+},
+
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": "  {volume}",
+    "format-source-muted": " 🚫 {volume}",
+    "on-click": "pamixer --default-source -t",
+    "on-scroll-up": "pamixer --default-source --increase 5",
+    "on-scroll-down": "pamixer --default-source --decrease 5",
+    "scroll-step": 5,
+    "tooltip": false
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}",
+    "format-muted": "🔇 {volume}",
+    "format-icons": [""],
+    "max-volume": 125,
+    "scrolling": 10,
+    "on-click": "pamixer -t",
+    "on-click-right": "timeout 15s launch-audio",
+    "tooltip": false
+  },
+
+  "custom/voxtype": {
+    "exec": "archer-voxtype-status",
+    "return-type": "json",
+    "format": "{icon}",
+    "format-icons": {
+      "idle": "",
+      "recording": "󰍬",
+      "transcribing": "󰔟"
+    },
+    "tooltip": true,
+    "on-click-right": "archer-voxtype-config",
+    "on-click": "archer-voxtype-model"
+  }
+}

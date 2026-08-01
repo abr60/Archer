@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=ChatGpt
+Comment=ChatGpt
+Exec=launch-webapp https://chatgpt.com/
+Terminal=false
+Type=Application
+Icon=/home/abr/.local/share/applications/icons/ChatGpt.png
+StartupNotify=true

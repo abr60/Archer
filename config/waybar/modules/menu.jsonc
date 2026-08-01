@@ -1,0 +1,48 @@
+{
+  "custom/menu": {
+    "format": "󰮫",
+    "menu": "on-click",
+    "tooltip": false,
+    "menu-file": "$HOME/.config/waybar/assets/menu/menu.xml",
+    "menu-actions": {
+      "mode_dark":  "archer-set-mode dark",
+      "mode_light": "archer-set-mode light",
+
+      "scheme_tonal_spot":  "archer-matugen-scheme --apply scheme-tonal-spot",
+      "scheme_content":     "archer-matugen-scheme --apply scheme-content",
+      "scheme_expressive":  "archer-matugen-scheme --apply scheme-expressive",
+      "scheme_fidelity":    "archer-matugen-scheme --apply scheme-fidelity",
+      "scheme_fruit_salad": "archer-matugen-scheme --apply scheme-fruit-salad",
+      "scheme_monochrome":  "archer-matugen-scheme --apply scheme-monochrome",
+      "scheme_neutral":     "archer-matugen-scheme --apply scheme-neutral",
+      "scheme_rainbow":     "archer-matugen-scheme --apply scheme-rainbow",
+      "scheme_vibrant":     "archer-matugen-scheme --apply scheme-vibrant",
+
+      "theme_canvas":      "archer-apply-theme Canvas",
+      "theme_emerald":     "archer-apply-theme Emerald",
+      "theme_graffiti":    "archer-apply-theme Graffiti",
+      "theme_landscape":   "archer-apply-theme Landscape",
+      "theme_monochrome":  "archer-apply-theme Monochrome",
+      "theme_pixelpulse":  "archer-apply-theme Pixelpulse",
+      "theme_spectrum":    "archer-apply-theme Spectrum",
+      "theme_sumie":       "archer-apply-theme Sumi-e",
+
+      "wallpaper_select": "rofi-set-bg",
+      "wallpaper_next":   "archer-wallpaper-cycle next",
+      "wallpaper_prev":   "archer-wallpaper-cycle prev",
+      "wallpaper_random": "archer-wallpaper-cycle random",
+
+      "anim_fast":   "ln -sf ~/.config/hypr/animations/fast.lua ~/.config/hypr/animations.lua && hyprctl reload",
+      "anim_fluid":  "ln -sf ~/.config/hypr/animations/fluid.lua ~/.config/hypr/animations.lua && hyprctl reload",
+
+      "waybar_style_intricate": "ln -sf ~/.config/waybar/css/Intricate.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_minimal":   "ln -sf ~/.config/waybar/css/minimal.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_pristine":  "ln -sf ~/.config/waybar/css/Pristine.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_hardcoded":   "ln -sf ~/.config/waybar/css/hardcoded.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_illogicalimpulse":        "ln -sf ~/.config/waybar/css/illogical-impulse.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_liquidglass":        "ln -sf ~/.config/waybar/css/liquid-glass.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+
+      "rescan_menu": "generate-menu && pkill -SIGUSR2 waybar"
+    }
+  }
+}

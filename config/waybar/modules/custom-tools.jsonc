@@ -1,0 +1,47 @@
+{
+  "custom/archer": {
+    "format": "<span size='14500'></span>"
+  },
+
+  "custom/active_window": {
+    "exec": "~/.config/waybar/assets/scripts/window.sh",
+    "return-type": "json",
+    "markup": true,
+    "tooltip": false
+  },
+
+  "custom/timer": {
+    "exec": "~/.config/waybar/assets/scripts/timer",
+    "return-type": "json",
+    "format": "{}",
+    "on-click": "~/.config/waybar/assets/scripts/timer click",
+    "on-click-right": "~/.config/waybar/assets/scripts/timer right",
+    "on-click-middle": "~/.config/waybar/assets/scripts/timer middle",
+    "on-scroll-up": "~/.config/waybar/assets/scripts/timer down",
+    "on-scroll-down": "~/.config/waybar/assets/scripts/timer up",
+    "tooltip": true,
+    "escape": true
+  },
+
+  "custom/weather": {
+    "format": "{}°",
+    "exec": "wttrbar --nerd --location chittagong",
+    "return-type": "json",
+    "interval": 60,
+    "tooltip": false
+  },
+
+  "custom/updatespacman": {
+    "format": "{} {icon}",
+    "format-icons": { "has-updates": "󰏗", "updated": "" },
+    "return-type": "json",
+    "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300",
+    "on-click": "launch-floating-terminal-with-presentation update"
+  },
+
+  "custom/lens": {
+    "format": "󰧶",
+    "on-click": "google-lens-capture",
+    "tooltip": false
+  }
+}

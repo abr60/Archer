@@ -75,37 +75,33 @@ tooltip label {
 /* ── Per-Module Hover States (Isolated) ──────────────────── */
 
 /* Left side modules */
-#custom-resources:hover,
-#mpris:hover,
-#temperature:hover,
-#custom-weather:hover,
-#custom-updatespacman:hover,
-#custom-timer:hover,
-#custom-hdd:hover,
-#custom-screenrecording-indicator:hover,
-#custom-voxtype:hover {
+#custom-resources:hover, #custom-resources:hover label,
+#mpris:hover, #mpris:hover label,
+#temperature:hover, #temperature:hover label,
+#custom-weather:hover, #custom-weather:hover label,
+#custom-updatespacman:hover, #custom-updatespacman:hover label,
+#custom-hdd:hover, #custom-hdd:hover label,
+#custom-screenrecording-indicator:hover, #custom-screenrecording-indicator:hover label,
+#custom-voxtype:hover, #custom-voxtype:hover label,
+#cpu:hover, #cpu:hover label,
+#memory:hover, #memory:hover label {
     background-color: alpha(@primary, 0.28);
     border-radius:    4px;
     color:            @on_surface;
     padding:          0 6px;
 }
 
-/* Center workspaces */
-#workspaces button:hover {
-    background-color: alpha(@on_surface, 0.12);
-    border-radius:    4px;
-    color:            @tertiary;
-}
-
 /* Right side modules */
-#custom-lens:hover,
-#power-profiles-daemon:hover,
-#battery:hover,
-#custom-swaync:hover,
-#bluetooth:hover,
-#network:hover,
-#backlight:hover,
-#pulseaudio:hover {
+#power-profiles-daemon:hover, #power-profiles-daemon:hover label,
+#battery:hover, #battery:hover label,
+#custom-swaync:hover, #custom-swaync:hover label,
+#bluetooth:hover, #bluetooth:hover label,
+#network:hover, #network:hover label,
+#backlight:hover, #backlight:hover label,
+#pulseaudio:hover, #pulseaudio:hover label,
+#custom-vpn:hover, #custom-vpn:hover label,
+#custom-mako:hover, #custom-mako:hover label,
+#custom-power:hover, #custom-power:hover label {
     background-color: alpha(@primary, 0.28);
     border-radius:    4px;
     color:            @on_surface;
@@ -113,25 +109,20 @@ tooltip label {
 }
 
 /* Right-side module spacing */
-#custom-lens,
-#power-profiles-daemon,
-#battery {
+#custom-lens, #custom-lens label,
+#power-profiles-daemon, #power-profiles-daemon label,
+#battery, #battery label {
     margin-right: 3px;
 }
 
-#custom-swaync,
-#bluetooth,
-#network,
-#backlight {
+#custom-swaync, #custom-swaync label,
+#bluetooth, #bluetooth label,
+#network, #network label,
+#backlight, #backlight label,
+#custom-vpn, #custom-vpn label,
+#custom-mako, #custom-mako label,
+#custom-power, #custom-power label {
     margin-right: 2px;
-}
-
-/* Clock (far right, special handling) */
-#clock:hover {
-    background-color: alpha(@primary, 0.28);
-    border-radius:    4px;
-    color:            @on_surface;
-    padding:          0 8px;
 }
 
 
@@ -157,7 +148,8 @@ tooltip label {
 
 /* ── Clock Module (Far Right) ──────────────────────────── */
 
-#clock {
+#clock,
+#clock label {
     font-size:   12px;
     font-weight: 800;
     color:       @on_surface;
@@ -168,7 +160,8 @@ tooltip label {
 
 /* ── MPRIS Module (Icon-Only, Larger) ────────────────────── */
 
-#mpris {
+#mpris,
+#mpris label {
     font-size:   23px;
     font-weight: bold;
     color:       @on_surface;
@@ -176,7 +169,8 @@ tooltip label {
     min-width:   20px;
 }
 
-#mpris.playing {
+#mpris.playing,
+#mpris.playing label {
     font-style:  normal;
     font-weight: bold;
     color:       @primary;
@@ -185,57 +179,51 @@ tooltip label {
 
 /* ── Timer Module (State-Dependent) ──────────────────────── */
 
-#custom-timer {
-    font:        900 13px "Doto";
+#custom-timer,
+#custom-timer label {
+    font-family: 'Doto', sans-serif;
+    font-size:   13px;
+    font-weight: 900;
     padding:     0 6px;
     min-width:   40px;
 }
 
-#custom-timer.reset {
+#custom-timer.reset,
+#custom-timer.reset label {
     color: @error;
 }
 
 
 /* ── Resource & System Modules ────────────────────────────── */
 
-#custom-resources {
+#custom-resources,
+#custom-resources label {
     font-style: italic;
     color:      alpha(@on_surface, 0.7);
     padding:    0 10px;
 }
 
-#custom-weather {
+#cpu, #cpu label,
+#memory, #memory label,
+#custom-weather, #custom-weather label,
+#custom-updatespacman, #custom-updatespacman label,
+#custom-hdd, #custom-hdd label,
+#custom-screenrecording-indicator, #custom-screenrecording-indicator label,
+#custom-voxtype, #custom-voxtype label,
+#temperature, #temperature label {
     padding: 0 6px;
 }
 
-#custom-updatespacman {
-    padding: 0 6px;
-}
-
-#custom-hdd {
-    padding: 0 6px;
-}
-
-#custom-screenrecording-indicator {
-    padding: 0 6px;
-}
-
-#custom-voxtype {
-    padding: 0 6px;
-}
-
-#temperature {
-    padding: 0 6px;
-}
-
-#temperature.critical {
+#temperature.critical,
+#temperature.critical label {
     color: @tertiary;
 }
 
 
 /* ── Tray Expander Integration ───────────────────────────── */
 
-#custom-expand-icon {
+#custom-expand-icon,
+#custom-expand-icon label {
     color:    alpha(@on_surface, 0.5);
     padding:  0 3px;
     font-size: 11px;
@@ -255,7 +243,8 @@ tooltip label {
 
 /* ── Bluetooth Module ──────────────────────────────────────── */
 
-#bluetooth {
+#bluetooth,
+#bluetooth label {
     font-size: 16px;
     color:     @primary;
     padding:   0 6px;
@@ -264,34 +253,41 @@ tooltip label {
 
 /* ── Network Module ────────────────────────────────────────── */
 
-#network {
+#network,
+#network label {
     padding: 0 6px;
 }
 
-#network.disconnected {
+#network.disconnected,
+#network.disconnected label {
     color: @error;
 }
 
 
 /* ── Backlight Module ──────────────────────────────────────── */
 
-#backlight {
+#backlight,
+#backlight label {
     padding: 0 6px;
 }
 
 
 /* ── Audio/Pulseaudio Modules ──────────────────────────────── */
 
-#pulseaudio {
+#pulseaudio,
+#pulseaudio label {
     padding: 0 6px;
 }
 
 #pulseaudio:not(.microphone).muted,
-#pulseaudio.microphone.source-muted {
+#pulseaudio:not(.microphone).muted label,
+#pulseaudio.microphone.source-muted,
+#pulseaudio.microphone.source-muted label {
     color: alpha(@on_surface, 0.4);
 }
 
-#pulseaudio#microphone {
+#pulseaudio#microphone,
+#pulseaudio#microphone label {
     font-size: 12px;
     padding:   0 5px;
 }
@@ -299,7 +295,8 @@ tooltip label {
 
 /* ── Power Profiles Daemon ─────────────────────────────────── */
 
-#power-profiles-daemon {
+#power-profiles-daemon,
+#power-profiles-daemon label {
     padding: 0 6px;
     font-size: 14px;
 }
@@ -307,37 +304,86 @@ tooltip label {
 
 /* ── Battery Module (State-Dependent) ──────────────────────── */
 
-#battery {
+#battery,
+#battery label {
     padding:   0 6px;
     min-width: 35px;
 }
 
-#battery.charging,
-#battery.plugged {
+#battery.charging, #battery.charging label,
+#battery.plugged, #battery.plugged label {
     color: @secondary;
 }
 
-#battery.warning {
+#battery.warning, #battery.warning label {
     color: @tertiary;
 }
 
-#battery.critical:not(.charging) {
+#battery.critical:not(.charging),
+#battery.critical:not(.charging) label {
     color: @error;
 }
 
 
 /* ── Custom Lens Module ────────────────────────────────────── */
 
-#custom-lens {
+#custom-lens,
+#custom-lens label {
     font-size: 16px;
     padding:   0 6px;
     min-width: 20px;
 }
 
 
+/* ── VPN & Mako Modules (Added) ───────────────────────────── */
+
+#custom-vpn,
+#custom-vpn label {
+    font-size: 16px;
+    padding:   0 6px;
+}
+
+#custom-vpn.connected,
+#custom-vpn.connected label {
+    color: @primary;
+}
+
+#custom-vpn.disconnected,
+#custom-vpn.disconnected label {
+    color: alpha(@on_surface, 0.4);
+}
+
+#custom-mako,
+#custom-mako label {
+    padding:   0 6px;
+    font-size: 14px;
+}
+
+#custom-mako.normal,
+#custom-mako.normal label {
+    color: @primary;
+}
+
+#custom-mako.dnd,
+#custom-mako.dnd label {
+    color: @error;
+}
+
+
+/* ── Power Module (Added) ─────────────────────────────────── */
+
+#custom-power,
+#custom-power label {
+    color:     @error;
+    font-size: 15px;
+    padding:   0 6px;
+}
+
+
 /* ── Swaync Bell (Notification) ────────────────────────────── */
 
-#custom-swaync {
+#custom-swaync,
+#custom-swaync label {
     padding: 0 6px;
 }
 
@@ -362,9 +408,15 @@ tooltip label {
 
 /* ── Dropdown Menu ──────────────────────────────────────── */
 
-#custom-menu {
+#custom-menu,
+#custom-menu label {
     color:   @primary;
     padding: 0 6px;
+}
+
+menu,
+menu * {
+    transition: none;
 }
 
 menu {
@@ -389,6 +441,10 @@ menu menuitem {
     border-radius: 3px;
 }
 
+menu menuitem label {
+    color: inherit;
+}
+
 menu menu menuitem:not(:last-child) {
     border-bottom:  1px solid alpha(@on_surface, 0.08);
     margin-bottom:  2px;
@@ -400,6 +456,10 @@ menu menuitem:hover {
     border-radius:    3px;
 }
 
+menu menuitem:hover label {
+    color: @primary;
+}
+
 menu separator {
     background-color: alpha(@on_surface, 0.12);
     min-height:       1px;
@@ -409,10 +469,11 @@ menu separator {
 
 /* ── Hidden/Unused Modules ────────────────────────────────── */
 
-#custom-archer {
+#custom-archer,
+#custom-archer label {
     opacity:   0;
-    font-size: 0;
-    padding:   0;
-    margin:    0;
-    min-width: 0;
+    font-size: 0px;
+    padding:   0px;
+    margin:    0px;
+    min-width: 0px;
 }

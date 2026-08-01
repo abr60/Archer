@@ -17,7 +17,6 @@ post_hook   = "hyprctl reload"
 [templates.waybar]
 input_path  = "~/.config/matugen/templates/waybar.css"
 output_path = "~/.config/waybar/matugen.css"
-post_hook   = ""
 
 [templates.quickshell_overview]
 input_path = '~/.config/matugen/templates/quickshell-overview.qml'
