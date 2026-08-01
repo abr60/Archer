@@ -11,14 +11,11 @@
     "interval": 3,
     "spacing": 1,
     "on-click": "timeout 40s kitty --class kitty --title dropdown -e impala",
-    "on-click-right": "mode",
     "menu": "on-click-right",
-    "menu-file": "$HOME/.config/waybar/assets/menu/vpn.xml",
+    "menu-file": "~/.config/waybar/menu/bandwith-test.xml",
     "menu-actions": {
-      "vpn_connect": "pkexec wg-quick up wg0",
-      "vpn_disconnect": "pkexec wg-quick down wg0",
-      "vpn_status": "kitty --class kitty --title dropdown -e sh -c 'sudo wg; read -p \"Press enter to exit...\"'",
-      "vpn_ip_check": "kitty --class kitty --title dropdown -e sh -c 'curl https://ipinfo.io; read -p \"\nPress enter to exit...\"'"
+      "speedtest": "~/.config/waybar/assets/scripts/bandwith-test.sh speedtest",
+      "netinfo": "~/.config/waybar/assets/scripts/bandwith-test.sh info"
     }
   },
 
@@ -39,7 +36,7 @@
     "interval": "once",
     "signal": 12,
     "menu": "on-click",
-    "menu-file": "$HOME/.config/waybar/assets/menu/vpn_menu.xml",
+    "menu-file": "$HOME/.config/waybar/menu/vpn_menu.xml",
     "tooltip": true,
     "menu-actions": {
       "vpn_ca": "archer-vpn-toggle ca",

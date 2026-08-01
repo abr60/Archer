@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
 # generate-menu.sh — Scan dirs and regenerate the waybar GTK popup menu XML
-# Output: ~/.config/waybar/assets/menu/menu.xml
+# Output: ~/.config/waybar/menu.xml
 # =============================================================================
 
 THEMES_DIR="$HOME/.local/share/Archer/Themes"
@@ -9,7 +9,7 @@ ANIM_DIR="$HOME/.config/hypr/animations"
 WAYBAR_CSS_DIR="$HOME/.config/waybar/css"
 STATE_DIR="$HOME/.local/state/Archer"
 SCRIPTS_DIR="$HOME/.config/matugen/bin"
-OUTPUT="$HOME/.config/waybar/assets/menu/menu.xml"
+OUTPUT="$HOME/.config/waybar/menu/style-menu.xml"
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 xml_escape() { sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g' <<< "$1"; }

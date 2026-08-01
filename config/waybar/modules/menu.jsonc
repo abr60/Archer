@@ -3,7 +3,7 @@
     "format": "󰮫",
     "menu": "on-click",
     "tooltip": false,
-    "menu-file": "$HOME/.config/waybar/assets/menu/menu.xml",
+    "menu-file": "$HOME/.config/waybar/menu/style-menu.xml",
     "menu-actions": {
       "mode_dark":  "archer-set-mode dark",
       "mode_light": "archer-set-mode light",

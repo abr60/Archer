@@ -23,7 +23,7 @@
   "interval": 5,
   "tooltip": false,
   "menu": "on-click",
-  "menu-file": "$HOME/.config/waybar/assets/menu/temp.xml",
+  "menu-file": "$HOME/.config/waybar/menu/temp.xml",
   "menu-actions": {
     "fan_full": "bash -c 'echo \"level full-speed\" | sudo tee /proc/acpi/ibm/fan'",
     "fan_auto": "sudo systemctl restart thinkfan"
