@@ -1,0 +1,231 @@
+@import "../waybar/matugen.css";
+
+* {
+  border: none;
+  padding: 0px;
+  min-height: 0;
+  font-family: "JetBrains Mono Nerd Font";
+}
+
+window#waybar {
+  background-color: transparent;
+}
+
+#waybar > box {
+  border-radius: 0px;
+  margin: 0px;
+  border-right: 1px solid alpha(@outline, 0.2);
+  background-color: @surface;
+  box-shadow: 0 1px 2px @shadow;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  font-weight: bold;
+}
+
+.modules-left {
+  margin-top: 8px;
+  padding: 0px;
+}
+
+.modules-right {
+  margin-bottom: 8px;
+}
+
+/* Workspaces */
+#workspaces button {
+  all: initial;
+  color: @on_surface;
+  padding: 2px 0px;
+  margin: 2px 0px;
+  border: none;
+  opacity: 0.75;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+#workspaces button.active {
+  color: @on_primary;
+  background: @primary;
+  opacity: 1;
+  border-radius: 4px;
+}
+
+#workspaces button.empty {
+  opacity: 0.35;
+  color: alpha(@on_surface, 0.45);
+}
+
+#workspaces button.empty.active {
+  opacity: 0.75;
+  background-color: @primary;
+  color: @on_primary;
+}
+
+/* Global Module Layout for Vertical Alignment */
+#memory,
+#mpris,
+#tray,
+#cpu,
+#clock,
+#battery,
+#backlight,
+#network,
+#bluetooth,
+#pulseaudio,
+#power-profiles-daemon,
+#custom-menu,
+#custom-idle-indicator,
+#custom-notification-silencing-indicator,
+#custom-updatespacman,
+#custom-screenrecording-indicator,
+#custom-update,
+#custom-voxtype,
+#custom-vpn {
+  padding: 0px;
+  margin: 6px 0px;
+  font-weight: bold;
+  font-size: 14px;
+  color: @on_surface_variant; /* Uses Matugen's muted grey tone */
+  opacity: 0.75;              /* Softens bright white icons if variant isn't available */
+}
+
+/* Specific Adjustments */
+#clock {
+  font-family: Doto;
+  font-size: 11px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+#custom-expand-icon, #custom-expand-icon label,
+#custom-vpn, #custom-vpn label,
+#custom-menu, #custom-menu label {
+  padding: 0 0 0 5;
+  font-size: 15px;
+}
+
+#mpris {
+  font-size: 12px;
+  margin: 12px 0px;
+  opacity: 0.9;
+  animation: blink 3s linear infinite alternate;
+}
+
+#custom-separator {
+  opacity: 0.2;
+  margin: 4px 0px;
+  font-size: 10px;
+}
+
+#custom-expand-icon {
+  opacity: 0.5;
+  font-size: 10px;
+  margin: 4px 0px;
+}
+
+#bluetooth {
+  font-size: 18;
+  padding-left: 5;
+}
+
+#custom-updatespacman {
+  font-size: 19;
+}
+
+#custom-idle-indicator.active,
+#custom-notification-silencing-indicator.active,
+#custom-voxtype.recording,
+#custom-screenrecording-indicator.active {
+  color: @error;
+}
+
+/* Tooltips */
+tooltip {
+  padding: 6px;
+  background: @surface_container_high;
+  font-size: 11px;
+  border: 1px solid alpha(@outline, 0.6);
+  border-radius: 6px;
+}
+
+tooltip label {
+  color: alpha(@on_surface, 1);
+  font-weight: normal;
+}
+
+/* Animations */
+@keyframes blink {
+  to {
+    color: @outline_variant;
+  }
+}
+
+@keyframes blink-recording {
+  to {
+    color: @surface;
+  }
+}
+
+#network.disconnected,
+#battery.warning {
+  color: @tertiary;
+}
+
+#memory.warning,
+#cpu.warning {
+  color: @secondary;
+}
+
+#memory.critical,
+#cpu.critical {
+  color: @error;
+}
+
+/* ── Dropdown Menu ────────────────────────────────── */
+menu,
+menu * {
+    transition: none;
+}
+
+menu {
+    background-color: @surface_container_low;
+    border: 1px solid alpha(@on_surface, 0.12);
+    border-radius: 16px;
+    padding: 6px;
+    margin-top: 6px;
+    box-shadow: none;
+    min-width: 0px;
+}
+
+menu menu {
+    margin-left: 4px;
+    margin-top: -4px;
+}
+
+menu menuitem {
+    border: none;
+    margin-bottom: 2px;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-weight: 500;
+}
+
+menu menuitem label {
+    color: inherit;
+}
+
+menu menuitem:hover {
+    background-color: @primary_container;
+    color: @on_primary_container;
+    font-weight: 700;
+}
+
+menu menuitem:hover label {
+    color: @on_primary_container;
+}
+
+menu separator {
+    background-color: alpha(@on_surface, 0.08);
+    min-height: 1px;
+    margin: 6px 8px;
+}

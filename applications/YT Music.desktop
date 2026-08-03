@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Name=YT Music
-Comment=YT Music
-Exec=launch-webapp https://music.youtube.com/
-Terminal=false
-Type=Application
-Icon=~/.local/share/applications/icons/YT Music.png
-StartupNotify=true

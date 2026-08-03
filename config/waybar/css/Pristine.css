@@ -13,7 +13,7 @@
     border-radius: 0;
     font-family: 'CaskaydiaMono Nerd Font', 'JetBrainsMono Nerd Font', sans-serif;
     font-size:   13px;
-    font-weight: 700;
+    font-weight: 500;
     transition:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -44,8 +44,8 @@ tooltip label {
     background-color: @surface_container;
     border:           1px solid alpha(@on_surface, 0.12);
     border-radius:    6px;
-    margin:           3px 4px 0px 4px;
-    padding:          2px 1px;
+    margin:           1px 2px 1px 2px;
+    padding:          0px 1px;
     box-shadow:       0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -77,35 +77,6 @@ tooltip label {
 /* Left side modules */
 #custom-resources:hover, #custom-resources:hover label,
 
-#temperature:hover, #temperature:hover label,
-#custom-weather:hover, #custom-weather:hover label,
-#custom-updatespacman:hover, #custom-updatespacman:hover label,
-#custom-hdd:hover, #custom-hdd:hover label,
-#custom-screenrecording-indicator:hover, #custom-screenrecording-indicator:hover label,
-#custom-voxtype:hover, #custom-voxtype:hover label,
-#cpu:hover, #cpu:hover label,
-#memory:hover, #memory:hover label {
-    background-color: alpha(@primary, 0.28);
-    border-radius:    4px;
-    color:            @on_surface;
-    padding:          0 6px;
-}
-
-/* Right side modules */
-#power-profiles-daemon:hover, #power-profiles-daemon:hover label,
-#battery:hover, #battery:hover label,
-#custom-swaync:hover, #custom-swaync:hover label,
-#bluetooth:hover, #bluetooth:hover label,
-#network:hover, #network:hover label,
-#backlight:hover, #backlight:hover label,
-#pulseaudio:hover, #pulseaudio:hover label,
-#custom-vpn:hover, #custom-vpn:hover label,
-#custom-power:hover, #custom-power:hover label {
-    background-color: alpha(@primary, 0.28);
-    border-radius:    4px;
-    color:            @on_surface;
-    padding:          0 6px;
-}
 
 /* Right-side module spacing */
 #custom-lens, #custom-lens label,
@@ -127,21 +98,62 @@ tooltip label {
 
 /* ── Workspace Styling ───────────────────────────────────── */
 
-#workspaces {
-    padding: 0 4px;
-}
+/* --- Workspaces --- */ 
+button { 
+  box-shadow: none; 
+  border: none; 
+  border-radius: 0px; 
+} 
 
-#workspaces button {
-    color:   alpha(@on_surface, 0.4);
-    padding: 0 4px;
-    min-width: 24px;
-}
+button:hover { 
+  background: transparent; 
+} 
 
-#workspaces button.active {
-    color:            @on_surface;
-    background-color: alpha(@primary, 0.15);
-    border-radius:    4px;
-    padding:          0 6px;
+#workspaces { 
+  border-radius: 16px; 
+  background-color: @surface_container;
+  margin: 0px 0px; 
+  padding: 0px 1px; 
+} 
+
+#workspaces button { 
+  padding: 0px 4px; 
+  margin: 3px 2px; 
+  border-radius: 4px; 
+  color: @on_surface_variant;
+  background-color: transparent; 
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
+} 
+
+/* Active Workspace - Warm Forest Accent */
+#workspaces button.active { 
+  background-color: @secondary_container; 
+  color: @on_secondary; 
+  margin: 3px 4px; 
+  border-radius: 4px; 
+} 
+
+/* Empty Workspace */
+#workspaces button.empty { 
+  color: @outline_variant; 
+  background-color: transparent; 
+} 
+
+/* Empty but Active Workspace */
+#workspaces button.empty.active { 
+  background-color: @surface_variant; 
+  color: @on_secondary_container; 
+
+  border-radius: 4px; 
+} 
+
+/* Hover States */
+#workspaces button:hover,
+#workspaces button:hover.empty { 
+  background-color: @surface_variant; 
+  color: @on_surface; 
+
+  border-radius: 12px; 
 }
 
 
@@ -162,7 +174,7 @@ tooltip label {
 
 #mpris,
 #mpris label {
-    font-size:   23px;
+    font-size:   22px;
     color:       @on_surface;
     padding:     0 0 0 10px;
 }
@@ -412,56 +424,60 @@ tooltip label {
     font-size: 17px;
 }
 
-menu,
-menu * {
-    transition: none;
-}
-
 menu {
-    background-color: @surface_container_low;
-    border:           1px solid alpha(@on_surface, 0.12);
-    border-radius:    8px;
-    padding:          4px;
-    margin-top:       6px;
-    box-shadow:       0 2px 6px rgba(0, 0, 0, 0.15);
-    min-width:        0px;
+  background-color: @surface_container_low;
+  border: 1px solid alpha(@on_surface, 0.12);
+  border-radius: 8px;
+  padding: 2px;
+  margin-top: 6px;
+  box-shadow: none;
+  min-width: 0px;
 }
 
 menu menu {
-    margin-left:  2px;
-    margin-top:  -4px;
+  margin-left: 2px;
+  margin-top: -4px;
 }
 
 menu menuitem {
-    border-bottom: none;
-    margin-bottom: 2px;
-    padding:       4px 8px;
-    border-radius: 3px;
+  background-color: transparent;
+  color: @on_surface;
+  padding: 2px 8px;
+  margin-bottom: 2px;
+  padding-bottom: 3px;
+  border-bottom: none;
 }
 
 menu menuitem label {
-    color: inherit;
+  color: inherit;
 }
 
 menu menu menuitem:not(:last-child) {
-    border-bottom:  1px solid alpha(@on_surface, 0.08);
-    margin-bottom:  2px;
+  border-bottom: 1px solid alpha(@on_surface, 0.08);
+  margin-bottom: 2px;
+  padding-bottom: 4px;
 }
 
-menu menuitem:hover {
-    background-color: alpha(@primary, 0.44);
-    color:            @primary;
-    border-radius:    3px;
+menu menuitem:hover,
+menu menuitem:selected {
+  background-color: alpha(@primary, 0.44);
+  color: @primary;
 }
 
-menu menuitem:hover label {
-    color: @primary;
+menu menuitem:hover label,
+menu menuitem:selected label {
+  color: @primary;
+}
+
+menu menuitem:disabled,
+menu menuitem:disabled label {
+  color: alpha(@on_surface, 0.38);
 }
 
 menu separator {
-    background-color: alpha(@on_surface, 0.12);
-    min-height:       1px;
-    margin:           4px 8px;
+  background-color: alpha(@on_surface, 0.12);
+  min-height: 1px;
+  margin: 4px 8px;
 }
 
 

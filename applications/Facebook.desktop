@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Name=Facebook
-Comment=Facebook
-Exec=launch-webapp https://www.facebook.com/
-Terminal=false
-Type=Application
-Icon=~/.local/share/applications/icons/Facebook.png
-StartupNotify=true

@@ -91,7 +91,7 @@ tooltip label {
 #left-2 > widget > #custom-timer,
 #left-2 > widget > #custom-timer label {
     font-family: Doto, sans-serif;
-    font-size: 19px;
+    font-size: 16px;
 }
 
 #right-1 > widget > #backlight {
@@ -159,7 +159,8 @@ button:hover {
 /* ── Clock ─────────────────── */
 #clock,
 #clock label {
-    font-size: 14px;
+    font-size: 16px;
+    font-family: Doto;
     color: @on_secondary_container;
     border-radius: 9999px;
     margin: 2px 4px;
@@ -403,6 +404,50 @@ menu separator {
 
 #backlight,
 #backlight label {
-    font-size: 21px;
+    font-size: 18px;
     font-weight: 700;
+}
+
+#custom-vpn,
+#custom-vpn label {
+    font-size: 16px;
+    padding:   0 4 0 4px;
+    margin: 0px;
+}
+
+#custom-vpn.connected,
+#custom-vpn.connected label {
+    color: @primary;
+}
+
+#custom-vpn.disconnected,
+#custom-vpn.disconnected label {
+    color: alpha(@on_surface, 0.4);
+}
+
+#custom-mako,
+#custom-mako label {
+    margin: 0px 0px;
+    padding: 0px 0px;
+    font-size: 14px;
+}
+
+#custom-mako.normal,
+#custom-mako.normal label {
+    color: @primary;
+}
+
+#custom-mako.dnd,
+#custom-mako.dnd label {
+    color: @error;
+}
+
+#custom-menu,
+#custom-menu label {
+  margin: 0px 2px;
+  padding: 2px 1px;
+  font-size: 19px;
+  color: @primary;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }

@@ -52,10 +52,10 @@
             <child><object class="GtkMenuItem" id="theme_canvas"><property name="label">  Canvas</property></object></child>
             <child><object class="GtkMenuItem" id="theme_emerald"><property name="label">  Emerald</property></object></child>
             <child><object class="GtkMenuItem" id="theme_graffiti"><property name="label">  Graffiti</property></object></child>
-            <child><object class="GtkMenuItem" id="theme_landscape"><property name="label">  Landscape  ✓</property></object></child>
+            <child><object class="GtkMenuItem" id="theme_landscape"><property name="label">  Landscape</property></object></child>
             <child><object class="GtkMenuItem" id="theme_monochrome"><property name="label">  Monochrome</property></object></child>
             <child><object class="GtkMenuItem" id="theme_pixelpulse"><property name="label">  Pixelpulse</property></object></child>
-            <child><object class="GtkMenuItem" id="theme_spectrum"><property name="label">  Spectrum</property></object></child>
+            <child><object class="GtkMenuItem" id="theme_spectrum"><property name="label">  Spectrum  ✓</property></object></child>
             <child><object class="GtkMenuItem" id="theme_sumie"><property name="label">  Sumi-e</property></object></child>
           </object>
         </child>
@@ -99,9 +99,25 @@
             <child><object class="GtkMenuItem" id="waybar_style_hardcoded"><property name="label">  hardcoded</property></object></child>
             <child><object class="GtkMenuItem" id="waybar_style_illogicalimpulse"><property name="label">  illogical-impulse</property></object></child>
             <child><object class="GtkMenuItem" id="waybar_style_intricate"><property name="label">  Intricate</property></object></child>
+            <child><object class="GtkMenuItem" id="waybar_style_left"><property name="label">  left</property></object></child>
             <child><object class="GtkMenuItem" id="waybar_style_liquidglass"><property name="label">  liquid-glass</property></object></child>
             <child><object class="GtkMenuItem" id="waybar_style_minimal"><property name="label">  minimal</property></object></child>
             <child><object class="GtkMenuItem" id="waybar_style_pristine"><property name="label">  Pristine</property></object></child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- ── WAYBAR POSITION ────────────────────────────────────────────────── -->
+    <child>
+      <object class="GtkMenuItem" id="layout_menu">
+        <property name="label">󱂬  Waybar Position</property>
+        <child type="submenu">
+          <object class="GtkMenu">
+            <child><object class="GtkMenuItem" id="waybar_bottom"><property name="label">󱂬  bottom</property></object></child>
+            <child><object class="GtkMenuItem" id="waybar_left"><property name="label">󱂬  left</property></object></child>
+            <child><object class="GtkMenuItem" id="waybar_right"><property name="label">󱂬  right</property></object></child>
+            <child><object class="GtkMenuItem" id="waybar_top"><property name="label">󱂬  top</property></object></child>
           </object>
         </child>
       </object>

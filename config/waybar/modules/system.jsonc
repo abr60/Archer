@@ -36,8 +36,8 @@
     "min-length": 4,
     "tooltip": false,
     "on-scroll-down": "brightnessctl s 5%-",
-    "on-scroll-up": "brightnessctl s +5%",
-    "on-click": "archer-set-mode $([ \"$(cat ~/.local/state/Archer/current-mode)\" = 'dark' ] && echo light || echo dark)"
+    "on-scroll-up": "brightnessctl s +5%"
+    //"on-click": "archer-set-mode $([ \"$(cat ~/.local/state/Archer/current-mode)\" = 'dark' ] && echo light || echo dark)"
   },
 
 "power-profiles-daemon": {

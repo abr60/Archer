@@ -154,7 +154,6 @@ button:hover {
 
 /* ── Clock ────────────────────────────────────────────── */
 #clock {
-    background-color: alpha(@surface, 0.7);
     color: @primary;
     border-radius: 1px 1px 16px 1px;
     padding: 2px 8px;
@@ -162,7 +161,7 @@ button:hover {
     font-family: Doto, sans-serif;
     font-size: 16px;
     font-style: normal;
-    font-weight: 900;
+    font-weight: 700;
 }
 
 /* ── Base MPRIS Styling ───────────────────────────────── */

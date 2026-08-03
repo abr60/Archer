@@ -41,6 +41,12 @@
       "waybar_style_hardcoded":   "ln -sf ~/.config/waybar/css/hardcoded.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
       "waybar_style_illogicalimpulse":        "ln -sf ~/.config/waybar/css/illogical-impulse.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
       "waybar_style_liquidglass":        "ln -sf ~/.config/waybar/css/liquid-glass.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_left":        "ln -sf ~/.config/waybar/css/left.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      
+      "waybar_top":            "ln -sf ~/.config/waybar/layouts/top.jsonc ~/.config/waybar/active-layout.jsonc && pkill -SIGUSR2 waybar",
+      "waybar_bottom":         "ln -sf ~/.config/waybar/layouts/bottom.jsonc ~/.config/waybar/active-layout.jsonc && pkill -SIGUSR2 waybar",
+      "waybar_left":   "ln -sf ~/.config/waybar/layouts/left.jsonc ~/.config/waybar/active-layout.jsonc && pkill -SIGUSR2 waybar",
+      "waybar_right":  "ln -sf ~/.config/waybar/layouts/right.jsonc ~/.config/waybar/active-layout.jsonc && pkill -SIGUSR2 waybar",
 
       "rescan_menu": "generate-menu && pkill -SIGUSR2 waybar"
     }

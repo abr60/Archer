@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Name=Cloude
-Comment=Cloude
-Exec=launch-webapp https://claude.ai/new
-Terminal=false
-Type=Application
-Icon=~/.local/share/applications/icons/Cloude.png
-StartupNotify=true

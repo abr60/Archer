@@ -1,0 +1,21 @@
+{
+  "position": "top",
+  "height": 22,
+  "width": 1437,
+  "margin": "0px 6px 0px 6px",
+  "spacing": 0,
+
+  "modules-left": [
+    "group/left-1",
+    "group/left-2"
+  ],
+
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+
+  "modules-right": [
+    "group/right-2",
+    "group/right-1"
+  ]
+}

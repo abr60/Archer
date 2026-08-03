@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Name=MS Word
-Comment=MS Word
-Exec=launch-webapp https://word.cloud.microsoft/
-Terminal=false
-Type=Application
-Icon=~/.local/share/applications/icons/MS Word.png
-StartupNotify=true

@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Name=Notebook LLM
-Comment=Notebook LLM
-Exec=launch-webapp https://notebooklm.google.com/
-Terminal=false
-Type=Application
-Icon=~/.local/share/applications/icons/Notebook LLM.png
-StartupNotify=true

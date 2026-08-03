@@ -7,6 +7,7 @@
 THEMES_DIR="$HOME/.local/share/Archer/Themes"
 ANIM_DIR="$HOME/.config/hypr/animations"
 WAYBAR_CSS_DIR="$HOME/.config/waybar/css"
+LAYOUTS_DIR="$HOME/.config/waybar/layouts"
 STATE_DIR="$HOME/.local/state/Archer"
 SCRIPTS_DIR="$HOME/.config/matugen/bin"
 OUTPUT="$HOME/.config/waybar/menu/style-menu.xml"
@@ -26,6 +27,9 @@ mapfile -t ANIMS < <(find "$ANIM_DIR" -maxdepth 1 -type f -name "*.lua" | sort |
 
 # ─── Scan waybar CSS styles ───────────────────────────────────────────────────
 mapfile -t STYLES < <(find "$WAYBAR_CSS_DIR" -maxdepth 1 -name "*.css" | sort | xargs -I{} basename {} .css)
+
+# ─── Scan waybar Layouts styles ───────────────────────────────────────────────────
+mapfile -t LAYOUTS < <(find "$LAYOUTS_DIR" -maxdepth 1 -name "*.jsonc" | sort | xargs -I{} basename {} .jsonc)
 
 # ─── Current mode ─────────────────────────────────────────────────────────────
 CURRENT_MODE=$(cat "$STATE_DIR/current-mode" 2>/dev/null || echo "dark")
@@ -165,6 +169,28 @@ for style in "${STYLES[@]}"; do
     label=$(xml_escape "$style")
     id="waybar_style_$(echo "$style" | tr '[:upper:] ' '[:lower:]_' | tr -cd '[:alnum:]_')"
     echo "            <child><object class=\"GtkMenuItem\" id=\"${id}\"><property name=\"label\">  ${label}</property></object></child>" >> "$OUTPUT"
+done
+
+cat >> "$OUTPUT" << 'EOF'
+          </object>
+        </child>
+      </object>
+    </child>
+
+EOF
+
+# ─── 7. WAYBAR POSITION (scanned) ─────────────────────────────────────────────
+echo "    <!-- ── WAYBAR POSITION ────────────────────────────────────────────────── -->" >> "$OUTPUT"
+echo "    <child>" >> "$OUTPUT"
+echo "      <object class=\"GtkMenuItem\" id=\"layout_menu\">" >> "$OUTPUT"
+echo "        <property name=\"label\">󱂬  Waybar Position</property>" >> "$OUTPUT"
+echo "        <child type=\"submenu\">" >> "$OUTPUT"
+echo "          <object class=\"GtkMenu\">" >> "$OUTPUT"
+
+for layout in "${LAYOUTS[@]}"; do
+    label=$(xml_escape "$layout")
+    id="waybar_$(echo "$layout" | sed 's/^layout-//' | tr '[:upper:] ' '[:lower:]_' | tr -cd '[:alnum:]_')"
+    echo "            <child><object class=\"GtkMenuItem\" id=\"${id}\"><property name=\"label\">󱂬  ${label}</property></object></child>" >> "$OUTPUT"
 done
 
 cat >> "$OUTPUT" << 'EOF'

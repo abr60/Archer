@@ -1,0 +1,438 @@
+{
+  "exclusive": true,
+  "reload_style_on_change": true,
+  "position": "left",
+  "margin-top": 0,
+  "spacing": 0,
+  "height": 0,
+  "margin-bottom": 0,
+  "modules-left": [
+    "hyprland/workspaces",
+    "custom/separator",
+    "custom/voxtype",
+    "custom/idle-indicator",
+    "custom/notification-silencing-indicator",
+    "custom/screenrecording-indicator",
+    "custom/updatespacman"
+  ],
+  "modules-center": ["mpris"],
+  "modules-right": [
+    "group/tray-expander",
+    "backlight",
+    "bluetooth",
+    "network",
+    "pulseaudio",
+    "power-profiles-daemon",
+    "battery",
+    "custom/vpn",
+    "custom/menu",
+    "clock"
+  ],
+
+"hyprland/workspaces": {
+  //"persistent-workspaces": {"*": [ 1,2,3,4,5,6 ]},
+	"on-click": "activate",
+	"format": "{windows}", //{icon} 
+  "justify": "center",
+  "enable-bar-scroll": true,
+  "tooltip": false,
+	"format-window-separator": " ",
+	"window-rewrite-default": "",
+	"window-rewrite": {		
+        "class<.*imv*.>": "",
+        "class<.*bambustudio*.>": "󰐫",
+        "class<.*bitwarden*.>": "",
+        "class<.*handbrake*.>": "󰈫",
+        "class<.*stremio*.>": "󱖏",
+        "title<.*waydroid*.>": "",
+        "class<.*grayjay*.>": "󱗆",
+		"title<.*amazon.*>": "",
+		"class<firefox|org.mozilla.firefox|librewolf|floorp|mercury-browser|[Cc]achy-browser>": "",
+		"class<zen>": "󰰷",
+		"class<waterfox|waterfox-bin>": "",
+		"class<microsoft-edge>": "",
+		"class<Chromium|Thorium|[Cc]hrome>": "",
+		"class<brave-browser>": "🦁",
+		"class<tor-browser>": "",
+		"class<firefox-developer-edition>": "🦊",
+		"class<kitty|konsole>": "",
+		"class<kitty-dropterm>": "",
+		"class<com.mitchellh.ghostty>": "",
+		"class<org.wezfurlong.wezterm>": "",
+        "class<org.omarchy.terminal>": "󰏖",
+		"class<[Tt]hunderbird|[Tt]hunderbird-esr>": "",
+		"class<eu.betterbird.Betterbird>": "",
+		"title<.*gmail.*>": "󰊫",
+		"class<[Tt]elegram-desktop|org.telegram.desktop|io.github.tdesktop_x64.TDesktop>": "",
+		"class<discord|[Ww]ebcord|Vesktop>": "",
+		"title<.*whatsapp.*>": "",
+    "title<.*zapzap.*>": "",
+		"title<.*messenger.*>": "",
+		"title<.*facebook.*>": " ",
+		"title<.*reddit.*>": "",
+    "title<.*ChatGPT.*>": "",
+    "class<.*ChatGPT.*>": "",
+    "title<.*[Cc]laude.*>": "",
+    "class<.*[Cc]laude.*>": "",
+    "title<.*[Dd]eep[Ss]eek.*>": "󱢺",
+    "class<.*[Dd]eep[Ss]eek.*>": "󱢺",
+    "title<.*[Qq]wen.*>": "󰭆",
+    "class<.*[Qq]wen.*>": "󰭆",
+    "title<.*[Gg]emini.*>": "",
+    "class<.*[Gg]emini.*>": "",
+		"class<subl>": "󰅳",
+		"class<slack>": "",
+		"class<mpv>": "",
+		"class<celluloid|Zoom>": "",
+		"class<Cider>": "󰎆 ",
+		"title<.*Picture-in-Picture.*>": "",
+		"title<.*youtube.*>": "",
+		"class<vlc>": "󰕼",
+		"title<.*cmus.*>": "",
+		"class<[Ss]potify>": "",
+		"class<virt-macodeger>": "",
+		"class<.virt-manager-wrapped>": "",
+		"class<virtualbox manager>": "💽",
+		"title<virtualbox>": "💽",
+		"class<remmina>": "🖥️",
+		"class<VSCode|code-url-handler|code-oss|codium|codium-url-handler|VSCodium>": "󰨞",
+    "class<dev.zed.Zed>": "󰵁",
+		"class<codeblocks>": "󰅩",
+		"title<.*github.*>": "",
+		"class<mousepad>": "",
+		"class<libreoffice-writer>": "",
+		"class<libreoffice-startcenter>": " 󰏆",
+		"class<libreoffice-calc>": "",
+		"title<.*nvim ~.*>": "",
+    "class<org.gnome.Nautilus>": "",
+		"title<.*vim.*>": "",
+		"title<.*figma.*>": "",
+		"title<.*jira.*>": "",
+		"class<jetbrains-idea>": "",
+    "title<*.VSCode.*>": "󰨞",
+    "class<.*code.*>": "󰨞",
+		"class<obs|com.obsproject.Studio>": "",
+		"class<polkit-gnome-authentication-agent-1>": "󰒃",
+		"class<nwg-look>": "",
+		"class<[Pp]avucontrol|org.pulseaudio.pavucontrol>": "󱡫",
+		"class<steam>": "",
+		"class<thunar|nemo>": "󰝰",	
+    "class<Gparted>":"",
+		"class<gimp>": "",
+		"class<emulator>": "📱",
+		"class<android-studio>": "",
+   	"class<org.pipewire.Helvum>": "󰓃",
+    "class<localsend>":"",
+    "class<PrusaSlicer|UltiMaker-Cura|OrcaSlicer>": "󰹛"
+		}
+	},
+"custom/separator": {
+    "format": "", 
+    "tooltip": false
+},
+ "custom/voxtype": {
+    "exec": "voxtype-status",
+    "return-type": "json",
+    "format": "{icon}",
+    "format-icons": {
+      "idle": "",
+      "recording": "󰍬",
+      "transcribing": "󰔟"
+    },
+    "tooltip": true,
+    "on-click-right": "voxtype-config",
+    "on-click": "voxtype-model"
+  },
+      "custom/idle-indicator": {
+    "on-click": "toggle-idle",
+    "exec": "$ARCHER_PATH/default/waybar/indicators/idle.sh",
+    "signal": 9,
+    "return-type": "json"
+  },
+  "custom/notification-silencing-indicator": {
+    "on-click": "toggle-notification-silencing",
+    "exec": "$ARCHER_PATH/default/waybar/indicators/notification-silencing.sh",
+    "signal": 10,
+    "return-type": "json"
+  },
+    "power-profiles-daemon": {
+    "justify": "center",
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+   "format-icons": {
+        "performance": " ",
+        "balanced": " ",
+        "power-saver": "󰌪 "
+    }
+  },
+  "cpu": {
+    "justify": "center",
+    "interval": 10,
+    "format": "{usage:02}%\ncpu",
+    "on-click": "launch-or-focus-tui btop",
+    "states": {
+        "warning": 50,
+        "critical": 80
+    }
+  },
+    "memory": {
+    "justify": "center",
+    "interval": 2,
+    "format": " {percentage:02}%\n mem",
+    "on-click": "launch-or-focus-tui btop",
+    "states": {
+        "warning": 50,
+        "critical": 80
+    }
+  },
+  "backlight": {
+    "justify": "center",
+        "device": "intel_backlight",
+        "rotate": 0,
+        "format": "{icon}",
+        "on-scroll-down": "brightnessctl s 5%-",
+        "on-scroll-up": "brightnessctl s +5%",
+        "tooltip-format": "🌕 {percent}%",
+            "format-icons": [
+      "󰃜",
+      "󰃝",
+      "󰃞",
+      "󰃟",
+      "󰃠"
+    ]
+   },
+  "custom/menu": {
+    "format": "󰮫",
+    "justify": "center",
+    "menu": "on-click",
+    "tooltip": false,
+    "menu-file": "$HOME/.config/waybar/menu/style-menu.xml",
+    "menu-actions": {
+      "mode_dark":  "archer-set-mode dark",
+      "mode_light": "archer-set-mode light",
+
+      "scheme_tonal_spot":  "archer-matugen-scheme --apply scheme-tonal-spot",
+      "scheme_content":     "archer-matugen-scheme --apply scheme-content",
+      "scheme_expressive":  "archer-matugen-scheme --apply scheme-expressive",
+      "scheme_fidelity":    "archer-matugen-scheme --apply scheme-fidelity",
+      "scheme_fruit_salad": "archer-matugen-scheme --apply scheme-fruit-salad",
+      "scheme_monochrome":  "archer-matugen-scheme --apply scheme-monochrome",
+      "scheme_neutral":     "archer-matugen-scheme --apply scheme-neutral",
+      "scheme_rainbow":     "archer-matugen-scheme --apply scheme-rainbow",
+      "scheme_vibrant":     "archer-matugen-scheme --apply scheme-vibrant",
+
+      "theme_canvas":      "archer-apply-theme Canvas",
+      "theme_emerald":     "archer-apply-theme Emerald",
+      "theme_graffiti":    "archer-apply-theme Graffiti",
+      "theme_landscape":   "archer-apply-theme Landscape",
+      "theme_monochrome":  "archer-apply-theme Monochrome",
+      "theme_pixelpulse":  "archer-apply-theme Pixelpulse",
+      "theme_spectrum":    "archer-apply-theme Spectrum",
+      "theme_sumie":       "archer-apply-theme Sumi-e",
+
+      "wallpaper_select": "rofi-set-bg",
+      "wallpaper_next":   "archer-wallpaper-cycle next",
+      "wallpaper_prev":   "archer-wallpaper-cycle prev",
+      "wallpaper_random": "archer-wallpaper-cycle random",
+
+      "anim_fast":   "ln -sf ~/.config/hypr/animations/fast.lua ~/.config/hypr/animations.lua && hyprctl reload",
+      "anim_fluid":  "ln -sf ~/.config/hypr/animations/fluid.lua ~/.config/hypr/animations.lua && hyprctl reload",
+
+      "waybar_style_intricate": "ln -sf ~/.config/waybar/css/Intricate.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_minimal":   "ln -sf ~/.config/waybar/css/minimal.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_pristine":  "ln -sf ~/.config/waybar/css/Pristine.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_hardcoded":   "ln -sf ~/.config/waybar/css/hardcoded.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_illogicalimpulse":        "ln -sf ~/.config/waybar/css/illogical-impulse.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_liquidglass":        "ln -sf ~/.config/waybar/css/liquid-glass.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      "waybar_style_left":        "ln -sf ~/.config/waybar/css/left.css ~/.config/waybar/style.css && pkill -SIGUSR2 waybar",
+      
+      "waybar_top":            "ln -sf ~/.config/waybar/layouts/top.jsonc ~/.config/waybar/active-layout.jsonc && pkill -SIGUSR2 waybar",
+      "waybar_bottom":         "ln -sf ~/.config/waybar/layouts/bottom.jsonc ~/.config/waybar/active-layout.jsonc && pkill -SIGUSR2 waybar",
+      "waybar_left":   "ln -sf ~/.config/waybar/layouts/left.jsonc ~/.config/waybar/active-layout.jsonc && pkill -SIGUSR2 waybar",
+      "waybar_right":  "ln -sf ~/.config/waybar/layouts/right.jsonc ~/.config/waybar/active-layout.jsonc && pkill -SIGUSR2 waybar",
+
+      "rescan_menu": "generate-menu && pkill -SIGUSR2 waybar"
+    }
+  },
+  "clock": {
+    "format": "{:%I:%M}",
+    "format-alt": "<span weight='900'>{:%d/%m\n%I:%M}</span>",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+        "mode": "month",
+        "on-scroll": 1,
+        "format": {
+            "months":   "<span color='#ffead3'><b>{}</b></span>",
+            "days":     "<span color='#ecc6d9'><b>{}</b></span>",
+            "weeks":    "<span color='#99ffdd'><b>W{}</b></span>",
+            "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+            "today":    "<span color='#ff6699'><b><u>{}</u></b></span>"
+        }
+    },
+    "actions": {
+        "on-click-right": "mode",
+        "on-scroll-up": "shift_up",
+        "on-scroll-down": "shift_down"
+    }
+  },
+"network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "justify": "center",
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} | {frequency}GHz | {signalStrength}%",
+    "tooltip-format-ethernet": "Connected",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "timeout 40s kitty --class kitty --title dropdown -e impala",
+    "menu": "on-click-right",
+    "menu-file": "~/.config/waybar/menu/bandwith-test.xml",
+    "menu-actions": {
+      "speedtest": "~/.config/waybar/assets/scripts/bandwith-test.sh speedtest",
+      "netinfo": "~/.config/waybar/assets/scripts/bandwith-test.sh info"
+    }
+  },
+  "battery": {
+    "justify": "center",
+    "format": "{icon}",
+    "format-discharging": "{icon}",
+    "format-charging": "{icon}",
+    "format-plugged": "{icon}",
+    "format-icons": {
+      "charging": [
+        "󰢜",
+        "󰂆",
+        "󰂇",
+        "󰂈",
+        "󰢝",
+        "󰂉",
+        "󰢞",
+        "󰂊",
+        "󰂋",
+        "󰂅"
+      ],
+      "default": [
+        "󰁺",
+        "󰁻",
+        "󰁼",
+        "󰁽",
+        "󰁾",
+        "󰁿",
+        "󰂀",
+        "󰂁",
+        "󰂂",
+        "󰁹"
+      ]
+    },
+    "format-full": "{icon}",
+    "tooltip-format-discharging": "{timeTo}",
+    "tooltip-format-charging": "{timeTo}",
+    "interval": 5,
+    "on-click": "menu power",
+    "on-click-right": "notify-send -u low \"$(battery-status)\"",
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
+  },
+ "bluetooth": {
+  "justify": "center",
+    "format": "󰂯",
+    "format-connected": "󰂱",
+    "format-disabled": "󰂲",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "launch-bluetooth"
+  },
+  "pulseaudio": {
+    "justify": "center",
+    "format": "{icon}",
+    "on-click": "pamixer -t",
+    "on-click-right": "timeout 15s launch-audio",
+    "tooltip-format": "Playing at {volume}%",
+    "scroll-step": 5,
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "default": ["", "", ""]
+    }
+  },
+   "mpris": {
+    "justify": "center",
+    "rotate": 90,
+    "format": " {artist} - {title}",
+    "format-paused": "<span color='grey'>{status_icon}</span>",
+    "max-length": 25,
+    "player-icons": {
+      "default": "⏸",
+      "mpv": "🎵"
+    },
+    "status-icons": {
+      "paused": "󰝛"
+    },
+    "ignored-players": ["firefox", "chromium", "brave"]
+  },
+  "custom/updatespacman": {
+    "format": " {icon}",
+    "format-icons": { "has-updates": "󰏗", "updated": "" },
+    "return-type": "json",
+    "exec": "waybar-module-pacman-updates --interval-seconds 5 --network-interval-seconds 300",
+    "on-click": "launch-floating-terminal-with-presentation update"
+  },
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": [
+      "custom/expand-icon",
+      "cpu",
+      "memory"
+      ]
+  },
+  "custom/expand-icon": {
+    "format": "",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 12,
+    "spacing": 4,
+    "show-passive-items": true
+  },
+  "custom/screenrecording-indicator": {
+    "on-click": "capture-screenrecording",
+    "exec": "$ARCHER_PATH/default/waybar/indicators/screen-recording.sh",
+    "signal": 8,
+    "return-type": "json"
+  },
+
+  "custom/vpn": {
+    "exec": "archer-vpn-status",
+    "justify": "center",
+    "return-type": "json",
+    "interval": "once",
+    "signal": 12,
+    "menu": "on-click",
+    "menu-file": "$HOME/.config/waybar/menu/vpn_menu.xml",
+    "tooltip": true,
+    "menu-actions": {
+      "vpn_ca": "archer-vpn-toggle ca",
+      "vpn_ch": "archer-vpn-toggle ch",
+      "vpn_jp": "archer-vpn-toggle jp",
+      "vpn_nl": "archer-vpn-toggle nl",
+      "vpn_no": "archer-vpn-toggle no",
+      "vpn_pl": "archer-vpn-toggle pl",
+      "vpn_ro": "archer-vpn-toggle ro",
+      "vpn_sg": "archer-vpn-toggle sg",
+      "vpn_us": "archer-vpn-toggle us",
+      "vpn_disconnect_all": "bash -c 'ACTIVE=$(cat /tmp/.archer-vpn-active 2>/dev/null); [[ -n $ACTIVE ]] && sudo wg-quick down $ACTIVE && rm -f /tmp/.archer-vpn-active && pkill -RTMIN+12 waybar && notify-send \"VPN\" \"Disconnected\"'",
+      "vpn_ip_check":     "bash -c 'IP=$(curl -s --max-time 5 https://ipinfo.io); notify-send \"Public IP Info\" \"$IP\"'",
+      "vpn_sync_configs": "archer-vpn-sync"
+    }
+  }
+  
+}
