@@ -55,8 +55,8 @@
             <child><object class="GtkMenuItem" id="theme_landscape"><property name="label">  Landscape</property></object></child>
             <child><object class="GtkMenuItem" id="theme_monochrome"><property name="label">  Monochrome</property></object></child>
             <child><object class="GtkMenuItem" id="theme_pixelpulse"><property name="label">  Pixelpulse</property></object></child>
-            <child><object class="GtkMenuItem" id="theme_spectrum"><property name="label">  Spectrum  ✓</property></object></child>
-            <child><object class="GtkMenuItem" id="theme_sumie"><property name="label">  Sumi-e</property></object></child>
+            <child><object class="GtkMenuItem" id="theme_spectrum"><property name="label">  Spectrum</property></object></child>
+            <child><object class="GtkMenuItem" id="theme_sumie"><property name="label">  Sumi-e  ✓</property></object></child>
           </object>
         </child>
       </object>
@@ -99,10 +99,10 @@
             <child><object class="GtkMenuItem" id="waybar_style_hardcoded"><property name="label">  hardcoded</property></object></child>
             <child><object class="GtkMenuItem" id="waybar_style_illogicalimpulse"><property name="label">  illogical-impulse</property></object></child>
             <child><object class="GtkMenuItem" id="waybar_style_intricate"><property name="label">  Intricate</property></object></child>
-            <child><object class="GtkMenuItem" id="waybar_style_left"><property name="label">  left</property></object></child>
             <child><object class="GtkMenuItem" id="waybar_style_liquidglass"><property name="label">  liquid-glass</property></object></child>
             <child><object class="GtkMenuItem" id="waybar_style_minimal"><property name="label">  minimal</property></object></child>
             <child><object class="GtkMenuItem" id="waybar_style_pristine"><property name="label">  Pristine</property></object></child>
+            <child><object class="GtkMenuItem" id="waybar_style_sidebar"><property name="label">  sidebar</property></object></child>
           </object>
         </child>
       </object>

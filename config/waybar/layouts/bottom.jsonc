@@ -1,4 +1,7 @@
 {
+
+  "include": ["modules/*.jsonc"],
+
   "position": "bottom",
   "height": 22,
   "width": 1437,

@@ -167,3 +167,5 @@ time=2026-08-02T23:43:05.836+06:00 level=WARN msg="media control (MPRIS/NowPlayi
 time=2026-08-03T16:14:29.061+06:00 level=INFO msg="cliamp starting (version=v1.57.0 level=INFO)"
 time=2026-08-03T21:20:54.767+06:00 level=INFO msg="cliamp starting (version=v1.57.0 level=INFO)"
 time=2026-08-03T21:42:33.627+06:00 level=INFO msg="cliamp starting (version=v1.57.0 level=INFO)"
+time=2026-08-04T13:05:51.418+06:00 level=INFO msg="cliamp starting (version=v1.57.0 level=INFO)"
+time=2026-08-04T13:05:51.521+06:00 level=WARN msg="media control (MPRIS/NowPlaying) unavailable: mpris: name already taken"
