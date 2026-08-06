@@ -16,12 +16,6 @@ THEME_DEST="/usr/share/plymouth/themes/archer"
 ensure_installed plymouth
 ensure_installed ttf-liberation
 
-# ─── Remove default Plymouth theme to avoid conflicts ────────────────────────
-if is_installed plymouth-theme-spinner; then
-    sudo pacman -Rns --noconfirm plymouth-theme-spinner 2>/dev/null || true
-    ok "Removed default plymouth-theme-spinner"
-fi
-
 # ─── Validate source ──────────────────────────────────────────────────────────
 if [[ ! -d "$THEME_SRC" ]]; then
     warn "Plymouth theme source not found at $THEME_SRC — skipping"
@@ -68,6 +62,17 @@ if ! grep -q 'plymouth' "$MKINITCPIO"; then
     ok "Plymouth hook added after udev in mkinitcpio.conf"
 else
     ok "Plymouth hook already present in mkinitcpio.conf"
+fi
+
+# ─── Remove Arch splash image from linux.preset (UKI) ─────────────────────────
+LINUX_PRESET="/etc/mkinitcpio.d/linux.preset"
+if [[ -f "$LINUX_PRESET" ]]; then
+    if grep -q '^default_options=.*--splash' "$LINUX_PRESET"; then
+        sudo sed -i 's/^\(default_options=.*--splash.*\)/#\1/' "$LINUX_PRESET"
+        ok "Commented out --splash option in linux.preset"
+    else
+        ok "Arch splash already commented out or missing in linux.preset"
+    fi
 fi
 
 # ─── Ensure splash in limine.conf ─────────────────────────────────────────────

@@ -61,7 +61,7 @@ process_event() {
             charging)
                 notify-send -u normal "Power Connected | Power Saver" "Charging (${capacity}%)" \
                     -i battery-charging
-                powerprofilesctl set power-saver 2>/dev/null
+                powerprofilesctl set balanced 2>/dev/null
                 rm -f "$FLAG_FILE"
                 CRITICAL_TRIGGERED=false
                 LAST_NAG_CAPACITY=100
@@ -70,7 +70,7 @@ process_event() {
             discharging)
                 notify-send -u normal "On Battery | Power Saver" "Power-saver profile active" \
                     -i battery-caution
-                powerprofilesctl set power-saver 2>/dev/null
+                powerprofilesctl set balanced 2>/dev/null
                 ;;
         esac
         LAST_STATUS="$status"
