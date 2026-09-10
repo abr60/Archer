@@ -1,30 +1,25 @@
 #!/usr/bin/env bash
-# archer:summary=Deploy Limine config with auto-detected LUKS PARTUUID
+# archer:summary=Refresh Limine header and regenerate boot entries
+
+set -euo pipefail
 
 ARCHER_DIR="${ARCHER_DIR:-$HOME/.local/share/Archer}"
 TEMPLATE="$ARCHER_DIR/default/limine/limine.conf"
-DEST="/boot/limine/limine.conf"
+DEST="/boot/limine.conf"
 
-# Auto-detect LUKS partition PARTUUID
-LUKS_DEV=$(sudo dmsetup deps -o devname root 2>/dev/null | grep -oP '\(.*?\)' | tr -d '()' | head -1)
-if [[ -z "$LUKS_DEV" ]]; then
-    # Fallback — find encrypted partition manually
-    LUKS_DEV=$(lsblk -rno NAME,TYPE | awk '$2=="part"' | while read name _; do
-        sudo cryptsetup isLuks /dev/$name 2>/dev/null && echo $name && break
-    done)
-fi
-
-PARTUUID=$(lsblk -rno PARTUUID /dev/$LUKS_DEV 2>/dev/null)
-
-if [[ -z "$PARTUUID" ]]; then
-    echo "ERROR: Could not detect LUKS PARTUUID — set it manually in $DEST"
+if [[ ! -f "$TEMPLATE" ]]; then
+    echo "ERROR: Template not found at $TEMPLATE" >&2
     exit 1
 fi
 
-echo "Detected LUKS PARTUUID: $PARTUUID"
-
-# Deploy template with PARTUUID substituted
+# Deploy header (flat path — not /boot/limine/limine.conf)
 sudo cp "$TEMPLATE" "$DEST"
-sudo sed -i "s/%%LUKS_PARTUUID%%/$PARTUUID/g" "$DEST"
+echo "Limine header deployed to $DEST"
 
-echo "Limine config deployed to $DEST"
+# Regenerate entries (kernel cmdline comes from /etc/kernel/cmdline + drop-ins)
+if command -v limine-entry-tool &>/dev/null; then
+    sudo limine-entry-tool
+    echo "Boot entries regenerated via limine-entry-tool"
+else
+    echo "WARN: limine-entry-tool not found — header only, no entries generated" >&2
+fi

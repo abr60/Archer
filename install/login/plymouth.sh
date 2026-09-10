@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
-# install/login/plymouth.sh — Install and configure Archer Plymouth theme
+# install/login/plymouth.sh — Install Archer Plymouth theme + mkinitcpio hooks
+# Uses drop-in files (not sed on mkinitcpio.conf) — mirrors omarchy.
 # =============================================================================
 
 set -euo pipefail
@@ -39,8 +40,7 @@ if [[ -f "$WALLPAPER_SRC" ]]; then
     sudo cp "$WALLPAPER_SRC" "$THEME_DEST/plymouth.png"
     ok "Wallpaper installed"
 else
-    warn "plymouth.png not found at $WALLPAPER_SRC"
-    warn "Copy your wallpaper manually to $THEME_DEST/plymouth.png"
+    warn "plymouth.png not found at $WALLPAPER_SRC — copy manually to $THEME_DEST/plymouth.png"
 fi
 
 # ─── Regenerate assets (optional) ────────────────────────────────────────────
@@ -55,45 +55,74 @@ if [[ "${REGEN_ASSETS:-false}" == "true" ]]; then
     fi
 fi
 
-# ─── Ensure plymouth hook is in mkinitcpio ────────────────────────────────────
-MKINITCPIO="/etc/mkinitcpio.conf"
-if ! grep -q 'plymouth' "$MKINITCPIO"; then
-    sudo sed -i 's/\(HOOKS=([^)]*udev\)/\1 plymouth/' "$MKINITCPIO"
-    ok "Plymouth hook added after udev in mkinitcpio.conf"
-else
-    ok "Plymouth hook already present in mkinitcpio.conf"
-fi
+# ─── Set plymouth theme via plymouthd.conf ───────────────────────────────────
+sudo mkdir -p /etc/plymouth
+printf "[Daemon]\nTheme=archer\n" | sudo tee /etc/plymouth/plymouthd.conf >/dev/null
+ok "Wrote /etc/plymouth/plymouthd.conf (Theme=archer)"
 
-# ─── Remove Arch splash image from linux.preset (UKI) ─────────────────────────
-LINUX_PRESET="/etc/mkinitcpio.d/linux.preset"
-if [[ -f "$LINUX_PRESET" ]]; then
-    if grep -q '^default_options=.*--splash' "$LINUX_PRESET"; then
-        sudo sed -i 's/^\(default_options=.*--splash.*\)/#\1/' "$LINUX_PRESET"
-        ok "Commented out --splash option in linux.preset"
-    else
-        ok "Arch splash already commented out or missing in linux.preset"
+# ─── mkinitcpio drop-in: archer_hooks.conf ───────────────────────────────────
+# Replaces HOOKS from /etc/mkinitcpio.conf with the correct boot stack:
+# base udev plymouth keyboard autodetect microcode modconf kms keymap
+# consolefont block encrypt filesystems fsck btrfs-overlayfs
+# (uses busybox `encrypt`, not systemd sd-encrypt — matches omarchy)
+sudo mkdir -p /etc/mkinitcpio.conf.d
+sudo tee /etc/mkinitcpio.conf.d/archer_hooks.conf >/dev/null <<'HOOKS_EOF'
+HOOKS=(base udev plymouth keyboard autodetect microcode modconf kms keymap consolefont block encrypt filesystems fsck btrfs-overlayfs)
+
+# Drop kms when NVIDIA owns every GPU (avoids pulling nouveau + 100MB GSP fw).
+# Hybrid systems keep kms for iGPU early KMS at LUKS prompt.
+if [[ " ${MODULES[*]:-} " == *" nvidia_drm "* ]]; then
+  _archer_nvidia_gpu=0
+  _archer_other_gpu=0
+  for _archer_pci in "${OMARCHY_PCI_DEVICES_PATH:-/sys/bus/pci/devices}"/*; do
+    if [[ ! -r $_archer_pci/class || ! -r $_archer_pci/vendor ]]; then
+      _archer_other_gpu=1
+      continue
     fi
-fi
-
-# ─── Ensure splash in limine.conf ─────────────────────────────────────────────
-LIMINE_CONF="/boot/limine/limine.conf"
-if [[ -f "$LIMINE_CONF" ]]; then
-    if ! grep -q 'splash' "$LIMINE_CONF"; then
-        sudo sed -i '/cmdline:/ s/$/ quiet splash/' "$LIMINE_CONF"
-        ok "Added 'quiet splash' to limine.conf cmdline"
+    [[ $(<"$_archer_pci/class") == "0x03"* ]] || continue
+    if [[ $(<"$_archer_pci/vendor") == "0x10de" ]]; then
+      _archer_nvidia_gpu=1
     else
-        ok "splash already present in limine.conf"
+      _archer_other_gpu=1
     fi
-else
-    warn "limine.conf not found at $LIMINE_CONF"
-    warn "Run limine.sh first, then re-run this script to add splash to cmdline"
+  done
+  if ((_archer_nvidia_gpu && !_archer_other_gpu)); then
+    _archer_hooks=()
+    for _archer_hook in "${HOOKS[@]}"; do
+      [[ $_archer_hook == "kms" ]] || _archer_hooks+=("$_archer_hook")
+    done
+    HOOKS=("${_archer_hooks[@]}")
+  fi
+  unset _archer_nvidia_gpu _archer_other_gpu _archer_pci _archer_hooks _archer_hook
 fi
 
-# ─── Set as default theme and rebuild initramfs ───────────────────────────────
-msg "Setting archer as default Plymouth theme and rebuilding initramfs..."
-sudo plymouth-set-default-theme -R archer && ok "Plymouth theme set and initramfs rebuilt" || {
-    warn "plymouth-set-default-theme -R failed — trying manual rebuild"
-    sudo mkinitcpio -p linux && ok "initramfs rebuilt manually" || warn "mkinitcpio failed — run manually"
-}
+# Bundle vconsole.conf so Plymouth uses the configured layout at LUKS prompt,
+# but only for Latin layouts — bundling Hebrew/Cyrillic/Arabic would make the
+# Latin passphrase untypeable and lock the user out.
+if [[ -f /etc/vconsole.conf ]]; then
+  case $(. /etc/vconsole.conf && echo "${XKBLAYOUT%%,*}") in
+    af | am | ara | bd | bg | by | et | ge | gr | il | in | iq | ir | kg | kh | kz | la | lk | mk | mm | mn | mv | np | rs | ru | sy | th | tj | ua) ;;
+    *) FILES+=(/etc/vconsole.conf) ;;
+  esac
+fi
+HOOKS_EOF
+ok "Wrote /etc/mkinitcpio.conf.d/archer_hooks.conf"
+
+# ─── Rebuild initramfs / UKIs ─────────────────────────────────────────────────
+# limine-mkinitcpio builds UKIs and re-runs limine-entry-tool (preferred when
+# limine-mkinitcpio-hook is installed). Fallback to mkinitcpio -P.
+msg "Rebuilding initramfs / UKIs..."
+if command -v limine-mkinitcpio &>/dev/null; then
+    if sudo limine-mkinitcpio 2>&1 | tail -20; then
+        ok "UKIs rebuilt via limine-mkinitcpio"
+    else
+        warn "limine-mkinitcpio failed — try manually: sudo limine-mkinitcpio"
+    fi
+elif sudo plymouth-set-default-theme -R archer 2>&1 | tail -10; then
+    ok "Initramfs rebuilt via plymouth-set-default-theme -R"
+else
+    warn "plymouth-set-default-theme -R failed — trying mkinitcpio -P"
+    sudo mkinitcpio -P 2>&1 | tail -20 && ok "initramfs rebuilt via mkinitcpio -P" || warn "mkinitcpio failed — run manually"
+fi
 
 ok "Plymouth setup complete — reboot to see the theme"

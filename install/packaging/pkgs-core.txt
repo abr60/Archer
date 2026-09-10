@@ -94,6 +94,12 @@ power-profiles-daemon
 thermald
 lm_sensors
 
+# --- Boot Stack (Limine + LUKS + Plymouth) ---
+limine
+plymouth
+btrfs-progs
+snapper
+
 # --- TUI Tools ---
 impala
 bluetui

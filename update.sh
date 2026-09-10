@@ -148,6 +148,30 @@ run_step "config/applications.sh"      "Syncing applications"
 run_step "services/system-services.sh" "Syncing system services"
 run_step "services/user-services.sh"   "Syncing user services"
 
+# ── Boot stack (Limine + Plymouth) ────────────────────────────────────────────
+if command -v limine-entry-tool &>/dev/null; then
+    section "Syncing boot entries"
+    msg "Regenerating Limine entries..."
+    if sudo limine-entry-tool 2>&1 | tail -5; then
+        ok "Limine entries synced"
+        echo " BOOT: Limine entries synced" >> "$REPORT_FILE"
+    else
+        warn "limine-entry-tool failed"
+        echo " BOOT: limine-entry-tool failed" >> "$REPORT_FILE"
+    fi
+    # Rebuild UKIs if hook package present (applies new mkinitcpio hooks / cmdline)
+    if command -v limine-mkinitcpio &>/dev/null; then
+        msg "Rebuilding UKIs (limine-mkinitcpio)..."
+        if sudo limine-mkinitcpio 2>&1 | tail -10; then
+            ok "UKIs rebuilt"
+            echo " BOOT: UKIs rebuilt" >> "$REPORT_FILE"
+        else
+            warn "limine-mkinitcpio failed"
+            echo " BOOT: limine-mkinitcpio failed" >> "$REPORT_FILE"
+        fi
+    fi
+fi
+
 # ==========================================
 # 7. RE-STOW CONFIG SYMLINKS
 # ==========================================
