@@ -60,31 +60,58 @@ if sudo dmsetup deps -o devname root 2>/dev/null | grep -q .; then
     LUKS_DEV=$(sudo dmsetup deps -o devname root 2>/dev/null | grep -oP '\(.*?\)' | tr -d '()' | head -1 || true)
 fi
 if [[ -z "$LUKS_DEV" ]]; then
-    LUKS_DEV=$(lsblk -rno NAME,TYPE 2>/dev/null | awk '$2=="part"' | while read -r name _; do
-        sudo cryptsetup isLuks "/dev/$name" 2>/dev/null && echo "$name" && break
-    done || true)
+    if command -v cryptsetup &>/dev/null; then
+        LUKS_DEV=$(lsblk -rno NAME,TYPE 2>/dev/null | awk '$2=="part"' | while read -r name _; do
+            sudo cryptsetup isLuks "/dev/$name" 2>/dev/null && echo "$name" && break
+        done || true)
+    fi
+    # Fallback scan via blkid if cryptsetup path missed it
+    if [[ -z "$LUKS_DEV" ]]; then
+        LUKS_DEV=$(sudo blkid -t TYPE=crypto_LUKS -o device 2>/dev/null | head -1 | sed 's|/dev/||' || true)
+        # keep bare name to match the existing normalization; full path handled below
+    fi
 fi
 
 sudo mkdir -p "$(dirname "$CMDLINE_FILE")"
 
 if [[ -n "$LUKS_DEV" ]]; then
-    PARTUUID=$(lsblk -rno PARTUUID "/dev/$LUKS_DEV" 2>/dev/null || true)
+    # Normalize to /dev/… path
+    [[ "$LUKS_DEV" == /dev/* ]] || LUKS_DEV="/dev/$LUKS_DEV"
+    PARTUUID=$(lsblk -rno PARTUUID "$LUKS_DEV" 2>/dev/null || true)
+    # Fallback to blkid if lsblk returned empty (busy device, stale cache)
+    if [[ -z "$PARTUUID" ]]; then
+        PARTUUID=$(sudo blkid -s PARTUUID -o value "$LUKS_DEV" 2>/dev/null || true)
+    fi
+    LUKS_UUID=$(lsblk -rno UUID "$LUKS_DEV" 2>/dev/null || sudo blkid -s UUID -o value "$LUKS_DEV" 2>/dev/null || true)
     if [[ -n "$PARTUUID" ]]; then
-        ok "Detected LUKS device  : /dev/$LUKS_DEV"
+        ok "Detected LUKS device  : $LUKS_DEV"
         ok "Detected PARTUUID     : $PARTUUID"
         echo "cryptdevice=PARTUUID=$PARTUUID:root root=/dev/mapper/root $BASE_CMDLINE_BTRFS" | sudo tee "$CMDLINE_FILE" >/dev/null
+    elif [[ -n "$LUKS_UUID" ]]; then
+        warn "No PARTUUID for $LUKS_DEV — using UUID fallback"
+        ok "Detected LUKS UUID    : $LUKS_UUID"
+        echo "cryptdevice=UUID=$LUKS_UUID:root root=/dev/mapper/root $BASE_CMDLINE_BTRFS" | sudo tee "$CMDLINE_FILE" >/dev/null
     else
-        warn "LUKS device /dev/$LUKS_DEV has no PARTUUID — writing btrfs cmdline without cryptdevice"
-        echo "$BASE_CMDLINE_BTRFS" | sudo tee "$CMDLINE_FILE" >/dev/null
+        warn "No PARTUUID/UUID for $LUKS_DEV — using device path (PARTUUID preferred, regenerate later)"
+        echo "cryptdevice=$LUKS_DEV:root root=/dev/mapper/root $BASE_CMDLINE_BTRFS" | sudo tee "$CMDLINE_FILE" >/dev/null
     fi
 else
     # Fallback: plain install (no LUKS) — detect fstype to avoid wrong rootflags on ext4
     msg "No LUKS device detected — plain install"
     ROOT_SRC=$(findmnt -no SOURCE / 2>/dev/null | sed 's/\[.*\]//')
-    ROOT_FSTYPE=$(findmnt -no FSTYPE / 2>/dev/null || echo "btrfs")
-    ROOT_UUID=$(lsblk -rno UUID "$ROOT_SRC" 2>/dev/null || true)
-    ROOT_SPEC="root=${ROOT_UUID:+UUID=$ROOT_UUID}"
-    [[ -z "$ROOT_UUID" ]] && ROOT_SPEC="root=$ROOT_SRC"
+    # findmnt may be empty in chroot/archiso; try blkid fallback
+    if [[ -z "$ROOT_SRC" ]]; then
+        ROOT_SRC=$(sudo blkid -t TYPE=btrfs -o device 2>/dev/null | head -1 || findmnt -no SOURCE / 2>/dev/null || true)
+    fi
+    [[ -z "$ROOT_SRC" ]] && { err "Cannot detect root device — aborting cmdline write"; exit 1; }
+    ROOT_FSTYPE=$(findmnt -no FSTYPE / 2>/dev/null || sudo blkid -s TYPE -o value "$ROOT_SRC" 2>/dev/null || echo "btrfs")
+    ROOT_UUID=$(lsblk -rno UUID "$ROOT_SRC" 2>/dev/null || sudo blkid -s UUID -o value "$ROOT_SRC" 2>/dev/null || true)
+    if [[ -n "$ROOT_UUID" ]]; then
+        ROOT_SPEC="root=UUID=$ROOT_UUID"
+    else
+        warn "No UUID for $ROOT_SRC — using device path"
+        ROOT_SPEC="root=$ROOT_SRC"
+    fi
     if [[ "$ROOT_FSTYPE" == "btrfs" ]]; then
         echo "$ROOT_SPEC $BASE_CMDLINE_BTRFS" | sudo tee "$CMDLINE_FILE" >/dev/null
     else
@@ -92,6 +119,14 @@ else
     fi
 fi
 ok "Wrote $CMDLINE_FILE"
+# Verify we never wrote an empty/root-less cmdline (the ``device ''`` boot failure).
+if ! sudo grep -qE '(^| )root=' "$CMDLINE_FILE" 2>/dev/null; then
+    err "FATAL: $CMDLINE_FILE has no root= — refusing to generate boot entries"
+    sudo cat "$CMDLINE_FILE" 2>/dev/null || true
+    exit 1
+fi
+sudo cat "$CMDLINE_FILE"
+ok "Verified cmdline contains root="
 
 # ─── Deploy header ────────────────────────────────────────────────────────────
 sudo cp "$TEMPLATE" "$DEST"

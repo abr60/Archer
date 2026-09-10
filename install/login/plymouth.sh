@@ -108,6 +108,13 @@ fi
 HOOKS_EOF
 ok "Wrote /etc/mkinitcpio.conf.d/archer_hooks.conf"
 
+# Match omarchy: resume hook lives in its own drop-in so it can be
+# toggled/overridden independently; omarchy_resume.conf uses HOOKS+=(resume).
+sudo tee /etc/mkinitcpio.conf.d/archer_resume.conf >/dev/null <<'RESUME_EOF'
+HOOKS+=(resume)
+RESUME_EOF
+ok "Wrote /etc/mkinitcpio.conf.d/archer_resume.conf (resume hook)"
+
 # ─── Rebuild initramfs / UKIs ─────────────────────────────────────────────────
 # limine-mkinitcpio builds UKIs and re-runs limine-entry-tool (preferred when
 # limine-mkinitcpio-hook is installed). Fallback to mkinitcpio -P.
