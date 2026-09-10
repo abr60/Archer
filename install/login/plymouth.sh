@@ -119,17 +119,37 @@ ok "Wrote /etc/mkinitcpio.conf.d/archer_resume.conf (resume hook)"
 # limine-mkinitcpio builds UKIs and re-runs limine-entry-tool (preferred when
 # limine-mkinitcpio-hook is installed). Fallback to mkinitcpio -P.
 msg "Rebuilding initramfs / UKIs..."
+REBUILD_OK=false
 if command -v limine-mkinitcpio &>/dev/null; then
     if sudo limine-mkinitcpio 2>&1 | tail -20; then
         ok "UKIs rebuilt via limine-mkinitcpio"
+        REBUILD_OK=true
     else
         warn "limine-mkinitcpio failed — try manually: sudo limine-mkinitcpio"
     fi
 elif sudo plymouth-set-default-theme -R archer 2>&1 | tail -10; then
     ok "Initramfs rebuilt via plymouth-set-default-theme -R"
+    REBUILD_OK=true
 else
     warn "plymouth-set-default-theme -R failed — trying mkinitcpio -P"
-    sudo mkinitcpio -P 2>&1 | tail -20 && ok "initramfs rebuilt via mkinitcpio -P" || warn "mkinitcpio failed — run manually"
+    if sudo mkinitcpio -P 2>&1 | tail -20; then
+        ok "initramfs rebuilt via mkinitcpio -P"
+        REBUILD_OK=true
+    else
+        warn "mkinitcpio failed — run manually"
+    fi
+fi
+
+# Verify a UKI actually exists — entries point at /boot/EFI/Linux/*.efi, no UKI = unbootable
+if ! ls /boot/EFI/Linux/*.efi &>/dev/null; then
+    if [[ "$REBUILD_OK" == true ]]; then
+        warn "No UKI found in /boot/EFI/Linux/ after rebuild — boot entries will be empty"
+    else
+        err "No UKI in /boot/EFI/Linux/ and rebuild failed — system will NOT boot"
+        exit 1
+    fi
+else
+    ok "Verified UKI: $(ls /boot/EFI/Linux/*.efi 2>/dev/null | head -1)"
 fi
 
 ok "Plymouth setup complete — reboot to see the theme"

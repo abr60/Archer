@@ -103,5 +103,5 @@ return {
 
   tertiary_fixed_dim = "rgba(bdce7fff)",
 
-  image = "/home/abr/Walls/Graffiti/Mischief.jpg",
+  image = "~/Walls/Graffiti/Mischief.jpg",
 }

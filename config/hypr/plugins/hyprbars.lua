@@ -43,7 +43,7 @@ hl.plugin.hyprbars.add_button({
   fg_color = "rgb(1e1e22)",
   size     = 12,
   icon     = "",
-  action   = "exec bash /home/pseudo/Archer/config/hypr/plugins/hyprbars-minimize.sh", -- Explicit path & execution
+  action   = "exec bash ~/.config/hypr/plugins/hyprbars-minimize.sh", -- Explicit path & execution
 })
 
 -- Maximize / Fullscreen Window (Green)

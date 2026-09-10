@@ -44,7 +44,7 @@ This means you edit files in your repo, push to GitHub, and the running system r
 ## Installation
 
 ```bash
-git clone https://github.com/drunk-particles/Archer.git ~/Archer
+git clone https://github.com/abr60/Archer.git ~/Archer
 bash ~/Archer/setup.sh
 ```
 
@@ -88,4 +88,4 @@ During setup you'll be asked to choose an install mode:
 
 ---
 
-*by [drunk-particles](https://github.com/drunk-particles)*
+*by [abr60](https://github.com/abr60)*

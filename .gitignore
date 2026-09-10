@@ -1,0 +1,26 @@
+# ── Personal / machine-specific — never commit ──
+**/.zsh_history
+**/memo-history.log
+**/.zsh_sessions/
+*.log
+
+# ── Editor / OS ──
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# ── Python / build ──
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# ── Secrets ──
+.env
+*.pem
+*.key

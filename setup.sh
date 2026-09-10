@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
 # Archer - Setup Entry Point
-# Run after: git clone https://github.com/drunk-particles/Archer.git ~/Archer
+# Run after: git clone https://github.com/abr60/Archer.git ~/Archer
 # Usage: bash ~/Archer/setup.sh
 # =============================================================================
 
@@ -127,8 +127,8 @@ run_step "services/all.sh"    "services"                 false
 
 # ── Login / Boot Stack ────────────────────────────────────────────────────────
 run_step "login/sddm.sh"                  "SDDM"                            false
-run_step "login/limine.sh"                "Limine bootloader"               false
-run_step "login/plymouth.sh"              "Plymouth"                        false
+run_step "login/limine.sh"                "Limine bootloader"               true
+run_step "login/plymouth.sh"              "Plymouth"                        true
 run_step "login/agents.sh"                "Agent skills"                    false
 
 # ==========================================

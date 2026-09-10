@@ -10,7 +10,7 @@ section "Walls"
 
 WALLS_DIR="$HOME/Walls"
 THEMES_DIR="$HOME/Archer/Themes"
-REPO_URL="https://github.com/drunk-particles/Walls.git"
+REPO_URL="https://github.com/abr60/Walls.git"
 
 # ─── Clone or Update ──────────────────────────────────────────────────────────
 if [[ -d "$WALLS_DIR/.git" ]]; then

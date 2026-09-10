@@ -1,7 +1,7 @@
 -- Web app bindings.
 
 a.bind("SUPER + SHIFT + C",        "Claude",       { webapp = "https://claude.ai" })
-a.bind("SUPER + SHIFT + G",        "GitHub",       { webapp = "https://github.com/drunk-particles/Archer" })
+a.bind("SUPER + SHIFT + G",        "GitHub",       { webapp = "https://github.com/abr60/Archer" })
 a.bind("SUPER + SHIFT + Y",        "YouTube",      { webapp = "https://youtube.com/" })
 a.bind("SUPER + SHIFT + X",        "X",            { webapp = "https://x.com/" })
 a.bind("SUPER + SHIFT + P",        "Google Photos",{ webapp = "https://photos.google.com/", focus = true })

@@ -92,6 +92,7 @@ thermald
 lm_sensors
 
 # --- Boot Stack (Limine + LUKS + Plymouth) ---
+cryptsetup
 limine
 plymouth
 btrfs-progs
