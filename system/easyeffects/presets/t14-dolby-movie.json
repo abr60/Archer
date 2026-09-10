@@ -9,7 +9,7 @@
             "input-gain": 0.0,
             "output-gain": -3.0,
             "ir-width": 100,
-            "kernel-path": "/home/pseudo/.local/share/easyeffects/irs/T14-Dolby-Movie.irs"
+            "kernel-path": "~/.local/share/easyeffects/irs/T14-Dolby-Movie.irs"
         },
         "limiter#0": {
             "alr": false,

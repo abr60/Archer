@@ -46,6 +46,18 @@ cd "$ARCHER_REAL"
 stow --target="$HOME/.config" --verbose=1 config
 ok "Stow complete — ~/.config symlinked from $ARCHER_REAL/config"
 
+# ─── GTK bookmarks (template → per-user) ────────────────────────────────────
+# config/gtk-3.0/bookmarks is user-specific (contains $HOME) and is
+# gitignored; generate it from the matugen template if missing.
+GTK_BOOKMARKS_SRC="$ARCHER_REAL/config/matugen/templates/gtk-3.0/bookmarks"
+GTK_BOOKMARKS_DST="$HOME/.config/gtk-3.0/bookmarks"
+if [[ -f "$GTK_BOOKMARKS_SRC" ]]; then
+    mkdir -p "$(dirname "$GTK_BOOKMARKS_DST")"
+    # Expand $HOME placeholder in template to actual home path
+    sed "s|\$HOME|$HOME|g" "$GTK_BOOKMARKS_SRC" > "$GTK_BOOKMARKS_DST"
+    ok "GTK bookmarks generated at $GTK_BOOKMARKS_DST"
+fi
+
 # ─── Script permissions ───────────────────────────────────────────────────────
 find "$CONFIG_DEST/hypr/scripts" -type f -exec chmod +x {} + 2>/dev/null || true
 ok "Script permissions updated"

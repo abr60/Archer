@@ -3,6 +3,14 @@
 **/memo-history.log
 **/.zsh_sessions/
 *.log
+# calibre reading history / library state (private)
+config/calibre/history.plist
+config/calibre/viewer-webengine.json
+config/calibre/viewer/annots/
+config/calibre/gui.json
+# generated gtk bookmarks (user-specific, template lives in matugen/templates)
+config/gtk-3.0/bookmarks
+# calibre library path is machine-specific
 
 # ── Editor / OS ──
 .DS_Store

@@ -17,7 +17,7 @@
       false
     ]
   ],
-  "viewer-background-image": "/home/pseudo/Pictures/Screenshots",
+  "viewer-background-image": "~/Pictures/Screenshots",
   "welcome_wizard_device": "default",
   "welcome_wizard_was_run": true
 }
