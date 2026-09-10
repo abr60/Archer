@@ -88,20 +88,29 @@ START_TIME=$(date +%s)
 # =============================================================================
 section "Preparing package manager"
 
-msg "Syncing package databases..."
-sudo pacman -Sy --noconfirm >> "$LOG_FILE" 2>&1 || warn "pacman -Sy failed — continuing with existing DB"
-
+# Rank mirrors safely: backup, write to tmp, only replace on success.
+# Rate-sort is slow/flaky on fresh archiso; use age-sort with timeout.
 if command -v reflector &>/dev/null; then
     msg "Ranking fastest mirrors (reflector)..."
-    sudo reflector --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist >> "$LOG_FILE" 2>&1 \
-        && ok "Mirrors ranked" || warn "reflector failed — using current mirrorlist"
-elif pacman -Si reflector &>/dev/null 2>&1; then
-    msg "Installing reflector for mirror ranking..."
-    sudo pacman -S --noconfirm --needed reflector >> "$LOG_FILE" 2>&1 && {
-        sudo reflector --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist >> "$LOG_FILE" 2>&1 \
-            && ok "Mirrors ranked" || warn "reflector run failed"
-    } || warn "Could not install reflector — skipping mirror ranking"
+    REF_TMP=$(mktemp)
+    if timeout 45 reflector --latest 10 --protocol https --sort age --save "$REF_TMP" >> "$LOG_FILE" 2>&1; then
+        if [[ -s "$REF_TMP" ]]; then
+            sudo cp /etc/pacman.d/mirrorlist "/etc/pacman.d/mirrorlist.bak.$(date +%s)" 2>/dev/null || true
+            sudo cp "$REF_TMP" /etc/pacman.d/mirrorlist
+            ok "Mirrors ranked"
+        else
+            warn "reflector produced empty file — keeping current mirrorlist"
+        fi
+    else
+        warn "reflector failed or timed out — using current mirrorlist"
+    fi
+    rm -f "$REF_TMP"
+else
+    msg "reflector not installed — skipping mirror ranking (good mirrors from archinstall)"
 fi
+
+msg "Syncing package databases..."
+sudo pacman -Sy --noconfirm >> "$LOG_FILE" 2>&1 || warn "pacman -Sy failed — continuing with existing DB"
 
 # Enable parallel AUR builds
 if ! grep -q '^\s*MAKEFLAGS=' /etc/makepkg.conf 2>/dev/null; then
@@ -125,28 +134,48 @@ pkg_in_pacman() {
 
 bootstrap_yay() {
     if ! command -v yay &>/dev/null; then
-        echo -e "  \033[33m[....]\033[0m 'yay' not found. Bootstrapping AUR helper..."
-
-        sudo pacman -S --noconfirm --needed base-devel git >> "$LOG_FILE" 2>&1
+        echo -e "  \033[33m[....]\033[0m 'yay' not found — bootstrapping AUR helper..."
+        msg "Installing base-devel + git for AUR builds..."
+        if ! sudo pacman -S --noconfirm --needed base-devel git >> "$LOG_FILE" 2>&1; then
+            warn "base-devel/git install failed — retrying with fresh DB"
+            sudo pacman -Sy --noconfirm >> "$LOG_FILE" 2>&1 || true
+            sudo pacman -S --noconfirm --needed base-devel git >> "$LOG_FILE" 2>&1 || {
+                echo -e "  \033[31m[fail]\033[0m base-devel/git install failed — cannot build yay"
+                return 1
+            }
+        fi
 
         local tmp_dir
         tmp_dir=$(mktemp -d)
+        trap 'rm -rf "$tmp_dir"' RETURN
 
-        if git clone https://aur.archlinux.org/yay-bin.git "$tmp_dir" >> "$LOG_FILE" 2>&1; then
-            (
-                cd "$tmp_dir" || exit 1
-                makepkg -si --noconfirm >> "$LOG_FILE" 2>&1
-            )
-
-            if command -v yay &>/dev/null; then
-                echo -e "\r  \033[32m[ ok ]\033[0m 'yay' successfully installed"
-                return 0
-            fi
+        msg "Cloning yay-bin..."
+        if ! git clone https://aur.archlinux.org/yay-bin.git "$tmp_dir" >> "$LOG_FILE" 2>&1; then
+            echo -e "  \033[31m[fail]\033[0m git clone yay-bin failed — check network"
+            echo "git clone yay-bin failed" >> "$LOG_FILE"
+            return 1
         fi
 
-        echo -e "\r  \033[31m[fail]\033[0m Failed to install 'yay'. AUR packages will fail."
+        msg "Building yay-bin (makepkg)..."
+        if ( cd "$tmp_dir" && makepkg -si --noconfirm --needed >> "$LOG_FILE" 2>&1 ); then
+            if command -v yay &>/dev/null; then
+                echo -e "  \033[32m[ ok ]\033[0m 'yay' successfully installed"
+                return 0
+            fi
+        else
+            warn "makepkg failed — see $LOG_FILE"
+        fi
+
+        if command -v yay &>/dev/null; then
+            echo -e "  \033[32m[ ok ]\033[0m 'yay' installed (late check)"
+            return 0
+        fi
+
+        echo -e "  \033[31m[fail]\033[0m Failed to install 'yay'. AUR packages will fail."
+        echo "yay bootstrap failed — check $LOG_FILE" >> "$LOG_FILE"
         return 1
     fi
+    ok "yay already installed ($(yay --version 2>/dev/null | head -1))"
 }
 
 # =============================================================================
