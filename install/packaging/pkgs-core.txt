@@ -45,7 +45,7 @@ xdg-user-dirs
 xdg-user-dirs-gtk
 gpu-screen-recorder
 swaync
-waybar-git
+waybar
 wttrbar-bin
 swayosd
 rofi
@@ -62,14 +62,11 @@ playerctl
 cava
 mpd
 mpc
-spotify
-spotifydl
 mpd-mpris
 mpv-mpris
 sof-firmware
 cliamp
 audacious
-voxtype-bin
 
 # --- Multimedia Codecs ---
 gst-libav
@@ -126,18 +123,13 @@ nwg-look
 qt5ct
 qt6ct
 kvantum
-kvantum-qt5
-gnome-themes-extra
-gnome-tweaks
 #yaru-icon-theme
 papirus-folders-git
 
 # --- Applications ---
 kitty
-nautilus
-nautilus-python
-gnome-disk-utility
-sushi
+thunar
+tumbler
 imv
 gvfs-mtp
 mpv
@@ -164,8 +156,6 @@ cowsay
 awww
 matugen-bin
 bibata-cursor-theme
-woff2-font-awesome
 xdg-terminal-exec
 cowfortune
 rmpc
-google-chrome

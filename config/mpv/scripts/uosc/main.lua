@@ -944,7 +944,7 @@ bind_command('show-in-directory', function()
 	elseif state.platform == 'darwin' then
 		utils.subprocess_detached({args = {'open', '-R', state.path}, cancellable = false})
 	elseif state.platform == 'linux' then
-		local result = utils.subprocess({args = {'nautilus', state.path}, cancellable = false})
+		local result = utils.subprocess({args = {'thunar', state.path}, cancellable = false})
 
 		-- Fallback opens the folder with xdg-open instead
 		if result.status ~= 0 then

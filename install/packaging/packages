@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Archer - Package Installer
+# Archer - Package Installer (batched)
 # Usage:
 #   bash packages              # installs core (pkgs-core.txt)
 #   bash packages extra        # installs extra (pkgs-extra.txt), untagged only
@@ -44,10 +44,8 @@ fi
 # Parse package list
 # =============================================================================
 if [[ -n "$TAG" ]]; then
-    # Only lines containing [tag:<TAG>]
     mapfile -t PKGS < <(grep "\[tag:${TAG}\]" "$PKG_LIST" | grep -v '^\s*#' | grep -v '^\s*$' | awk '{print $1}')
 else
-    # Only untagged lines (no [tag:...] present)
     mapfile -t PKGS < <(grep -v '^\s*#' "$PKG_LIST" | grep -v '^\s*$' | grep -v '\[tag:' | awk '{print $1}')
 fi
 
@@ -86,12 +84,37 @@ gum confirm "Proceed with installation?" || { msg "Aborted."; exit 0; }
 START_TIME=$(date +%s)
 
 # =============================================================================
-# Install packages
+# Pre-flight: sync DB, fastest mirrors, parallel builds
 # =============================================================================
-INSTALLED=()
-FAILED=()
-SKIPPED=()
+section "Preparing package manager"
 
+msg "Syncing package databases..."
+sudo pacman -Sy --noconfirm >> "$LOG_FILE" 2>&1 || warn "pacman -Sy failed — continuing with existing DB"
+
+if command -v reflector &>/dev/null; then
+    msg "Ranking fastest mirrors (reflector)..."
+    sudo reflector --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist >> "$LOG_FILE" 2>&1 \
+        && ok "Mirrors ranked" || warn "reflector failed — using current mirrorlist"
+elif pacman -Si reflector &>/dev/null 2>&1; then
+    msg "Installing reflector for mirror ranking..."
+    sudo pacman -S --noconfirm --needed reflector >> "$LOG_FILE" 2>&1 && {
+        sudo reflector --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist >> "$LOG_FILE" 2>&1 \
+            && ok "Mirrors ranked" || warn "reflector run failed"
+    } || warn "Could not install reflector — skipping mirror ranking"
+fi
+
+# Enable parallel AUR builds
+if ! grep -q '^\s*MAKEFLAGS=' /etc/makepkg.conf 2>/dev/null; then
+    JOBS="$(nproc)"
+    # Leave one core free on beefy machines
+    (( JOBS > 2 )) && JOBS=$((JOBS - 1))
+    echo "MAKEFLAGS=\"-j${JOBS}\"" | sudo tee -a /etc/makepkg.conf >> "$LOG_FILE" 2>&1
+    ok "MAKEFLAGS=-j${JOBS} added to /etc/makepkg.conf"
+fi
+
+# =============================================================================
+# Helpers
+# =============================================================================
 pkg_is_installed() {
     pacman -Q "$1" &>/dev/null
 }
@@ -103,74 +126,124 @@ pkg_in_pacman() {
 bootstrap_yay() {
     if ! command -v yay &>/dev/null; then
         echo -e "  \033[33m[....]\033[0m 'yay' not found. Bootstrapping AUR helper..."
-        
-        # Ensure base-devel and git are present first
+
         sudo pacman -S --noconfirm --needed base-devel git >> "$LOG_FILE" 2>&1
-        
+
         local tmp_dir
         tmp_dir=$(mktemp -d)
-        
+
         if git clone https://aur.archlinux.org/yay-bin.git "$tmp_dir" >> "$LOG_FILE" 2>&1; then
             (
                 cd "$tmp_dir" || exit 1
                 makepkg -si --noconfirm >> "$LOG_FILE" 2>&1
             )
-            
+
             if command -v yay &>/dev/null; then
                 echo -e "\r  \033[32m[ ok ]\033[0m 'yay' successfully installed"
                 return 0
             fi
         fi
-        
+
         echo -e "\r  \033[31m[fail]\033[0m Failed to install 'yay'. AUR packages will fail."
         return 1
     fi
 }
 
-install_pkg() {
-    local pkg="$1"
-
-    if pkg_is_installed "$pkg"; then
-        SKIPPED+=("$pkg")
-        echo -e "  \033[90m[skip]\033[0m $pkg already installed"
-        return 0
-    fi
-
-    echo -ne "  \033[33m[....]\033[0m $pkg"
-
-    if pkg_in_pacman "$pkg"; then
-        if sudo pacman -S --noconfirm --needed "$pkg" >> "$LOG_FILE" 2>&1; then
-            if pkg_is_installed "$pkg"; then
-                INSTALLED+=("$pkg")
-                echo -e "\r  \033[32m[ ok ]\033[0m $pkg"
-                return 0
-            fi
-        fi
-    else
-        if yay -S --noconfirm --needed "$pkg" >> "$LOG_FILE" 2>&1; then
-            if pkg_is_installed "$pkg"; then
-                INSTALLED+=("$pkg")
-                echo -e "\r  \033[32m[ ok ]\033[0m $pkg \033[90m(aur)\033[0m"
-                return 0
-            fi
-        fi
-    fi
-
-    FAILED+=("$pkg")
-    echo -e "\r  \033[31m[fail]\033[0m $pkg"
-    echo "FAILED: $pkg" >> "$LOG_FILE"
-}
-
+# =============================================================================
+# Classify packages: repo vs AUR, skip already installed
+# =============================================================================
 echo ""
 section "Installing $LIST_LABEL packages"
 echo "Install started: $(date)" >> "$LOG_FILE"
 
-# Bootstrap yay first so it's ready for any AUR packages
 bootstrap_yay
 
+SKIPPED=()
+REPO_PKGS=()
+AUR_PKGS=()
+
 for pkg in "${PKGS[@]}"; do
-    install_pkg "$pkg"
+    if pkg_is_installed "$pkg"; then
+        SKIPPED+=("$pkg")
+    elif pkg_in_pacman "$pkg"; then
+        REPO_PKGS+=("$pkg")
+    else
+        AUR_PKGS+=("$pkg")
+    fi
 done
+
+if [[ ${#SKIPPED[@]} -gt 0 ]]; then
+    msg "${#SKIPPED[@]} already installed — skipping"
+    printf '  \033[90m[skip]\033[0m %s\n' "${SKIPPED[@]}"
+fi
+
+INSTALLED=()
+FAILED=()
+
+# =============================================================================
+# Batched install — ONE pacman transaction + ONE yay transaction
+# =============================================================================
+if [[ ${#REPO_PKGS[@]} -gt 0 ]]; then
+    msg "Installing ${#REPO_PKGS[@]} repo packages in one transaction..."
+    echo "REPO batch: ${REPO_PKGS[*]}" >> "$LOG_FILE"
+    if sudo pacman -S --noconfirm --needed "${REPO_PKGS[@]}" >> "$LOG_FILE" 2>&1; then
+        for pkg in "${REPO_PKGS[@]}"; do
+            if pkg_is_installed "$pkg"; then
+                INSTALLED+=("$pkg")
+            else
+                FAILED+=("$pkg")
+            fi
+        done
+        ok "Repo batch done — ${#REPO_PKGS[@]} packages"
+    else
+        warn "Repo batch failed — falling back to per-package install"
+        for pkg in "${REPO_PKGS[@]}"; do
+            echo -ne "  \033[33m[....]\033[0m $pkg"
+            if sudo pacman -S --noconfirm --needed "$pkg" >> "$LOG_FILE" 2>&1 && pkg_is_installed "$pkg"; then
+                INSTALLED+=("$pkg")
+                echo -e "\r  \033[32m[ ok ]\033[0m $pkg"
+            else
+                FAILED+=("$pkg")
+                echo -e "\r  \033[31m[fail]\033[0m $pkg"
+                echo "FAILED: $pkg" >> "$LOG_FILE"
+            fi
+        done
+    fi
+fi
+
+if [[ ${#AUR_PKGS[@]} -gt 0 ]]; then
+    if ! command -v yay &>/dev/null; then
+        warn "yay not available — ${#AUR_PKGS[@]} AUR packages cannot be installed"
+        FAILED+=("${AUR_PKGS[@]}")
+        for pkg in "${AUR_PKGS[@]}"; do echo "FAILED (no yay): $pkg" >> "$LOG_FILE"; done
+    else
+        msg "Installing ${#AUR_PKGS[@]} AUR packages in one transaction..."
+        echo "AUR batch: ${AUR_PKGS[*]}" >> "$LOG_FILE"
+        if yay -S --noconfirm --needed "${AUR_PKGS[@]}" >> "$LOG_FILE" 2>&1; then
+            for pkg in "${AUR_PKGS[@]}"; do
+                if pkg_is_installed "$pkg"; then
+                    INSTALLED+=("$pkg")
+                else
+                    FAILED+=("$pkg")
+                fi
+            done
+            ok "AUR batch done — ${#AUR_PKGS[@]} packages"
+        else
+            warn "AUR batch failed — falling back to per-package install"
+            for pkg in "${AUR_PKGS[@]}"; do
+                echo -ne "  \033[33m[....]\033[0m $pkg \033[90m(aur)\033[0m"
+                if yay -S --noconfirm --needed "$pkg" >> "$LOG_FILE" 2>&1 && pkg_is_installed "$pkg"; then
+                    INSTALLED+=("$pkg")
+                    echo -e "\r  \033[32m[ ok ]\033[0m $pkg \033[90m(aur)\033[0m"
+                else
+                    FAILED+=("$pkg")
+                    echo -e "\r  \033[31m[fail]\033[0m $pkg"
+                    echo "FAILED: $pkg" >> "$LOG_FILE"
+                fi
+            done
+        fi
+    fi
+fi
 
 # =============================================================================
 # Summary
@@ -199,6 +272,7 @@ fi
 echo ""
 echo "Install finished: $(date)" >> "$LOG_FILE"
 echo "Installed: ${INSTALLED[*]:-none}" >> "$LOG_FILE"
+echo "Skipped: ${SKIPPED[*]:-none}" >> "$LOG_FILE"
 echo "Failed: ${FAILED[*]:-none}" >> "$LOG_FILE"
 
 END_TIME=$(date +%s)
