@@ -5,5 +5,5 @@ Comment=Zoom
 Exec=launch-webapp https://app.zoom.us/wc/home
 Terminal=false
 Type=Application
-Icon=/home/abr/.local/share/applications/icons/Zoom.png
+Icon=~/.local/share/applications/icons/Zoom.png
 StartupNotify=true

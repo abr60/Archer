@@ -40,6 +40,15 @@ mkdir -p "$DEST"
 cp -a "$SRC"/. "$DEST"/
 ok "Copied Archer applications"
 
+# Expand portable Icon=~ paths to absolute $HOME for this user
+# (repo templates use ~/.local/... so they work for any username)
+while IFS= read -r -d '' desktop; do
+    if grep -q 'Icon=~/' "$desktop"; then
+        sed -i "s|Icon=~/|Icon=$HOME/|g" "$desktop"
+    fi
+done < <(find "$DEST" -type f -name '*.desktop' -print0 2>/dev/null)
+ok "Expanded Icon paths for $USER"
+
 # Remove any top-level desktop files that also exist in hidden/
 HIDDEN_DIR="$DEST/hidden"
 

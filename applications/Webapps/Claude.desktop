@@ -5,5 +5,5 @@ Comment=Claude
 Exec=launch-webapp https://claude.ai/new
 Terminal=false
 Type=Application
-Icon=/home/abr/.local/share/applications/icons/Claude.png
+Icon=~/.local/share/applications/icons/Claude.png
 StartupNotify=true

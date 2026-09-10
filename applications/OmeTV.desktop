@@ -5,5 +5,5 @@ Comment=OmeTV
 Exec=launch-webapp https://ome.tv/
 Terminal=false
 Type=Application
-Icon=/home/abr/.local/share/applications/icons/OmeTV.png
+Icon=~/.local/share/applications/icons/OmeTV.png
 StartupNotify=true

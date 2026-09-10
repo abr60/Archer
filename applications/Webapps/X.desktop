@@ -5,5 +5,5 @@ Comment=X
 Exec=launch-webapp https://x.com/home
 Terminal=false
 Type=Application
-Icon=/home/abr/.local/share/applications/icons/X.png
+Icon=~/.local/share/applications/icons/X.png
 StartupNotify=true

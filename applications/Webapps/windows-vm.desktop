@@ -2,7 +2,7 @@
 Name=Windows
 Comment=Start Windows VM via Docker and connect with RDP
 Exec=uwsm app -- windows-vm launch
-Icon=/home/abr/.local/share/applications/icons/windows.png
+Icon=~/.local/share/applications/icons/windows.png
 Terminal=false
 Type=Application
 Categories=System;Virtualization;

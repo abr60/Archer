@@ -5,5 +5,5 @@ Comment=ChatGPT
 Exec=launch-webapp https://chatgpt.com/
 Terminal=false
 Type=Application
-Icon=/home/abr/.local/share/applications/icons/ChatGPT.png
+Icon=~/.local/share/applications/icons/ChatGPT.png
 StartupNotify=true

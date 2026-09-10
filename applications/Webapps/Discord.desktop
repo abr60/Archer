@@ -5,5 +5,5 @@ Comment=Discord
 Exec=launch-webapp https://discord.com/channels/@me
 Terminal=false
 Type=Application
-Icon=/home/abr/.local/share/applications/icons/Discord.png
+Icon=~/.local/share/applications/icons/Discord.png
 StartupNotify=true

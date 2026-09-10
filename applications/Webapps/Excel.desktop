@@ -5,5 +5,5 @@ Comment=Excel
 Exec=launch-webapp https://excel.cloud.microsoft/
 Terminal=false
 Type=Application
-Icon=/home/abr/.local/share/applications/icons/Excel.png
+Icon=~/.local/share/applications/icons/Excel.png
 StartupNotify=true

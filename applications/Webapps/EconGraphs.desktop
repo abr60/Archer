@@ -5,5 +5,5 @@ Comment=EconGraphs
 Exec=launch-webapp https://www.econgraphs.org/
 Terminal=false
 Type=Application
-Icon=/home/abr/.local/share/applications/icons/EconGraphs.png
+Icon=~/.local/share/applications/icons/EconGraphs.png
 StartupNotify=true
