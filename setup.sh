@@ -129,6 +129,7 @@ run_step "services/all.sh"    "services"                 false
 run_step "login/sddm.sh"                  "SDDM"                            false
 run_step "login/limine.sh"                "Limine bootloader"               false
 run_step "login/plymouth.sh"              "Plymouth"                        false
+run_step "login/agents.sh"                "Agent skills"                    false
 
 # ==========================================
 # 7. DONE

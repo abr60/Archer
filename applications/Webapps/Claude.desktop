@@ -1,9 +1,9 @@
 [Desktop Entry]
 Version=1.0
-Name=Cloude
-Comment=Cloude
+Name=Claude
+Comment=Claude
 Exec=launch-webapp https://claude.ai/new
 Terminal=false
 Type=Application
-Icon=~/.local/share/applications/icons/Cloude.png
+Icon=/home/abr/.local/share/applications/icons/Claude.png
 StartupNotify=true

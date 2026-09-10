@@ -343,7 +343,7 @@ show_setup_menu() {
   local options="  Audio\n  Wifi\n󰂯  Bluetooth\n󱐋  Power Profile\n  System Sleep\n󰍹  Monitors"
   [[ -f ~/.config/hypr/bindings.lua ]] && options="$options\n  Keybindings"
   [[ -f ~/.config/hypr/input.lua ]] && options="$options\n  Input"
-  options="$options\n  Defaults\n󰱔  DNS\n  Security\n  Config"
+  options="$options\n  Defaults\n󰱔  DNS\n  Security\n  Config\n󱚤  Agents"
 
   case $(menu "Setup" "$options") in
   *Audio*) launch-audio ;;
@@ -358,7 +358,19 @@ show_setup_menu() {
   *DNS*) present_terminal setup-dns ;;
   *Security*) show_setup_security_menu ;;
   *Config*) show_setup_config_menu ;;
+  *Agents*) show_setup_agents_menu ;;
   *) show_main_menu ;;
+  esac
+}
+
+show_setup_agents_menu() {
+  case $(menu "Setup" "󱚤  Default Agent\n󰉉  Open default/agents\n  Edit archer Skill\n󰈷  Diagnose Crash Skill\n  Relink Skills") in
+  *Default*) present_terminal "omarchy-default-agent --pick 2>/dev/null || archer-default-agent --pick 2>/dev/null || omarchy-default-agent" ;;
+  *Open*) terminal bash -c 'ls -R ~/.local/share/Archer/default/agents 2>/dev/null | head -40; echo "---"; echo "Press enter to open in editor"; read; launch-editor ~/.local/share/Archer/default/agents' ;;
+  *archer*) open_in_editor "$HOME/.local/share/Archer/default/agents/skills/archer/SKILL.md" ;;
+  *Diagnose*) open_in_editor "$HOME/.local/share/Archer/default/agents/skills/diagnose-crash/SKILL.md" ;;
+  *Relink*) present_terminal "$HOME/.local/share/Archer/install/login/agents.sh" ;;
+  *) show_setup_menu ;;
   esac
 }
 
@@ -597,7 +609,14 @@ show_install_ai_menu() {
       echo ollama
   )
 
-  case $(menu "Install" "  Dictation\n󱚤  LM Studio\n󱚤  Ollama\n󱚤  Crush") in
+  case $(menu "Install" "󱚤  ChatGPT\n󱚤  Claude\n󱚤  Gemini\n󱚤  Grok\n󱚤  DeepSeek\n󱚤  Mistral\n󱚤  NotebookLM\n  ── Local ──\n  Dictation\n󱚤  LM Studio\n󱚤  Ollama\n󱚤  Crush") in
+  *ChatGPT*) present_terminal "webapp-install ChatGPT https://chatgpt.com/ ChatGPT.png" ;;
+  *Claude*) present_terminal "webapp-install Claude https://claude.ai/new Claude.png" ;;
+  *Gemini*) present_terminal "webapp-install Gemini https://gemini.google.com/app Gemini.png" ;;
+  *Grok*) present_terminal "webapp-install Grok https://grok.com/ Grok.png" ;;
+  *DeepSeek*) present_terminal "webapp-install DeepSeek https://chat.deepseek.com/ DeepSeek.png" ;;
+  *Mistral*) present_terminal "webapp-install 'Mistral Le' https://chat.mistral.ai/chat 'Mistral Le.png'" ;;
+  *NotebookLM*|*Notebook*) present_terminal "webapp-install 'Notebook LLM' https://notebooklm.google.com/ 'Notebook LLM.png'" ;;
   *Dictation*) present_terminal archer-voxtype-install ;;
   *Studio*) install "LM Studio" "lmstudio-bin" ;;
   *Ollama*) install "Ollama" $ollama_pkg ;;

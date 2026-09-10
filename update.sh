@@ -148,6 +148,11 @@ run_step "config/applications.sh"      "Syncing applications"
 run_step "services/system-services.sh" "Syncing system services"
 run_step "services/user-services.sh"   "Syncing user services"
 
+# ── Agent skills ──────────────────────────────────────────────────────────────
+if [[ -f "$INSTALL_DIR/login/agents.sh" ]]; then
+    run_step "login/agents.sh" "Syncing agent skills"
+fi
+
 # ── Boot stack (Limine + Plymouth) ────────────────────────────────────────────
 if command -v limine-entry-tool &>/dev/null; then
     section "Syncing boot entries"
