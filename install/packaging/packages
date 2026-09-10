@@ -88,16 +88,26 @@ START_TIME=$(date +%s)
 # =============================================================================
 section "Preparing package manager"
 
-# Rank mirrors safely: backup, write to tmp, only replace on success.
-# Rate-sort is slow/flaky on fresh archiso; use age-sort with timeout.
-if command -v reflector &>/dev/null; then
-    msg "Ranking fastest mirrors (reflector)..."
+# Rank mirrors: disabled by default on fresh archiso — archinstall mirrors are
+# already geo-selected and reliable. Ranking with reflector frequently picks
+# unreachable mirrors and breaks pacman -Sy (the failure you just hit).
+# Only rank if you explicitly opt in: ARCHER_RANK_MIRRORS=1 bash packages
+# or: sudo reflector --latest 10 --protocol https --sort age --save /tmp/ml && sudo cp /tmp/ml /etc/pacman.d/mirrorlist
+if [[ "${ARCHER_RANK_MIRRORS:-0}" == "1" ]] && command -v reflector &>/dev/null; then
+    msg "Ranking fastest mirrors (reflector) — opt-in..."
     REF_TMP=$(mktemp)
+    REF_BAK="/etc/pacman.d/mirrorlist.bak.$(date +%s)"
+    sudo cp /etc/pacman.d/mirrorlist "$REF_BAK" 2>/dev/null || true
     if timeout 45 reflector --latest 10 --protocol https --sort age --save "$REF_TMP" >> "$LOG_FILE" 2>&1; then
         if [[ -s "$REF_TMP" ]]; then
-            sudo cp /etc/pacman.d/mirrorlist "/etc/pacman.d/mirrorlist.bak.$(date +%s)" 2>/dev/null || true
             sudo cp "$REF_TMP" /etc/pacman.d/mirrorlist
             ok "Mirrors ranked"
+            # Verify new mirrors actually work — restore on failure
+            if ! sudo pacman -Sy --noconfirm >> "$LOG_FILE" 2>&1; then
+                warn "pacman -Sy failed with ranked mirrors — restoring backup"
+                sudo cp "$REF_BAK" /etc/pacman.d/mirrorlist 2>/dev/null || true
+                sudo pacman -Sy --noconfirm >> "$LOG_FILE" 2>&1 || warn "pacman -Sy still failed after restore"
+            fi
         else
             warn "reflector produced empty file — keeping current mirrorlist"
         fi
@@ -106,11 +116,23 @@ if command -v reflector &>/dev/null; then
     fi
     rm -f "$REF_TMP"
 else
-    msg "reflector not installed — skipping mirror ranking (good mirrors from archinstall)"
+    if command -v reflector &>/dev/null; then
+        msg "Skipping mirror ranking (use ARCHER_RANK_MIRRORS=1 to enable)"
+    else
+        msg "reflector not installed — skipping mirror ranking"
+    fi
+    msg "Syncing package databases..."
+    if ! sudo pacman -Sy --noconfirm >> "$LOG_FILE" 2>&1; then
+        warn "pacman -Sy failed — will restore latest backup mirrorlist and retry"
+        LATEST_BAK=$(ls -t /etc/pacman.d/mirrorlist.bak.* 2>/dev/null | head -1 || true)
+        if [[ -n "$LATEST_BAK" ]]; then
+            sudo cp "$LATEST_BAK" /etc/pacman.d/mirrorlist 2>/dev/null || true
+            sudo pacman -Sy --noconfirm >> "$LOG_FILE" 2>&1 || warn "pacman -Sy still failed — check network/time"
+        else
+            warn "No backup mirrorlist found — check network (ping archlinux.org) and system time (timedatectl)"
+        fi
+    fi
 fi
-
-msg "Syncing package databases..."
-sudo pacman -Sy --noconfirm >> "$LOG_FILE" 2>&1 || warn "pacman -Sy failed — continuing with existing DB"
 
 # Enable parallel AUR builds
 if ! grep -q '^\s*MAKEFLAGS=' /etc/makepkg.conf 2>/dev/null; then
